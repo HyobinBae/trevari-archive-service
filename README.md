@@ -1,8 +1,6 @@
-# Boilerplate for trevari web appllication
-
 
 <p style='text-align: center; margin: 100px 0;'>
-    <img src="./static/images/TREVARI@2x.png" width='400'>
+    <img src="./static/images/TREVARI@2x.png" width='200'>
 </p>
 
 
