@@ -1,0 +1,15 @@
+generates:
+  ./src/types/user-backend-api.ts:
+    schema: https://user-backend-api.trevari.co.kr/graphql
+    documents:
+      - src/gql/*.{tsx,ts,js,jsx,gql}
+    plugins:
+      - add: /* eslint-disable */
+      - typescript
+      - typescript-operations
+config:
+  # immutableTypes: true
+  # nonOptionalTypename: true
+  declarationKind: interface
+  scalars:
+    Float: number
