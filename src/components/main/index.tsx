@@ -1,21 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
 import styled from '@emotion/styled';
+import { heading5 } from '@trevari/typo';
 
 import { backend } from 'api';
-import { heading5 } from '@trevari/typo';
 import Layout from 'components/layout';
+import HeroSlider from 'components/main/HeroSlider';
+import BlogList from 'components/main/BlogList';
+import Posts from 'components/main/Posts';
 
 function Main() {
-  const { data, isFetched } = useQuery(['banners'], backend.getBanners);
+  const { data: bannersData, isFetched: isFetchedBanners } = useQuery(['banners'], backend.getBanners);
+  const { data: postsData, isFetched: isFetchedPosts } = useQuery(['mainPosts'], backend.getMainPosts);
 
   return (
     <Layout>
+      <Base>{isFetchedBanners && <HeroSlider banners={bannersData.banners} />}</Base>
       <Base>
-        <Title>메인페이지</Title>
-        {isFetched &&
-          data.banners.map((d: any) => {
-            return <div key={d.id}>{d.id}</div>;
-          })}
+        {isFetchedPosts && (
+          <Blogs>
+            <Posts posts={postsData.mainPosts} />
+          </Blogs>
+        )}
       </Base>
     </Layout>
   );
@@ -31,4 +36,11 @@ const Title = styled.h6`
   ${heading5};
   width: 100%;
   text-align: center;
+`;
+
+const Blogs = styled.div`
+  padding: 54px 0 80px;
+  ${({ theme }) => theme.breakPoint.mobile} {
+    padding: 20px 0;
+  }
 `;
