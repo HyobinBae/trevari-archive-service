@@ -1,14 +1,17 @@
 overwrite: true
-schema: "http://localhost:8000"
-documents: "src/types/*.graphql"
+schema:
+  - http://localhost:8000/graphql:
+      headers:
+        Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Imd1ZXN0Iiwic2NvcGUiOiJndWVzdCIsImlhdCI6MTUxODI1ODA3N30.qRWF3MlIiYCdo0Gs-Yv6XrUlpw8pn2Tsw4VjNtkxE5E
 generates:
-  src/types/graphql.tsx:
+  ./src/types/__generate__/user-backend-api.ts:
     plugins:
+      - add:
+          content: /* eslint-disable */
       - "typescript"
       - "typescript-operations"
-      - "typescript-react-apollo"
-      - "typescript-graphql-files-modules"
-      - "typescript-document-nodes"
-  ./graphql.schema.json:
+      - "typescript-react-query"
+  ./src/types/__generate__/user-backend-api-graphql.schema.json:
     plugins:
       - "introspection"
+

@@ -8,12 +8,17 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "prestart": "npm run codegen",
+    "predev": "npm run codegen"
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
+    "@graphql-codegen/add": "^3.1.1",
     "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typescript": "^2.4.8",
+    "@graphql-codegen/typescript-resolvers": "^2.6.1",
     "@tanstack/react-query": "^4.0.10",
     "@tanstack/react-query-devtools": "^4.0.10",
     "@testing-library/jest-dom": "^5.16.3",
@@ -64,15 +69,12 @@
     ]
   },
   "devDependencies": {
-    "@graphql-codegen/typescript-react-query": "^4.0.0",
+    "@graphql-codegen/cli": "2.6.2",
+    "@graphql-codegen/introspection": "2.1.1",
+    "@graphql-codegen/typescript": "2.4.8",
+    "@graphql-codegen/typescript-operations": "2.3.5",
+    "@graphql-codegen/typescript-react-query": "^4.0.1",
     "prettier": "2.6.1",
-    "tslint-config-prettier": "^1.18.0",
-    "@graphql-codegen/typescript": "2.7.3",
-    "@graphql-codegen/typescript-document-nodes": "2.3.3",
-    "@graphql-codegen/typescript-operations": "2.5.3",
-    "@graphql-codegen/typescript-react-apollo": "3.3.3",
-    "@graphql-codegen/typescript-graphql-files-modules": "2.2.1",
-    "@graphql-codegen/introspection": "2.2.1",
-    "@graphql-codegen/cli": "2.11.5"
+    "tslint-config-prettier": "^1.18.0"
   }
 }
