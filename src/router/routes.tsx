@@ -1,24 +1,26 @@
-import { lazy } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import loadable from '@loadable/component';
 
 import ScrollToTop from 'utils/scrollToTop';
+import Layout from 'components/layout';
 
-const Loading = () => {
-  return <div>loading</div>;
+const Main = loadable(() => import('components/main'));
+const Legacy = loadable(() => import('components/legacy'));
+
+const NoMatch = () => {
+  return <p>페이지를 찾을 수 없습니다: 404!</p>;
 };
 
-const Main = lazy(() => import('components/main'));
-
-/* eslint max-len: 0, react/display-name: 0 */
-// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   return (
-    <>
+    <Layout>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={Main} />
-        <Route element={Loading} />
+        <Route index element={<Main />} />
+        <Route path="/menu" element={<Legacy />} />
+        <Route path="*" element={<NoMatch />} />
       </Routes>
-    </>
+    </Layout>
   );
 };

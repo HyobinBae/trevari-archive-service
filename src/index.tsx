@@ -1,26 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TrevariThemeProvider } from '@trevari/react-emotion-theme';
 
-import Main from 'components/main';
-import 'styles/index.css';
+import EnhancedRouter from 'router';
 import reportWebVitals from './reportWebVitals';
+import 'styles/index.css';
 
 const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <TrevariThemeProvider>
-          <Main />
-        </TrevariThemeProvider>
-      </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <TrevariThemeProvider>
+      <QueryClientProvider client={queryClient} contextSharing={true}>
+        <EnhancedRouter />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </TrevariThemeProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
