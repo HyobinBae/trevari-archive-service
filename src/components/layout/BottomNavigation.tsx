@@ -1,47 +1,59 @@
 import React from 'react';
-import Home from 'svgs/Home';
+import { Link, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
+import { MenuIcon } from '@trevari/icons';
 import { body8 } from '@trevari/typo';
+
+import HomeFilled from 'svgs/HomeFilled';
+import LoveOutline from 'svgs/LoveOutline';
+import LoveFilled from 'svgs/LoveFilled';
+import HomeOutline from 'svgs/HomeOutline';
+import MyFilled from 'svgs/MyFilled';
+import MyOutline from 'svgs/MyOutline';
 
 const bottomNavs = [
   {
-    icon: <Home />,
+    icon: <HomeOutline />,
+    activeIcon: <HomeFilled />,
     name: '홈',
     to: '/',
   },
   {
-    icon: <Home />,
+    icon: <MenuIcon width={24} height={24} color={'#6E6E6C'} />,
+    activeIcon: <MenuIcon width={24} height={24} color={'#000'} />,
     name: '메뉴',
-    to: '/',
+    to: '/menu',
   },
   {
-    icon: <Home />,
+    icon: <LoveOutline />,
+    activeIcon: <LoveFilled />,
     name: '찜',
-    to: '/',
+    to: '/wish',
   },
   {
-    icon: <Home />,
+    icon: <MyOutline />,
+    activeIcon: <MyFilled />,
     name: '마이페이지',
-    to: '/',
+    to: '/my',
   },
 ];
 
 const BottomNavigation = () => {
+  const { pathname } = useLocation();
+
   return (
-    <Base>
-      <FixedWrapper>
-        {bottomNavs.map(bottomItem => {
-          const { icon, name, to } = bottomItem;
-          return (
-            <Item key={name} to={to}>
-              <>{icon}</>
-              <NavName>{name}</NavName>
-            </Item>
-          );
-        })}
-      </FixedWrapper>
-    </Base>
+    <FixedWrapper>
+      {bottomNavs.map(bottomItem => {
+        const { icon, activeIcon, name, to } = bottomItem;
+        const isActive = pathname === to;
+        return (
+          <Item key={name} to={to}>
+            <>{isActive ? activeIcon : icon}</>
+            <NavName active={isActive}>{name}</NavName>
+          </Item>
+        );
+      })}
+    </FixedWrapper>
   );
 };
 
@@ -60,8 +72,8 @@ const Base = styled.div`
 const FixedWrapper = styled.div`
   position: fixed;
   display: flex;
-  width: 500px;
-
+  width: 100%;
+  bottom: 0;
   border-top: 1px solid ${({ theme }) => theme.colors.gray300};
 `;
 
@@ -73,6 +85,7 @@ const Item = styled(Link)`
   padding: 7px 0 5px;
 `;
 
-const NavName = styled.span`
-  ${body8}
+const NavName = styled.span<{ active: boolean }>`
+  ${body8};
+  color: ${({ active, theme }) => (active ? theme.colors.black : theme.colors.gray700)};
 `;
