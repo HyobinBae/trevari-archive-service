@@ -74,6 +74,7 @@ const FixedWrapper = styled.div`
   display: flex;
   width: 100%;
   bottom: 0;
+  background: ${({ theme }) => theme.colors.white};
   border-top: 1px solid ${({ theme }) => theme.colors.gray300};
 `;
 

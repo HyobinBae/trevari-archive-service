@@ -54,7 +54,7 @@ const FooterComp = () => {
 export default FooterComp;
 
 const Base = styled.div`
-  padding: 1.5rem 0;
+  padding: 1.5rem 0 2.5rem;
 `;
 const Anchor = styled.a(resetAnchorCss, {
   font: 'inherit',

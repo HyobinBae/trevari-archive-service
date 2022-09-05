@@ -64,13 +64,20 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
 
 export default TopNavigation;
 
-const Base = styled.div``;
+const Base = styled.div`
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+`;
 
 const AppBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   padding: 12px 20px;
+  box-sizing: border-box;
 `;
 
 const BarInstance = styled(Link)`
