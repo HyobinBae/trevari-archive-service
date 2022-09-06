@@ -27,12 +27,14 @@ export const mainApi = userBackendApi.injectEndpoints({
           where,
         },
       }),
+      transformResponse: ({ banners }: { banners: Array<Banner> }) => banners,
     }),
     getCurationDisplayOrders: build.query<Array<DisplayOrder>, QueryDisplayOrdersArgs>({
       query: ({ limit, offset, where }) => ({
         document: GET_CURATION_DISPLAY_ORDERS,
         variables: { limit, offset, where },
       }),
+      transformResponse: ({ displayOrders }: { displayOrders: Array<DisplayOrder> }) => displayOrders,
     }),
     getCurations: build.query<Array<ClubsWithTag>, ClubWithTagDatasInput>({
       query: options => ({
@@ -41,6 +43,7 @@ export const mainApi = userBackendApi.injectEndpoints({
           options,
         },
       }),
+      transformResponse: ({ clubWithTagDatas }: { clubWithTagDatas: Array<ClubsWithTag> }) => clubWithTagDatas,
     }),
     getPosts: build.query<Array<Post>, QueryMainPostsArgs>({
       query: ({ limit, offset, excludeClosedPost }) => ({
@@ -51,6 +54,7 @@ export const mainApi = userBackendApi.injectEndpoints({
           excludeClosedPost,
         },
       }),
+      transformResponse: ({ mainPosts }: { mainPosts: Array<Post> }) => mainPosts,
     }),
   }),
 });
@@ -58,5 +62,5 @@ export const mainApi = userBackendApi.injectEndpoints({
 export const { useGetBannersQuery, useGetCurationDisplayOrdersQuery, useGetCurationsQuery, useGetPostsQuery } = mainApi;
 
 export const {
-  endpoints: { getBanners, getPosts },
+  endpoints: { getBanners, getPosts, getCurationDisplayOrders, getCurations },
 } = mainApi;

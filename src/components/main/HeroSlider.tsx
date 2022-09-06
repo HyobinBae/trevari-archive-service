@@ -7,20 +7,11 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'components/main/styles/main.css';
 import { PaginationOptions } from 'swiper/types';
-import { useAppDispatch } from 'store';
 import { useGetBannersQuery } from 'apis/user-backend-api/main';
-import { setHeroBanners } from 'ducks/main';
 import { Banner } from 'types/__generate__/user-backend-api';
 
 const HeroSlider = () => {
-  const dispatch = useAppDispatch();
-  const { data, isLoading, error } = useGetBannersQuery({});
-
-  useEffect(() => {
-    if (!isLoading) {
-      dispatch(setHeroBanners(data?.banners));
-    }
-  }, [data, isLoading, error, dispatch]);
+  const { data: banners, isLoading, error } = useGetBannersQuery({});
 
   const clickBanner = (title: string) => {
     console.log('rolling banner title', title);
@@ -62,7 +53,7 @@ const HeroSlider = () => {
           navigation={true}
           style={{ height: 'inherit', bottom: '0px' }}
         >
-          {data?.banners?.map(({ title, mobileImageUrl, linkUrl }: Banner) => {
+          {banners?.map(({ title, mobileImageUrl, linkUrl }: Banner) => {
             return (
               <SwiperSlide key={title}>
                 <ImgLinkWrap className="wrap" href={linkUrl} onClick={() => clickBanner(title)}>
