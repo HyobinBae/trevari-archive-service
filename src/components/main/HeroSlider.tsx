@@ -1,21 +1,33 @@
-import { useAtom } from 'jotai';
+import { useEffect } from 'react';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { bannersAtom } from 'apis/user_backend_api';
 import { Base, Gradation, ImgLinkWrap, SwiperImg } from 'components/main/styles/main.style';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'components/main/styles/main.css';
 import { PaginationOptions } from 'swiper/types';
+import { useAppDispatch } from 'store';
+import { useGetBannersQuery } from 'apis/user-backend-api/main';
+import { setHeroBanners } from 'ducks/main';
 
 const HeroSlider = () => {
-  const [{ data, error }] = useAtom(bannersAtom);
+  const dispatch = useAppDispatch();
+  const { data, isLoading, error } = useGetBannersQuery({});
+
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch(setHeroBanners(data?.banners));
+    }
+  }, [data, isLoading, error, dispatch]);
 
   const clickBanner = (title: string) => {
     console.log('rolling banner title', title);
   };
 
+  if (isLoading) {
+    return <div>로딩중입니다.</div>;
+  }
   if (error) {
     return <div>에러입니다.</div>;
   }
