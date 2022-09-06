@@ -30,11 +30,8 @@ import LineArrow from 'svgs/LineArrow';
 
 const BlogList = () => {
   const { data: posts, isLoading, error } = useGetPostsQuery({ limit: 10, excludeClosedPost: true });
-  const b = posts?.filter(({ category }) => category !== '공지');
-  const n = posts?.filter(({ category }) => category === '공지');
-
-  const blogs = isMobile ? b?.slice(0, 2) : b?.slice(0, 3);
-  const notices = isMobile ? n?.slice(0, 3) : n?.slice(0, 4);
+  const blogs = posts?.filter(({ category }) => category !== '공지').slice(0, 3);
+  const notices = posts?.filter(({ category }) => category === '공지').slice(0, 3);
 
   if (isLoading) {
     return <>로딩중~~</>;
