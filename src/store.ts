@@ -1,15 +1,27 @@
-import type { Action, ThunkAction } from '@reduxjs/toolkit';
-import { configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
+import { configureStore, combineReducers, ThunkAction, Action } from '@reduxjs/toolkit';
+import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
 
-import persistReducer from 'ducks';
+import main from 'apis/user-backend-api/main/main.slice';
 import { userBackendApi } from 'apis/user-backend-api';
-import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['main'],
+};
+
+const rootReducer = combineReducers({
+  [userBackendApi.reducerPath]: userBackendApi.reducer,
+  main,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: persistReducer,
+  reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

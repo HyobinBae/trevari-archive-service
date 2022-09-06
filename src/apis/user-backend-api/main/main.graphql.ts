@@ -82,7 +82,73 @@ export const GET_WISH_CLUBS = gql`
     }
   }
 `;
+export const GET_CURATION_DISPLAY_ORDERS = gql`
+  query displayOrders($limit: Int, $offset: Int, $where: DisplayOrdersWhereInput) {
+    displayOrders(limit: $limit, offset: $offset, where: $where) {
+      id
+      type
+      isDisplayed
+      order
+      itemID
+    }
+  }
+`;
 
+export const GET_CURATION_LIST = gql`
+  query clubWithTagDatas($options: ClubWithTagDatasInput) {
+    clubWithTagDatas(options: $options) {
+      clubs {
+        id
+        name
+        season
+        seasonID
+        coverUrl
+        type
+        leaderIDs
+        dayOfSchedule
+        weekOfSchedule
+        timeOfSchedule
+        memberCount
+        maxMemberCount
+        leaderImageUrl
+        leaderTitle
+        description
+        option
+        options
+        openedAt
+        subDescription
+        subHashTag
+        subCoverUrl
+        applicationDeadline
+        price
+        clubGroup {
+          description
+        }
+        leaders {
+          name
+        }
+        place {
+          name
+        }
+        seasonData {
+          mostFullClubConditionPercent
+          allOpenStartedAt
+        }
+        meetings {
+          order
+          startedAt
+          endedAt
+        }
+      }
+      tag {
+        id
+        name
+        description
+        clubGroupId
+      }
+    }
+  }
+`;
 export const GET_CLUBS_FOR_LISTS = gql`
   query clubs(
     $limit: Int

@@ -1,15 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { RootState } from 'store';
-import { Banner, Post } from 'types/__generate__/user-backend-api';
+import { Banner, ClubsWithTag, DisplayOrder, Post } from 'types/__generate__/user-backend-api';
+import { mainApi } from 'apis/user-backend-api/main';
 
 interface MainState {
   banners: Banner[];
+  curationOrders: DisplayOrder[];
+  curations: ClubsWithTag[];
   posts: Post[];
   status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: MainState = {
   banners: [],
+  curationOrders: [],
+  curations: [],
   posts: [],
   status: 'failed',
 };
@@ -30,6 +36,14 @@ export const mainSlice = createSlice({
         posts: action.payload,
       };
     },
+  },
+  extraReducers: builder => {
+    builder.addMatcher(mainApi.endpoints.getCurationDisplayOrders.matchFulfilled, (state, { payload }) => {
+      return {
+        ...state,
+        curationOrders: payload,
+      };
+    });
   },
 });
 
