@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { format } from 'date-fns';
-import styled from '@emotion/styled';
 import {
   MultiCard,
   MultiCardContent,
@@ -8,68 +7,62 @@ import {
   MultiCardParagraph,
   MultiCardTitle,
 } from '@trevari/business-components';
-import { body7 } from '@trevari/typo';
+import { Link } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 
 import Box from 'components/base/Box';
-import { useWindowSize } from 'utils/windowResize';
 import ListTitle from 'components/main/ListTitle';
+import { useGetPostsQuery } from 'apis/user-backend-api/main';
+import { setMainPosts } from 'ducks/main';
+import { Post } from 'types/__generate__/user-backend-api';
+import { useAppDispatch } from 'store';
+import { Base, BlogListBody, BlogListWrap, LayerSmallText } from 'components/main/styles/main.style';
 
-interface IProps {
-  blogs?: any[];
-}
+const BlogList = () => {
+  const dispatch = useAppDispatch();
+  const { data, isLoading, error } = useGetPostsQuery({ limit: 10, excludeClosedPost: true });
 
-const BlogList = ({ blogs }: IProps) => {
-  console.log('blogs', blogs);
-  const { mode } = useWindowSize();
-  const mobile = blogs.slice(0, 2);
-  const pc = blogs.slice(0, 3);
-  const posts = mode === 'sm' ? mobile : pc;
+  const contents = isMobile ? data?.mainPosts.slice(0, 2) : data?.mainPosts.slice(0, 3);
 
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch(setMainPosts(contents));
+    }
+  }, [data, isLoading, error, dispatch]);
+
+  if (isLoading) {
+    return <>로딩중~~</>;
+  }
+  if (error) {
+    return <>에러입니다. </>;
+  }
   return (
-    <Wrapper>
-      <ListTitle title="블로그" more="/blog" />
-      <BlogListBody>
-        {posts.map(post => (
-          <Box style={{ marginBottom: '24px' }}>
-            <a href={`/blog/show?id=${post.id}`}>
-              <MultiCard hero={<MultiCardHero src={post.thumbnailUrl} alt="이미지" />} style={{ width: '100%' }}>
-                <MultiCardContent>
-                  <MultiCardTitle>{post.title}</MultiCardTitle>
-                  <Box style={{ marginTop: '8px' }}>
-                    <MultiCardParagraph>{post.description}</MultiCardParagraph>
-                  </Box>
-                  <LayerSmallText>
-                    {' '}
-                    조회수 {post.viewCount} · {format(post.createdAt, 'YYYY.MM.DD')}{' '}
-                  </LayerSmallText>
-                </MultiCardContent>
-              </MultiCard>
-            </a>
-          </Box>
-        ))}
-      </BlogListBody>
-    </Wrapper>
+    <Base>
+      <BlogListWrap>
+        <ListTitle title="블로그" more="//trevari.co.kr/blog" />
+        <BlogListBody>
+          {contents.map((post: Post) => (
+            <Box style={{ marginBottom: '24px' }} key={post.id}>
+              <Link to={`//trevari.co.kr/blog/show?id=${post.id}`}>
+                <MultiCard hero={<MultiCardHero src={post.thumbnailUrl} alt="이미지" />} style={{ width: '100%' }}>
+                  <MultiCardContent>
+                    <MultiCardTitle>{post.title}</MultiCardTitle>
+                    <Box style={{ marginTop: '8px' }}>
+                      <MultiCardParagraph>{post.description}</MultiCardParagraph>
+                    </Box>
+                    <LayerSmallText>
+                      {' '}
+                      조회수 {post.viewCount} · {format(new Date(post.createdAt), 'yyyy.MM.dd')}{' '}
+                    </LayerSmallText>
+                  </MultiCardContent>
+                </MultiCard>
+              </Link>
+            </Box>
+          ))}
+        </BlogListBody>
+      </BlogListWrap>
+    </Base>
   );
 };
 
 export default BlogList;
-
-const LayerSmallText = styled.div`
-  ${body7};
-  color: ${({ theme }) => theme.colors.gray600};
-  margin-top: 16px;
-`;
-
-const BlogListBody = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-gap: 24px;
-  padding: 0 20px;
-`;
-
-const Wrapper = styled.div`
-  width: 100%;
-  height: auto;
-  margin: 0 auto;
-`;

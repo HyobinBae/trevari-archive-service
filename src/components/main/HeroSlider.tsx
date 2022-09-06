@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { Base, Gradation, ImgLinkWrap, SwiperImg } from 'components/main/styles/main.style';
+import { Base, Gradation, GradiantWrap, ImgLinkWrap, SwiperImg } from 'components/main/styles/main.style';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'components/main/styles/main.css';
@@ -10,6 +10,7 @@ import { PaginationOptions } from 'swiper/types';
 import { useAppDispatch } from 'store';
 import { useGetBannersQuery } from 'apis/user-backend-api/main';
 import { setHeroBanners } from 'ducks/main';
+import { Banner } from 'types/__generate__/user-backend-api';
 
 const HeroSlider = () => {
   const dispatch = useAppDispatch();
@@ -52,25 +53,27 @@ const HeroSlider = () => {
 
   return (
     <Base>
-      <Swiper
-        autoplay={true}
-        loop={true}
-        modules={[Pagination]}
-        pagination={pagination}
-        navigation={true}
-        style={{ height: 'inherit', bottom: '0px' }}
-      >
-        {data.banners.map(({ title, mobileImageUrl, linkUrl }) => {
-          return (
-            <SwiperSlide key={title}>
-              <ImgLinkWrap className="wrap" href={linkUrl} onClick={() => clickBanner(title)}>
-                <SwiperImg src={mobileImageUrl} alt={title} />
-              </ImgLinkWrap>
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
-      <Gradation />
+      <GradiantWrap>
+        <Swiper
+          autoplay={true}
+          loop={true}
+          modules={[Pagination]}
+          pagination={pagination}
+          navigation={true}
+          style={{ height: 'inherit', bottom: '0px' }}
+        >
+          {data?.banners?.map(({ title, mobileImageUrl, linkUrl }: Banner) => {
+            return (
+              <SwiperSlide key={title}>
+                <ImgLinkWrap className="wrap" href={linkUrl} onClick={() => clickBanner(title)}>
+                  <SwiperImg src={mobileImageUrl} alt={title} />
+                </ImgLinkWrap>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+        <Gradation />
+      </GradiantWrap>
     </Base>
   );
 };

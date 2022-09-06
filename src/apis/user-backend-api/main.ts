@@ -1,10 +1,10 @@
-import { Banner, Maybe, QueryBannersArgs, QueryMainPostsArgs } from 'types/__generate__/user-backend-api';
 import { userBackendApi } from 'apis/user-backend-api';
 import { GET_BANNERS, GET_MAIN_POSTS } from 'apis/user-backend-api/main.graphql';
+import { Banner, Post, QueryBannersArgs, QueryMainPostsArgs } from 'types/__generate__/user-backend-api';
 
 export const mainApi = userBackendApi.injectEndpoints({
   endpoints: build => ({
-    getBanners: build.query<Array<Maybe<Banner>>, QueryBannersArgs>({
+    getBanners: build.query<Array<Banner>, QueryBannersArgs>({
       query: ({ limit, offset, where }) => ({
         document: GET_BANNERS,
         variables: {
@@ -14,7 +14,7 @@ export const mainApi = userBackendApi.injectEndpoints({
         },
       }),
     }),
-    getMainPosts: build.query<Array<Maybe<Banner>>, QueryMainPostsArgs>({
+    getPosts: build.query<Array<Post>, QueryMainPostsArgs>({
       query: ({ limit, offset, excludeClosedPost }) => ({
         document: GET_MAIN_POSTS,
         variables: {
@@ -27,8 +27,8 @@ export const mainApi = userBackendApi.injectEndpoints({
   }),
 });
 
-export const { useGetBannersQuery, useGetMainPostsQuery } = mainApi;
+export const { useGetBannersQuery, useGetPostsQuery } = mainApi;
 
 export const {
-  endpoints: { getBanners, getMainPosts },
+  endpoints: { getBanners, getPosts },
 } = mainApi;

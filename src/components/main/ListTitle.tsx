@@ -43,7 +43,7 @@ const ListTitleWrapper = styled.div`
   } ;
 `;
 
-const MoreList = styled.a`
+const MoreList = styled.span`
   ${body4};
   ${({ theme }) => theme.breakPoint.mobile} {
     ${body8};
