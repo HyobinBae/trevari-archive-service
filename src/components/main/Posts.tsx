@@ -1,4 +1,3 @@
-import { useWindowSize } from 'utils/windowResize';
 import ListTitle from './ListTitle';
 import Box from '../base/Box';
 import {
@@ -8,7 +7,7 @@ import {
   MultiCardParagraph,
   MultiCardTitle,
 } from '@trevari/business-components';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import React from 'react';
 import styled from '@emotion/styled';
