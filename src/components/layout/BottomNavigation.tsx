@@ -4,12 +4,12 @@ import styled from '@emotion/styled';
 import { MenuIcon } from '@trevari/icons';
 import { body8 } from '@trevari/typo';
 
-import HomeFilled from 'svgs/HomeFilled';
-import LoveOutline from 'svgs/LoveOutline';
-import LoveFilled from 'svgs/LoveFilled';
-import HomeOutline from 'svgs/HomeOutline';
-import MyFilled from 'svgs/MyFilled';
-import MyOutline from 'svgs/MyOutline';
+import HomeFilled from 'components/svgs/HomeFilled';
+import LoveOutline from 'components/svgs/LoveOutline';
+import LoveFilled from 'components/svgs/LoveFilled';
+import HomeOutline from 'components/svgs/HomeOutline';
+import MyFilled from 'components/svgs/MyFilled';
+import MyOutline from 'components/svgs/MyOutline';
 
 const bottomNavs = [
   {
@@ -58,16 +58,6 @@ const BottomNavigation = () => {
 };
 
 export default BottomNavigation;
-
-const Base = styled.div`
-  position: absolute;
-  z-index: 100;
-  bottom: 0;
-  width: 100%;
-
-  height: 56px;
-  background: #fff;
-`;
 
 const FixedWrapper = styled.div`
   position: fixed;

@@ -3,8 +3,8 @@ import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-import Logo from 'svgs/Logo';
-import Alarm from 'svgs/Alarm';
+import Logo from 'components/svgs/Logo';
+import Alarm from 'components/svgs/Alarm';
 
 interface IProps {
   closeMenuWhenScrolled: boolean;

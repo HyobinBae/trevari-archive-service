@@ -1,10 +1,10 @@
-import { userBackendApi } from 'apis/user-backend-api';
+import { backend } from 'api/backend';
 import {
   GET_BANNERS,
   GET_CURATION_DISPLAY_ORDERS,
   GET_CURATION_LIST,
   GET_MAIN_POSTS,
-} from 'apis/user-backend-api/main/main.graphql';
+} from 'pages/main/api/main.graphql';
 import {
   QueryBannersArgs,
   Banner,
@@ -16,7 +16,8 @@ import {
   Post,
 } from 'types/__generate__/user-backend-api';
 
-export const mainApi = userBackendApi.injectEndpoints({
+export const mainApi = backend.injectEndpoints({
+  overrideExisting: true,
   endpoints: build => ({
     getBanners: build.query<Array<Banner>, QueryBannersArgs>({
       query: ({ limit, offset, where }) => ({

@@ -4,8 +4,8 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
 
-import main from 'apis/user-backend-api/main/main.slice';
-import { userBackendApi } from 'apis/user-backend-api';
+import { backend } from 'api/backend';
+import main from 'pages/main/api/main.slice';
 
 const persistConfig = {
   key: 'root',
@@ -14,7 +14,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  [userBackendApi.reducerPath]: userBackendApi.reducer,
+  [backend.reducerPath]: backend.reducer,
   main,
 });
 
@@ -29,7 +29,7 @@ export const store = configureStore({
       },
     })
       .concat(logger)
-      .concat(userBackendApi.middleware),
+      .concat(backend.middleware),
   devTools: process.env.NODE_ENV !== 'production',
 });
 

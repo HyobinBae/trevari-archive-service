@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 
 import { useAppSelector } from 'store';
-import { Base } from 'components/main/styles/main.style';
-import { selectTagOrders } from 'apis/user-backend-api/main/main.slice';
-import { useGetCurationDisplayOrdersQuery, useGetCurationsQuery } from 'apis/user-backend-api/main';
+import { Base } from 'pages/main/styles/main.style';
+import { selectTagOrders } from 'pages/main/api/main.slice';
+import { useGetCurationDisplayOrdersQuery, useGetCurationsQuery } from 'pages/main/api';
 
 const random = Math.random();
 
+// TODO 작업해야 함
 const CurationList = () => {
   const tagOrders = useAppSelector(selectTagOrders);
 

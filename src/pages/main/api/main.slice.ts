@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { RootState } from 'store';
 import { Banner, ClubsWithTag, Post } from 'types/__generate__/user-backend-api';
-import { getBanners, getCurationDisplayOrders, getCurations, getPosts } from 'apis/user-backend-api/main';
-import { MAT_890_TAG_ID } from 'common/const';
+import { getBanners, getCurationDisplayOrders, getCurations, getPosts } from 'pages/main/api';
+import { MAT_890_TAG_ID } from 'pages/main/const';
 
 interface MainState {
   banners: Banner[];

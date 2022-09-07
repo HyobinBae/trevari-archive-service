@@ -9,9 +9,9 @@ import {
   MultiCardTitle,
 } from '@trevari/business-components';
 
-import { useGetPostsQuery } from 'apis/user-backend-api/main';
+import { useGetPostsQuery } from 'pages/main/api';
 import Box from 'components/base/Box';
-import ListTitle from 'components/main/ListTitle';
+import ListTitle from 'pages/main/components/ListTitle';
 import {
   Base,
   BlogListBody,
@@ -24,11 +24,11 @@ import {
   NoticeListWrap,
   TextOverflowForDescription,
   TextOverflowForTitle,
-} from 'components/main/styles/main.style';
+} from 'pages/main/styles/main.style';
 import { Post } from 'types/__generate__/user-backend-api';
-import LineArrow from 'svgs/LineArrow';
+import LineArrow from 'components/svgs/LineArrow';
 
-const BlogList = () => {
+const Posts = () => {
   const { data: posts, isLoading, error } = useGetPostsQuery({ limit: 10, excludeClosedPost: true });
   const blogs = posts?.filter(({ category }) => category !== '공지').slice(0, 3);
   const notices = posts?.filter(({ category }) => category === '공지').slice(0, 3);
@@ -85,4 +85,4 @@ const BlogList = () => {
   );
 };
 
-export default BlogList;
+export default Posts;

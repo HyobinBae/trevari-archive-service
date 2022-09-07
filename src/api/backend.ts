@@ -2,15 +2,18 @@ import { GraphQLClient } from 'graphql-request';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query';
 
-import { GUEST_TOKEN } from 'common/const';
-import { storage } from 'apis';
+import { storage } from 'api';
+import { endpoints, GUEST_TOKEN } from 'config';
+import { RootState } from '../store';
 
-export const client = new GraphQLClient('http://localhost:8000/graphql', {});
+export const client = new GraphQLClient(endpoints.USER_BACKEND_API_GRAPHQL_ENDPOINT, {});
 
-export const userBackendApi = createApi({
+export const backend = createApi({
   baseQuery: graphqlRequestBaseQuery({
     client,
     prepareHeaders: async (headers, { getState }) => {
+      // TODO auth 작업시 auth에 토큰 set해주기
+      // const storeToken = (getState() as RootState).auth.token;
       const token = storage.getToken$() || GUEST_TOKEN;
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
@@ -18,6 +21,6 @@ export const userBackendApi = createApi({
       return headers;
     },
   }),
-  reducerPath: 'userBackendApi',
+  reducerPath: 'backend',
   endpoints: () => ({}),
 });
