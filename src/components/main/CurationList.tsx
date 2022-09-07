@@ -1,8 +1,9 @@
-import { Base } from 'components/main/styles/main.style';
-import { useGetCurationDisplayOrdersQuery, useGetCurationsQuery } from 'apis/user-backend-api/main';
 import { useEffect } from 'react';
-import { selectTagOrders } from 'apis/user-backend-api/main/main.slice';
+
 import { useAppSelector } from 'store';
+import { Base } from 'components/main/styles/main.style';
+import { selectTagOrders } from 'apis/user-backend-api/main/main.slice';
+import { useGetCurationDisplayOrdersQuery, useGetCurationsQuery } from 'apis/user-backend-api/main';
 
 const random = Math.random();
 
