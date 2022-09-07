@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Base, Gradation, GradiantWrap, ImgLinkWrap, SwiperImg } from 'pages/main/styles/main.style';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import 'pages/main/styles/main.module.css';
+import 'pages/main/styles/main.css';
 import { PaginationOptions } from 'swiper/types';
 import { useGetBannersQuery } from 'pages/main/api';
 import { Banner } from 'types/__generate__/user-backend-api';
