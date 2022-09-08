@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - "main"
+      - "APP-60"
   workflow_dispatch:
 
 
