@@ -8,7 +8,6 @@ on:
 env:
   CONTAINER_NAME: my-page
   SEPARATOR_PATH: kubernetes-resources/overlays/dev
-  NODE_VERSION: '16.x'
 
 permissions:
   contents: read
@@ -19,11 +18,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Read .nvmrc
+        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        id: nvm
+
+      - name: Setup node
+        uses: actions/setup-node@v1
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Register whitelist ip
         run: |
