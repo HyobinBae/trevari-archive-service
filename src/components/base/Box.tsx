@@ -7,7 +7,7 @@ interface IProps {
   onClick?: () => void;
 }
 
-const Box = ({ children, style, onClick = () => {} }: IProps) => {
+const Box = ({ children, style, onClick = () => ({}) }: IProps) => {
   return (
     <Base style={style} onClick={onClick}>
       {children}

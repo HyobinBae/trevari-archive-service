@@ -1,10 +1,12 @@
+import React from 'react';
+
 interface IProps {
   width?: number;
   height?: number;
   fill?: string;
 }
 
-export default ({ width = 78, height = 14, fill = '#FF7900' }: IProps & JSX.IntrinsicElements['svg']) => {
+const Logo = ({ width = 78, height = 14, fill = '#FF7900' }: IProps & JSX.IntrinsicElements['svg']) => {
   return (
     <svg width={width} height={height} viewBox="0 0 78 14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip-logo)">
@@ -33,3 +35,5 @@ export default ({ width = 78, height = 14, fill = '#FF7900' }: IProps & JSX.Intr
     </svg>
   );
 };
+
+export default Logo;

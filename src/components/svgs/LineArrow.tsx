@@ -21,8 +21,7 @@ const getDirection = (direction: string) => {
   }
 };
 
-// tslint:disable:max-line-length
-export default ({
+const LineArrow = ({
   width = 40,
   height = 40,
   direction = 'right',
@@ -43,3 +42,5 @@ export default ({
     </svg>
   );
 };
+
+export default LineArrow;

@@ -4,7 +4,6 @@ import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query';
 
 import { storage } from 'api';
 import { endpoints, GUEST_TOKEN } from 'config';
-import { RootState } from '../store';
 
 export const client = new GraphQLClient(endpoints.USER_BACKEND_API_GRAPHQL_ENDPOINT, {});
 

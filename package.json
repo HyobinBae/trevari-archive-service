@@ -8,6 +8,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write",
+    "lint": "eslint . --ext .ts",
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
@@ -26,7 +27,7 @@
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
-    "@trevari/business-components": "^0.2.0",
+    "@trevari/business-components": "^0.2.1",
     "@trevari/components": "^0.0.10",
     "@trevari/design-token": "^0.0.5",
     "@trevari/icons": "^0.0.5",
@@ -53,7 +54,6 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
     "swiper": "^8.3.2",
-    "typescript": "^4.6.3",
     "universal-cookie": "^4.0.4",
     "web-vitals": "^2.1.4"
   },
@@ -81,8 +81,15 @@
     "@graphql-codegen/typescript-operations": "2.3.5",
     "@graphql-codegen/typescript-rtk-query": "^2.3.4",
     "react-scripts": "^5.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.37.0",
+    "@typescript-eslint/parser": "^5.37.0",
+    "eslint": "8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.8",
     "prettier": "2.6.1",
     "redux-devtools-extension": "^2.13.9",
-    "tslint-config-prettier": "^1.18.0"
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.8.2"
   }
 }

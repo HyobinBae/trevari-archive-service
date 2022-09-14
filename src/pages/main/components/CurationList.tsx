@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { useAppSelector } from 'store';
 import { Base } from 'pages/main/styles/main.style';
