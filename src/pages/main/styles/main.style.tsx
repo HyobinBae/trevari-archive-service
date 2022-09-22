@@ -35,11 +35,17 @@ export const Gradation = styled.div`
   background: linear-gradient(360deg, rgba(0, 0, 0, 0.2) 58.76%, rgba(0, 0, 0, 0) 100%);
 `;
 
-export const BlogListWrap = styled.div`
+export const PostListWrap = styled.div<{ show: boolean }>`
+  ${({ theme, show }) =>
+    show
+      ? `
   padding: 54px 0 80px;
-  ${({ theme }) => theme.breakPoint.mobile} {
+  ${theme.breakPoint.mobile} {
     padding: 20px 0;
-  }
+  }`
+      : `
+  display: none;
+  `}
 `;
 
 export const LayerSmallText = styled.div`
@@ -54,13 +60,6 @@ export const BlogListBody = styled.div`
   grid-template-columns: repeat(1, 1fr);
   grid-gap: 24px;
   padding: 0 20px;
-`;
-
-export const NoticeListWrap = styled.div`
-  padding: 54px 0 80px;
-  ${({ theme }) => theme.breakPoint.mobile} {
-    padding: 20px 0 40px;
-  }
 `;
 
 export const NoticeListBody = styled.div`

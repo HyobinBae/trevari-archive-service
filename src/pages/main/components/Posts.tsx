@@ -16,13 +16,12 @@ import CurationTitle from 'pages/main/components/CurationTitle';
 import {
   Base,
   BlogListBody,
-  BlogListWrap,
+  PostListWrap,
   DateFormat,
   LayerSmallText,
   NoticeContents,
   NoticeItems,
   NoticeListBody,
-  NoticeListWrap,
   TextOverflowForDescription,
   TextOverflowForTitle,
 } from 'pages/main/styles/main.style';
@@ -31,8 +30,8 @@ import LineArrow from 'components/svgs/LineArrow';
 
 const Posts = () => {
   const { data: posts, isLoading, error } = useGetPostsQuery({ limit: 10, excludeClosedPost: true });
-  const blogs = posts?.filter(({ category }) => category !== '공지').slice(0, 3);
-  const notices = posts?.filter(({ category }) => category === '공지').slice(0, 3);
+  const blogs = posts?.filter(({ category }) => category !== '공지').slice(0, 3) || [];
+  const notices = posts?.filter(({ category }) => category === '공지').slice(0, 3) || [];
 
   if (isLoading) {
     return <>로딩중~~</>;
@@ -42,7 +41,7 @@ const Posts = () => {
   }
   return (
     <Base>
-      <BlogListWrap>
+      <PostListWrap show={blogs?.length > 0}>
         <CurationTitle title="블로그" more="//trevari.co.kr/blog" />
         <BlogListBody>
           {blogs?.map((post: Post) => (
@@ -64,8 +63,8 @@ const Posts = () => {
             </Box>
           ))}
         </BlogListBody>
-      </BlogListWrap>
-      <NoticeListWrap>
+      </PostListWrap>
+      <PostListWrap show={notices?.length > 0}>
         <CurationTitle title="공지사항" more="//trevari.co.kr/blog?category=공지" />
         <NoticeListBody>
           {notices?.map(({ id, title, description, createdAt, updatedAt }: Post) => (
@@ -81,7 +80,7 @@ const Posts = () => {
             </Link>
           ))}
         </NoticeListBody>
-      </NoticeListWrap>
+      </PostListWrap>
     </Base>
   );
 };
