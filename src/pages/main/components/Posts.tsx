@@ -56,7 +56,7 @@ const Posts = () => {
                     </Box>
                     <LayerSmallText>
                       {' '}
-                      조회수 {post.viewCount} · {format(new Date(post.createdAt), 'yyyy.MM.dd')}{' '}
+                      조회수 {post.viewCount} · {format(Date.parse(post.createdAt), 'yyyy.MM.dd')}{' '}
                     </LayerSmallText>
                   </MultiCardContent>
                 </MultiCard>
