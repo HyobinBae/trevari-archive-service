@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import loadable from '@loadable/component';
+import loadable, { DefaultComponent } from '@loadable/component';
 
 import ScrollToTop from 'utils/scrollToTop';
 import Layout from 'components/layout';
