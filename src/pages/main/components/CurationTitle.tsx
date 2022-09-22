@@ -7,7 +7,7 @@ interface IProps {
   more?: string;
 }
 
-const ListTitle = ({ title, more }: IProps) => {
+const CurationTitle = ({ title, more }: IProps) => {
   return (
     <ListHeader>
       <ListTitleWrapper>{title}</ListTitleWrapper>
@@ -20,7 +20,7 @@ const ListTitle = ({ title, more }: IProps) => {
   );
 };
 
-export default ListTitle;
+export default CurationTitle;
 
 const ListHeader = styled.div`
   display: flex;

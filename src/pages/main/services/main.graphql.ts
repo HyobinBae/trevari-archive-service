@@ -16,72 +16,100 @@ export const GET_BANNERS = gql`
 `;
 
 export const GET_WISH_CLUBS = gql`
-  query clubs(
-    $limit: Int
-    $offset: Int
-    $where: ClubsWhereInput
-    $order: String
-    $randomSeed: Float
-    $mostFullClubConditionPercent: Int
-    $isTopAllMostFullClubs: Boolean
-    $containsFullClub: Boolean
-    $searchByLeaderName: Boolean
-  ) {
-    clubs(
-      limit: $limit
-      offset: $offset
-      where: $where
-      order: $order
-      randomSeed: $randomSeed
-      mostFullClubConditionPercent: $mostFullClubConditionPercent
-      isTopAllMostFullClubs: $isTopAllMostFullClubs
-      containsFullClub: $containsFullClub
-      searchByLeaderName: $searchByLeaderName
-    ) {
-      id
-      description
-      clubGroup {
-        description
-      }
-      coverUrl
-      leaderTitle
-      wishedCount
-      name
-      price
-      type
+  query wishClubs($limit: Int, $offset: Int, $where: WishClubsWhereInput) {
+    wishClubs(limit: $limit, offset: $offset, where: $where) {
+      clubID
+      userID
       season
-      seasonID
-      runningTime
-      weekOfSchedule
-      dayOfSchedule
-      timeOfSchedule
-      memberCount
-      clubGroupID
-      maxMemberCount
-      leaders {
+      club {
+        id
+        season
+        seasonID
         name
-      }
-      option
-      options
-      openedAt
-      applicationDeadline
-      subCoverUrl
-      subHashTag
-      seasonData {
-        mostFullClubConditionPercent
-        allOpenStartedAt
-      }
-      place {
-        name
-      }
-      meetings {
-        order
-        startedAt
-        endedAt
+        coverUrl
+        price
+        type
+        dayOfSchedule
+        weekOfSchedule
+        timeOfSchedule
+        placeID
+        partnerIDs
+        leaderIDs
+        isClosed
+        partnerApplicationCount
+        memberCount
+        maxMemberCount
+        minBookreviewLength
+        clubGroupID
+        clubHistoryID
+        extensionStartedAt
+        categoryID
+        tagIDs
+        information
+        leaderDescription
+        leaderImageUrl
+        leaderTitle
+        option
+        options
+        partnerDescription
+        partnerImageUrl
+        curriculum
+        notice
+        description
+        openedAt
+        meetings {
+          order
+          startedAt
+          endedAt
+          contents {
+            title
+          }
+        }
+        clubGroup {
+          name
+          description
+        }
+        clubHistory {
+          sinceSeason
+          readContents {
+            title
+          }
+        }
+        leaders {
+          name
+        }
+        partners {
+          name
+        }
+        place {
+          name
+        }
+        seasonData {
+          openStatus
+          allOpenStartedAt
+        }
       }
     }
   }
 `;
+
+export const CREATE_WISH_CLUB = gql`
+  mutation createWishClub($input: CreateWishClubInput!) {
+    createWishClub(input: $input) {
+      wishClub {
+        clubID
+        userID
+        season
+      }
+    }
+  }
+`;
+export const DELETE_WISH_CLUB = gql`
+  mutation deleteWishClub($clubID: String!, $userID: String!) {
+    deleteWishClub(clubID: $clubID, userID: $userID)
+  }
+`;
+
 export const GET_CURATION_DISPLAY_ORDERS = gql`
   query displayOrders($limit: Int, $offset: Int, $where: DisplayOrdersWhereInput) {
     displayOrders(limit: $limit, offset: $offset, where: $where) {
@@ -104,7 +132,6 @@ export const GET_CURATION_LIST = gql`
         seasonID
         coverUrl
         type
-        leaderIDs
         dayOfSchedule
         weekOfSchedule
         timeOfSchedule
@@ -116,9 +143,6 @@ export const GET_CURATION_LIST = gql`
         option
         options
         openedAt
-        subDescription
-        subHashTag
-        subCoverUrl
         applicationDeadline
         price
         clubGroup {
@@ -145,6 +169,7 @@ export const GET_CURATION_LIST = gql`
         name
         description
         clubGroupId
+        isPublic
       }
     }
   }

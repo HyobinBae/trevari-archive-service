@@ -1,3 +1,4 @@
+import React from 'react';
 import { format } from 'date-fns';
 import { isMobile } from 'react-device-detect';
 import { Link } from 'react-router-dom';
@@ -9,9 +10,9 @@ import {
   MultiCardTitle,
 } from '@trevari/business-components';
 
-import { useGetPostsQuery } from 'pages/main/api';
+import { useGetPostsQuery } from 'pages/main/services/main.api';
 import Box from 'components/base/Box';
-import ListTitle from 'pages/main/components/ListTitle';
+import CurationTitle from 'pages/main/components/CurationTitle';
 import {
   Base,
   BlogListBody,
@@ -42,7 +43,7 @@ const Posts = () => {
   return (
     <Base>
       <BlogListWrap>
-        <ListTitle title="블로그" more="//trevari.co.kr/blog" />
+        <CurationTitle title="블로그" more="//trevari.co.kr/blog" />
         <BlogListBody>
           {blogs?.map((post: Post) => (
             <Box style={{ marginBottom: '24px' }} key={post.id}>
@@ -65,7 +66,7 @@ const Posts = () => {
         </BlogListBody>
       </BlogListWrap>
       <NoticeListWrap>
-        <ListTitle title="공지사항" more="//trevari.co.kr/blog?category=공지" />
+        <CurationTitle title="공지사항" more="//trevari.co.kr/blog?category=공지" />
         <NoticeListBody>
           {notices?.map(({ id, title, description, createdAt, updatedAt }: any) => (
             <Link to={`//trevari.co.kr/blog/show?id=${id}`} target="blank" key={id}>

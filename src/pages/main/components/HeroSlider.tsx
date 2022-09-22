@@ -1,14 +1,14 @@
 import React from 'react';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-import { Base, Gradation, GradiantWrap, ImgLinkWrap, SwiperImg } from 'pages/main/styles/main.style';
+import { PaginationOptions } from 'swiper/types';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import 'pages/main/styles/main.css';
-import { PaginationOptions } from 'swiper/types';
-import { useGetBannersQuery } from 'pages/main/api';
+
+import { useGetBannersQuery } from 'pages/main/services/main.api';
 import { Banner } from 'types/__generate__/user-backend-api';
+import { Base, GradiantWrap, ImgLinkWrap, SwiperImg } from 'pages/main/styles/main.style';
+import 'pages/main/styles/main.css';
 
 const HeroSlider = () => {
   const { data: banners, isLoading, error } = useGetBannersQuery({});
@@ -53,17 +53,18 @@ const HeroSlider = () => {
           navigation={true}
           style={{ height: 'inherit', bottom: '0px' }}
         >
-          {banners?.map(({ title, mobileImageUrl, linkUrl }: Banner) => {
-            return (
-              <SwiperSlide key={title}>
-                <ImgLinkWrap className="wrap" href={linkUrl} onClick={() => clickBanner(title)}>
-                  <SwiperImg src={mobileImageUrl} alt={title} />
-                </ImgLinkWrap>
-              </SwiperSlide>
-            );
-          })}
+          {banners
+            ?.filter(({ isClosed }) => isClosed === false)
+            .map(({ title, mobileImageUrl, linkUrl }: Banner) => {
+              return (
+                <SwiperSlide key={title}>
+                  <ImgLinkWrap className="wrap" href={linkUrl} onClick={() => clickBanner(title)}>
+                    <SwiperImg src={mobileImageUrl} alt={title} />
+                  </ImgLinkWrap>
+                </SwiperSlide>
+              );
+            })}
         </Swiper>
-        <Gradation />
       </GradiantWrap>
     </Base>
   );

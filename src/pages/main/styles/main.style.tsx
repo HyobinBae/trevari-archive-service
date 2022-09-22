@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { body6, body7, body8, title2 } from '@trevari/typo';
+import { body6, body7, body8, heading8, title2 } from '@trevari/typo';
 
 export const Base = styled.div`
   width: 100%;
@@ -18,7 +18,7 @@ export const ImgLinkWrap = styled.a`
     object-fit: cover;
   }
   position: relative;
-  height: 540px;
+  height: auto;
   width: 100%;
 `;
 
@@ -144,4 +144,33 @@ export const DateFormat = styled.p`
     color: ${({ theme }) => theme.colors.gray500};
     margin-top: 8px;
   } ;
+`;
+
+export const CurationsContainer = styled.div`
+  height: auto;
+  padding: 0 0 78px;
+`;
+
+export const ListHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  padding: 16px 20px;
+  margin: 24px 0 0 0;
+  background: ${({ theme }) => theme.colors.white};
+`;
+
+export const ListTitleWrapper = styled.div`
+  ${heading8};
+`;
+
+export const MoreText = styled.span`
+  ${body8};
+  margin: 5px 0;
+  cursor: pointer;
+`;
+
+export const ClickMore = styled.a`
+  color: ${({ theme }) => theme.colors.gray500};
 `;
