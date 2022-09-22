@@ -118,7 +118,7 @@ const ClubCard = (props: Props | IProps) => {
 
     return (
       <MainCardFooter styles={mainCardFooterStyle}>
-        <MainCardFooterBanner open={open} animationDuration={props.animationDuration}>
+        <MainCardFooterBanner open={openingReservation} animationDuration={props.animationDuration}>
           찜하고 오픈 알림을 받아보세요.
         </MainCardFooterBanner>
         <HeartButtonWrapper onClick={() => handleClickBookmark(id)}>
