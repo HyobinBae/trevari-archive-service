@@ -6,6 +6,7 @@ const getMobileDetect = (userAgent: string) => {
   const isSSR = (): boolean => Boolean(userAgent.match(/SSR/i));
 
   const isMobile = (): boolean => Boolean(isAndroid() || isIos() || isOpera() || isWindows());
+  const isApp = ():boolean => Boolean(userAgent.match(/trevariApp/i));
   const isDesktop = (): boolean => Boolean(!isMobile() && !isSSR());
   return {
     isMobile,
@@ -13,6 +14,7 @@ const getMobileDetect = (userAgent: string) => {
     isAndroid,
     isIos,
     isSSR,
+    isApp
   };
 };
 export const useMobileDetect = () => {
