@@ -8,7 +8,6 @@ import {
 } from '../styles/main.style';
 import AppIntroduce from 'components/svgs/AppIntroduce';
 import AppQRCode from 'components/svgs/AppQRCode';
-import { useTheme } from '@emotion/react';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 
 const DownloadAppComp = () => {
