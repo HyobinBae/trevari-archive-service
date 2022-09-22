@@ -5,17 +5,21 @@ import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
 
 import { backend } from 'api/backend';
-import main from 'pages/main/api/main.slice';
+import main from 'pages/main/services/main.store';
+import auth from 'services/auth/auth.store';
+import user from 'services/user/user.store';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['main'],
+  whitelist: [],
 };
 
 const rootReducer = combineReducers({
   [backend.reducerPath]: backend.reducer,
   main,
+  auth,
+  user,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

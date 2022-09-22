@@ -6,7 +6,7 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import EnhancedRouter from 'router';
-import { store } from 'store';
+import { store } from 'services/store';
 
 import reportWebVitals from './reportWebVitals';
 import 'styles/index.css';
@@ -18,7 +18,16 @@ ReactDOM.render(
     <React.StrictMode>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <TrevariThemeProvider>
+          <TrevariThemeProvider
+            breakPoint={{
+              mobile: '@media (min-width: 0px) and (max-width: 3600px)',
+              tablet: '2400',
+              desktop: '100',
+              exceptMobile: '3600',
+              exceptTable: '3600',
+              exceptDesktop: '3600',
+            }}
+          >
             <EnhancedRouter />
           </TrevariThemeProvider>
         </PersistGate>
