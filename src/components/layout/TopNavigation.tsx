@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
 import Logo from 'components/svgs/Logo';
-import Alarm from 'components/svgs/Alarm';
 import { AppBar } from '@trevari/business-components';
+import AlarmButton from 'pages/main/components/AlarmButton';
 
 interface IProps {
   closeMenuWhenScrolled: boolean;
@@ -61,11 +60,7 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
               <Logo width={78} height={14} fill={'#000'} />
             </BarInstance>
           }
-          actions={
-            <BarInstance to={'/alarm'}>
-              <Alarm />
-            </BarInstance>
-          }
+          actions={<AlarmButton />}
         />
       </AppBarWrapper>
 
@@ -111,7 +106,7 @@ const AppBarContainer = styled(AppBar)<{ on: boolean }>`
   }
 `;
 
-const BarInstance = styled(Link)`
+const BarInstance = styled.div`
   display: flex;
   align-items: center;
 `;
