@@ -8,6 +8,7 @@ import { backend } from 'api/backend';
 import main from 'pages/main/services/main.store';
 import auth from 'services/auth/auth.store';
 import user from 'services/user/user.store';
+import ui from 'services/ui.store';
 
 const persistConfig = {
   key: 'root',
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   main,
   auth,
   user,
+  ui,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
