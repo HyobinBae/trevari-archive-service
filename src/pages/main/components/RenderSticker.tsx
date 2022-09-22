@@ -1,5 +1,11 @@
-import Reactc from 'react';
+import styled from '@emotion/styled';
+import React from 'react';
+import { Badge } from '@trevari/components';
+
+import Box from 'components/base/Box';
 import { Club } from 'types/__generate__/user-backend-api';
+import { clubStatus, OPTION_BADGE, STATUS_BADGE } from 'utils/club';
+
 interface IProps {
   club: Club;
 }
@@ -10,7 +16,12 @@ const RenderStickers = ({ club }: IProps) => {
       const key = '온라인';
       return (
         <Box style={{ marginTop: statusBadge ? '6px' : '0px' }}>
-          <Badge backgroundColor={OPTION_BADGE[key].color} color={'#fff'} variant={OPTION_BADGE[key].type} size={size}>
+          <Badge
+            backgroundColor={OPTION_BADGE[key].color}
+            color={'#fff'}
+            variant={OPTION_BADGE[key].type}
+            size={'small'}
+          >
             {OPTION_BADGE[key].name}
           </Badge>
         </Box>
@@ -24,7 +35,7 @@ const RenderStickers = ({ club }: IProps) => {
           <Badge
             backgroundColor={OPTION_BADGE[optionName].color}
             color={'#fff'}
-            size={size}
+            size={'small'}
             variant={OPTION_BADGE[optionName].type}
           >
             {OPTION_BADGE[optionName].name}
@@ -36,12 +47,12 @@ const RenderStickers = ({ club }: IProps) => {
   };
 
   return (
-    <TagBox workOnlyBookmark={workOnlyBookmark}>
+    <TagBox>
       {statusBadge && (
         <Badge
           backgroundColor={STATUS_BADGE[statusBadge].color}
           color={'#fff'}
-          size={size}
+          size={'small'}
           variant={STATUS_BADGE[statusBadge].type}
         >
           {STATUS_BADGE[statusBadge].name}
@@ -53,3 +64,15 @@ const RenderStickers = ({ club }: IProps) => {
 };
 
 export default RenderStickers;
+
+const TagBox = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: auto;
+`;

@@ -24,6 +24,7 @@ import { confirmAuth, selectUserId } from 'services/auth/auth.store';
 import { useAppDispatch, useAppSelector } from 'services/store';
 import { mainApi } from 'pages/main/services/main.api';
 import { selectWishClubIds } from 'pages/main/services/main.store';
+import RenderStickers from 'pages/main/components/RenderSticker';
 
 export interface IProps {
   club: Club;
@@ -150,7 +151,7 @@ const ClubCard = (props: Props | IProps) => {
           <MainCardImg src={coverUrl} />
           {isFullClub && renderLayer('꽉 찼어요!')}
           {openingReservation && renderLayer('오픈 예정')}
-          {/*{renderSticker}*/}
+          <RenderStickers club={props.club} />
         </MainCardHero>
       }
       footer={<MainHeartFooter {...props} />}
