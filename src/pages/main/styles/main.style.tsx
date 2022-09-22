@@ -174,3 +174,41 @@ export const MoreText = styled.span`
 export const ClickMore = styled.a`
   color: ${({ theme }) => theme.colors.gray500};
 `;
+
+export const DownloadAppCompDiv = styled.div<{ width: number }>`
+  display: ${props => (props.width < 1248 ? 'none' : 'block')};
+  position: fixed;
+  z-index: 0;
+  width: 100%;
+  max-width: 362px;
+  left: calc(50vw - 618px);
+  bottom: 25%;
+`;
+
+export const AppQRCodeDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 38px;
+  align-items: center;
+`;
+
+export const AppQRCodeTextDiv = styled.div`
+  margin-left: 5px;
+`;
+
+
+export const GoToBookreviewText = styled.div`
+  color: ${({ theme }) => theme.colors.orange900};
+  font-size: 16px;
+`;
+
+export const ViewMoreText = styled.div`
+  font-size: 20px;
+  color: ${({ theme }) => theme.colors.gray900};
+`;
+
+export const DownloadAppText = styled.div`
+  font-size: 20px;
+  color: ${({ theme }) => theme.colors.gray900};
+  font-weight: bold;
+`;
