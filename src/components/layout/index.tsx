@@ -4,6 +4,9 @@ import styled from '@emotion/styled';
 import TopNavigation from 'components/layout/TopNavigation';
 import BottomNavigation from 'components/layout/BottomNavigation';
 import { useWindowSize } from 'hooks/useWindowSize';
+import { Collapse, Toast } from '@trevari/components';
+import { useAppSelector } from 'services/store';
+import { selectToast } from 'services/ui.store';
 
 interface IProps {
   hideTopNav?: boolean;
@@ -13,6 +16,7 @@ interface IProps {
 }
 
 const Layout = ({ children }: IProps) => {
+  const { open, text, type, fade, autoClose } = useAppSelector(selectToast);
   const { width } = useWindowSize();
   const [viewMode, setViewMode] = useState<'center' | 'full'>('full');
 
@@ -27,6 +31,11 @@ const Layout = ({ children }: IProps) => {
   return (
     <Base>
       <Body>
+        <Item>
+          <Collapse open={open} autoCollapseMs={3500} fade={fade} onAutoCallapse={autoClose ? () => ({}) : undefined}>
+            <Toast status={type}>{text}</Toast>
+          </Collapse>
+        </Item>
         {viewMode === 'full' ? (
           <FullWindow>
             <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />
@@ -58,6 +67,17 @@ const Base = styled.div`
 `;
 const Body = styled.div``;
 
+const Item = styled.div`
+  position: fixed;
+  top: 50px;
+  z-index: 10;
+  width: 100%;
+  padding: 0 20px;
+  .trevari-toast {
+    max-width: 460px;
+    width: 100%;
+  }
+`;
 const CenterWindow = styled.div`
   max-width: 500px;
   width: 100vw;

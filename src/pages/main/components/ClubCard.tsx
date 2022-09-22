@@ -25,6 +25,7 @@ import { useAppDispatch, useAppSelector } from 'services/store';
 import { mainApi } from 'pages/main/services/main.api';
 import { selectWishClubIds } from 'pages/main/services/main.store';
 import RenderStickers from 'pages/main/components/RenderSticker';
+import { toastAlert } from 'services/ui.store';
 
 export interface IProps {
   club: Club;
@@ -51,7 +52,7 @@ const layerStyle: GetStyles = () => overflowNoneStyles;
 const mainCardFooterStyle: GetStyles = () => styles;
 
 const ClubCard = (props: Props | IProps) => {
-  const dispath = useAppDispatch();
+  const dispatch = useAppDispatch();
   const selectedUserId = useAppSelector(selectUserId);
   const wishClubs = useAppSelector(selectWishClubIds);
   const {
@@ -82,11 +83,11 @@ const ClubCard = (props: Props | IProps) => {
 
   const handleClickBookmark = (clubId: string) => {
     setCheckBookmark(state => !state);
-    dispath(confirmAuth());
+    dispatch(confirmAuth());
     if (wishClubs.includes(clubId)) {
-      dispath(mainApi.endpoints.deleteWishClub.initiate({ clubID: clubId, userID: selectedUserId }));
+      dispatch(mainApi.endpoints.deleteWishClub.initiate({ clubID: clubId, userID: selectedUserId }));
     } else {
-      dispath(
+      dispatch(
         mainApi.endpoints.createWishClub.initiate({
           input: {
             clubID: clubId,
@@ -95,6 +96,12 @@ const ClubCard = (props: Props | IProps) => {
           },
         }),
       );
+      toastAlert({
+        open: true,
+        type: 'info',
+        text: `이 클럽, 놓치지 않을 거예요. 마감이 임박하면 문자를 발송드려요!\n
+            (마케팅 정보 수신 동의 시에만 발송되며, 오후 9시 ~ 익일 오전 8시에는 발송하지 않습니다)`,
+      });
     }
   };
 
