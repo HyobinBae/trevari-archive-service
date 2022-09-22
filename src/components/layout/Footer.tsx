@@ -2,7 +2,7 @@ import React from 'react';
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Footer, FooterLinks, FooterSnsLinks, FooterTerms } from '@trevari/business-components';
-import { Container, resetAnchorCss } from '@trevari/components';
+import { resetAnchorCss } from '@trevari/components';
 import { FacebookCircleIcon, InstagramCircleIcon } from '@trevari/icons';
 import { body6 } from '@trevari/typo';
 
@@ -62,10 +62,7 @@ const Anchor = styled.a(resetAnchorCss, {
   display: 'block',
   cursor: 'pointer',
 });
-const GuideText = styled.p`
-  ${body6};
-  margin-bottom: 1rem;
-`;
+
 const IconWrapper = styled(Anchor)`
   width: 2.25rem;
   height: 2.25rem;

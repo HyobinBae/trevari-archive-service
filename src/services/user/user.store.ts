@@ -3,7 +3,7 @@ import { User } from 'types/__generate__/user-backend-api';
 import { getUser } from 'api/backend';
 
 interface UserState {
-  me: any;
+  me: never;
   user: User;
 }
 

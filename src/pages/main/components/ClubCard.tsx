@@ -180,20 +180,6 @@ export const MainFooterText = styled(_MainCardFooterText)`
   padding-left: 0.5rem;
 `;
 
-const CustomMainCardSubTitle = styled(MainCardSubTitle)`
-  ${heading10};
-`;
-const CustomMainCardParagraph = styled(MainCardParagraph)`
-  ${body3};
-  width: 100%;
-`;
-
-const CustomMainCardContent = styled(MainCardContent)`
-  ${({ theme }) => theme.breakPoint.mobile} {
-    padding-bottom: 40px;
-  } ;
-`;
-
 const DimLayer = styled.div`
   position: absolute;
   top: 0;
