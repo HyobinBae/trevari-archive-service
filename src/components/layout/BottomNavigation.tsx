@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { MenuIcon } from '@trevari/icons';
 import { body8 } from '@trevari/typo';
@@ -25,7 +25,7 @@ const bottomNavs = [
     to: 'https://trevari.co.kr/menu',
   },
   {
-    icon: <LoveOutline />,
+    icon: <LoveOutline color={'#6E6E6C'} />,
     activeIcon: <LoveFilled />,
     name: '찜',
     to: 'https://trevari.co.kr/wishList',
@@ -41,13 +41,17 @@ const bottomNavs = [
 const BottomNavigation = () => {
   const { pathname } = useLocation();
 
+  const handleRedirect = (to: string) => {
+    return (window.location.href = to);
+  };
+
   return (
     <Wrapper>
       {bottomNavs.map(bottomItem => {
         const { icon, activeIcon, name, to } = bottomItem;
         const isActive = pathname === to;
         return (
-          <Item key={name} to={{ pathname: to }}>
+          <Item key={name} onClick={() => handleRedirect(to)}>
             <>{isActive ? activeIcon : icon}</>
             <NavName active={isActive}>{name}</NavName>
           </Item>
@@ -72,7 +76,7 @@ const Wrapper = styled.div`
   padding: 7px 0 calc(env(safe-area-inset-bottom) + 5px);
 `;
 
-const Item = styled(Link)`
+const Item = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
