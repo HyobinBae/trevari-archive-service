@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { TrevariThemeProvider } from '@trevari/react-emotion-theme';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import { init as initApm } from '@elastic/apm-rum';
 
 import EnhancedRouter from 'router';
 import { store } from 'services/store';
@@ -12,6 +13,14 @@ import reportWebVitals from './reportWebVitals';
 import 'styles/index.css';
 
 const persistor = persistStore(store);
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const apm = initApm({
+  serviceName: 'trevari-web',
+  serverUrl: 'https://c0b7c3d540624325a041607b770d97ad.apm.ap-northeast-2.aws.elastic-cloud.com:443',
+  serviceVersion: '',
+  environment: process.env.NODE_ENV,
+});
 
 ReactDOM.render(
   <Suspense fallback="loading...">
