@@ -29,16 +29,10 @@ import { Post } from 'types/__generate__/user-backend-api';
 import LineArrow from 'components/svgs/LineArrow';
 
 const Posts = () => {
-  const { data: posts, isLoading, error } = useGetPostsQuery({ limit: 10, excludeClosedPost: true });
+  const { data: posts } = useGetPostsQuery({ limit: 10, excludeClosedPost: true });
   const blogs = posts?.filter(({ category }) => category !== '공지').slice(0, 3) || [];
   const notices = posts?.filter(({ category }) => category === '공지').slice(0, 3) || [];
 
-  if (isLoading) {
-    return <>로딩중~~</>;
-  }
-  if (error) {
-    return <>에러입니다. </>;
-  }
   return (
     <Base>
       <PostListWrap show={blogs?.length > 0}>

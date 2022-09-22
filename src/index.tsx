@@ -8,6 +8,7 @@ import { init as initApm } from '@elastic/apm-rum';
 
 import EnhancedRouter from 'router';
 import { store } from 'services/store';
+import LoadingPage from 'components/base/LoadingPage';
 
 import reportWebVitals from './reportWebVitals';
 import 'styles/index.css';
@@ -23,7 +24,7 @@ const apm = initApm({
 });
 
 ReactDOM.render(
-  <Suspense fallback="loading...">
+  <Suspense fallback={<LoadingPage />}>
     <React.StrictMode>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>

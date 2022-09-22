@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import React, { useEffect, useRef } from 'react';
-import lottie, { AnimationConfigWithData, AnimationConfigWithPath } from 'lottie-web';
+import React, { useEffect } from 'react';
+import lottie from 'lottie-web';
 import TREVARI_LOADING from 'components/svgs/trevari-loading.json';
 
 const LoadingPage = () => {
@@ -22,10 +22,12 @@ const LoadingPage = () => {
 export default LoadingPage;
 
 const LottieWrap = styled.div`
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  position: absolute;
-  margin: 0 auto;
-  z-index: 1000;
+  background: white;
 `;

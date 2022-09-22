@@ -9,8 +9,15 @@ import { useAppDispatch } from 'services/store';
 import { selectAuthenticated, validateAuth } from 'services/auth/auth.store';
 import { storage } from 'api';
 import { GUEST_TOKEN } from 'config';
+import LoadingPage from 'components/base/LoadingPage';
 
-const Main = loadable(() => import('pages/main'));
+type Loader<T> = (props: T) => Promise<DefaultComponent<T>>;
+
+function Loadable<T>(loader: Loader<T>, opt = {}) {
+  return loadable(loader, { fallback: <LoadingPage />, ...opt });
+}
+
+const Main = Loadable(() => import('pages/main'));
 
 const NoMatch = () => {
   return <p>페이지를 찾을 수 없습니다: 404!</p>;

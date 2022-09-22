@@ -1,15 +1,28 @@
 import Loading from 'components/base/Loading';
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, ReactElement, JSXElementConstructor, ReactPortal } from 'react';
 
 interface IProps {
-  loading: boolean;
+  loading?: boolean;
   loader?: ReactNode;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
-const Loader = ({ loading, loader = <Loading />, children }: IProps) =>
-  useMemo(() => {
-    return loading ? loader : <>{children}</>;
-  }, [loading]);
+const Loader = ({
+  loading = false,
+  loader = <Loading />,
+  children,
+}: IProps):
+  | ReactElement<any, string | JSXElementConstructor<any>>
+  | string
+  | number
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  | {}
+  | Iterable<ReactNode>
+  | ReactPortal
+  | boolean
+  | null
+  | undefined => {
+  return loading ? loader : <>{children}</>;
+};
 
 export default Loader;

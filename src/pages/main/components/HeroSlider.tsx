@@ -11,18 +11,11 @@ import { Base, GradiantWrap, ImgLinkWrap, SwiperImg } from 'pages/main/styles/ma
 import 'pages/main/styles/main.css';
 
 const HeroSlider = () => {
-  const { data: banners, isLoading, error } = useGetBannersQuery({});
+  const { data: banners } = useGetBannersQuery({});
 
   const clickBanner = (title: string) => {
     console.log('rolling banner title', title);
   };
-
-  if (isLoading) {
-    return <div>로딩중입니다.</div>;
-  }
-  if (error) {
-    return <div>에러입니다.</div>;
-  }
 
   const pagination: PaginationOptions = {
     clickable: true,
