@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
+import cn from 'classnames';
 
 import Logo from 'components/svgs/Logo';
 import Alarm from 'components/svgs/Alarm';
+import { AppBar } from '@trevari/business-components';
 
 interface IProps {
   closeMenuWhenScrolled: boolean;
@@ -14,7 +16,7 @@ interface IProps {
 const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps) => {
   const [hideAppbar, setHideAppbar] = useState(false);
   const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
+  const [whiteBackground, setWhiteBackground] = useState(false);
 
   const scrollY = useRef(0);
 
@@ -25,7 +27,12 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
       }
       const currentScrollY = window.scrollY;
 
-      // for iOS bouncing scroll behavior
+      if (currentScrollY < 50) {
+        setWhiteBackground(false);
+      } else {
+        setWhiteBackground(true);
+      }
+
       if (currentScrollY < 50) {
         hideAppbar && setHideAppbar(false);
       } else {
@@ -35,6 +42,7 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
       }
       scrollY.current = currentScrollY;
     };
+
     window.addEventListener('scroll', onScroll);
     return () => {
       window.removeEventListener('scroll', onScroll);
@@ -43,14 +51,24 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
 
   return (
     <Base>
-      <AppBar>
-        <BarInstance to={'/'}>
-          <Logo width={78} height={14} fill={'#000'} />
-        </BarInstance>
-        <BarInstance to={'/alarm'}>
-          <Alarm />
-        </BarInstance>
-      </AppBar>
+      <AppBarWrapper hide={hideAppbar}>
+        <AppBarContainer
+          className={cn({ on: whiteBackground })}
+          position={hideAppBarWhenScrolled ? 'relative' : 'fixed'}
+          on={whiteBackground}
+          logo={
+            <BarInstance to={'/'}>
+              <Logo width={78} height={14} fill={'#000'} />
+            </BarInstance>
+          }
+          actions={
+            <BarInstance to={'/alarm'}>
+              <Alarm />
+            </BarInstance>
+          }
+        />
+      </AppBarWrapper>
+
       <Global
         styles={css`
           body {
@@ -71,13 +89,26 @@ const Base = styled.div`
   width: 100%;
 `;
 
-const AppBar = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+const AppBarWrapper = styled.div<{ hide: boolean }>`
+  position: fixed;
+  top: 0;
   width: 100%;
-  padding: 12px 20px;
-  box-sizing: border-box;
+  z-index: 10;
+  max-width: 500px;
+  transition: transform 250ms;
+  transform: ${({ hide }) => (hide ? `translate3d(0, -100%, 0)` : `translate3d(0, 0, 0)`)};
+`;
+
+const AppBarContainer = styled(AppBar)<{ on: boolean }>`
+  background: ${({ on, theme }) => (on ? theme.colors.white : 'transparent')};
+
+  .trevari-container {
+    background: transparent;
+  }
+
+  .on .trevari-container {
+    background: white;
+  }
 `;
 
 const BarInstance = styled(Link)`

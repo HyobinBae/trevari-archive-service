@@ -22,19 +22,19 @@ const bottomNavs = [
     icon: <MenuIcon width={24} height={24} color={'#6E6E6C'} />,
     activeIcon: <MenuIcon width={24} height={24} color={'#000'} />,
     name: '메뉴',
-    to: '/menu',
+    to: 'https://trevari.co.kr/menu',
   },
   {
     icon: <LoveOutline />,
     activeIcon: <LoveFilled />,
     name: '찜',
-    to: '/wish',
+    to: 'https://trevari.co.kr/wishList',
   },
   {
     icon: <MyOutline />,
     activeIcon: <MyFilled />,
     name: '마이페이지',
-    to: '/my',
+    to: 'https://trevari.co.kr/mypage',
   },
 ];
 
@@ -42,30 +42,34 @@ const BottomNavigation = () => {
   const { pathname } = useLocation();
 
   return (
-    <FixedWrapper>
+    <Wrapper>
       {bottomNavs.map(bottomItem => {
         const { icon, activeIcon, name, to } = bottomItem;
         const isActive = pathname === to;
         return (
-          <Item key={name} to={to}>
+          <Item key={name} to={{ pathname: to }}>
             <>{isActive ? activeIcon : icon}</>
             <NavName active={isActive}>{name}</NavName>
           </Item>
         );
       })}
-    </FixedWrapper>
+    </Wrapper>
   );
 };
 
 export default BottomNavigation;
 
-const FixedWrapper = styled.div`
+const Wrapper = styled.div`
   position: fixed;
-  display: flex;
-  width: 100%;
   bottom: 0;
+  z-index: 10;
+  display: flex;
+  max-width: 500px;
+  width: 100%;
   background: ${({ theme }) => theme.colors.white};
   border-top: 1px solid ${({ theme }) => theme.colors.gray300};
+  padding: 7px 0 calc(constant(safe-area-inset-bottom) + 5px);
+  padding: 7px 0 calc(env(safe-area-inset-bottom) + 5px);
 `;
 
 const Item = styled(Link)`
@@ -74,6 +78,7 @@ const Item = styled(Link)`
   align-items: center;
   width: 25%;
   padding: 7px 0 5px;
+  cursor: pointer;
 `;
 
 const NavName = styled.span<{ active: boolean }>`

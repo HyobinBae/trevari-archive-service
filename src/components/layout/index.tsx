@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
 import TopNavigation from 'components/layout/TopNavigation';
@@ -12,29 +12,35 @@ interface IProps {
   children: ReactNode;
 }
 
-const Layout = ({ children, mode = 'center', hideTopNav = false, hideBottomNav = false }: IProps) => {
+const Layout = ({ children }: IProps) => {
   const { width } = useWindowSize();
-  const isMobile = width < 769;
+  const [viewMode, setViewMode] = useState<'center' | 'full'>('full');
 
   useEffect(() => {
-    console.log('isMobile', isMobile);
-  }, []);
+    if (width > 500) {
+      setViewMode('center');
+    } else {
+      setViewMode('full');
+    }
+  }, [width]);
 
   return (
     <Base>
-      {isMobile ? (
-        <FullWindow>
-          <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />
-          {children}
-          <BottomNavigation />
-        </FullWindow>
-      ) : (
-        <CenterWindow>
-          <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />
-          {children}
-          <BottomNavigation />
-        </CenterWindow>
-      )}
+      <Body>
+        {viewMode === 'full' ? (
+          <FullWindow>
+            <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />
+            {children}
+            <BottomNavigation />
+          </FullWindow>
+        ) : (
+          <CenterWindow>
+            <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />
+            {children}
+            <BottomNavigation />
+          </CenterWindow>
+        )}
+      </Body>
     </Base>
   );
 };
@@ -45,24 +51,19 @@ const Base = styled.div`
   position: relative;
   margin: 0 auto;
   background: #eeeeee;
-  ${({ theme }) => theme.breakPoint.mobile} {
-    width: 100%;
-    height: 100%;
-  }
+  max-width: 500px;
+  width: 100%;
+  min-height: 100vh;
+  transition: margin-top 0.5s;
 `;
+const Body = styled.div``;
 
 const CenterWindow = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
   max-width: 500px;
-  width: 100vh;
-  height: 100vh;
-  overflow: hidden;
+  width: 100vw;
+  margin: auto;
   background: ${({ theme }) => theme.colors.white};
-  filter: drop-shadow(0px 0px 20px rgba(130, 130, 130, 0.15));
+  box-shadow: 0 0 20px rgba(130, 130, 130, 0.15);
 `;
 
 const FullWindow = styled.div`
