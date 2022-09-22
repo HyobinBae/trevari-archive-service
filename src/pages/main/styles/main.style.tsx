@@ -181,7 +181,8 @@ export const DownloadAppCompDiv = styled.div<{ width: number }>`
   width: 100%;
   max-width: 362px;
   left: calc(50vw - 618px);
-  bottom: 25%;
+  bottom: 0%;
+  transform: translate(0%, -100%);
 `;
 
 export const AppQRCodeDiv = styled.div`
