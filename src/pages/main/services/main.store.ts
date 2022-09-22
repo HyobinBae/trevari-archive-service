@@ -3,6 +3,7 @@ import { filter } from 'lodash';
 import { MAT_890_TAG_ID } from 'pages/main/const';
 import {
   createWishClub,
+  deleteWishClub,
   getBanners,
   getCurationDisplayOrders,
   getCurations,
@@ -85,7 +86,18 @@ export const mainStore = createSlice({
       }
     });
     builder.addMatcher(createWishClub.matchFulfilled, (state, { payload }) => {
-      console.log('paylaod', payload.wishClub);
+      const wishClub = payload.wishClub;
+      state.wishClubs = [...state.wishClubs].concat(wishClub);
+    });
+    builder.addMatcher(deleteWishClub.matchFulfilled, (state, action) => {
+      const {
+        meta: {
+          arg: {
+            originalArgs: { clubID },
+          },
+        },
+      } = action;
+      state.wishClubs = state.wishClubs.filter(wishClub => wishClub.clubID !== clubID);
     });
   },
 });
