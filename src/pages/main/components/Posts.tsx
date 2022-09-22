@@ -62,7 +62,7 @@ const Posts = () => {
         <CurationTitle title="공지사항" more="//trevari.co.kr/blog?category=공지" />
         <NoticeListBody>
           {notices?.map(({ id, title, description, createdAt, updatedAt }: Post) => (
-            <Link to={`//trevari.co.kr/blog/show?id=${id}`} target="blank" key={id}>
+            <Link to={`//trevari.co.kr/blog/show?id=${id}`} key={id}>
               <NoticeItems>
                 <NoticeContents>
                   <TextOverflowForTitle>{title}</TextOverflowForTitle>

@@ -12,7 +12,7 @@ const CurationTitle = ({ title, more }: IProps) => {
     <ListHeader>
       <ListTitleWrapper>{title}</ListTitleWrapper>
       {more && (
-        <ClickMore href={more} target="_blank">
+        <ClickMore href={more}>
           <MoreList>전체보기</MoreList>
         </ClickMore>
       )}
