@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import { Footer, FooterLinks, FooterSnsLinks, FooterTerms } from '@trevari/business-components';
 import { resetAnchorCss } from '@trevari/components';
 import { FacebookCircleIcon, InstagramCircleIcon } from '@trevari/icons';
-import { body6 } from '@trevari/typo';
 
 const FooterComp = () => {
   return (

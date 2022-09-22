@@ -26,7 +26,7 @@ export function useWindowSize(): ISize {
 
   useEffect(() => {
     if (!isClient) {
-      return () => {};
+      return () => ({});
     }
 
     const handleResize = () => setWindowSize(getSize());

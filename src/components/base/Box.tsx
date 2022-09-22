@@ -17,6 +17,6 @@ const Box = ({ children, style = {}, onClick = () => ({}) }: IProps) => {
 
 export default Box;
 
-export const Base = styled.div<{ style: any }>`
-  ${props => props.style};
-`;
+export const Base = styled.div(props => ({
+  ...props?.style,
+}));

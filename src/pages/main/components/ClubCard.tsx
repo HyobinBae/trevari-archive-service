@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from 'react';
-import { body3, heading10, heading11, heading5, heading9 } from '@trevari/typo';
+import { heading11, heading5, heading9 } from '@trevari/typo';
 import { format, isBefore } from 'date-fns';
 import ko from 'date-fns/locale/ko';
 import { css, useTheme } from '@emotion/react';
