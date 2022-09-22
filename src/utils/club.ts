@@ -1,7 +1,14 @@
 import { isBefore, format, add } from 'date-fns';
 import { Club } from 'types/__generate__/user-backend-api';
 
-export const OPTION_BADGE: any = {
+interface IObject {
+  [key: string]: {
+    name: string;
+    type: string;
+    color: string;
+  };
+}
+export const OPTION_BADGE: IObject = {
   온라인: {
     name: '온라인',
     type: 'filled',
@@ -9,7 +16,7 @@ export const OPTION_BADGE: any = {
   },
 };
 
-export const STATUS_BADGE: any = {
+export const STATUS_BADGE: IObject = {
   마감임박: {
     name: '마감임박',
     type: 'filled',
