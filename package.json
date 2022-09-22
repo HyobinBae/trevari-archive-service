@@ -12,6 +12,7 @@
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@elastic/apm-rum": "^5.12.0",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@graphql-codegen/add": "^3.1.1",
@@ -81,7 +82,6 @@
     "@graphql-codegen/typescript": "2.4.8",
     "@graphql-codegen/typescript-operations": "2.3.5",
     "@graphql-codegen/typescript-rtk-query": "^2.3.4",
-    "react-scripts": "^5.0.1",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
     "eslint": "8.22.0",
@@ -89,6 +89,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
     "prettier": "2.6.1",
+    "react-scripts": "^5.0.1",
     "redux-devtools-extension": "^2.13.9",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.8.2"
