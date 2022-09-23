@@ -202,7 +202,9 @@ const ClubCard = (props: Props | IProps) => {
 
 export default ClubCard;
 
-export const ClubCardContainer = styled.div``;
+export const ClubCardContainer = styled.div`
+  cursor: pointer;
+`;
 
 export const HeartButtonWrapper = styled.div`
   display: flex;
