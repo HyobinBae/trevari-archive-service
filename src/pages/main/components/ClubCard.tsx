@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useState } from 'react';
 import { heading11, heading5, heading9 } from '@trevari/typo';
 import { format, isBefore } from 'date-fns';
 import ko from 'date-fns/locale/ko';
@@ -75,7 +75,7 @@ const ClubCard = (props: Props | IProps) => {
   const isFullClub = memberCount >= maxMemberCount;
   const openingReservation = isBefore(new Date(), Date.parse(openedAt));
   const desc = description ? description : clubGroup && clubGroup.description;
-  const [open] = useReducer(prev => !prev, isBefore(new Date(), Date.parse(openedAt)));
+  // const [open] = useReducer(prev => !prev, isBefore(new Date(), Date.parse(openedAt)));
   const [isCheckedBookmark, setCheckBookmark] = useState<boolean>(isBookmark);
   const {
     colors: { orange900 },
@@ -103,6 +103,10 @@ const ClubCard = (props: Props | IProps) => {
             (마케팅 정보 수신 동의 시에만 발송되며, 오후 9시 ~ 익일 오전 8시에는 발송하지 않습니다)`,
       });
     }
+  };
+
+  const handleRedirect = () => {
+    return (window.location.href = `https://dev.trevari.co.kr/clubs/show?clubID=${props.club.id}`);
   };
 
   const MainHeartFooter = (props: Props | IProps) => {
@@ -151,29 +155,34 @@ const ClubCard = (props: Props | IProps) => {
   };
 
   return (
-    <MainCard
-      style={{ width: '100%' }}
-      hero={
-        <MainCardHero className={'club-card'} styles={layerStyle}>
-          <MainCardImg src={coverUrl} />
-          {isFullClub && renderLayer('꽉 찼어요!')}
-          {openingReservation && renderLayer('오픈 예정')}
-          <RenderStickers club={props.club} />
-        </MainCardHero>
-      }
-      footer={<MainHeartFooter {...props} />}
-    >
-      <MainCardContent>
-        <MainCardTitle>{name}</MainCardTitle>
-        <MainCardSubTitle>{leaderTitle}</MainCardSubTitle>
-        <MainCardParagraph>{desc}</MainCardParagraph>
-      </MainCardContent>
-    </MainCard>
+    <Base onClick={handleRedirect}>
+      <MainCard
+        style={{ width: '100%' }}
+        hero={
+          <MainCardHero className={'club-card'} styles={layerStyle}>
+            <MainCardImg src={coverUrl} />
+            {isFullClub && renderLayer('꽉 찼어요!')}
+            {openingReservation && renderLayer('오픈 예정')}
+            <RenderStickers club={props.club} />
+          </MainCardHero>
+        }
+        footer={<MainHeartFooter {...props} />}
+      >
+        <MainCardContent>
+          <MainCardTitle>{name}</MainCardTitle>
+          <MainCardSubTitle>{leaderTitle}</MainCardSubTitle>
+          <MainCardParagraph>{desc}</MainCardParagraph>
+        </MainCardContent>
+      </MainCard>
+    </Base>
   );
 };
 
 export default ClubCard;
 
+export const Base = styled.div`
+  cursor: pointer;
+`;
 export const HeartButtonWrapper = styled.div`
   display: flex;
   align-items: center;
