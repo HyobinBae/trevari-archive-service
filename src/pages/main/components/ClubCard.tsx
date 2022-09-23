@@ -81,7 +81,8 @@ const ClubCard = (props: Props | IProps) => {
     colors: { orange900 },
   } = useTheme();
 
-  const handleClickBookmark = (clubId: string) => {
+  const handleClickBookmark = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, clubId: string) => {
+    e.stopPropagation();
     setCheckBookmark(state => !state);
     dispatch(confirmAuth());
     if (wishClubs.includes(clubId)) {
@@ -121,7 +122,7 @@ const ClubCard = (props: Props | IProps) => {
         <MainCardFooterBanner open={openingReservation} animationDuration={props.animationDuration}>
           찜하고 오픈 알림을 받아보세요.
         </MainCardFooterBanner>
-        <HeartButtonWrapper onClick={() => handleClickBookmark(id)}>
+        <HeartButtonWrapper onClick={e => handleClickBookmark(e, id)}>
           {isCheckedBookmark ? (
             <LoveFilled width={24} height={24} color={orange900} />
           ) : (
@@ -157,28 +158,32 @@ const ClubCard = (props: Props | IProps) => {
   };
 
   return (
-    <MainCard
-      style={{ width: '100%' }}
-      hero={
-        <MainCardHero className={'club-card'} styles={layerStyle}>
-          <MainCardImg src={coverUrl} />
-          {isFullClub && renderLayer('꽉 찼어요!')}
-          {openingReservation && renderLayer('오픈 예정')}
-          <RenderStickers club={props.club} />
-        </MainCardHero>
-      }
-      footer={<MainHeartFooter {...props} />}
-    >
-      <MainCardContent>
-        <MainCardTitle>{name}</MainCardTitle>
-        <MainCardSubTitle>{leaderTitle}</MainCardSubTitle>
-        <MainCardParagraph>{desc}</MainCardParagraph>
-      </MainCardContent>
-    </MainCard>
+    <ClubCardContainer onClick={() => handleClickClub(id, props.tag?.id)}>
+      <MainCard
+        style={{ width: '100%' }}
+        hero={
+          <MainCardHero className={'club-card'} styles={layerStyle}>
+            <MainCardImg src={coverUrl} />
+            {isFullClub && renderLayer('꽉 찼어요!')}
+            {openingReservation && renderLayer('오픈 예정')}
+            <RenderStickers club={props.club} />
+          </MainCardHero>
+        }
+        footer={<MainHeartFooter {...props} />}
+      >
+        <MainCardContent>
+          <MainCardTitle>{name}</MainCardTitle>
+          <MainCardSubTitle>{leaderTitle}</MainCardSubTitle>
+          <MainCardParagraph>{desc}</MainCardParagraph>
+        </MainCardContent>
+      </MainCard>
+    </ClubCardContainer>
   );
 };
 
 export default ClubCard;
+
+export const ClubCardContainer = styled.div``;
 
 export const HeartButtonWrapper = styled.div`
   display: flex;
