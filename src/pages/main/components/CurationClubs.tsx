@@ -14,10 +14,24 @@ interface IProps {
 const CurationClubs = ({ clubs = [], tag }: IProps) => {
   return (
     <CurationClubsBase>
-      <Swiper slidesPerView={1.8} spaceBetween={10}>
+      <Swiper
+        slidesPerView={1.5}
+        spaceBetween={10}
+        style={{ paddingRight: '20px' }}
+        breakpoints={{
+          500: {
+            slidesPerView: 1.5,
+            spaceBetween: 10,
+          },
+          768: {
+            slidesPerView: 2.5,
+            spaceBetween: 10,
+          },
+        }}
+      >
         {clubs?.map((club: Club) => (
-          <SwiperSlide key={club.id}>
-            <ClubCard key={club.id} club={club} tag={tag} />
+          <SwiperSlide key={`${club.id}+${tag.id}`}>
+            <ClubCard club={club} tag={tag} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -28,25 +42,9 @@ const CurationClubs = ({ clubs = [], tag }: IProps) => {
 export default CurationClubs;
 
 export const CurationClubsBase = styled.div`
-  max-width: 1200px;
-  width: 100%;
-
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  place-content: space-between flex-start;
   overflow-x: scroll;
   overflow-y: hidden;
   padding: 0 0 0 20px;
-`;
-
-export const CurationsWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  width: 100%;
-  height: 100%;
-  margin: 0 0 20px 0;
-  overflow-x: scroll;
 `;
