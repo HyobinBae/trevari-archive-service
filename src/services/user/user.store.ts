@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from 'types/__generate__/user-backend-api';
-import { getUser } from 'api/backend';
+import { RootState } from 'services/store';
+import { getUser } from 'services/user/user.api';
 
 interface UserState {
-  me: never;
   user: User;
 }
 
 const initialState: UserState = {
-  me: {},
   user: {
     ads: [],
     appleID: '',
@@ -66,6 +65,7 @@ export const userStore = createSlice({
   },
 });
 
+export const selectUser = (state: RootState) => state.user.user;
 export const { setUser } = userStore.actions;
 
 export default userStore.reducer;

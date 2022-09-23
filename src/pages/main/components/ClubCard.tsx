@@ -22,10 +22,12 @@ import LoveOutline from 'components/svgs/LoveOutline';
 
 import { confirmAuth, selectUserId } from 'services/auth/auth.store';
 import { useAppDispatch, useAppSelector } from 'services/store';
-import { mainApi } from 'pages/main/services/main.api';
+import { createWishClub, deleteWishClub } from 'pages/main/services/main.api';
 import { selectWishClubIds } from 'pages/main/services/main.store';
 import RenderStickers from 'pages/main/components/RenderSticker';
 import { toastAlert } from 'services/ui.store';
+import { selectUser } from 'services/user/user.store';
+import { updateUser } from 'services/user/user.api';
 
 export interface IProps {
   club: Club;
@@ -55,6 +57,7 @@ const mainCardFooterStyle: GetStyles = () => styles;
 const ClubCard = (props: Props | IProps) => {
   const dispatch = useAppDispatch();
   const selectedUserId = useAppSelector(selectUserId);
+  const { isAgreedToAllMarketing } = useAppSelector(selectUser);
   const wishClubs = useAppSelector(selectWishClubIds);
   const {
     club: {
@@ -86,10 +89,10 @@ const ClubCard = (props: Props | IProps) => {
     setCheckBookmark(state => !state);
     dispatch(confirmAuth());
     if (wishClubs.includes(clubId)) {
-      dispatch(mainApi.endpoints.deleteWishClub.initiate({ clubID: clubId, userID: selectedUserId }));
+      dispatch(deleteWishClub.initiate({ clubID: clubId, userID: selectedUserId }));
     } else {
       dispatch(
-        mainApi.endpoints.createWishClub.initiate({
+        createWishClub.initiate({
           input: {
             clubID: clubId,
             season: seasonID,
@@ -103,6 +106,22 @@ const ClubCard = (props: Props | IProps) => {
         text: `이 클럽, 놓치지 않을 거예요. 마감이 임박하면 문자를 발송드려요!\n
             (마케팅 정보 수신 동의 시에만 발송되며, 오후 9시 ~ 익일 오전 8시에는 발송하지 않습니다)`,
       });
+    }
+
+    if (!isAgreedToAllMarketing) {
+      const isConfirmed = confirm(
+        '마케팅 정보 수신자만 오픈 알림 문자를 받으실 수 있습니다. 마케팅 정보 수신에 동의하시겠습니까?',
+      );
+      if (isConfirmed) {
+        dispatch(
+          updateUser.initiate({
+            input: {
+              id: selectedUserId,
+              isAgreedToAllMarketing: true,
+            },
+          }),
+        );
+      }
     }
   };
 

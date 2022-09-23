@@ -5,11 +5,12 @@ import loadable, { DefaultComponent } from '@loadable/component';
 
 import ScrollToTop from 'utils/scrollToTop';
 import Layout from 'components/layout';
-import { useAppDispatch } from 'services/store';
-import { selectAuthenticated, validateAuth } from 'services/auth/auth.store';
+import { useAppDispatch, useAppSelector } from 'services/store';
+import { selectAuthenticated, selectUserId, validateAuth } from 'services/auth/auth.store';
 import { storage } from 'api';
 import { GUEST_TOKEN } from 'config';
 import LoadingPage from 'components/base/LoadingPage';
+import { getUser } from 'services/user/user.api';
 
 type Loader<T> = (props: T) => Promise<DefaultComponent<T>>;
 
@@ -26,12 +27,15 @@ const NoMatch = () => {
 export default () => {
   const dispatch = useAppDispatch();
   const authenticated = useSelector(selectAuthenticated);
+  const userId = useAppSelector(selectUserId);
 
   const _validateAuth = useCallback(() => dispatch(validateAuth(storage.getToken$() || GUEST_TOKEN)), [dispatch]);
 
   useEffect(() => {
     if (!authenticated) {
       _validateAuth();
+    } else {
+      dispatch(getUser.initiate(userId));
     }
   }, [authenticated]);
 
