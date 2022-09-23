@@ -181,12 +181,12 @@ const ClubCard = (props: Props | IProps) => {
       <MainCard
         style={{ width: '100%' }}
         hero={
-          <MainCardHero className={'club-card'} styles={layerStyle}>
+          <MainCardHeroImageWrap className={'club-card'} styles={layerStyle}>
             <MainCardImg src={coverUrl} />
             {isFullClub && renderLayer('꽉 찼어요!')}
             {openingReservation && renderLayer('오픈 예정')}
             <RenderStickers club={props.club} />
-          </MainCardHero>
+          </MainCardHeroImageWrap>
         }
         footer={<MainHeartFooter {...props} />}
       >
@@ -252,4 +252,12 @@ const MainCardImg = styled.img`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+`;
+const MainCardHeroImageWrap = styled(MainCardHero)`
+  @media (min-width: 0) and (max-width: 767px) {
+    height: 150px;
+  }
+  @media (min-width: 768px) and (max-width: 3600px) {
+    height: 120px;
+  }
 `;
