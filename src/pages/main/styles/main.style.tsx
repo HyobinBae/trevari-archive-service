@@ -177,9 +177,8 @@ export const ClickMore = styled.a`
 export const DownloadAppCompDiv = styled.div`
   position: fixed;
   display: block;
-  width: 100%;
-  max-width: 362px;
-  left: calc(50vw - 618px);
+  width: auto;
+  right: calc(50vw + 250px + 46px);
   top: 50%;
   transform: translateY(-50%);
 `;
