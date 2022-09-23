@@ -4,19 +4,20 @@ import styled from '@emotion/styled';
 import ClubCard from 'pages/main/components/ClubCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { Club } from 'types/__generate__/user-backend-api';
+import { Club, Tag } from 'types/__generate__/user-backend-api';
 
 interface IProps {
   clubs?: Club[] | null;
+  tag: Tag;
 }
 
-const CurationClubs = ({ clubs = [] }: IProps) => {
+const CurationClubs = ({ clubs = [], tag }: IProps) => {
   return (
     <CurationClubsBase>
       <Swiper slidesPerView={1.8} spaceBetween={10}>
         {clubs?.map((club: Club) => (
           <SwiperSlide key={club.id}>
-            <ClubCard key={club.id} club={club} />
+            <ClubCard key={club.id} club={club} tag={tag} />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -55,7 +55,7 @@ const CurationList = () => {
           return (
             <CurationRow key={tag?.id}>
               <TagTitle title={tag?.name || ''} more={`https://trevari.co.kr/tags/show?tagID=${tag?.id}`} />
-              <CurationClubs clubs={clubs} />
+              <CurationClubs clubs={clubs} tag={tag} />
             </CurationRow>
           );
         })}
