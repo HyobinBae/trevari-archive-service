@@ -14,17 +14,21 @@ const DownloadAppComp = () => {
   const { width } = useWindowSize();
 
   return (
-    <DownloadAppCompDiv width={width}>
-      <AppIntroduce />
-      <AppQRCodeDiv>
-        <AppQRCode />
-        <AppQRCodeTextDiv>
-          <ViewMoreText>볼거리가 다양해졌어요</ViewMoreText>
-          <DownloadAppText>앱을 다운 받아 보세요!</DownloadAppText>
-        </AppQRCodeTextDiv>
-      </AppQRCodeDiv>
-    </DownloadAppCompDiv>
-  )
-}
+    <>
+      {width > 1248 && (
+        <DownloadAppCompDiv>
+          <AppIntroduce />
+          <AppQRCodeDiv>
+            <AppQRCode />
+            <AppQRCodeTextDiv>
+              <ViewMoreText>볼거리가 다양해졌어요</ViewMoreText>
+              <DownloadAppText>앱을 다운 받아 보세요!</DownloadAppText>
+            </AppQRCodeTextDiv>
+          </AppQRCodeDiv>
+        </DownloadAppCompDiv>
+      )}
+    </>
+  );
+};
 
 export default DownloadAppComp;

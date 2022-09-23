@@ -174,15 +174,14 @@ export const ClickMore = styled.a`
   color: ${({ theme }) => theme.colors.gray500};
 `;
 
-export const DownloadAppCompDiv = styled.div<{ width: number }>`
-  display: ${props => (props.width < 1248 ? 'none' : 'block')};
+export const DownloadAppCompDiv = styled.div`
   position: fixed;
-  z-index: 0;
+  display: block;
   width: 100%;
   max-width: 362px;
   left: calc(50vw - 618px);
-  bottom: 0%;
-  transform: translate(0%, -100%);
+  top: 50%;
+  transform: translateY(-50%);
 `;
 
 export const AppQRCodeDiv = styled.div`
@@ -195,7 +194,6 @@ export const AppQRCodeDiv = styled.div`
 export const AppQRCodeTextDiv = styled.div`
   margin-left: 5px;
 `;
-
 
 export const GoToBookreviewText = styled.div`
   color: ${({ theme }) => theme.colors.orange900};
