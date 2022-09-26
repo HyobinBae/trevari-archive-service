@@ -6,8 +6,8 @@ on:
 
 
 env:
-  CONTAINER_NAME: my-page
-  SEPARATOR_PATH: kubernetes-resources/overlays/dev
+  CONTAINER_NAME: trevari-web
+  SEPARATOR_PATH: kubernetes-resources/overlays/prod/front
 
 permissions:
   contents: read
