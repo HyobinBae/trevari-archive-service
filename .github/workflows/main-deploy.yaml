@@ -78,7 +78,7 @@ jobs:
       - name: Update Kubernetes resources
         run: |
           echo \${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME=\${{ steps.build-image.outputs.image }}
-          cd kubernetes-resources/overlays/dev/
+          cd kubernetes-resources/overlays/prod/front
           kustomize edit set image \${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME=\${{ steps.build-image.outputs.image }}
           cat kustomization.yaml
 
