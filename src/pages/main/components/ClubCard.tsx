@@ -171,7 +171,7 @@ const ClubCard = (props: Props | IProps) => {
   };
 
   const handleClickClub = (clubID: string, tagID?: string) => {
-    window.location.href = `https://dev.trevari.co.kr/clubs/show?clubID=${clubID}${tagID ? `&tagID=${tagID}` : ''}${
+    window.location.href = `https://trevari.co.kr/clubs/show?clubID=${clubID}${tagID ? `&tagID=${tagID}` : ''}${
       memberCount >= maxMemberCount ? `&status=FullClub` : ''
     }`;
   };
