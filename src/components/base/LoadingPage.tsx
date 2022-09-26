@@ -1,27 +1,15 @@
+import React from 'react';
 import styled from '@emotion/styled';
-import React, { useEffect } from 'react';
-import lottie from 'lottie-web';
+import Lottie from 'lottie-react';
 import TREVARI_LOADING from 'components/svgs/trevari-loading.json';
 
 const LoadingPage = () => {
-  const loadingDom = document.getElementById('loading');
-
-  useEffect(() => {
-    lottie.loadAnimation({
-      container: loadingDom,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      animationData: TREVARI_LOADING,
-    });
-  }, []);
-
-  return <LottieWrap id="loading" />;
+  return <LottieWrap animationData={TREVARI_LOADING} loop={true} />;
 };
 
 export default LoadingPage;
 
-const LottieWrap = styled.div`
+const LottieWrap = styled(Lottie)`
   position: absolute;
   z-index: 1000;
   top: 0;

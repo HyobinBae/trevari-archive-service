@@ -8,21 +8,18 @@ import Layout from 'components/layout';
 import { useAppDispatch, useAppSelector } from 'services/store';
 import { selectAuthenticated, selectUserId, validateAuth } from 'services/auth/auth.store';
 import { storage } from 'api';
-import { GUEST_TOKEN } from 'config';
-import LoadingPage from 'components/base/LoadingPage';
+import Loading from 'components/base/Loading';
 import { getUser } from 'services/user/user.api';
+import { GUEST_TOKEN } from 'config';
 
 type Loader<T> = (props: T) => Promise<DefaultComponent<T>>;
 
 function Loadable<T>(loader: Loader<T>, opt = {}) {
-  return loadable(loader, { fallback: <LoadingPage />, ...opt });
+  return loadable(loader, { fallback: <Loading />, ...opt });
 }
 
 const Main = Loadable(() => import('pages/main'));
-
-const NoMatch = () => {
-  return <p>페이지를 찾을 수 없습니다: 404!</p>;
-};
+const LoadingP = Loadable(() => import('components/base/LoadingPage'));
 
 export default () => {
   const dispatch = useAppDispatch();
@@ -44,7 +41,7 @@ export default () => {
       <ScrollToTop />
       <Routes>
         <Route index element={<Main />} />
-        <Route path="*" element={<NoMatch />} />
+        <Route path="*" element={<LoadingP />} />
       </Routes>
     </Layout>
   );
