@@ -1,34 +1,49 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import TREVARI_APP_IMAGE from '../../../images/TREVARI_APP.png';
+import { Overlay } from '@trevari/components/lib/Overlay';
 
-const AppDownloadPopup = () => {
+interface IProps {
+  onClosePopup: () => void;
+}
+
+const AppDownloadPopup = ({onClosePopup}: IProps) => {
   const onClickDynamicLink = () => {
     console.log('앱 링크로 가기');
+    // if (userAgent === 'iOS') {
+    //   goToIOSAppstoreLink()
+    // } else if (userAgent === 'AOS') {
+    //   goToAOSPlaystoreLinke()
+    // }
   };
 
   const onClickWeb = () => {
     console.log('onClickWeb');
+    onClosePopup();
   }
 
   return (
-    <AppDownloadPopupContainer>
-      <AppImageWrapper>
-        <img src={TREVARI_APP_IMAGE} width='84' />
-        <div>
-          클럽, 이벤트 신청부터<br/>
-          독후감 작성까지<br/>
-          모두 가능한 앱에서 만나요!
-        </div>
+    <>
+      <AppDownloadPopupContainer>
+        <AppImageWrapper>
+          <img src={TREVARI_APP_IMAGE} width='84' />
+          <div>
+            클럽, 이벤트 신청부터<br/>
+            독후감 작성까지<br/>
+            모두 가능한 앱에서 만나요!
+          </div>
 
-      </AppImageWrapper>
-      <GoToAppButton onClick={onClickDynamicLink}>
-        앱으로 보기
-      </GoToAppButton>
-      <MaintainWebButton onClick={onClickWeb}>
-        오늘은 그냥 볼게요.
-      </MaintainWebButton>
-    </AppDownloadPopupContainer>
+        </AppImageWrapper>
+        <GoToAppButton onClick={onClickDynamicLink}>
+          앱으로 보기
+        </GoToAppButton>
+        <MaintainWebButton onClick={onClickWeb}>
+          오늘은 그냥 볼게요.
+        </MaintainWebButton>
+      </AppDownloadPopupContainer>
+      {/*<Overlay />*/}
+      <OverlayComp />
+    </>
   )
 }
 
@@ -44,6 +59,7 @@ const AppDownloadPopupContainer = styled.div`
   max-width: 500px;
   z-index: 20;
   height: 293px;
+  background: ${({ theme }) => theme.colors.white};
 `;
 
 const AppImageWrapper = styled.div`
@@ -68,6 +84,7 @@ const GoToAppButton = styled.div`
   align-items: center;
   width: 100%;
   color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
 `;
 
 const MaintainWebButton = styled.div`
@@ -79,4 +96,16 @@ const MaintainWebButton = styled.div`
   align-items: center;
   width: 100%;
   display: flex;
+  cursor: pointer;
+`;
+
+const OverlayComp = styled.div`
+  position: absolute;
+  background: #000000;
+  opacity: 0.4;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 15;
 `;
