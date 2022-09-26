@@ -1,3 +1,5 @@
+name: Deploy trevari/trevari-web feat push
+
 on:
   push:
     branches:
