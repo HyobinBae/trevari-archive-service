@@ -1,4 +1,4 @@
-import { configureStore, combineReducers, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, ThunkAction, Action, MiddlewareArray } from '@reduxjs/toolkit';
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import storage from 'redux-persist/lib/storage';
@@ -26,6 +26,12 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+const middlewares = new MiddlewareArray();
+
+if (process.env.NODE_ENV === `development`) {
+  middlewares.concat(logger);
+}
+
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
@@ -34,7 +40,7 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     })
-      .concat(logger)
+      .concat(middlewares)
       .concat(backend.middleware),
   devTools: process.env.NODE_ENV !== 'production',
 });
