@@ -22,19 +22,19 @@ const bottomNavs = [
     icon: <MenuIcon width={24} height={24} color={'#6E6E6C'} />,
     activeIcon: <MenuIcon width={24} height={24} color={'#000'} />,
     name: '메뉴',
-    to: 'https://trevari.co.kr/menu',
+    to: 'https://dev.trevari.co.kr/menu',
   },
   {
     icon: <LoveOutline color={'#6E6E6C'} />,
     activeIcon: <LoveFilled />,
     name: '찜',
-    to: 'https://trevari.co.kr/wishList',
+    to: 'https://dev.trevari.co.kr/wishList',
   },
   {
     icon: <MyOutline />,
     activeIcon: <MyFilled />,
     name: '마이페이지',
-    to: 'https://trevari.co.kr/mypage',
+    to: 'https://dev.trevari.co.kr/mypage',
   },
 ];
 
