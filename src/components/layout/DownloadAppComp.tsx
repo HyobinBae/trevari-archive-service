@@ -1,14 +1,14 @@
 import React from 'react';
+import AppIntroduce from 'components/svgs/AppIntroduce';
+import AppQRCode from 'components/svgs/AppQRCode';
+import { useWindowSize } from 'hooks/useWindowSize';
 import {
   AppQRCodeDiv,
   AppQRCodeTextDiv,
   DownloadAppCompDiv,
   DownloadAppText,
   ViewMoreText,
-} from '../styles/main.style';
-import AppIntroduce from 'components/svgs/AppIntroduce';
-import AppQRCode from 'components/svgs/AppQRCode';
-import { useWindowSize } from '../../../hooks/useWindowSize';
+} from 'components/layout/style';
 
 const DownloadAppComp = () => {
   const { width } = useWindowSize();
