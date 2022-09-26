@@ -5,37 +5,58 @@ import { Footer, FooterLinks, FooterSnsLinks, FooterTerms } from '@trevari/busin
 import { resetAnchorCss } from '@trevari/components';
 import { FacebookCircleIcon, InstagramCircleIcon } from '@trevari/icons';
 
+import { FOOTER_NAVS, FOOTER_TERMS_NAV } from 'components/layout/const';
+
 const FooterComp = () => {
+  const onClickMoveTo = (snsName: string) => () => {
+    switch (snsName) {
+      case '페이스북': {
+        window.open('https://www.facebook.com/trevari/');
+        break;
+      }
+
+      case '인스타그램': {
+        window.open('https://www.instagram.com/trevari_official/');
+        break;
+      }
+
+      case '네이버 블로그': {
+        window.open('https://blog.naver.com/trevarivari');
+        break;
+      }
+    }
+  };
+
   return (
     <Base>
       <Footer
         links={
           <FooterLinks>
-            <Anchor onClick={e => e.preventDefault()}>자주 묻는 질문</Anchor>
-            <Anchor onClick={e => e.preventDefault()}>문의하기</Anchor>
-            <Anchor onClick={e => e.preventDefault()}>블로그</Anchor>
-            <Anchor onClick={e => e.preventDefault()}>트레바리 채용</Anchor>
-            <Anchor onClick={e => e.preventDefault()}>파트너 모집</Anchor>
-            <Anchor onClick={e => e.preventDefault()}>공지사항</Anchor>
+            {FOOTER_NAVS.map(nav => (
+              <CustomATag href={nav.link} key={nav.title}>
+                <Anchor>{nav.title}</Anchor>
+              </CustomATag>
+            ))}
           </FooterLinks>
         }
         snsLinks={
-          <FooterSnsLinks>
+          <CustomFooterSnsLinks>
             <IconWrapper>
-              <FacebookCircleIcon />
+              <FacebookCircleIcon onClick={onClickMoveTo('페이스북')} />
             </IconWrapper>
             <IconWrapper>
-              <InstagramCircleIcon />
+              <InstagramCircleIcon onClick={onClickMoveTo('인스타그램')} />
             </IconWrapper>
-          </FooterSnsLinks>
+          </CustomFooterSnsLinks>
         }
         terms={
-          <FooterTerms>
-            <Anchor onClick={e => e.preventDefault()}>이용약관</Anchor>
-            <Anchor onClick={e => e.preventDefault()}>개인정보처리방침</Anchor>
-            <Anchor onClick={e => e.preventDefault()}>트레바리 운영정책</Anchor>
-            <Anchor onClick={e => e.preventDefault()}>공지사항</Anchor>
-          </FooterTerms>
+          <CustomFooterTerms>
+            {FOOTER_TERMS_NAV.map(nav => (
+              <FooterLink href={nav.link} key={nav.title}>
+                <Anchor>{nav.title}</Anchor>
+              </FooterLink>
+            ))}
+          </CustomFooterTerms>
         }
       />
 
@@ -73,4 +94,27 @@ const IconWrapper = styled(Anchor)`
     width: 100%;
     height: 100%;
   }
+`;
+
+const CustomATag = styled.a`
+  color: ${({ theme }) => theme.colors.gray800};
+  &:hover {
+    color: ${({ theme }) => theme.colors.gray800};
+  }
+`;
+
+const CustomFooterSnsLinks = styled(FooterSnsLinks)`
+  .trevari-footer-sns-links-item {
+    list-style: none;
+  }
+`;
+
+const CustomFooterTerms = styled(FooterTerms)`
+  .trevari-footer-terms-item {
+    list-style: none;
+  }
+`;
+
+const FooterLink = styled.a`
+  color: #4e4e4c;
 `;
