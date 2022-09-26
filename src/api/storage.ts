@@ -16,6 +16,9 @@ const REFRESH_TOKEN_KEY = 'refresh_token';
 const cookies = new Cookies();
 
 class Storage {
+  static getToken$() {
+    throw new Error('Method not implemented.');
+  }
   clearAll$() {
     try {
       cookies.remove('tr_user_token');

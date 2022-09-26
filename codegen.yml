@@ -1,15 +1,17 @@
+overwrite: true
+schema:
+  - http://localhost:8000/graphql:
+      headers:
+        Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Imd1ZXN0Iiwic2NvcGUiOiJndWVzdCIsImlhdCI6MTUxODI1ODA3N30.qRWF3MlIiYCdo0Gs-Yv6XrUlpw8pn2Tsw4VjNtkxE5E
 generates:
-  ./src/types/user-backend-api.ts:
-    schema: https://user-backend-api.trevari.co.kr/graphql
-    documents:
-      - src/gql/*.{tsx,ts,js,jsx,gql}
+  ./src/types/__generate__/user-backend-api.ts:
     plugins:
-      - add: /* eslint-disable */
-      - typescript
-      - typescript-operations
-config:
-  # immutableTypes: true
-  # nonOptionalTypename: true
-  declarationKind: interface
-  scalars:
-    Float: number
+      - add:
+          content: /* eslint-disable */
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-query"
+  ./src/types/__generate__/user-backend-api-graphql.schema.json:
+    plugins:
+      - "introspection"
+

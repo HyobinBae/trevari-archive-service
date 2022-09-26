@@ -1,27 +1,49 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Provider } from 'react-redux';
 import { TrevariThemeProvider } from '@trevari/react-emotion-theme';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import { init as initApm } from '@elastic/apm-rum';
 
-import Main from 'components/main';
-import 'styles/index.css';
+import EnhancedRouter from 'router';
+import { store } from 'services/store';
+import LoadingPage from 'components/base/LoadingPage';
+
 import reportWebVitals from './reportWebVitals';
+import 'styles/index.css';
 
-const queryClient = new QueryClient();
+const persistor = persistStore(store);
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const apm = initApm({
+  serviceName: 'trevari-web',
+  serverUrl: 'https://c0b7c3d540624325a041607b770d97ad.apm.ap-northeast-2.aws.elastic-cloud.com:443',
+  serviceVersion: '',
+  environment: process.env.NODE_ENV,
+});
 
 ReactDOM.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <TrevariThemeProvider>
-          <Main />
-        </TrevariThemeProvider>
-      </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
-  </React.StrictMode>,
+  <Suspense fallback={<LoadingPage />}>
+    <React.StrictMode>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <TrevariThemeProvider
+            breakPoint={{
+              mobile: '@media (min-width: 0px) and (max-width: 3600px)',
+              tablet: '2400',
+              desktop: '100',
+              exceptMobile: '3600',
+              exceptTable: '3600',
+              exceptDesktop: '3600',
+            }}
+          >
+            <EnhancedRouter />
+          </TrevariThemeProvider>
+        </PersistGate>
+      </Provider>
+    </React.StrictMode>
+  </Suspense>,
   document.getElementById('root'),
 );
 

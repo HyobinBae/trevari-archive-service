@@ -1,0 +1,66 @@
+import React from 'react';
+import { Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { PaginationOptions } from 'swiper/types';
+import 'swiper/css';
+import 'swiper/css/pagination';
+
+import { useGetBannersQuery } from 'pages/main/services/main.api';
+import { Banner } from 'types/__generate__/user-backend-api';
+import { Base, GradiantWrap, ImgLinkWrap, SwiperImg } from 'pages/main/styles/main.style';
+import 'pages/main/styles/main.css';
+
+const HeroSlider = () => {
+  const { data: banners } = useGetBannersQuery({});
+
+  const clickBanner = (title: string) => {
+    console.log('rolling banner title', title);
+  };
+
+  const pagination: PaginationOptions = {
+    clickable: true,
+    type: 'fraction',
+    renderFraction: (currentClass: string, totalClass: string) => {
+      return (
+        '<div class="custom-fraction">' +
+        '<span class="' +
+        currentClass +
+        '"></span>' +
+        ' / ' +
+        '<span class="' +
+        totalClass +
+        '"></span>' +
+        '</div>'
+      );
+    },
+  };
+
+  return (
+    <Base>
+      <GradiantWrap>
+        <Swiper
+          autoplay={true}
+          loop={true}
+          modules={[Pagination]}
+          pagination={pagination}
+          navigation={true}
+          style={{ height: 'inherit', bottom: '0px' }}
+        >
+          {banners
+            ?.filter(({ isClosed }) => isClosed === false)
+            .map(({ title, mobileImageUrl, linkUrl }: Banner) => {
+              return (
+                <SwiperSlide key={title}>
+                  <ImgLinkWrap className="wrap" href={linkUrl} onClick={() => clickBanner(title)}>
+                    <SwiperImg src={mobileImageUrl} alt={title} />
+                  </ImgLinkWrap>
+                </SwiperSlide>
+              );
+            })}
+        </Swiper>
+      </GradiantWrap>
+    </Base>
+  );
+};
+
+export default HeroSlider;

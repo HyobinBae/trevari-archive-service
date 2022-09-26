@@ -1,10 +1,16 @@
-import React, { ReactNode } from 'react';
-import { History } from 'history';
-import Routes from 'router/routes';
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-interface Props {
-  history: History;
-  children?: ReactNode;
-}
-export const EnhancedRouter = ({ history }: Props) => <Routes />;
+import Routes from 'router/routes';
+// import DownloadAppComp from 'pages/main/components/DownloadAppComp';
+
+export const EnhancedRouter = () => {
+  return (
+    <BrowserRouter>
+      <Routes />
+      {/*<DownloadAppComp />*/}
+    </BrowserRouter>
+  );
+};
+
 export default EnhancedRouter;
