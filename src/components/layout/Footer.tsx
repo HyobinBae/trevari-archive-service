@@ -97,13 +97,6 @@ const IconWrapper = styled(Anchor)`
   }
 `;
 
-const CustomATag = styled.a`
-  color: ${({ theme }) => theme.colors.gray800};
-  &:hover {
-    color: ${({ theme }) => theme.colors.gray800};
-  }
-`;
-
 const CustomFooterSnsLinks = styled(FooterSnsLinks)`
   .trevari-footer-sns-links-item {
     list-style: none;
