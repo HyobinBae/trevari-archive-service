@@ -23,6 +23,7 @@ const bottomNavs = [
     activeIcon: <MenuIcon width={24} height={24} color={'#000'} />,
     name: '메뉴',
     to: 'https://dev.trevari.co.kr/menu',
+    
   },
   {
     icon: <LoveOutline color={'#6E6E6C'} />,
