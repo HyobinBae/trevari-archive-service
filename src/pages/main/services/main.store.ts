@@ -67,9 +67,9 @@ export const mainStore = createSlice({
     });
     builder.addMatcher(getCurations.matchFulfilled, (state, { payload }) => {
       if (state.wishClubs.length > 0) {
-        const ddd = filter(payload, ({ clubs }: { clubs: IClub[] }) => clubs.length > 0);
+        const canDisplayClubs = filter(payload, ({ clubs }: { clubs: IClub[] }) => clubs.length > 0);
         const wishClubIDs = state.wishClubs.map(({ clubID }) => clubID);
-        const clubsWithBookmark = ddd.map(({ clubs, tag }) => {
+        const clubsWithBookmark = canDisplayClubs.map(({ clubs, tag }) => {
           return {
             clubs: clubs?.map((club: IClub) => {
               return wishClubIDs.includes(club?.id) ? { ...club, isBookmark: true } : { ...club, isBookmark: false };
