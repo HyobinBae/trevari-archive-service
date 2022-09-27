@@ -1,7 +1,7 @@
+import styled from '@emotion/styled';
 import React from 'react';
 import { format } from 'date-fns';
 import { isMobile } from 'react-device-detect';
-import { Link } from 'react-router-dom';
 import {
   MultiCard,
   MultiCardContent,
@@ -41,7 +41,7 @@ const Posts = () => {
         <BlogListBody>
           {blogs?.map((post: Post) => (
             <Box style={{ marginBottom: '24px' }} key={post.id}>
-              <Link to={`${endpoints.user_page_url}/blog/show?id=${post.id}`}>
+              <Link href={`${endpoints.user_page_url}/blog/show?id=${post.id}`}>
                 <MultiCard hero={<MultiCardHero src={post.thumbnailUrl} alt="이미지" />} style={{ width: '100%' }}>
                   <MultiCardContent>
                     <MultiCardTitle>{post.title}</MultiCardTitle>
@@ -63,7 +63,7 @@ const Posts = () => {
         <CurationTitle title="공지사항" more={`${endpoints.user_page_url}/blog?category=공지`} />
         <NoticeListBody>
           {notices?.map(({ id, title, description, createdAt, updatedAt }: Post) => (
-            <Link to={`${endpoints.user_page_url}/blog/show?id=${id}`} key={id}>
+            <Link href={`${endpoints.user_page_url}/blog/show?id=${id}`} key={id}>
               <NoticeItems>
                 <NoticeContents>
                   <TextOverflowForTitle>{title}</TextOverflowForTitle>
@@ -81,3 +81,5 @@ const Posts = () => {
 };
 
 export default Posts;
+
+const Link = styled.a``;
