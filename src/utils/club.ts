@@ -41,8 +41,8 @@ export const clubStatus = (club: Club) => {
   const isOverApplicationDeadline = applicationDeadline ? isBefore(Date.parse(applicationDeadline), new Date()) : false;
 
   const today = format(new Date(), 'yyyy-MM-dd HH:mm');
-  const openDate = format(Date.parse(openedAt), 'yyyy-MM-dd HH:mm');
-  const sevenDaysAfterOpenDate = format(add(Date.parse(openedAt), { days: 7 }), 'yyyy-MM-dd HH:mm');
+  const openDate = format(Date.parse(openedAt as string), 'yyyy-MM-dd HH:mm');
+  const sevenDaysAfterOpenDate = format(add(Date.parse(openedAt as string), { days: 7 }), 'yyyy-MM-dd HH:mm');
   const isNewOpenedClub = openDate < today && today < sevenDaysAfterOpenDate;
 
   if (isMostFullClub && !isFullClub && !isOverApplicationDeadline) {
