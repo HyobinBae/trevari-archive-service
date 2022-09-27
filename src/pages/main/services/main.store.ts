@@ -11,14 +11,15 @@ import {
   getWishClubs,
 } from 'pages/main/services/main.api';
 import { RootState } from 'services/store';
-import { Banner, ClubsWithTag, Post, WishClub } from 'types/__generate__/user-backend-api';
+import { Banner, Post, WishClub } from 'types/__generate__/user-backend-api';
+import { IClub, ICuration } from 'pages/main/services/main.types';
 
 interface MainState {
   banners: Banner[];
   tagOrders: string[];
   newbieTagOrder: string[];
   wishClubs: WishClub[];
-  curations: ClubsWithTag[];
+  curations: ICuration[];
   posts: Post[];
   status: 'idle' | 'loading' | 'failed';
 }
@@ -66,11 +67,11 @@ export const mainStore = createSlice({
     });
     builder.addMatcher(getCurations.matchFulfilled, (state, { payload }) => {
       if (state.wishClubs.length > 0) {
-        const ddd = filter(payload, ({ clubs }) => clubs.length > 0);
+        const canDisplayClubs = filter(payload, ({ clubs }: { clubs: IClub[] }) => clubs.length > 0);
         const wishClubIDs = state.wishClubs.map(({ clubID }) => clubID);
-        const clubsWithBookmark = ddd.map(({ clubs, tag }) => {
+        const clubsWithBookmark: ICuration[] = canDisplayClubs.map(({ clubs, tag }) => {
           return {
-            clubs: clubs?.map(club => {
+            clubs: clubs?.map((club: IClub) => {
               return wishClubIDs.includes(club?.id) ? { ...club, isBookmark: true } : { ...club, isBookmark: false };
             }),
             tag,
@@ -78,16 +79,16 @@ export const mainStore = createSlice({
         });
         state.curations = clubsWithBookmark;
       } else {
-        const ddd = filter(payload, ({ clubs }) => clubs.length > 0);
-        const clubsWithBookmark = ddd.map(({ clubs, tag }) => {
-          return { clubs: clubs?.map(club => ({ ...club, isBookmark: false })), tag };
+        const canDisplayClubs = filter(payload, ({ clubs }: { clubs: IClub[] }) => clubs.length > 0);
+        const clubsWithBookmark: ICuration[] = canDisplayClubs.map(({ clubs, tag }) => {
+          return { clubs: clubs?.map((club: IClub) => ({ ...club, isBookmark: false })), tag };
         });
         state.curations = clubsWithBookmark;
       }
     });
     builder.addMatcher(createWishClub.matchFulfilled, (state, { payload }) => {
       const wishClub = payload.wishClub;
-      state.wishClubs = [...state.wishClubs].concat(wishClub);
+      state.wishClubs = [...state.wishClubs].concat(wishClub as WishClub);
     });
     builder.addMatcher(deleteWishClub.matchFulfilled, (state, action) => {
       const {

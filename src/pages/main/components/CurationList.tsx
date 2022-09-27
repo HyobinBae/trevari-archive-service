@@ -7,8 +7,10 @@ import { selectDisplayCurations, selectTagOrders } from 'pages/main/services/mai
 import { getCurationDisplayOrders, getCurations, getWishClubs } from 'pages/main/services/main.api';
 import TagTitle from 'pages/main/components/TagTitle';
 import CurationClubs from 'pages/main/components/CurationClubs';
+import { ICuration } from 'pages/main/services/main.types';
 import { Club, Tag } from 'types/__generate__/user-backend-api';
 import { selectAuthenticated, selectUserId } from 'services/auth/auth.store';
+import { endpoints } from 'config';
 
 const random = 0.15132412105559778;
 
@@ -16,7 +18,7 @@ const CurationList = () => {
   const dispatch = useAppDispatch();
   const tagOrders = useAppSelector(selectTagOrders);
   const authenticated = useAppSelector(selectAuthenticated);
-  const curations = useAppSelector(selectDisplayCurations);
+  const curations: ICuration[] = useAppSelector(selectDisplayCurations);
   const userId = useAppSelector(selectUserId);
 
   const options = {
@@ -51,10 +53,9 @@ const CurationList = () => {
     <Base>
       <CurationsContainer>
         {curations?.map(({ clubs, tag }: { clubs: Club[]; tag: Tag }) => {
-          // const { clubs, tag } = curation;
           return (
             <CurationRow key={tag?.id}>
-              <TagTitle title={tag?.name || ''} more={`https://trevari.co.kr/tags/show?tagID=${tag?.id}`} />
+              <TagTitle title={tag?.name || ''} more={`${endpoints.user_page_url}/tags/show?tagID=${tag?.id}`} />
               <CurationClubs clubs={clubs} tag={tag} />
             </CurationRow>
           );

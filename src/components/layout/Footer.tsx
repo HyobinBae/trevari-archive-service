@@ -33,9 +33,9 @@ const FooterComp = () => {
         links={
           <FooterLinks>
             {FOOTER_NAVS.map(nav => (
-              <CustomATag href={nav.link} key={nav.title}>
-                <Anchor>{nav.title}</Anchor>
-              </CustomATag>
+              <Anchor href={nav.link} key={nav.title}>
+                {nav.title}
+              </Anchor>
             ))}
           </FooterLinks>
         }
@@ -52,9 +52,9 @@ const FooterComp = () => {
         terms={
           <CustomFooterTerms>
             {FOOTER_TERMS_NAV.map(nav => (
-              <FooterLink href={nav.link} key={nav.title}>
-                <Anchor>{nav.title}</Anchor>
-              </FooterLink>
+              <Anchor href={nav.link} key={nav.title}>
+                {nav.title}
+              </Anchor>
             ))}
           </CustomFooterTerms>
         }
@@ -76,11 +76,12 @@ export default FooterComp;
 const Base = styled.div`
   padding: 1.5rem 0 2.5rem;
 `;
+
 const Anchor = styled.a(resetAnchorCss, {
   font: 'inherit',
-  color: 'currentColor',
   display: 'block',
   cursor: 'pointer',
+  color: '#4e4e4c',
 });
 
 const IconWrapper = styled(Anchor)`
@@ -113,8 +114,4 @@ const CustomFooterTerms = styled(FooterTerms)`
   .trevari-footer-terms-item {
     list-style: none;
   }
-`;
-
-const FooterLink = styled.a`
-  color: #4e4e4c;
 `;

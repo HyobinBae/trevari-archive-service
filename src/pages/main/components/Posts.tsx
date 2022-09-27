@@ -27,6 +27,7 @@ import {
 } from 'pages/main/styles/main.style';
 import { Post } from 'types/__generate__/user-backend-api';
 import LineArrow from 'components/svgs/LineArrow';
+import { endpoints } from 'config';
 
 const Posts = () => {
   const { data: posts } = useGetPostsQuery({ limit: 10, excludeClosedPost: true });
@@ -36,11 +37,11 @@ const Posts = () => {
   return (
     <Base>
       <PostListWrap show={blogs?.length > 0}>
-        <CurationTitle title="블로그" more="//trevari.co.kr/blog" />
+        <CurationTitle title="블로그" more={`${endpoints.user_page_url}/blog`} />
         <BlogListBody>
           {blogs?.map((post: Post) => (
             <Box style={{ marginBottom: '24px' }} key={post.id}>
-              <Link to={`//trevari.co.kr/blog/show?id=${post.id}`}>
+              <Link to={`${endpoints.user_page_url}/blog/show?id=${post.id}`}>
                 <MultiCard hero={<MultiCardHero src={post.thumbnailUrl} alt="이미지" />} style={{ width: '100%' }}>
                   <MultiCardContent>
                     <MultiCardTitle>{post.title}</MultiCardTitle>
@@ -59,10 +60,10 @@ const Posts = () => {
         </BlogListBody>
       </PostListWrap>
       <PostListWrap show={notices?.length > 0}>
-        <CurationTitle title="공지사항" more="//trevari.co.kr/blog?category=공지" />
+        <CurationTitle title="공지사항" more={`${endpoints.user_page_url}/blog?category=공지`} />
         <NoticeListBody>
           {notices?.map(({ id, title, description, createdAt, updatedAt }: Post) => (
-            <Link to={`//trevari.co.kr/blog/show?id=${id}`} key={id}>
+            <Link to={`${endpoints.user_page_url}/blog/show?id=${id}`} key={id}>
               <NoticeItems>
                 <NoticeContents>
                   <TextOverflowForTitle>{title}</TextOverflowForTitle>
