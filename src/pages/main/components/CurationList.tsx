@@ -9,6 +9,7 @@ import TagTitle from 'pages/main/components/TagTitle';
 import CurationClubs from 'pages/main/components/CurationClubs';
 import { Club, Tag } from 'types/__generate__/user-backend-api';
 import { selectAuthenticated, selectUserId } from 'services/auth/auth.store';
+import { endpoints } from 'config';
 
 const random = 0.15132412105559778;
 
@@ -54,7 +55,7 @@ const CurationList = () => {
           // const { clubs, tag } = curation;
           return (
             <CurationRow key={tag?.id}>
-              <TagTitle title={tag?.name || ''} more={`https://trevari.co.kr/tags/show?tagID=${tag?.id}`} />
+              <TagTitle title={tag?.name || ''} more={`${endpoints.user_page_url}/tags/show?tagID=${tag?.id}`} />
               <CurationClubs clubs={clubs} tag={tag} />
             </CurationRow>
           );

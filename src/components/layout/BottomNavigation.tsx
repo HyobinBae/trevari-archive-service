@@ -10,6 +10,7 @@ import LoveFilled from 'components/svgs/LoveFilled';
 import HomeOutline from 'components/svgs/HomeOutline';
 import MyFilled from 'components/svgs/MyFilled';
 import MyOutline from 'components/svgs/MyOutline';
+import { endpoints } from 'config';
 
 const bottomNavs = [
   {
@@ -22,19 +23,19 @@ const bottomNavs = [
     icon: <MenuIcon width={24} height={24} color={'#6E6E6C'} />,
     activeIcon: <MenuIcon width={24} height={24} color={'#000'} />,
     name: '메뉴',
-    to: 'https://trevari.co.kr/menu',
+    to: `${endpoints.user_page_url}/menu`,
   },
   {
     icon: <LoveOutline color={'#6E6E6C'} />,
     activeIcon: <LoveFilled />,
     name: '찜',
-    to: 'https://trevari.co.kr/wishList',
+    to: `${endpoints.user_page_url}/wishList`,
   },
   {
     icon: <MyOutline />,
     activeIcon: <MyFilled />,
     name: '마이페이지',
-    to: 'https://trevari.co.kr/mypage',
+    to: `${endpoints.user_page_url}/mypage`,
   },
 ];
 

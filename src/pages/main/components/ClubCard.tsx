@@ -28,6 +28,7 @@ import RenderStickers from 'pages/main/components/RenderSticker';
 import { toastAlert } from 'services/ui.store';
 import { selectUser } from 'services/user/user.store';
 import { updateUser } from 'services/user/user.api';
+import { endpoints } from 'config';
 
 export interface IProps {
   club: Club;
@@ -171,7 +172,7 @@ const ClubCard = (props: Props | IProps) => {
   };
 
   const handleClickClub = (clubID: string, tagID?: string) => {
-    window.location.href = `https://trevari.co.kr/clubs/show?clubID=${clubID}${tagID ? `&tagID=${tagID}` : ''}${
+    window.location.href = `${endpoints.user_page_url}/clubs/show?clubID=${clubID}${tagID ? `&tagID=${tagID}` : ''}${
       memberCount >= maxMemberCount ? `&status=FullClub` : ''
     }`;
   };
