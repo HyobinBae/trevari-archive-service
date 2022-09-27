@@ -72,8 +72,6 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME:$IMAGE_TAG .
           docker push ${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME:$IMAGE_TAG
-          docker image tag ${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME:$IMAGE_TAG ${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME:latest
-          docker push ${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME:latest
           echo "::set-output name=image::${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME:$IMAGE_TAG"
 
       - name: Setup Kustomize
