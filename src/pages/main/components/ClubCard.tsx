@@ -16,7 +16,7 @@ import {
   MainCardFooter,
   GetStyles,
 } from '@trevari/business-components';
-import { Club, Tag } from 'types/__generate__/user-backend-api';
+import { Tag } from 'types/__generate__/user-backend-api';
 import LoveFilled from 'components/svgs/LoveFilled';
 import LoveOutline from 'components/svgs/LoveOutline';
 
@@ -24,6 +24,8 @@ import { confirmAuth, selectUserId } from 'services/auth/auth.store';
 import { useAppDispatch, useAppSelector } from 'services/store';
 import { createWishClub, deleteWishClub } from 'pages/main/services/main.api';
 import { selectWishClubIds } from 'pages/main/services/main.store';
+
+import { IClub } from 'pages/main/services/main.types';
 import RenderStickers from 'pages/main/components/RenderSticker';
 import { toastAlert } from 'services/ui.store';
 import { selectUser } from 'services/user/user.store';
@@ -31,7 +33,7 @@ import { updateUser } from 'services/user/user.api';
 import { endpoints } from 'config';
 
 export interface IProps {
-  club: Club;
+  club: IClub;
   tag: Tag;
 }
 
@@ -55,7 +57,7 @@ const layerStyle: GetStyles = () => overflowNoneStyles;
 
 const mainCardFooterStyle: GetStyles = () => styles;
 
-const ClubCard = (props: Props | IProps) => {
+const ClubCard = (props: Props & IProps) => {
   const dispatch = useAppDispatch();
   const selectedUserId = useAppSelector(selectUserId);
   const { isAgreedToAllMarketing } = useAppSelector(selectUser);
@@ -64,7 +66,7 @@ const ClubCard = (props: Props | IProps) => {
     club: {
       id,
       name,
-      place: { name: placeName },
+      place,
       coverUrl,
       leaderTitle,
       clubGroup,
@@ -78,7 +80,7 @@ const ClubCard = (props: Props | IProps) => {
     },
   } = props;
   const isFullClub = memberCount >= maxMemberCount;
-  const openingReservation = isBefore(new Date(), Date.parse(openedAt));
+  const openingReservation = isBefore(new Date(), Date.parse(openedAt as string));
   const desc = description ? description : clubGroup && clubGroup.description;
   const [isCheckedBookmark, setCheckBookmark] = useState<boolean>(isBookmark);
   const {
@@ -126,7 +128,7 @@ const ClubCard = (props: Props | IProps) => {
     }
   };
 
-  const MainHeartFooter = (props: Props | IProps) => {
+  const MainHeartFooter = (props: Props & IProps) => {
     const firstMeeting = format(Date.parse(meetings[0].startedAt), 'M/d(EEE)', {
       locale: ko,
     });
@@ -151,7 +153,7 @@ const ClubCard = (props: Props | IProps) => {
         </HeartButtonWrapper>
         <div style={{ flex: 1 }}>
           <MainFooterText>
-            {placeName} | 첫 모임일 {firstMeeting} {meetingStartedAt} ~ {meetingEndedAt}
+            {place?.name} | 첫 모임일 {firstMeeting} {meetingStartedAt} ~ {meetingEndedAt}
           </MainFooterText>
         </div>
       </MainCardFooter>
@@ -164,7 +166,7 @@ const ClubCard = (props: Props | IProps) => {
         <LayerTextWrap>
           <LayerText>{text}</LayerText>
           {text.includes('오픈') && (
-            <LayerSmallText>{format(Date.parse(openedAt), 'M/d(ddd) a h시', { locale: ko })}</LayerSmallText>
+            <LayerSmallText>{format(Date.parse(openedAt as string), 'M/d(ddd) a h시', { locale: ko })}</LayerSmallText>
           )}
         </LayerTextWrap>
       </DimLayer>
@@ -183,7 +185,7 @@ const ClubCard = (props: Props | IProps) => {
         style={{ width: '100%' }}
         hero={
           <MainCardHeroImageWrap className={'club-card'} styles={layerStyle}>
-            <MainCardImg src={coverUrl} />
+            <MainCardImg src={coverUrl as string} />
             {isFullClub && renderLayer('꽉 찼어요!')}
             {openingReservation && renderLayer('오픈 예정')}
             <RenderStickers club={props.club} />
@@ -240,6 +242,7 @@ const LayerTextWrap = styled.div`
 const LayerText = styled.p`
   ${heading5};
   color: ${({ theme }) => theme.colors.white};
+
   ${({ theme }) => theme.breakPoint.mobile} {
     ${heading9}
   } ;
