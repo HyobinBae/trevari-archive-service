@@ -29,7 +29,7 @@ const bottomNavs = [
     icon: <LoveOutline color={'#6E6E6C'} />,
     activeIcon: <LoveFilled />,
     name: '찜',
-    to: `${endpoints.user_page_url}/wishList`,
+    to: `${endpoints.user_page_url}/wishList`,    
   },
   {
     icon: <MyOutline />,
