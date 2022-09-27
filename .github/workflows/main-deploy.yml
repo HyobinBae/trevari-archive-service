@@ -56,14 +56,24 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYYMMDDTHHmm
+          utcOffset: "+09:00"
+
       - name: Build, tag, and push image to Trevari docker registry
         id: build-image
         env:
-          IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: ${{steps.current-time.outputs.formattedTime}}
         run: |
           docker build -t ${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME:$IMAGE_TAG .
           docker push ${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME:$IMAGE_TAG
+          docker image tag ${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME:$IMAGE_TAG ${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME:latest
+          docker push ${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME:latest
           echo "::set-output name=image::${{ secrets.DOCKER_REGISTRY }}/$CONTAINER_NAME:$IMAGE_TAG"
+
       - name: Setup Kustomize
         uses: imranismail/setup-kustomize@v1
 
