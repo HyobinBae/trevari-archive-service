@@ -19,9 +19,7 @@ function Main() {
   const savedTodayDate = localStorage.getItem('today');
   const userId = useAppSelector(selectUserId);
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(pageView(userId));
-  });
+
   useEffect(() => {
     if (todayDateToString !== savedTodayDate) {
       setIsOpenPopup(true);
