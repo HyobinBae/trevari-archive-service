@@ -10,6 +10,8 @@ import { selectUserId } from 'services/auth/auth.store';
 import { pageView } from 'services/analytics/analytics.store';
 import AppDownloadPopup from 'pages/main/components/AppDownloadPopup';
 import { useMobileDetect } from 'hooks/useDetectMobile';
+import TagManager from 'react-gtm-module';
+import { GOOGLE_TAG_MANAGER_CONTAINER_ID } from 'pages/main/ga';
 
 function Main() {
   const [isOpenPopup, setIsOpenPopup] = useState(false);
@@ -21,6 +23,8 @@ function Main() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    TagManager.initialize({ gtmId: GOOGLE_TAG_MANAGER_CONTAINER_ID });
+
     if (todayDateToString !== savedTodayDate) {
       setIsOpenPopup(true);
     } else {

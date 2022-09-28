@@ -2,6 +2,8 @@ import { GUEST_TOKEN, IS_PRODUCTION } from 'config';
 
 export const GA_MEASUREMENT_ID = 'UA-118335990-1';
 
+export const GOOGLE_TAG_MANAGER_CONTAINER_ID = 'GTM-MRFBZ44';
+
 interface IGAEvent {
   action: string;
   category: string;
