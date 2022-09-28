@@ -166,7 +166,7 @@ const ClubCard = (props: Props & IProps) => {
         <LayerTextWrap>
           <LayerText>{text}</LayerText>
           {text.includes('오픈') && (
-            <LayerSmallText>{format(Date.parse(openedAt as string), 'M/d(ddd) a h시', { locale: ko })}</LayerSmallText>
+            <LayerSmallText>{format(Date.parse(openedAt as string), 'M/d(EEE) a h시', { locale: ko })}</LayerSmallText>
           )}
         </LayerTextWrap>
       </DimLayer>
