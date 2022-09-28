@@ -12,6 +12,7 @@ import LoadingPage from 'components/base/LoadingPage';
 
 import reportWebVitals from './reportWebVitals';
 import 'styles/index.css';
+import { HelmetProvider } from 'react-helmet-async';
 
 const persistor = persistStore(store);
 
@@ -38,7 +39,9 @@ ReactDOM.render(
               exceptDesktop: '3600',
             }}
           >
-            <EnhancedRouter />
+            <HelmetProvider>
+              <EnhancedRouter />
+            </HelmetProvider>
           </TrevariThemeProvider>
         </PersistGate>
       </Provider>
