@@ -11,6 +11,7 @@ import HomeOutline from 'components/svgs/HomeOutline';
 import MyFilled from 'components/svgs/MyFilled';
 import MyOutline from 'components/svgs/MyOutline';
 import { endpoints } from 'config';
+import ga from 'pages/main/ga';
 
 const bottomNavs = [
   {
@@ -29,7 +30,7 @@ const bottomNavs = [
     icon: <LoveOutline color={'#6E6E6C'} />,
     activeIcon: <LoveFilled />,
     name: '찜',
-    to: `${endpoints.user_page_url}/wishList`,    
+    to: `${endpoints.user_page_url}/wishList`,
   },
   {
     icon: <MyOutline />,
@@ -42,7 +43,8 @@ const bottomNavs = [
 const BottomNavigation = () => {
   const { pathname } = useLocation();
 
-  const handleRedirect = (to: string) => {
+  const handleRedirect = (to: string, name: string) => {
+    ga.event({ category: '하단 네비게이션', action: name, label: '' });
     return (window.location.href = to);
   };
 
@@ -52,7 +54,7 @@ const BottomNavigation = () => {
         const { icon, activeIcon, name, to } = bottomItem;
         const isActive = pathname === to;
         return (
-          <Item key={name} onClick={() => handleRedirect(to)}>
+          <Item key={name} onClick={() => handleRedirect(to, name)}>
             <>{isActive ? activeIcon : icon}</>
             <NavName active={isActive}>{name}</NavName>
           </Item>
