@@ -68,7 +68,7 @@ const MainHelmet = () => {
 
       {/* Facebook Pixel Code */}
       {IS_PRODUCTION && (
-        <div>
+        <>
           <script
             dangerouslySetInnerHTML={{
               __html: `!function(f,b,e,v,n,t,s)
@@ -92,15 +92,8 @@ const MainHelmet = () => {
               src={`https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`}
             />
           </noscript>
-        </div>
+        </>
       )}
-
-      {/* Naver search data */}
-      {/* <span itemScope="" itemType="http://schema.org/Organization">
-        <link itemProp="url" href="https://m.trevari.co.kr" />
-        <a itemProp="sameAs" href="https://www.facebook.com/trevari" />
-        <a itemProp="sameAs" href="https://www.instagram.com/trevari_official" />
-      </span> */}
     </Helmet>
   );
 };
