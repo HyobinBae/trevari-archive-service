@@ -9,12 +9,14 @@ import { useGetBannersQuery } from 'pages/main/services/main.api';
 import { Banner } from 'types/__generate__/user-backend-api';
 import { Base, GradiantWrap, ImgLinkWrap, SwiperImg } from 'pages/main/styles/main.style';
 import 'pages/main/styles/main.css';
+import ga from 'pages/main/ga';
 
 const HeroSlider = () => {
   const { data: banners } = useGetBannersQuery({});
 
   const clickBanner = (title: string) => {
     console.log('rolling banner title', title);
+    ga.event({ action: '롤링 배너 클릭', category: '메인 페이지', label: title });
   };
 
   const pagination: PaginationOptions = {
