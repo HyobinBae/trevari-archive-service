@@ -2,24 +2,26 @@ import React from 'react';
 import styled from '@emotion/styled';
 import TREVARI_APP_IMAGE from '../../../images/TREVARI_APP.png';
 import { Overlay } from '@trevari/components/lib/Overlay';
+import { useMobileDetect } from '../../../hooks/useDetectMobile';
 
 interface IProps {
-  onClosePopup: () => void;
+  onClosePopup: (noMoreShowPopupToday: boolean) => void;
 }
 
 const AppDownloadPopup = ({onClosePopup}: IProps) => {
+  const mobileDetect  = useMobileDetect();
+
   const onClickDynamicLink = () => {
-    console.log('앱 링크로 가기');
-    // if (userAgent === 'iOS') {
-    //   goToIOSAppstoreLink()
-    // } else if (userAgent === 'AOS') {
-    //   goToAOSPlaystoreLinke()
-    // }
+    if(mobileDetect.isIos()) {
+      window.location.href = 'https://itunes.apple.com/app/id1638663578';
+    }  else if (mobileDetect.isAndroid()) {
+      window.location.href = 'https://play.google.com/store/apps/details?id=com.app.trevari.prod';
+    }
+    onClosePopup(false);
   };
 
   const onClickWeb = () => {
-    console.log('onClickWeb');
-    onClosePopup();
+    onClosePopup(true);
   }
 
   return (
