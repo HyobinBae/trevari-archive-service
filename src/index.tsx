@@ -12,10 +12,8 @@ import LoadingPage from 'components/base/LoadingPage';
 
 import reportWebVitals from './reportWebVitals';
 import 'styles/index.css';
-import { HelmetProvider } from 'react-helmet-async';
 import TagManager from 'react-gtm-module';
 import { GOOGLE_TAG_MANAGER_CONTAINER_ID } from 'pages/main/ga';
-import { IS_PRODUCTION } from 'config';
 
 const persistor = persistStore(store);
 
@@ -27,9 +25,7 @@ const apm = initApm({
   environment: process.env.NODE_ENV,
 });
 
-if (IS_PRODUCTION) {
-  TagManager.initialize({ gtmId: GOOGLE_TAG_MANAGER_CONTAINER_ID });
-}
+TagManager.initialize({ gtmId: GOOGLE_TAG_MANAGER_CONTAINER_ID });
 
 ReactDOM.render(
   <Suspense fallback={<LoadingPage />}>
@@ -46,9 +42,7 @@ ReactDOM.render(
               exceptDesktop: '3600',
             }}
           >
-            <HelmetProvider>
-              <EnhancedRouter />
-            </HelmetProvider>
+            <EnhancedRouter />
           </TrevariThemeProvider>
         </PersistGate>
       </Provider>
