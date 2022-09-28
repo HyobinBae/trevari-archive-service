@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IS_PRODUCTION } from 'config';
-import { PIXEL_ID } from 'pages/main/pixel';
 import { GA_MEASUREMENT_ID } from 'pages/main/ga';
 import {
   pageView as fbConversinPageView,
@@ -37,9 +36,7 @@ export const analytics = createSlice({
           page_location: 'https://m.trevari.co.kr',
           user_id: payload
         };
-        // eslint-disable-next-line
-        (window as any).fbq('trackSingle', PIXEL_ID, 'PageView');
-        // eslint-disable-next-line
+        //eslint-disable-next-line
         (window as any).gtag('config', GA_MEASUREMENT_ID, parameters);
       }
     },

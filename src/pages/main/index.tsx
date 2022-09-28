@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactFbq from 'react-fbq';
 
 import HeroSlider from 'pages/main/components/HeroSlider';
 import CurationList from 'pages/main/components/CurationList';
@@ -26,6 +27,7 @@ function Main() {
       setIsOpenPopup(false);
     }
     dispatch(pageView(userId));
+    ReactFbq.pageView();
   }, []);
 
   const onClosePopup = (noMoreShowPopupToday: boolean) => {
