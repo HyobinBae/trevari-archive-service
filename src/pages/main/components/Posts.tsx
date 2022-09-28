@@ -28,11 +28,16 @@ import {
 import { Post } from 'types/__generate__/user-backend-api';
 import LineArrow from 'components/svgs/LineArrow';
 import { endpoints } from 'config';
+import ga from 'pages/main/ga';
 
 const Posts = () => {
   const { data: posts } = useGetPostsQuery({ limit: 10, excludeClosedPost: true });
   const blogs = posts?.filter(({ category }) => category !== '공지').slice(0, 3) || [];
   const notices = posts?.filter(({ category }) => category === '공지').slice(0, 3) || [];
+
+  const clickPost = () => {
+    ga.event({ category: '메인 페이지', action: '블로그 카드 클릭', label: '' });
+  };
 
   return (
     <Base>
@@ -41,7 +46,7 @@ const Posts = () => {
         <BlogListBody>
           {blogs?.map((post: Post) => (
             <Box style={{ marginBottom: '24px' }} key={post.id}>
-              <Link href={`${endpoints.user_page_url}/blog/show?id=${post.id}`}>
+              <Link href={`${endpoints.user_page_url}/blog/show?id=${post.id}`} onClick={clickPost}>
                 <MultiCard hero={<MultiCardHero src={post.thumbnailUrl} alt="이미지" />} style={{ width: '100%' }}>
                   <MultiCardContent>
                     <MultiCardTitle>{post.title}</MultiCardTitle>
