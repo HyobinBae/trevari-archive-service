@@ -49,23 +49,6 @@ const MainHelmet = () => {
         </>
       )}
 
-      {/* Global Site Tag (gtag.js) - Google Analytics */}
-      {IS_PRODUCTION && (
-        <>
-          <script async={true} src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${GA_MEASUREMENT_ID}', { 'optimize_id': 'GTM-NTRCCNC'});
-                gtag('config', 'AW-829304701');`,
-            }}
-          />
-        </>
-      )}
-
       {/* Facebook Pixel Code */}
       {IS_PRODUCTION && (
         <>
