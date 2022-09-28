@@ -11,7 +11,7 @@ const LoveFilled = ({ width = 24, height = 24, color = '#FF7900', strokeColor = 
   return (
     <svg width={width} height={height} viewBox="0 0 24 24" fill="none">
       <path
-        d="M11.5627 6.21065L12.0312 6.58547L12.4998 6.21065L14.9506 4.25H18.0956L20.3125 6.46691V11.6759L12.0312 19.4701L3.75 11.6759V6.46691L5.96691 4.25H9.11191L11.5627 6.21065Z"
+        d="M11.5241 5.30467L12 5.69537L12.4759 5.30467L15.2831 3H18.9189L21.5 5.64874V11.8317L12 21.0073L2.5 11.8317V5.64874L5.08107 3H8.71687L11.5241 5.30467Z"
         fill={color}
         stroke={strokeColor}
         strokeWidth="1.5"
