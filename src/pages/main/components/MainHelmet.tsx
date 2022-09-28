@@ -3,7 +3,6 @@ import { PIXEL_ID } from 'pages/main/pixel';
 import { endpoints, IS_PRODUCTION } from 'config';
 import { Helmet } from 'react-helmet-async';
 import { getUniqueEventId } from 'pages/main/fbConversion';
-import { GA_MEASUREMENT_ID } from 'pages/main/ga';
 
 const MainHelmet = () => {
   const pageViewEventID = getUniqueEventId();
