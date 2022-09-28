@@ -11,3 +11,5 @@ export const endpoints = {
   user_login_page_url: IS_PRODUCTION ? 'https://login.trevari.co.kr' : 'http://localhost:3001',
   user_login_endpoint: IS_PRODUCTION ? 'https://login-api.trevari.co.kr/graphql' : 'http://localhost:10000/graphql',
 };
+
+
