@@ -6,7 +6,6 @@ on:
       - "feat/**"
   workflow_dispatch:
 
-
 env:
   CONTAINER_NAME: trevari-web
   SEPARATOR_PATH: kubernetes-resources/overlays/dev
