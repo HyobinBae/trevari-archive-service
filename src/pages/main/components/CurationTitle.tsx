@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { body4, body8, heading7, heading9 } from '@trevari/typo';
+import ga from 'pages/main/ga';
 
 interface IProps {
   title: string;
@@ -8,11 +9,15 @@ interface IProps {
 }
 
 const CurationTitle = ({ title, more }: IProps) => {
+  const clickMoreButton = () => {
+    ga.event({ category: '메인 페이지', action: '블로그 전체 보기', label: title });
+  };
+
   return (
     <ListHeader>
       <ListTitleWrapper>{title}</ListTitleWrapper>
       {more && (
-        <ClickMore href={more}>
+        <ClickMore href={more} onClick={clickMoreButton}>
           <MoreList>전체보기</MoreList>
         </ClickMore>
       )}

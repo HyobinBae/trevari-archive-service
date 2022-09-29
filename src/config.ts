@@ -10,6 +10,7 @@ export const endpoints = {
     : process.env.REACT_APP_BACKEND_GQL || 'http://localhost:8000/graphql',
   user_login_page_url: IS_PRODUCTION ? 'https://login.trevari.co.kr' : 'http://localhost:3001',
   user_login_endpoint: IS_PRODUCTION ? 'https://login-api.trevari.co.kr/graphql' : 'http://localhost:10000/graphql',
+  cloudfront_uri: 'https://image.trevari.co.kr',
 };
 
 

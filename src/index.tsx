@@ -1,10 +1,12 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import ReactFbq from 'react-fbq';
+
 import { TrevariThemeProvider } from '@trevari/react-emotion-theme';
+import { init as initApm } from '@elastic/apm-rum';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-import { init as initApm } from '@elastic/apm-rum';
 
 import EnhancedRouter from 'router';
 import { store } from 'services/store';
@@ -12,6 +14,10 @@ import LoadingPage from 'components/base/LoadingPage';
 
 import reportWebVitals from './reportWebVitals';
 import 'styles/index.css';
+import TagManager from 'react-gtm-module';
+import { GOOGLE_TAG_MANAGER_CONTAINER_ID } from 'pages/main/ga';
+import { PIXEL_ID } from 'pages/main/pixel';
+import { IS_PRODUCTION } from 'config';
 
 const persistor = persistStore(store);
 
@@ -22,6 +28,11 @@ const apm = initApm({
   serviceVersion: '',
   environment: process.env.NODE_ENV,
 });
+
+if (IS_PRODUCTION) {
+  ReactFbq.initialize({ id: PIXEL_ID });
+  TagManager.initialize({ gtmId: GOOGLE_TAG_MANAGER_CONTAINER_ID });
+}
 
 ReactDOM.render(
   <Suspense fallback={<LoadingPage />}>

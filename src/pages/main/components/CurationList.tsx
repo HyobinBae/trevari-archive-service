@@ -11,6 +11,7 @@ import { ICuration } from 'pages/main/services/main.types';
 import { Club, Tag } from 'types/__generate__/user-backend-api';
 import { selectAuthenticated, selectUserId } from 'services/auth/auth.store';
 import { endpoints } from 'config';
+import ViewAllClubsButton from 'pages/main/components/ViewAllClubsButton';
 
 const random = 0.15132412105559778;
 
@@ -61,6 +62,7 @@ const CurationList = () => {
           );
         })}
       </CurationsContainer>
+      <ViewAllClubsButton />
     </Base>
   );
 };

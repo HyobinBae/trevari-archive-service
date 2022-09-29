@@ -147,7 +147,6 @@ export const DateFormat = styled.p`
 
 export const CurationsContainer = styled.div`
   height: auto;
-  padding: 0 0 78px;
 `;
 
 export const ListHeader = styled.div`

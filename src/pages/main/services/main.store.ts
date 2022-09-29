@@ -13,7 +13,7 @@ import {
 import { RootState } from 'services/store';
 import { Banner, Post, WishClub } from 'types/__generate__/user-backend-api';
 import { IClub, ICuration } from 'pages/main/services/main.types';
-
+import ga from 'pages/main/ga';
 interface MainState {
   banners: Banner[];
   tagOrders: string[];
@@ -89,6 +89,7 @@ export const mainStore = createSlice({
     builder.addMatcher(createWishClub.matchFulfilled, (state, { payload }) => {
       const wishClub = payload.wishClub;
       state.wishClubs = [...state.wishClubs].concat(wishClub as WishClub);
+      ga.event({ action: '찜하기', category: '메인 페이지', label: `${wishClub?.club.name}^${wishClub?.clubID}` });
     });
     builder.addMatcher(deleteWishClub.matchFulfilled, (state, action) => {
       const {
