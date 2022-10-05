@@ -20,10 +20,6 @@ const CurationClubs = ({ clubs = [], tag }: IProps) => {
         style={{ paddingRight: '20px' }}
         breakpoints={{
           500: {
-            slidesPerView: 1.5,
-            spaceBetween: 10,
-          },
-          768: {
             slidesPerView: 2.5,
             spaceBetween: 10,
           },
