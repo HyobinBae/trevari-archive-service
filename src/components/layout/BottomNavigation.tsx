@@ -44,7 +44,7 @@ const BottomNavigation = () => {
   const { pathname } = useLocation();
 
   const handleRedirect = (to: string, name: string) => {
-    ga.event({ category: '하단 네비게이션', action: name, label: '' });
+    ga.event({ category: '하단 네비게이션', action: name, label: name });
     return (window.location.href = to);
   };
 
