@@ -262,10 +262,10 @@ const MainCardImg = styled.img`
   transform: translate(-50%, -50%);
 `;
 const MainCardHeroImageWrap = styled(MainCardHero)`
-  @media (min-width: 0) and (max-width: 767px) {
+  @media (min-width: 0) and (max-width: 500px) {
     height: 150px;
   }
-  @media (min-width: 768px) and (max-width: 3600px) {
+  @media (min-width: 500px) and (max-width: 10800px) {
     height: 120px;
   }
 `;

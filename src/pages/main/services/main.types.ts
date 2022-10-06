@@ -9,3 +9,8 @@ export interface ICuration extends ClubsWithTag {
   clubs: IClub[];
   tag: Tag;
 }
+
+export interface ICustomTag extends Tag {
+  id: string;
+  name: string;
+}

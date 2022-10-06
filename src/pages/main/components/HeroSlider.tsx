@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pagination } from 'swiper';
+import { Pagination, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { PaginationOptions } from 'swiper/types';
 import 'swiper/css';
@@ -10,6 +10,7 @@ import { Banner } from 'types/__generate__/user-backend-api';
 import { Base, GradiantWrap, ImgLinkWrap, SwiperImg } from 'pages/main/styles/main.style';
 import 'pages/main/styles/main.css';
 import ga from 'pages/main/ga';
+import Loading from 'components/base/Loading';
 
 const HeroSlider = () => {
   const { data: banners } = useGetBannersQuery({});
@@ -37,13 +38,14 @@ const HeroSlider = () => {
     },
   };
 
+  if (!banners) return <Loading />;
   return (
     <Base>
       <GradiantWrap>
         <Swiper
           autoplay={true}
           loop={true}
-          modules={[Pagination]}
+          modules={[Pagination, Autoplay]}
           pagination={pagination}
           navigation={true}
           style={{ height: 'inherit', bottom: '0px' }}

@@ -2,7 +2,7 @@ import { backend } from 'api/backend';
 import {
   CREATE_WISH_CLUB,
   DELETE_WISH_CLUB,
-  GET_BANNERS,
+  GET_BANNERS, GET_CLUBS_FOR_LISTS,
   GET_CURATION_DISPLAY_ORDERS,
   GET_CURATION_LIST,
   GET_MAIN_POSTS,
@@ -19,7 +19,7 @@ import {
   Post,
   WishClub,
   QueryWishClubsArgs,
-  CreateWishClubPayload,
+  CreateWishClubPayload, QueryClubsArgs, Club,
 } from 'types/__generate__/user-backend-api';
 
 export const mainApi = backend.injectEndpoints({
@@ -53,6 +53,31 @@ export const mainApi = backend.injectEndpoints({
         },
       }),
       transformResponse: ({ wishClubs }: { wishClubs: Array<WishClub> }) => wishClubs,
+    }),
+    getScheduledClubs: build.query<Array<Club>, QueryClubsArgs>({
+      query: ({ limit,
+                offset,
+                where,
+                order,
+                randomSeed,
+                mostFullClubConditionPercent,
+                isTopAllMostFullClubs,
+                containsFullClub,
+                searchByLeaderName }) => ({
+        document: GET_CLUBS_FOR_LISTS,
+        variables: {
+          limit,
+          offset,
+          where,
+          order,
+          randomSeed,
+          mostFullClubConditionPercent,
+          isTopAllMostFullClubs,
+          containsFullClub,
+          searchByLeaderName
+        },
+      }),
+      transformResponse: ({ clubs }: { clubs: Array<Club> }) => clubs,
     }),
     createWishClub: build.mutation({
       query: input => ({
@@ -97,6 +122,7 @@ export const {
   useGetBannersQuery,
   useGetCurationDisplayOrdersQuery,
   useGetWishClubsQuery,
+  useGetScheduledClubsQuery,
   useGetCurationsQuery,
   useGetPostsQuery,
 } = mainApi;
@@ -106,6 +132,7 @@ export const {
     getBanners,
     getPosts,
     getWishClubs,
+    getScheduledClubs,
     createWishClub,
     deleteWishClub,
     getCurationDisplayOrders,

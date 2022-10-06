@@ -33,7 +33,7 @@ export const pageView = (url: string, userID: string) => {
       parameters.user_id = userID;
     }
     // eslint-disable-next-line
-    (window as any).ga('config', GA_MEASUREMENT_ID, parameters);
+    (window as any).gtag('config', GA_MEASUREMENT_ID, parameters);
   }
 };
 

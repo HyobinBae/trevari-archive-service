@@ -14,8 +14,6 @@ import LoadingPage from 'components/base/LoadingPage';
 
 import reportWebVitals from './reportWebVitals';
 import 'styles/index.css';
-import TagManager from 'react-gtm-module';
-import { GOOGLE_TAG_MANAGER_CONTAINER_ID } from 'pages/main/ga';
 import { PIXEL_ID } from 'pages/main/pixel';
 import { IS_PRODUCTION } from 'config';
 
@@ -31,7 +29,6 @@ const apm = initApm({
 
 if (IS_PRODUCTION) {
   ReactFbq.initialize({ id: PIXEL_ID });
-  TagManager.initialize({ gtmId: GOOGLE_TAG_MANAGER_CONTAINER_ID });
 }
 
 ReactDOM.render(
