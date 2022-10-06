@@ -8,10 +8,11 @@ import {
   getCurationDisplayOrders,
   getCurations,
   getPosts,
+  getScheduledClubs,
   getWishClubs,
 } from 'pages/main/services/main.api';
 import { RootState } from 'services/store';
-import { Banner, Post, WishClub } from 'types/__generate__/user-backend-api';
+import { Banner, Club, ClubsWithTag, Post, WishClub } from 'types/__generate__/user-backend-api';
 import { IClub, ICuration } from 'pages/main/services/main.types';
 import ga from 'pages/main/ga';
 interface MainState {
@@ -19,6 +20,7 @@ interface MainState {
   tagOrders: string[];
   newbieTagOrder: string[];
   wishClubs: WishClub[];
+  scheduledClubs: Club[],
   curations: ICuration[];
   posts: Post[];
   status: 'idle' | 'loading' | 'failed';
@@ -29,6 +31,7 @@ const initialState: MainState = {
   tagOrders: [],
   newbieTagOrder: [],
   wishClubs: [],
+  scheduledClubs: [],
   curations: [],
   posts: [],
   status: 'failed',
@@ -60,6 +63,10 @@ export const mainStore = createSlice({
         });
         state.curations = clubsWithBookmark;
       }
+    });
+
+    builder.addMatcher(getScheduledClubs.matchFulfilled, (state, { payload }) => {
+      state.scheduledClubs = payload;
     });
     builder.addMatcher(getCurationDisplayOrders.matchFulfilled, (state, { payload }) => {
       state.tagOrders = payload.map(({ itemID }) => itemID).filter(tagID => tagID !== MAT_890_TAG_ID);
@@ -108,6 +115,7 @@ export const selectBanners = (state: RootState) => state.main.banners.filter(({ 
 export const selectPosts = (state: RootState) => state.main.posts;
 export const selectTagOrders = (state: RootState) => state.main.tagOrders;
 export const selectWishClubs = (state: RootState) => state.main.wishClubs;
+export const selectScheduledClubs = (state: RootState) => state.main.scheduledClubs;
 export const selectWishClubIds = (state: RootState) => state.main.wishClubs.map(({ clubID }) => clubID);
 export const selectDisplayCurations = (state: RootState) => state.main.curations;
 

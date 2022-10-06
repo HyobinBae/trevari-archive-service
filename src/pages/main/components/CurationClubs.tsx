@@ -5,10 +5,11 @@ import ClubCard from 'pages/main/components/ClubCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Club, Tag } from 'types/__generate__/user-backend-api';
+import { ICustomTag } from '../services/main.types';
 
 interface IProps {
   clubs?: Club[] | null;
-  tag: Tag;
+  tag: ICustomTag | Tag;
 }
 
 const CurationClubs = ({ clubs = [], tag }: IProps) => {
