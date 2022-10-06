@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { filter } from 'lodash';
+import { filter, orderBy } from 'lodash';
 import { MAT_890_TAG_ID } from 'pages/main/const';
 import {
   createWishClub,
@@ -69,7 +69,7 @@ export const mainStore = createSlice({
       state.scheduledClubs = payload;
     });
     builder.addMatcher(getCurationDisplayOrders.matchFulfilled, (state, { payload }) => {
-      state.tagOrders = payload.map(({ itemID }) => itemID).filter(tagID => tagID !== MAT_890_TAG_ID);
+      state.tagOrders = orderBy(payload, ['order'], ['asc']).map(({ itemID }) => itemID).filter(tagID => tagID !== MAT_890_TAG_ID);
       state.newbieTagOrder = payload.map(({ itemID }) => itemID);
     });
     builder.addMatcher(getCurations.matchFulfilled, (state, { payload }) => {
