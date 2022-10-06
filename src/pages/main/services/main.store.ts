@@ -12,7 +12,7 @@ import {
   getWishClubs,
 } from 'pages/main/services/main.api';
 import { RootState } from 'services/store';
-import { Banner, Club, ClubsWithTag, Post, WishClub } from 'types/__generate__/user-backend-api';
+import { Banner, Club, Post, WishClub } from 'types/__generate__/user-backend-api';
 import { IClub, ICuration } from 'pages/main/services/main.types';
 import ga from 'pages/main/ga';
 interface MainState {
