@@ -4,7 +4,7 @@ export const GUEST_TOKEN = IS_PRODUCTION
   : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Imd1ZXN0Iiwic2NvcGUiOiJndWVzdCIsImlhdCI6MTUxODI1ODA3N30.qRWF3MlIiYCdo0Gs-Yv6XrUlpw8pn2Tsw4VjNtkxE5E';
 
 export const endpoints = {
-  user_page_url: IS_PRODUCTION ? 'https://m.trevari.co.kr' : 'http://localhost:3000',
+  user_page_url: IS_PRODUCTION ? 'https://trevari.co.kr' : 'http://localhost:3000',
   user_backend_api_graphql_endpoint: IS_PRODUCTION
     ? 'https://user-backend-api.trevari.co.kr/graphql'
     : process.env.REACT_APP_BACKEND_GQL || 'http://localhost:8000/graphql',
