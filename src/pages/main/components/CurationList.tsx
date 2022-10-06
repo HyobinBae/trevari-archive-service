@@ -10,7 +10,7 @@ import CurationClubs from 'pages/main/components/CurationClubs';
 import { ICuration } from 'pages/main/services/main.types';
 import { Club, Tag } from 'types/__generate__/user-backend-api';
 import { selectAuthenticated, selectUserId } from 'services/auth/auth.store';
-import { endpoints } from 'config';
+import { endpoints, IS_PRODUCTION } from 'config';
 import ViewAllClubsButton from 'pages/main/components/ViewAllClubsButton';
 import { SCHEDULED_CLUB_TAG } from '../const';
 
@@ -31,7 +31,7 @@ const CurationList = () => {
       containsFullClub: true,
       isClosed: false,
       randomSeed: random,
-      tagIDs: tagOrders.filter(order => order !== 'WISHED_CLUB').slice(0, 25),
+      tagIDs: IS_PRODUCTION ?  tagOrders.slice(0, 25) : tagOrders.filter(order => order !== 'WISHED_CLUB').slice(0, 25),
     },
   };
 
