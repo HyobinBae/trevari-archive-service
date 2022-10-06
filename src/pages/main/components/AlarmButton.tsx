@@ -24,7 +24,7 @@ const AlarmButton = () => {
       window.addEventListener('customEventForRefreshNotificationIcon', refreshNotificationIcon);
     }
     return () => {
-      if (isApp) return;
+      if (!isApp) return;
       return window.removeEventListener('customEventForRefreshNotificationIcon', refreshNotificationIcon);
     };
   }, []);
