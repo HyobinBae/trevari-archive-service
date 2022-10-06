@@ -1,9 +1,11 @@
 import { configureStore, combineReducers, ThunkAction, Action, MiddlewareArray } from '@reduxjs/toolkit';
+import { Middleware } from 'redux';
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import storage from 'redux-persist/lib/storage';
-import logger from 'redux-logger';
+import { createLogger } from 'redux-logger';
 
+import { IS_PRODUCTION } from 'config';
 import { backend } from 'api/backend';
 import main from 'pages/main/services/main.store';
 import auth from 'services/auth/auth.store';
@@ -26,10 +28,10 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middlewares = new MiddlewareArray();
+const middlewares = [...new MiddlewareArray<Middleware[]>()];
 
-if (process.env.NODE_ENV === `development`) {
-  middlewares.concat(logger);
+if (!IS_PRODUCTION) {
+  middlewares.push(createLogger());
 }
 
 export const store = configureStore({
@@ -42,7 +44,7 @@ export const store = configureStore({
     })
       .concat(middlewares)
       .concat(backend.middleware),
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: !IS_PRODUCTION,
 });
 
 export type AppDispatch = typeof store.dispatch;
