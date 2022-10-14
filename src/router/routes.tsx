@@ -20,6 +20,7 @@ function Loadable<T>(loader: Loader<T>, opt = {}) {
 
 const Main = Loadable(() => import('pages/main'));
 const Menu = Loadable(() => import('pages/menu'));
+const Goods = Loadable(() => import('pages/goods'));
 const LoadingP = Loadable(() => import('components/base/LoadingPage'));
 
 export default () => {
@@ -53,6 +54,7 @@ export default () => {
       <Routes>
         <Route index element={<Main />} />
         <Route path="/menu" element={<Menu />} />
+        <Route path="/goods" element={<Goods />} />
         <Route path="*" element={<LoadingP />} />
       </Routes>
     </Layout>
