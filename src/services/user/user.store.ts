@@ -1,10 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from 'types/__generate__/user-backend-api';
+import { ClubRole, User } from 'types/__generate__/user-backend-api';
 import { RootState } from 'services/store';
-import { getUser } from 'services/user/user.api';
+import { getClubRoles, getUser } from 'services/user/user.api';
 
 interface UserState {
   user: User;
+  roles: ClubRole[];
+  currentRole: string;
+  hasPartnerMembership: boolean;
 }
 
 const initialState: UserState = {
@@ -48,6 +51,9 @@ const initialState: UserState = {
     route: '',
     updatedAt: '',
   },
+  roles: [],
+  currentRole: 'Member',
+  hasPartnerMembership: false,
 };
 
 export const userStore = createSlice({
@@ -62,10 +68,20 @@ export const userStore = createSlice({
     builder.addMatcher(getUser.matchFulfilled, (state, { payload }) => {
       state.user = payload;
     });
+    builder.addMatcher(getClubRoles.matchFulfilled, (state, { payload }) => {
+      const partnerClubRoles = payload && payload.length > 0 ? payload.filter(cr => cr.role === 'Partner') : [];
+      const hasPartnerMembership = partnerClubRoles.length > 0;
+      state.roles = payload;
+      state.hasPartnerMembership = hasPartnerMembership;
+      if (hasPartnerMembership) {
+        state.currentRole = 'Partner';
+      }
+    });
   },
 });
 
 export const selectUser = (state: RootState) => state.user.user;
+export const selectHasPartnerMembership = (state: RootState) => state.user.hasPartnerMembership;
 export const { setUser } = userStore.actions;
 
 export default userStore.reducer;

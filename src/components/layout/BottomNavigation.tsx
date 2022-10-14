@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { MenuIcon } from '@trevari/icons';
 import { body8 } from '@trevari/typo';
@@ -24,7 +24,7 @@ const bottomNavs = [
     icon: <MenuIcon width={24} height={24} color={'#6E6E6C'} />,
     activeIcon: <MenuIcon width={24} height={24} color={'#000'} />,
     name: '메뉴',
-    to: `${endpoints.user_page_url}/menu`,
+    to: `/menu`,
   },
   {
     icon: <LoveOutline color={'#6E6E6C'} />,
@@ -41,9 +41,13 @@ const bottomNavs = [
 ];
 
 const BottomNavigation = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const handleRedirect = (to: string, name: string) => {
+    if (to === '/menu') {
+      navigate('/menu');
+    }
     ga.event({ category: '하단 네비게이션', action: name, label: name });
     return (window.location.href = to);
   };
