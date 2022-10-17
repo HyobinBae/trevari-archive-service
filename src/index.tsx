@@ -32,26 +32,24 @@ if (IS_PRODUCTION) {
 }
 
 ReactDOM.render(
-  <Suspense fallback={<LoadingPage />}>
-    <React.StrictMode>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <TrevariThemeProvider
-            breakPoint={{
-              mobile: '@media (min-width: 0px) and (max-width: 3600px)',
-              tablet: '2400',
-              desktop: '100',
-              exceptMobile: '3600',
-              exceptTable: '3600',
-              exceptDesktop: '3600',
-            }}
-          >
-            <EnhancedRouter />
-          </TrevariThemeProvider>
-        </PersistGate>
-      </Provider>
-    </React.StrictMode>
-  </Suspense>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <TrevariThemeProvider
+          breakPoint={{
+            mobile: '@media (min-width: 0px) and (max-width: 3600px)',
+            tablet: '2400',
+            desktop: '100',
+            exceptMobile: '3600',
+            exceptTable: '3600',
+            exceptDesktop: '3600',
+          }}
+        >
+          <EnhancedRouter />
+        </TrevariThemeProvider>
+      </PersistGate>
+    </Provider>
+  </React.StrictMode>,
   document.getElementById('root'),
 );
 
