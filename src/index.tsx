@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import ReactFbq from 'react-fbq';
@@ -10,7 +10,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import EnhancedRouter from 'router';
 import { store } from 'services/store';
-import LoadingPage from 'components/base/LoadingPage';
 
 import reportWebVitals from './reportWebVitals';
 import 'styles/index.css';
