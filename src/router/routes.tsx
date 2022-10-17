@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from 'services/store';
 import { selectAuthenticated, selectUserId, validateAuth } from 'services/auth/auth.store';
 import { storage } from 'api';
 import Loading from 'components/base/Loading';
-import { getUser } from 'services/user/user.api';
+import { getClubRoles, getUser } from 'services/user/user.api';
 import { GUEST_TOKEN } from 'config';
 
 type Loader<T> = (props: T) => Promise<DefaultComponent<T>>;
@@ -19,6 +19,8 @@ function Loadable<T>(loader: Loader<T>, opt = {}) {
 }
 
 const Main = Loadable(() => import('pages/main'));
+const Menu = Loadable(() => import('pages/menu'));
+const Goods = Loadable(() => import('pages/goods'));
 const LoadingP = Loadable(() => import('components/base/LoadingPage'));
 
 export default () => {
@@ -33,6 +35,16 @@ export default () => {
       _validateAuth();
     } else {
       dispatch(getUser.initiate(userId));
+      dispatch(
+        getClubRoles.initiate({
+          limit: 15,
+          offset: 0,
+          where: {
+            userID: userId,
+            isOpenPeriodRefundedRole: false,
+          },
+        }),
+      );
     }
   }, [authenticated]);
 
@@ -41,6 +53,8 @@ export default () => {
       <ScrollToTop />
       <Routes>
         <Route index element={<Main />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/goods" element={<Goods />} />
         <Route path="*" element={<LoadingP />} />
       </Routes>
     </Layout>

@@ -49,3 +49,85 @@ export const UPDATE_USER = gql`
     }
   }
 `;
+
+export const GET_CLUB_ROLES = gql`
+  query clubRoles($limit: Int, $offset: Int, $where: ClubRolesWhereInput) {
+    clubRoles(limit: $limit, offset: $offset, where: $where) {
+      id
+      userID
+      clubID
+      clubApplicationID
+      replacementPartnerMeetingOrder
+      role
+      season
+      seasonID
+      refundStatus
+      refundedAt
+      createdAt
+      updatedAt
+      type
+      experiencedSeasonCount
+      seasonData {
+        openStatus
+        startedAt
+        endedAt
+        nextSeasonData {
+          id
+          openStatus
+        }
+      }
+      club {
+        id
+        season
+        seasonID
+        clubGroupID
+        clubHistoryID
+        name
+        option
+        options
+        type
+        place {
+          name
+          mapUrl
+          address
+        }
+        notice
+        coverUrl
+        dayOfSchedule
+        weekOfSchedule
+        timeOfSchedule
+        minBookreviewLength
+        isClosed
+        endedAt
+        meetings {
+          id
+          clubID
+          contents {
+            title
+            author
+            imageUrl
+            link
+            type
+          }
+          bookreviewDeadline
+          startedAt
+          endedAt
+          order
+          club {
+            name
+            minBookreviewLength
+          }
+        }
+        clubPosts {
+          id
+          createdAt
+        }
+        applicationDeadline
+      }
+      clubApplication {
+        id
+        method
+      }
+    }
+  }
+`;
