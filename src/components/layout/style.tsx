@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { heading7 } from '@trevari/typo';
 
 export const AppQRCodeDiv = styled.div`
   display: flex;
@@ -32,4 +33,17 @@ export const DownloadAppCompDiv = styled.div`
   transform: translateY(-50%);
   flex-direction: column;
   align-items: center;
+`;
+
+export const Title = styled.div`
+  ${heading7};
+`;
+
+export const ButtonWrapper = styled.div`
+  cursor: pointer;
+
+  ${({ theme }) => theme.breakPoint.mobile} {
+    width: 24px;
+    height: 24px;
+  }
 `;
