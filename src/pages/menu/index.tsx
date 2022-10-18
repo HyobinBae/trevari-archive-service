@@ -57,7 +57,7 @@ const Menu = () => {
       ),
     },
     {
-      title: '슈퍼마켓',
+      title: '슈퍼마켙',
       onClick: () => goToPage('/goods'),
       badge: (
         <BadgeWrap>
