@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PURGE } from 'redux-persist';
 import { ClubRole, User } from 'types/__generate__/user-backend-api';
 import { RootState } from 'services/store';
 import { getClubRoles, getUser } from 'services/user/user.api';
@@ -52,7 +53,7 @@ const initialState: UserState = {
     updatedAt: '',
   },
   roles: [],
-  currentRole: 'Member',
+  currentRole: '',
   hasPartnerMembership: false,
 };
 
@@ -63,8 +64,10 @@ export const userStore = createSlice({
     setUser: (state, { payload: { user } }: PayloadAction<{ user: User }>) => {
       state.user = user;
     },
+    logout: () => initialState,
   },
   extraReducers: builder => {
+    builder.addCase(PURGE, () => initialState);
     builder.addMatcher(getUser.matchFulfilled, (state, { payload }) => {
       state.user = payload;
     });
@@ -82,6 +85,6 @@ export const userStore = createSlice({
 
 export const selectUser = (state: RootState) => state.user.user;
 export const selectHasPartnerMembership = (state: RootState) => state.user.hasPartnerMembership;
-export const { setUser } = userStore.actions;
+export const { setUser, logout } = userStore.actions;
 
 export default userStore.reducer;

@@ -11,6 +11,7 @@ import { storage } from 'api';
 import Loading from 'components/base/Loading';
 import { getClubRoles, getUser } from 'services/user/user.api';
 import { GUEST_TOKEN } from 'config';
+import { logout } from 'services/user/user.store';
 
 type Loader<T> = (props: T) => Promise<DefaultComponent<T>>;
 
@@ -32,6 +33,7 @@ export default () => {
 
   useEffect(() => {
     if (!authenticated) {
+      dispatch(logout());
       _validateAuth();
     } else {
       dispatch(getUser.initiate(userId));

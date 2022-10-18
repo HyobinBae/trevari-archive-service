@@ -16,7 +16,7 @@ import 'styles/index.css';
 import { PIXEL_ID } from 'pages/main/pixel';
 import { IS_PRODUCTION } from 'config';
 
-const persistor = persistStore(store);
+export const persistor = persistStore(store);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const apm = initApm({
