@@ -2,10 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
 import cn from 'classnames';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Logo from 'components/svgs/Logo';
 import { AppBar } from '@trevari/business-components';
 import AlarmButton from 'pages/main/components/AlarmButton';
+import { useNavigation } from 'hooks/useNavigation';
+import { ButtonWrapper, Title } from 'components/layout/style';
+import Arrow from 'components/svgs/Arrow';
 
 interface IProps {
   closeMenuWhenScrolled: boolean;
@@ -13,6 +17,8 @@ interface IProps {
 }
 
 const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps) => {
+  const navigate = useNavigate();
+  const { title, path, showBackButton } = useNavigation();
   const [hideAppbar, setHideAppbar] = useState(false);
   const [open, setOpen] = useState(false);
   const [whiteBackground, setWhiteBackground] = useState(false);
@@ -48,6 +54,26 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
     };
   }, [closeMenuWhenScrolled, hideAppbar, open]);
 
+  const onClickBackButton = () => {
+    navigate(-1);
+  };
+
+  const renderLeftContents = () => {
+    return showBackButton ? (
+      <ButtonWrapper onClick={onClickBackButton}>
+        <Arrow direction={'left'} />
+      </ButtonWrapper>
+    ) : title === '홈' ? (
+      <BarInstance to={'/'}>
+        <Logo width={78} height={14} fill={'#000'} />
+      </BarInstance>
+    ) : (
+      <BarInstance to={path}>
+        <Title>{title}</Title>
+      </BarInstance>
+    );
+  };
+
   return (
     <Base>
       <AppBarWrapper hide={hideAppbar}>
@@ -55,11 +81,7 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
           className={cn({ on: whiteBackground })}
           position={hideAppBarWhenScrolled ? 'relative' : 'fixed'}
           on={whiteBackground}
-          logo={
-            <BarInstance to={'/'}>
-              <Logo width={78} height={14} fill={'#000'} />
-            </BarInstance>
-          }
+          logo={renderLeftContents()}
           actions={<AlarmButton />}
         />
       </AppBarWrapper>
@@ -106,7 +128,8 @@ const AppBarContainer = styled(AppBar)<{ on: boolean }>`
   }
 `;
 
-const BarInstance = styled.div`
+const BarInstance = styled(Link)`
   display: flex;
   align-items: center;
+  color: black;
 `;

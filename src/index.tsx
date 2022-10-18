@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import ReactFbq from 'react-fbq';
@@ -10,14 +10,13 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import EnhancedRouter from 'router';
 import { store } from 'services/store';
-import LoadingPage from 'components/base/LoadingPage';
 
 import reportWebVitals from './reportWebVitals';
 import 'styles/index.css';
 import { PIXEL_ID } from 'pages/main/pixel';
 import { IS_PRODUCTION } from 'config';
 
-const persistor = persistStore(store);
+export const persistor = persistStore(store);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const apm = initApm({
@@ -32,26 +31,24 @@ if (IS_PRODUCTION) {
 }
 
 ReactDOM.render(
-  <Suspense fallback={<LoadingPage />}>
-    <React.StrictMode>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <TrevariThemeProvider
-            breakPoint={{
-              mobile: '@media (min-width: 0px) and (max-width: 3600px)',
-              tablet: '2400',
-              desktop: '100',
-              exceptMobile: '3600',
-              exceptTable: '3600',
-              exceptDesktop: '3600',
-            }}
-          >
-            <EnhancedRouter />
-          </TrevariThemeProvider>
-        </PersistGate>
-      </Provider>
-    </React.StrictMode>
-  </Suspense>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <TrevariThemeProvider
+          breakPoint={{
+            mobile: '@media (min-width: 0px) and (max-width: 3600px)',
+            tablet: '2400',
+            desktop: '100',
+            exceptMobile: '3600',
+            exceptTable: '3600',
+            exceptDesktop: '3600',
+          }}
+        >
+          <EnhancedRouter />
+        </TrevariThemeProvider>
+      </PersistGate>
+    </Provider>
+  </React.StrictMode>,
   document.getElementById('root'),
 );
 
