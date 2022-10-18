@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PURGE } from 'redux-persist';
 import { ClubRole, User } from 'types/__generate__/user-backend-api';
 import { RootState } from 'services/store';
 import { getClubRoles, getUser } from 'services/user/user.api';
@@ -67,7 +66,6 @@ export const userStore = createSlice({
     logout: () => initialState,
   },
   extraReducers: builder => {
-    builder.addCase(PURGE, () => initialState);
     builder.addMatcher(getUser.matchFulfilled, (state, { payload }) => {
       state.user = payload;
     });

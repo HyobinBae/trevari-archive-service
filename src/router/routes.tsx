@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import loadable, { DefaultComponent } from '@loadable/component';
+import { isEmpty } from 'lodash';
 
 import ScrollToTop from 'utils/scrollToTop';
 import Layout from 'components/layout';
@@ -30,10 +31,15 @@ export default () => {
   const userId = useAppSelector(selectUserId);
 
   const _validateAuth = useCallback(() => dispatch(validateAuth(storage.getToken$() || GUEST_TOKEN)), [dispatch]);
+  const _logout = useCallback(() => {
+    dispatch(logout());
+  }, [dispatch]);
 
   useEffect(() => {
     if (!authenticated) {
-      dispatch(logout());
+      if (isEmpty(storage.getToken$())) {
+        _logout();
+      }
       _validateAuth();
     } else {
       dispatch(getUser.initiate(userId));
