@@ -21,17 +21,17 @@ const Menu = () => {
   const menuItems = [
     {
       title: '모든 클럽 보기',
-      onClick: () => goToPage('/apply'),
+      onClick: () => goToPage(`${endpoints.user_page_url}/apply`),
       badge: null,
     },
     {
       title: '커뮤니티 이벤트',
-      onClick: () => goToPage('/apply'),
+      onClick: () => goToPage(`${endpoints.user_page_url}/events`),
       badge: null,
     },
     {
       title: '다른 클럽 놀러가기',
-      onClick: () => goToPage('/meetings'),
+      onClick: () => goToPage(`${endpoints.user_page_url}/meetings`),
       badge: (
         <BadgeWrap>
           <Badge variant="filled" size="small" backgroundColor={orange900} color={white}>
