@@ -2,6 +2,7 @@ import React from 'react';
 import FixedBottomButton from 'components/base/FixedBottomButton';
 import { ImageWrap } from 'pages/goods/goods.styles';
 import Box from 'components/base/Box';
+import { goToPage } from 'utils';
 
 const Goods = () => {
   return (
@@ -12,11 +13,11 @@ const Goods = () => {
       />
       <FixedBottomButton
         text="예약하고 아지트에서 픽업하기"
-        onClick={() =>
-          window.open(
+        onClick={() => {
+          goToPage(
             'https://docs.google.com/forms/d/e/1FAIpQLSfv9vUQrT_AAQvHfQYrJrTMdZbE9tEvUd4xCcfcBmMUBY2_pQ/viewform?usp=pp_url',
-          )
-        }
+          );
+        }}
       />
     </Box>
   );
