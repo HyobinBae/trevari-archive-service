@@ -7,16 +7,13 @@ import Box from 'components/base/Box';
 import { BadgeWrap, MenuContainer, MenuItem, MenuItemAnchor } from 'pages/menu/menu.styles';
 import { selectHasPartnerMembership } from 'services/user/user.store';
 import { endpoints } from 'config';
+import { goToPage } from 'utils';
 
 const Menu = () => {
   const {
     colors: { orange900, green900, white },
   } = useTheme();
   const hasPartnerMembership = useSelector(selectHasPartnerMembership);
-
-  const goToPage = (url: string) => {
-    window.location.href = url;
-  };
 
   const menuItems = [
     {
