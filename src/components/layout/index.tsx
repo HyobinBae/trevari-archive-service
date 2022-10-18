@@ -5,6 +5,8 @@ import TopNavigation from 'components/layout/TopNavigation';
 import BottomNavigation from 'components/layout/BottomNavigation';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { Collapse, Toast } from '@trevari/components';
+import { useLocation } from 'react-router-dom';
+
 import { useAppSelector } from 'services/store';
 import { selectToast } from 'services/ui.store';
 
@@ -16,9 +18,17 @@ interface IProps {
 }
 
 const Layout = ({ children }: IProps) => {
+  const { pathname } = useLocation();
   const { open, text, type, fade, autoClose } = useAppSelector(selectToast);
   const { width } = useWindowSize();
   const [viewMode, setViewMode] = useState<'center' | 'full'>('full');
+  const [hideBottomNav, setHideBottomNav] = useState(false);
+
+  useEffect(() => {
+    if (pathname === '/goods') {
+      setHideBottomNav(true);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     if (width > 500) {
@@ -40,13 +50,13 @@ const Layout = ({ children }: IProps) => {
           <FullWindow>
             <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />
             {children}
-            <BottomNavigation />
+            {!hideBottomNav && <BottomNavigation />}
           </FullWindow>
         ) : (
           <CenterWindow>
             <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />
             {children}
-            <BottomNavigation />
+            {!hideBottomNav && <BottomNavigation />}
           </CenterWindow>
         )}
       </Body>
