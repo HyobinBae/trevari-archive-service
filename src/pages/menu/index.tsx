@@ -1,9 +1,11 @@
-import { Badge } from '@trevari/components';
 import React from 'react';
-import { BadgeWrap, MenuContainer, MenuItem, MenuItemAnchor } from 'pages/menu/menu.styles';
 import { useSelector } from 'react-redux';
-import { selectHasPartnerMembership } from 'services/user/user.store';
 import { useTheme } from '@emotion/react';
+import { Badge } from '@trevari/components';
+
+import Box from 'components/base/Box';
+import { BadgeWrap, MenuContainer, MenuItem, MenuItemAnchor } from 'pages/menu/menu.styles';
+import { selectHasPartnerMembership } from 'services/user/user.store';
 import { endpoints } from 'config';
 
 const Menu = () => {
@@ -72,18 +74,20 @@ const Menu = () => {
     },
   ];
   return (
-    <MenuContainer>
-      {menuItems.map(({ title, onClick, badge }) => {
-        return (
-          <MenuItemAnchor key={title} onClick={onClick}>
-            <MenuItem>
-              {title}
-              {badge}
-            </MenuItem>
-          </MenuItemAnchor>
-        );
-      })}
-    </MenuContainer>
+    <Box style={{ paddingTop: '48px' }}>
+      <MenuContainer>
+        {menuItems.map(({ title, onClick, badge }) => {
+          return (
+            <MenuItemAnchor key={title} onClick={onClick}>
+              <MenuItem>
+                {title}
+                {badge}
+              </MenuItem>
+            </MenuItemAnchor>
+          );
+        })}
+      </MenuContainer>
+    </Box>
   );
 };
 

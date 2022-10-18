@@ -131,4 +131,5 @@ const AppBarContainer = styled(AppBar)<{ on: boolean }>`
 const BarInstance = styled(Link)`
   display: flex;
   align-items: center;
+  color: black;
 `;

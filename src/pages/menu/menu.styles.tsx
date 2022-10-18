@@ -3,10 +3,12 @@ import { heading8 } from '@trevari/typo';
 
 export const MenuContainer = styled.div`
   height: 100vh;
-  padding: 80px 20px 333px 20px;
+  padding: 72px 20px 0 20px;
+  box-sizing: border-box;
 `;
 export const MenuItemAnchor = styled.a`
   cursor: pointer;
+  color: black;
 `;
 export const MenuItem = styled.div`
   display: flex;

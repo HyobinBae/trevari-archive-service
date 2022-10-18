@@ -15,7 +15,7 @@ import ui from 'services/ui.store';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [],
+  whitelist: ['user', 'ui'],
 };
 
 const rootReducer = combineReducers({
