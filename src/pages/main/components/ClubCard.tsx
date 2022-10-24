@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { CSSProperties, useState } from 'react';
 import { heading11, heading5, heading9 } from '@trevari/typo';
 import { format, isBefore } from 'date-fns';
 import ko from 'date-fns/locale/ko';
@@ -36,7 +36,7 @@ import ga from 'pages/main/ga';
 export interface IProps {
   club: IClub;
   tag: Tag;
-  style: any;
+  style: CSSProperties;
 }
 
 const ARGS = {
