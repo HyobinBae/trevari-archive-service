@@ -31,7 +31,7 @@ const CurationList = () => {
       containsFullClub: true,
       isClosed: false,
       randomSeed: random,
-      tagIDs: IS_PRODUCTION ?  tagOrders.slice(0, 25) : tagOrders.filter(order => order !== 'WISHED_CLUB').slice(0, 25),
+      tagIDs: IS_PRODUCTION ? tagOrders.slice(0, 25) : tagOrders.filter(order => order !== 'WISHED_CLUB').slice(0, 25),
     },
   };
 
@@ -47,7 +47,7 @@ const CurationList = () => {
       types: ['함께 만드는 클럽', '클럽장 있는 클럽', '함께 듣는 클럽'],
       isOpenClub: false,
     },
-  }
+  };
 
   useEffect(() => {
     dispatch(getCurationDisplayOrders.initiate({ where: { type: 'tag', isDisplayed: true } }));
@@ -65,8 +65,7 @@ const CurationList = () => {
         }),
       );
     }
-
-  }, [dispatch, authenticated, curations, tagOrders, scheduledClubs ]);
+  }, [dispatch, authenticated, curations, tagOrders, scheduledClubs]);
 
   return (
     <Base>
@@ -81,7 +80,10 @@ const CurationList = () => {
         })}
         {scheduledClubs.length > 0 && (
           <CurationRow key={SCHEDULED_CLUB_TAG?.id}>
-            <TagTitle title={SCHEDULED_CLUB_TAG?.name || ''} more={`${endpoints.user_page_url}/tags/show?tagID=${SCHEDULED_CLUB_TAG?.id}`} />
+            <TagTitle
+              title={SCHEDULED_CLUB_TAG?.name || ''}
+              more={`${endpoints.user_page_url}/tags/show?tagID=${SCHEDULED_CLUB_TAG?.id}`}
+            />
             <CurationClubs clubs={scheduledClubs} tag={SCHEDULED_CLUB_TAG} />
           </CurationRow>
         )}
