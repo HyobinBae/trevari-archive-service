@@ -36,6 +36,7 @@ import ga from 'pages/main/ga';
 export interface IProps {
   club: IClub;
   tag: Tag;
+  style: any;
 }
 
 const ARGS = {
@@ -64,6 +65,7 @@ const ClubCard = (props: Props & IProps) => {
   const { isAgreedToAllMarketing } = useAppSelector(selectUser);
   const wishClubs = useAppSelector(selectWishClubIds);
   const {
+    style,
     club: {
       id,
       name,
@@ -182,7 +184,7 @@ const ClubCard = (props: Props & IProps) => {
   };
 
   return (
-    <ClubCardContainer onClick={() => handleClickClub(id, props.tag?.id)}>
+    <ClubCardContainer style={{ ...style }} onClick={() => handleClickClub(id, props.tag?.id)}>
       <MainCard
         style={{ width: '100%' }}
         hero={
