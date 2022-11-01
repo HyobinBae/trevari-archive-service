@@ -32,6 +32,7 @@ import { selectUser } from 'services/user/user.store';
 import { updateUser } from 'services/user/user.api';
 import { endpoints } from 'config';
 import ga from 'pages/main/ga';
+import { clubStatus } from 'utils/club';
 
 export interface IProps {
   club: IClub;
@@ -177,7 +178,8 @@ const ClubCard = (props: Props & IProps) => {
   };
 
   const handleClickClub = (clubID: string, tagID?: string) => {
-    ga.event({ category: '메인 페이지', action: '클럽 카드 클릭', label: `${name}^${clubID}` });
+    const statusBadge = clubStatus(props.club) + ' ' || '';
+    ga.event({ category: '메인 페이지', action: `${statusBadge}클럽 카드 클릭`, label: `${name}^${clubID}` });
     window.location.href = `${endpoints.user_page_url}/clubs/show?clubID=${clubID}${tagID ? `&tagID=${tagID}` : ''}${
       memberCount >= maxMemberCount ? `&status=FullClub` : ''
     }`;
