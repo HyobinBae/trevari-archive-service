@@ -8,6 +8,7 @@ import { BadgeWrap, MenuContainer, MenuItem, MenuItemAnchor } from 'pages/menu/m
 import { selectHasPartnerMembership } from 'services/user/user.store';
 import { endpoints } from 'config';
 import { goToPage } from 'utils';
+import ga from 'pages/main/ga';
 
 const Menu = () => {
   const {
@@ -15,20 +16,24 @@ const Menu = () => {
   } = useTheme();
   const hasPartnerMembership = useSelector(selectHasPartnerMembership);
 
+  const menuItemClickAction = (url: string, name: string) => {
+    ga.event({ category: '메뉴 페이지', action: '버튼 클릭', label: name });
+    goToPage(url);
+  };
   const menuItems = [
     {
       title: '모든 클럽 보기',
-      onClick: () => goToPage(`${endpoints.user_page_url}/apply`),
+      onClick: () => menuItemClickAction(`${endpoints.user_page_url}/apply`, '모든 클럽 보기'),
       badge: null,
     },
     {
       title: '커뮤니티 이벤트',
-      onClick: () => goToPage(`${endpoints.user_page_url}/events`),
+      onClick: () => menuItemClickAction(`${endpoints.user_page_url}/events`, '커뮤니티 이벤트'),
       badge: null,
     },
     {
       title: '다른 클럽 놀러가기',
-      onClick: () => goToPage(`${endpoints.user_page_url}/meetings`),
+      onClick: () => menuItemClickAction(`${endpoints.user_page_url}/meetings`, '다른 클럽 놀러가기'),
       badge: (
         <BadgeWrap>
           <Badge variant="filled" size="small" backgroundColor={orange900} color={white}>
@@ -40,10 +45,11 @@ const Menu = () => {
     {
       title: hasPartnerMembership ? '파트너 어드민' : '파트너 지원하기',
       onClick: () =>
-        goToPage(
+        menuItemClickAction(
           hasPartnerMembership
             ? 'https://partners.trevari.co.kr/'
             : 'https://trevari.co.kr/blog/show?id=40ef561e-9b31-4a40-882b-02c83cc194c4',
+          hasPartnerMembership ? '파트너 어드민' : '파트너 지원하기',
         ),
       badge: (
         <BadgeWrap>
@@ -55,7 +61,7 @@ const Menu = () => {
     },
     {
       title: '슈퍼마켙',
-      onClick: () => goToPage('/goods'),
+      onClick: () => menuItemClickAction('/goods', '슈퍼마켙'),
       badge: (
         <BadgeWrap>
           <Badge variant="filled" size="small" backgroundColor={green900} color={white}>
@@ -66,10 +72,11 @@ const Menu = () => {
     },
     {
       title: '블로그',
-      onClick: () => goToPage(`${endpoints.user_page_url}/blog`),
+      onClick: () => menuItemClickAction(`${endpoints.user_page_url}/blog`, '블로그'),
       badge: null,
     },
   ];
+
   return (
     <Box style={{ paddingTop: '48px' }}>
       <MenuContainer>

@@ -45,10 +45,11 @@ const BottomNavigation = () => {
   const { pathname } = useLocation();
 
   const handleRedirect = (to: string, name: string) => {
+    const gaCategory = pathname === '/' ? '메인 페이지' : pathname === '/menu' ? '메뉴 페이지' : '';
     if (to === '/menu') {
       navigate('/menu');
     }
-    ga.event({ category: '하단 네비게이션', action: name, label: name });
+    !!gaCategory && ga.event({ category: gaCategory, action: '하단 네비게이션 클릭', label: name });
     return (window.location.href = to);
   };
 
