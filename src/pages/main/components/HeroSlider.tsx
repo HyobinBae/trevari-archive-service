@@ -16,7 +16,7 @@ const HeroSlider = () => {
   const { data: banners } = useGetBannersQuery({});
 
   const clickBanner = (title: string) => {
-    console.log('rolling banner title', title);
+    console.log('!rolling banner title!', title);
     ga.event({ action: '롤링 배너 클릭', category: '메인 페이지', label: title });
   };
 
