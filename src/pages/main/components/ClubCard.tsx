@@ -180,9 +180,11 @@ const ClubCard = (props: Props & IProps) => {
   const handleClickClub = (clubID: string, tagID?: string) => {
     const statusBadge = clubStatus(props.club) + ' ' || '';
     ga.event({ category: '메인 페이지', action: `${statusBadge}클럽 카드 클릭`, label: `${name}^${clubID}` });
-    window.location.href = `${endpoints.user_page_url}/clubs/show?clubID=${clubID}${tagID ? `&tagID=${tagID}` : ''}${
-      memberCount >= maxMemberCount ? `&status=FullClub` : ''
-    }`;
+    if (!openingReservation) {
+      window.location.href = `${endpoints.user_page_url}/clubs/show?clubID=${clubID}${tagID ? `&tagID=${tagID}` : ''}${
+        memberCount >= maxMemberCount ? `&status=FullClub` : ''
+      }`;
+    }
   };
 
   return (
