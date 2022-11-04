@@ -96,7 +96,6 @@ export const mainStore = createSlice({
     builder.addMatcher(createWishClub.matchFulfilled, (state, { payload }) => {
       const wishClub = payload.wishClub;
       state.wishClubs = [...state.wishClubs].concat(wishClub as WishClub);
-      ga.event({ action: '찜하기', category: '메인 페이지', label: `${wishClub?.club.name}^${wishClub?.clubID}` });
     });
     builder.addMatcher(deleteWishClub.matchFulfilled, (state, action) => {
       const {

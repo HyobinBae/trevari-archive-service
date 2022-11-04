@@ -107,6 +107,8 @@ const ClubCard = (props: Props & IProps) => {
           },
         }),
       );
+      ga.event({ action: '찜하기', category: '메인 페이지', label: `${name}^${id}` });
+
       toastAlert({
         open: true,
         type: 'info',
