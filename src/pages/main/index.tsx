@@ -10,6 +10,7 @@ import { selectUserId } from 'services/auth/auth.store';
 import { pageView } from 'services/analytics/analytics.store';
 import AppDownloadPopup from 'pages/main/components/AppDownloadPopup';
 import { useMobileDetect } from 'hooks/useDetectMobile';
+import NewCurationList from 'pages/main/components/NewCurationList';
 
 function Main() {
   const [isOpenPopup, setIsOpenPopup] = useState(false);
@@ -40,6 +41,7 @@ function Main() {
   return (
     <>
       <HeroSlider />
+      <NewCurationList />
       <CurationList />
       <Posts />
       <FooterComp />
