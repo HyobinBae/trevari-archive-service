@@ -1,0 +1,71 @@
+import styled from '@emotion/styled';
+import {
+  DisplayCard,
+  DisplayCardContent,
+  DisplayCardHero,
+  DisplayCardMeetingInfo,
+  DisplayCardParagraph,
+  DisplayCardPlaceInfo,
+  DisplayCardSubTitle,
+  DisplayCardTitle,
+} from '@trevari/business-components';
+import { format } from 'date-fns';
+import ko from 'date-fns/locale/ko';
+
+import { IEvent } from '../services/main.types';
+
+interface NewCurationClubCardProps {
+  event: IEvent;
+  cardWidth?: string;
+  imgHeight?: string;
+}
+
+const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' }: NewCurationClubCardProps) => {
+  const { id, name, description, thumbnailUrl, place, startedAt, hostName } = event;
+
+  const firstMeeting = format(Date.parse(startedAt!), 'M/d(EEE) HH:mm', {
+    locale: ko,
+  });
+  return (
+    <DisplayCard
+      style={{ width: cardWidth, maxWidth: '225px' }}
+      hero={
+        <DisplayCardHero>
+          <ImageWindow style={{ height: imgHeight }}>
+            <Image src={thumbnailUrl as string} alt="이미지" />
+          </ImageWindow>
+        </DisplayCardHero>
+      }
+    >
+      <DisplayCardContent>
+        <DisplayCardTitle>{name}</DisplayCardTitle>
+        <DisplayCardSubTitle>{hostName}</DisplayCardSubTitle>
+        <DisplayCardParagraph>{description}</DisplayCardParagraph>
+        <DisplayCardPlaceInfo>{place?.name}</DisplayCardPlaceInfo>
+        <DisplayCardMeetingInfo>{firstMeeting}</DisplayCardMeetingInfo>
+      </DisplayCardContent>
+    </DisplayCard>
+  );
+};
+
+const ImageWindow = styled.div`
+  position: relative;
+  width: 100%;
+  height: calc((50vw - 25px) * 0.9);
+  max-height: 203px;
+`;
+const Image = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+`;
+
+const IconWrapper = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 1000;
+`;
+export default NewCurationEventCard;
