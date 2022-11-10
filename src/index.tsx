@@ -20,7 +20,7 @@ export const persistor = persistStore(store);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const apm = initApm({
-  serviceName: 'm.trevari.co.kr',
+  serviceName: 'm-trevari-co-kr',
   serverUrl: 'https://c0b7c3d540624325a041607b770d97ad.apm.ap-northeast-2.aws.elastic-cloud.com:443',
   serviceVersion: '',
   environment: process.env.NODE_ENV,
