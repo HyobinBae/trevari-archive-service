@@ -7,13 +7,16 @@ import {
   getBanners,
   getCurationDisplayOrders,
   getCurations,
+  getNewCuration,
+  getNewCurations,
   getPosts,
   getScheduledClubs,
   getWishClubs,
 } from 'pages/main/services/main.api';
 import { RootState } from 'services/store';
 import { Banner, Club, Post, WishClub } from 'types/__generate__/user-backend-api';
-import { IClub, ICuration } from 'pages/main/services/main.types';
+import { IClub, IEvent, ICuration, INewCuration } from 'pages/main/services/main.types';
+
 interface MainState {
   banners: Banner[];
   tagOrders: string[];
@@ -21,6 +24,8 @@ interface MainState {
   wishClubs: WishClub[];
   scheduledClubs: Club[],
   curations: ICuration[];
+  newCurations: INewCuration[];
+  newCuration: INewCuration | null;
   posts: Post[];
   status: 'idle' | 'loading' | 'failed';
 }
@@ -32,6 +37,8 @@ const initialState: MainState = {
   wishClubs: [],
   scheduledClubs: [],
   curations: [],
+  newCurations: [],
+  newCuration: null,
   posts: [],
   status: 'failed',
 };
@@ -106,6 +113,12 @@ export const mainStore = createSlice({
       } = action;
       state.wishClubs = state.wishClubs.filter(wishClub => wishClub.clubID !== clubID);
     });
+    builder.addMatcher(getNewCurations.matchFulfilled, (state, {payload}) => {
+      state.newCurations = payload
+    });
+    builder.addMatcher(getNewCuration.matchFulfilled, (state, {payload}) => {
+      state.newCuration = payload
+    });
   },
 });
 
@@ -116,5 +129,7 @@ export const selectWishClubs = (state: RootState) => state.main.wishClubs;
 export const selectScheduledClubs = (state: RootState) => state.main.scheduledClubs;
 export const selectWishClubIds = (state: RootState) => state.main.wishClubs.map(({ clubID }) => clubID);
 export const selectDisplayCurations = (state: RootState) => state.main.curations;
+export const selectNewCurations = (state: RootState) => state.main.newCurations;
+export const selectNewCuration = (state: RootState) => state.main.newCuration;
 
 export default mainStore.reducer;

@@ -1,3 +1,5 @@
+import { INewCuration } from "pages/main/services/main.types";
+
 /* eslint-disable */
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -1961,6 +1963,8 @@ export type Query = {
   leaders?: Maybe<Array<Maybe<Leader>>>;
   mainManualPosts?: Maybe<Array<Maybe<Post>>>;
   mainPosts?: Maybe<Array<Maybe<Post>>>;
+  curation?:Maybe<INewCuration>;
+  curations?:Maybe<Array<INewCuration>>;
   meeting?: Maybe<Meeting>;
   meetingByID?: Maybe<Meeting>;
   meetings?: Maybe<Array<Maybe<Meeting>>>;
