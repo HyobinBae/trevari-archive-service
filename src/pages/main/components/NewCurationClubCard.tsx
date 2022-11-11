@@ -37,11 +37,20 @@ const NewCurationClubCard = ({
   cardWidth = '152px',
   imgHeight = '138px',
 }: NewCurationClubCardProps) => {
-  const { id, name, description, leaderTitle, coverUrl, place, meetings, seasonID, isBookmark } = club;
+  const {
+    id,
+    name,
+    description,
+    leaderTitle,
+    coverUrl,
+    Place: place,
+    meetings,
+    seasonID,
+    partnerDescriptionTitle,
+  } = club;
   const dispatch = useAppDispatch();
-  const [isCheckedBookmark, setCheckBookmark] = useState<boolean>(isBookmark);
+  const [isCheckedBookmark, setCheckBookmark] = useState<boolean>(isWishClub);
   const selectedUserId = useAppSelector(selectUserId);
-  const wishClubs = useAppSelector(selectWishClubIds);
   const { isAgreedToAllMarketing } = useAppSelector(selectUser);
   const [isAgreedToReceiveMarketingInfo, setAgreedToReceiveMarketingInfo] = useState(isAgreedToAllMarketing);
 
@@ -49,7 +58,7 @@ const NewCurationClubCard = ({
     e.stopPropagation();
     setCheckBookmark(state => !state);
     dispatch(confirmAuth());
-    if (wishClubs.includes(id)) {
+    if (isWishClub) {
       dispatch(deleteWishClub.initiate({ clubID: id, userID: selectedUserId }));
     } else {
       dispatch(
@@ -89,12 +98,16 @@ const NewCurationClubCard = ({
     }
   };
 
-  const firstMeeting = format(Date.parse(meetings[0].startedAt), 'M/d(EEE)', {
-    locale: ko,
-  });
-  const meetingStartedAt = format(Date.parse(meetings[0].startedAt), 'HH:mm', {
-    locale: ko,
-  });
+  const firstMeeting = meetings
+    ? format(Date.parse(meetings[0].startedAt), 'M/d(EEE)', {
+        locale: ko,
+      })
+    : '';
+  const meetingStartedAt = meetings
+    ? format(Date.parse(meetings[0].startedAt), 'HH:mm', {
+        locale: ko,
+      })
+    : '';
 
   const badgeText = clubStatus(club);
   const badgeColor = badgeText === 'NEW' ? '#1371FF' : 'black';
@@ -129,10 +142,10 @@ const NewCurationClubCard = ({
           )}
         </div>
         <DisplayCardTitle>{name}</DisplayCardTitle>
-        <DisplayCardSubTitle>{leaderTitle}</DisplayCardSubTitle>
+        <DisplayCardSubTitle>{leaderTitle || partnerDescriptionTitle}</DisplayCardSubTitle>
         <DisplayCardParagraph>{description}</DisplayCardParagraph>
         <DisplayCardPlaceInfo>{place?.name}</DisplayCardPlaceInfo>
-        <DisplayCardMeetingInfo>{`첫 모임 ${firstMeeting} ${meetingStartedAt}`}</DisplayCardMeetingInfo>
+        {meetings && <DisplayCardMeetingInfo>{`첫 모임 ${firstMeeting} ${meetingStartedAt}`}</DisplayCardMeetingInfo>}
       </DisplayCardContent>
     </DisplayCard>
   );

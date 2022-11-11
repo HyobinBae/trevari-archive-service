@@ -1,24 +1,32 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from '@emotion/styled';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { Club } from 'types/__generate__/user-backend-api';
 import NewCurationClubCard from './NewCurationClubCard';
 import { useWindowSize } from 'hooks/useWindowSize';
+import { IClub, IEvent } from '../services/main.types';
+import NewCurationEventCard from './NewCurationEventCard';
 
 interface IProps {
-  clubs?: Club[] | null;
+  lists?: Array<IClub | IEvent>;
+  wishClubIds?: Array<string>;
 }
 
-const NewCurationCardList = ({ clubs = [] }: IProps) => {
+const NewCurationCardList = ({ lists = [], wishClubIds = [] }: IProps) => {
   const { width } = useWindowSize();
 
-  const clubCardWidth = width > 500 ? 'calc(460px / 2.1)' : 'calc((100vw - 40px) / 2.1)';
-  const clubCardImgHeight = width > 500 ? 'calc(460px * 0.9 / 2.1)' : 'calc((100vw - 40px) * 0.9 / 2.1)';
+  const cardWidth = width > 500 ? 'calc(460px / 2.1)' : 'calc((100vw - 40px) / 2.1)';
+  const cardImgHeight = width > 500 ? 'calc(460px * 0.9 / 2.1)' : 'calc((100vw - 40px) * 0.9 / 2.1)';
+  const isClubCuration = (item: IClub | IEvent) => {
+    if ('coverUrl' in item) {
+      return true;
+    }
+    return false;
+  };
   return (
     <CurationClubsBase>
-      {clubs?.length > 2 ? (
+      {lists?.length > 2 ? (
         <Swiper
           slidesPerView={2.1}
           style={{ paddingRight: '20px' }}
@@ -31,16 +39,36 @@ const NewCurationCardList = ({ clubs = [] }: IProps) => {
             },
           }}
         >
-          {clubs?.map((club: Club) => (
-            <SwiperSlide key={`${club.id}`}>
-              <NewCurationClubCard cardWidth="100%" club={club} imgHeight={clubCardImgHeight} />
+          {lists?.map((item: IClub | IEvent) => (
+            <SwiperSlide key={`${item.id}`}>
+              {isClubCuration(item) ? (
+                <NewCurationClubCard
+                  isWishClub={wishClubIds.includes(item.id)}
+                  cardWidth="100%"
+                  club={item}
+                  imgHeight={cardImgHeight}
+                />
+              ) : (
+                <NewCurationEventCard event={item} cardWidth="100%" imgHeight={cardImgHeight} />
+              )}
             </SwiperSlide>
           ))}
         </Swiper>
       ) : (
         <ClubList>
-          {clubs?.map((club: Club) => (
-            <NewCurationClubCard cardWidth={clubCardWidth} imgHeight={clubCardImgHeight} key={club.id} club={club} />
+          {lists?.map((item: IClub | IEvent) => (
+            <Fragment key={item.id}>
+              {isClubCuration(item) ? (
+                <NewCurationClubCard
+                  isWishClub={wishClubIds.includes(item.id)}
+                  cardWidth={cardWidth}
+                  club={item}
+                  imgHeight={cardImgHeight}
+                />
+              ) : (
+                <NewCurationEventCard event={item} cardWidth={cardWidth} imgHeight={cardImgHeight} />
+              )}
+            </Fragment>
           ))}
         </ClubList>
       )}

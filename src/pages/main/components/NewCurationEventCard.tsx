@@ -21,11 +21,18 @@ interface NewCurationClubCardProps {
 }
 
 const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' }: NewCurationClubCardProps) => {
-  const { id, name, description, thumbnailUrl, place, startedAt, hostName } = event;
+  const { id, name, description, thumbnailUrl, Place: place, startedAt, hostName } = event;
 
-  const firstMeeting = format(Date.parse(startedAt!), 'M/d(EEE) HH:mm', {
-    locale: ko,
-  });
+  const meetingDate = startedAt
+    ? format(Date.parse(startedAt), 'M/d(EEE)', {
+        locale: ko,
+      })
+    : '';
+  const meetingStartedAt = startedAt
+    ? format(Date.parse(startedAt), 'HH:mm', {
+        locale: ko,
+      })
+    : '';
   return (
     <DisplayCard
       style={{ width: cardWidth, maxWidth: '225px' }}
@@ -42,7 +49,9 @@ const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' 
         <DisplayCardSubTitle>{hostName}</DisplayCardSubTitle>
         <DisplayCardParagraph>{description}</DisplayCardParagraph>
         <DisplayCardPlaceInfo>{place?.name}</DisplayCardPlaceInfo>
-        <DisplayCardMeetingInfo>{firstMeeting}</DisplayCardMeetingInfo>
+        <DisplayCardMeetingInfo>
+          {meetingDate} {meetingStartedAt}
+        </DisplayCardMeetingInfo>
       </DisplayCardContent>
     </DisplayCard>
   );
