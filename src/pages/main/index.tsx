@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import ReactFbq from 'react-fbq';
 
 import HeroSlider from 'pages/main/components/HeroSlider';
-import CurationList from 'pages/main/components/CurationList';
 import Posts from 'pages/main/components/Posts';
 import FooterComp from 'components/layout/Footer';
 import { useAppDispatch, useAppSelector } from 'services/store';
@@ -42,7 +41,6 @@ function Main() {
     <>
       <HeroSlider />
       <NewCurationList />
-      <CurationList />
       <Posts />
       <FooterComp />
       {mobileDetect.isMobile() && !mobileDetect.isApp() && isOpenPopup && (
