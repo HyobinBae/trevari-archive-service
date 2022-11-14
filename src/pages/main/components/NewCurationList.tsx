@@ -25,14 +25,11 @@ const NewCurationList = () => {
         getWishClubs.initiate({
           where: {
             userID: userId,
-            isClosed: false,
-            isFullClub: false,
-            isAppliablePeriod: true,
           },
         }),
       );
     }
-  }, [dispatch, authenticated, wishClubIds]);
+  }, [dispatch, authenticated]);
 
   const onClickViewAllButton = (id: string) => {
     navigate(`/curations/${id}`);

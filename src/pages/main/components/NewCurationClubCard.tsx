@@ -11,19 +11,21 @@ import {
 } from '@trevari/business-components';
 import { Badge } from '@trevari/components';
 import LoveFilled from 'components/svgs/LoveFilled';
-import { format } from 'date-fns';
+import { format, isBefore } from 'date-fns';
 import ko from 'date-fns/locale/ko';
 import { useState } from 'react';
 import { IClub } from '../services/main.types';
 import { confirmAuth, selectUserId } from 'services/auth/auth.store';
 import { useAppDispatch, useAppSelector } from 'services/store';
 import { createWishClub, deleteWishClub } from 'pages/main/services/main.api';
-import { selectWishClubIds } from 'pages/main/services/main.store';
 import ga from 'pages/main/ga';
 import { toastAlert } from 'services/ui.store';
 import { selectUser } from 'services/user/user.store';
 import { updateUser } from 'services/user/user.api';
 import { clubStatus } from 'utils/club';
+import { heading9, title6 } from '@trevari/typo';
+import { RightChevronIcon } from '@trevari/icons';
+import LoveOutlineOpacityApplied from 'components/svgs/LoveOutlineOpacityApplied';
 interface NewCurationClubCardProps {
   club: IClub;
   isWishClub: boolean;
@@ -46,17 +48,20 @@ const NewCurationClubCard = ({
     Place: place,
     meetings,
     seasonID,
+    openedAt,
+    memberCount,
+    maxMemberCount,
     partnerDescriptionTitle,
   } = club;
   const dispatch = useAppDispatch();
-  const [isCheckedBookmark, setCheckBookmark] = useState<boolean>(isWishClub);
   const selectedUserId = useAppSelector(selectUserId);
   const { isAgreedToAllMarketing } = useAppSelector(selectUser);
   const [isAgreedToReceiveMarketingInfo, setAgreedToReceiveMarketingInfo] = useState(isAgreedToAllMarketing);
+  const isFullClub = memberCount >= maxMemberCount;
+  const openingReservation = isBefore(new Date(), Date.parse(openedAt as string));
 
   const handleClickBookmark = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
-    setCheckBookmark(state => !state);
     dispatch(confirmAuth());
     if (isWishClub) {
       dispatch(deleteWishClub.initiate({ clubID: id, userID: selectedUserId }));
@@ -114,13 +119,33 @@ const NewCurationClubCard = ({
 
   const renderHearthIcon = () => (
     <IconWrapper onClick={handleClickBookmark}>
-      {isCheckedBookmark ? (
-        <LoveFilled strokeColor="#FF7900" />
-      ) : (
-        <LoveFilled color="transparent" strokeColor="white" />
-      )}
+      {isWishClub ? <LoveFilled strokeColor="#FF7900" /> : <LoveOutlineOpacityApplied />}
     </IconWrapper>
   );
+
+  const renderIsFullLayer = () => {
+    return (
+      <DimLayer>
+        <LayerTextWrap>
+          <LayerText>꽉 찼어요!</LayerText>
+        </LayerTextWrap>
+      </DimLayer>
+    );
+  };
+  const renderWillOpenLayer = () => {
+    return (
+      <DimLayer>
+        <FlexWrap>
+          <DarkLayerTextBox>
+            찜하고 오픈 알림 받기 <RightChevronIcon fontSize="20" />
+          </DarkLayerTextBox>
+          <DarkLayerTextBox>
+            {format(Date.parse(openedAt as string), 'M/d(EEE) HH:mm', { locale: ko })} 오픈 예정
+          </DarkLayerTextBox>
+        </FlexWrap>
+      </DimLayer>
+    );
+  };
   return (
     <DisplayCard
       style={{ width: cardWidth, maxWidth: '225px' }}
@@ -128,6 +153,8 @@ const NewCurationClubCard = ({
         <DisplayCardHero>
           <ImageWindow style={{ height: imgHeight }}>
             {renderHearthIcon()}
+            {isFullClub && renderIsFullLayer()}
+            {openingReservation && renderWillOpenLayer()}
             <Image src={coverUrl as string} alt="이미지" />
           </ImageWindow>
         </DisplayCardHero>
@@ -170,4 +197,42 @@ const IconWrapper = styled.div`
   right: 5px;
   z-index: 1000;
 `;
+
+const DimLayer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: ${({ theme }) => theme.colors.overlay50};
+  z-index: 10;
+`;
+const LayerTextWrap = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+const LayerText = styled.p`
+  ${heading9};
+  color: ${({ theme }) => theme.colors.white};
+`;
+const FlexWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+`;
+const DarkLayerTextBox = styled.div`
+  background-color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.white};
+  padding: 7px 0 7px 5px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  ${title6};
+`;
+
 export default NewCurationClubCard;
