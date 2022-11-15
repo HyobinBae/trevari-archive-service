@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
 import TopNavigation from 'components/layout/TopNavigation';
-import BottomNavigation from 'components/layout/BottomNavigation';
+import BottomNavigation from 'components/layout/BottomNavigationWrapper';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { Collapse, Toast } from '@trevari/components';
 import { useLocation } from 'react-router-dom';
