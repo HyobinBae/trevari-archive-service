@@ -15,6 +15,7 @@ import { body6 } from '@trevari/typo';
 import { Button } from '@trevari/components';
 import { goToPage } from 'utils';
 import NewCurationEventCard from 'pages/main/components/NewCurationEventCard';
+import LoadingPage from 'components/base/LoadingPage';
 
 const Curations = () => {
   const { curationId } = useParams();
@@ -49,7 +50,7 @@ const Curations = () => {
     }
     return false;
   };
-  if (!newCuration) return;
+  if (!newCuration) return <LoadingPage />;
   return (
     <Box style={{ paddingTop: '64px', minHeight: '100vh', paddingBottom: '67px' }}>
       <CurationInfoBox>
@@ -59,7 +60,7 @@ const Curations = () => {
 
       <Divider />
       {newCuration.lists.clubLists.length > 0 && (
-        <GridCardCount>{`총 ${newCuration.lists.clubLists.length}개의 클럽`}</GridCardCount>
+        <GridCardCount>{`총 ${newCuration.lists.clubLists.length}개`}</GridCardCount>
       )}
       <GridBox>
         {[...newCuration.lists.clubLists, ...newCuration.lists.eventLists].map(item => (
