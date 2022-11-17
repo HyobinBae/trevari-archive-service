@@ -26,6 +26,8 @@ import { clubStatus } from 'utils/club';
 import { heading9, title6 } from '@trevari/typo';
 import { RightChevronIcon } from '@trevari/icons';
 import LoveOutlineOpacityApplied from 'components/svgs/LoveOutlineOpacityApplied';
+import { goToPage } from 'utils';
+import { endpoints } from 'config';
 interface NewCurationClubCardProps {
   club: IClub;
   isWishClub: boolean;
@@ -114,6 +116,9 @@ const NewCurationClubCard = ({
       })
     : '';
 
+  const onClickClubCard = () => {
+    goToPage(`${endpoints.user_page_url}/clubs/show?clubID=${id}`);
+  };
   const badgeText = clubStatus(club);
   const badgeColor = badgeText === 'NEW' ? '#1371FF' : 'black';
 
@@ -148,7 +153,7 @@ const NewCurationClubCard = ({
   };
   return (
     <DisplayCard
-      style={{ width: cardWidth, maxWidth: '225px' }}
+      style={{ width: cardWidth, maxWidth: '225px', cursor: 'pointer' }}
       hero={
         <DisplayCardHero>
           <ImageWindow style={{ height: imgHeight }}>
@@ -159,6 +164,7 @@ const NewCurationClubCard = ({
           </ImageWindow>
         </DisplayCardHero>
       }
+      onClick={onClickClubCard}
     >
       <DisplayCardContent>
         <div>

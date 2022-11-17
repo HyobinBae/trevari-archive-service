@@ -9,8 +9,10 @@ import {
   DisplayCardSubTitle,
   DisplayCardTitle,
 } from '@trevari/business-components';
+import { endpoints } from 'config';
 import { format } from 'date-fns';
 import ko from 'date-fns/locale/ko';
+import { goToPage } from 'utils';
 
 import { IEvent } from '../services/main.types';
 
@@ -22,7 +24,6 @@ interface NewCurationClubCardProps {
 
 const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' }: NewCurationClubCardProps) => {
   const { id, name, description, thumbnailUrl, Place: place, startedAt, hostName } = event;
-
   const meetingDate = startedAt
     ? format(Date.parse(startedAt), 'M/d(EEE)', {
         locale: ko,
@@ -33,9 +34,13 @@ const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' 
         locale: ko,
       })
     : '';
+
+  const onClickEventCard = () => {
+    goToPage(`${endpoints.user_page_url}/events/show?eventID=${id}`);
+  };
   return (
     <DisplayCard
-      style={{ width: cardWidth, maxWidth: '225px' }}
+      style={{ width: cardWidth, maxWidth: '225px', cursor: 'pointer' }}
       hero={
         <DisplayCardHero>
           <ImageWindow style={{ height: imgHeight }}>
@@ -43,6 +48,7 @@ const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' 
           </ImageWindow>
         </DisplayCardHero>
       }
+      onClick={onClickEventCard}
     >
       <DisplayCardContent>
         <DisplayCardTitle>{name}</DisplayCardTitle>
