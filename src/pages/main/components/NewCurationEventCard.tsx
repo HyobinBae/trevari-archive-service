@@ -56,7 +56,7 @@ const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' 
         <div>{badgeText && <Badge variant="filled">{badgeText}</Badge>}</div>
         <DisplayCardTitle>{name}</DisplayCardTitle>
         <DisplayCardSubTitle>{hostName}</DisplayCardSubTitle>
-        <DisplayCardParagraph>{description}</DisplayCardParagraph>
+        <DisplayCardParagraph style={{ display: 'block' }}>{description}</DisplayCardParagraph>
         <DisplayCardPlaceInfo>{place?.name}</DisplayCardPlaceInfo>
         <DisplayCardMeetingInfo>
           {meetingDate} {meetingStartedAt}

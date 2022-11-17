@@ -53,7 +53,6 @@ const NewCurationClubCard = ({
     openedAt,
     memberCount,
     maxMemberCount,
-    partnerDescriptionTitle,
   } = club;
   const dispatch = useAppDispatch();
   const selectedUserId = useAppSelector(selectUserId);
@@ -175,8 +174,8 @@ const NewCurationClubCard = ({
           )}
         </div>
         <DisplayCardTitle>{name}</DisplayCardTitle>
-        <DisplayCardSubTitle>{leaderTitle || partnerDescriptionTitle}</DisplayCardSubTitle>
-        <DisplayCardParagraph>{description}</DisplayCardParagraph>
+        <DisplayCardSubTitle>{leaderTitle}</DisplayCardSubTitle>
+        <DisplayCardParagraph style={{ display: 'block' }}>{description}</DisplayCardParagraph>
         <DisplayCardPlaceInfo>{place?.name}</DisplayCardPlaceInfo>
         {meetings && <DisplayCardMeetingInfo>{`첫 모임 ${firstMeeting} ${meetingStartedAt}`}</DisplayCardMeetingInfo>}
       </DisplayCardContent>

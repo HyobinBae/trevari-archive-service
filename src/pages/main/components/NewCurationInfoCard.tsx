@@ -4,31 +4,15 @@ import { INewCuration } from '../services/main.types';
 const NewCurationInfoCard = ({ curation }: { curation: INewCuration }) => {
   const { title, description, head, body, coverUrl } = curation;
 
-  const ellipsisForLongTitle = title.length > 10 ? '...' : '';
-  const ellipsisForLongDescription = description.length > 20 ? '...' : '';
-  const ellipsisForLongHead = head.length > 30 ? '...' : '';
-  const ellipsisForLongBody = body.length > 80 ? '...' : '';
   return (
     <CurationInfoCard>
       <CurationCoverImage src={coverUrl} />
       <CurationTitleBox>
-        <div>
-          {title.slice(0, 10)}
-          {ellipsisForLongTitle}
-        </div>
-        <div>
-          {description.slice(0, 20)}
-          {ellipsisForLongDescription}
-        </div>
+        <div>{title}</div>
+        <div>{description}</div>
       </CurationTitleBox>
-      <CurationHeadingText>
-        {head.slice(0, 30)}
-        {ellipsisForLongHead}
-      </CurationHeadingText>
-      <CurationBodyText>
-        {body.slice(0, 80)}
-        {ellipsisForLongBody}
-      </CurationBodyText>
+      <CurationHeadingText>{head}</CurationHeadingText>
+      <CurationBodyText>{body}</CurationBodyText>
     </CurationInfoCard>
   );
 };
