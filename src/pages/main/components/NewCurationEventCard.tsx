@@ -9,6 +9,7 @@ import {
   DisplayCardSubTitle,
   DisplayCardTitle,
 } from '@trevari/business-components';
+import { Badge } from '@trevari/components';
 import { endpoints } from 'config';
 import { format } from 'date-fns';
 import ko from 'date-fns/locale/ko';
@@ -23,7 +24,7 @@ interface NewCurationClubCardProps {
 }
 
 const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' }: NewCurationClubCardProps) => {
-  const { id, name, description, thumbnailUrl, Place: place, startedAt, hostName } = event;
+  const { id, name, description, thumbnailUrl, Place: place, startedAt, hostName, memberCount, maxMemberCount } = event;
   const meetingDate = startedAt
     ? format(Date.parse(startedAt), 'M/d(EEE)', {
         locale: ko,
@@ -35,6 +36,7 @@ const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' 
       })
     : '';
 
+  const badgeText = maxMemberCount && memberCount && maxMemberCount * 0.7 <= memberCount ? '마감 임박' : '';
   const onClickEventCard = () => {
     goToPage(`${endpoints.user_page_url}/events/show?eventID=${id}`);
   };
@@ -51,6 +53,7 @@ const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' 
       onClick={onClickEventCard}
     >
       <DisplayCardContent>
+        <div>{badgeText && <Badge variant="filled">{badgeText}</Badge>}</div>
         <DisplayCardTitle>{name}</DisplayCardTitle>
         <DisplayCardSubTitle>{hostName}</DisplayCardSubTitle>
         <DisplayCardParagraph>{description}</DisplayCardParagraph>

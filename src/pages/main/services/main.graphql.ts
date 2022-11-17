@@ -290,6 +290,7 @@ export const GET_NEW_CURATION = gql`
           name
           description
           thumbnailUrl
+          memberCount, maxMemberCount
           Place {
             name
           }
@@ -331,6 +332,7 @@ export const GET_NEW_CURATIONS = gql`
           name
           description
           thumbnailUrl
+          memberCount, maxMemberCount
           Place {
             name
           }
