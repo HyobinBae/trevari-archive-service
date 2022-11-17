@@ -25,6 +25,9 @@ const NewCurationList = () => {
         getWishClubs.initiate({
           where: {
             userID: userId,
+            isClosed: false,
+            isFullClub: false,
+            isAppliablePeriod: true,
           },
         }),
       );
