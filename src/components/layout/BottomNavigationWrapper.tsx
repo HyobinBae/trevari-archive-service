@@ -31,13 +31,13 @@ const bottomNavs = [
     icon: <LoveOutlinedIcon width={24} height={24} color={'#6E6E6C'} />,
     activeIcon: <LoveFilledIcon width={24} height={24} />,
     label: '찜',
-    to: `${endpoints}/wishList`,
+    to: `${endpoints.user_page_url}/wishList`,
   },
   {
     icon: <MyOutlinedIcon width={24} height={24} />,
     activeIcon: <MyFilledIcon width={24} height={24} />,
     label: '마이페이지',
-    to: `${endpoints}/mypage`,
+    to: `${endpoints.user_page_url}/mypage`,
   },
 ];
 
