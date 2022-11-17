@@ -80,10 +80,4 @@ const Image = styled.img`
   width: 100%;
 `;
 
-const IconWrapper = styled.div`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  z-index: 1000;
-`;
 export default NewCurationEventCard;

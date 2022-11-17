@@ -29,7 +29,7 @@ const Curations = () => {
     goToPage('https://dev.trevari.co.kr/apply');
   };
   useEffect(() => {
-    dispatch(getNewCuration.initiate({ id: curationId! }));
+    dispatch(getNewCuration.initiate({ id: curationId || '' }));
     if (authenticated) {
       dispatch(
         getWishClubs.initiate({
