@@ -15,7 +15,7 @@ import {
 } from 'pages/main/services/main.api';
 import { RootState } from 'services/store';
 import { Banner, Club, Post, WishClub } from 'types/__generate__/user-backend-api';
-import { IClub, IEvent, ICuration, INewCuration } from 'pages/main/services/main.types';
+import { IClub, ICuration, INewCuration } from 'pages/main/services/main.types';
 
 interface MainState {
   banners: Banner[];
