@@ -16,8 +16,10 @@ import { Button } from '@trevari/components';
 import { goToPage } from 'utils';
 import NewCurationEventCard from 'pages/main/components/NewCurationEventCard';
 import LoadingPage from 'components/base/LoadingPage';
+import { useWindowSize } from 'hooks/useWindowSize';
 
 const Curations = () => {
+  const { width } = useWindowSize();
   const { curationId } = useParams();
   const dispatch = useAppDispatch();
   const authenticated = useAppSelector(selectAuthenticated);
@@ -50,6 +52,9 @@ const Curations = () => {
     }
     return false;
   };
+
+  const cardImgHeight = width > 500 ? 'calc(450px * 0.9 / 2)' : 'calc((100vw - 50px) * 0.9 / 2)';
+
   if (!newCuration) return <LoadingPage />;
   return (
     <Box style={{ paddingTop: '64px', minHeight: '100vh', paddingBottom: '67px' }}>
@@ -71,9 +76,10 @@ const Curations = () => {
                 cardWidth="100%"
                 key={item.id}
                 club={item}
+                imgHeight={cardImgHeight}
               />
             ) : (
-              <NewCurationEventCard cardWidth="100%" key={item.id} event={item} />
+              <NewCurationEventCard cardWidth="100%" key={item.id} event={item} imgHeight={cardImgHeight} />
             )}
           </>
         ))}
