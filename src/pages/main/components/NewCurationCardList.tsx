@@ -7,6 +7,7 @@ import NewCurationClubCard from './NewCurationClubCard';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { IClub, IEvent } from '../services/main.types';
 import NewCurationEventCard from './NewCurationEventCard';
+import { CURATION_CARD_ASPECT_RATIO } from '../const';
 
 interface IProps {
   lists?: Array<IClub | IEvent>;
@@ -17,7 +18,10 @@ const NewCurationCardList = ({ lists = [], wishClubIds = [] }: IProps) => {
   const { width } = useWindowSize();
 
   const cardWidth = width > 500 ? 'calc(460px / 2.1)' : 'calc((100vw - 40px) / 2.1)';
-  const cardImgHeight = width > 500 ? 'calc(460px * 0.9 / 2.1)' : 'calc((100vw - 40px) * 0.9 / 2.1)';
+  const cardImgHeight =
+    width > 500
+      ? `calc(460px * ${CURATION_CARD_ASPECT_RATIO} / 2.1)`
+      : `calc((100vw - 40px) * ${CURATION_CARD_ASPECT_RATIO} / 2.1)`;
   const isClubCuration = (item: IClub | IEvent) => {
     if ('coverUrl' in item) {
       return true;
@@ -30,7 +34,7 @@ const NewCurationCardList = ({ lists = [], wishClubIds = [] }: IProps) => {
         <Swiper
           slidesPerView={2.1}
           style={{ paddingRight: '20px' }}
-          spaceBetween={20}
+          spaceBetween={10}
           centeredSlides={false}
           breakpoints={{
             500: {

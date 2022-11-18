@@ -17,6 +17,7 @@ import { goToPage } from 'utils';
 import NewCurationEventCard from 'pages/main/components/NewCurationEventCard';
 import LoadingPage from 'components/base/LoadingPage';
 import { useWindowSize } from 'hooks/useWindowSize';
+import { CURATION_CARD_ASPECT_RATIO } from 'pages/main/const';
 
 const Curations = () => {
   const { width } = useWindowSize();
@@ -53,7 +54,10 @@ const Curations = () => {
     return false;
   };
 
-  const cardImgHeight = width > 500 ? 'calc(450px * 0.9 / 2)' : 'calc((100vw - 50px) * 0.9 / 2)';
+  const cardImgHeight =
+    width > 500
+      ? `calc(450px * ${CURATION_CARD_ASPECT_RATIO} / 2)`
+      : `calc((100vw - 50px) * ${CURATION_CARD_ASPECT_RATIO} / 2)`;
 
   if (!newCuration) return <LoadingPage />;
   return (
