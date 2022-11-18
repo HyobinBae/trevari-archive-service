@@ -119,8 +119,11 @@ const NewCurationClubCard = ({
     : '';
 
   const onClickClubCard = () => {
-    goToPage(`${endpoints.user_page_url}/clubs/show?clubID=${id}`);
+    if (!openingReservation) {
+      goToPage(`${endpoints.user_page_url}/clubs/show?clubID=${id}`);
+    }
   };
+
   const badgeText = clubStatus(club);
   const badgeColor = badgeText === 'NEW' ? '#1371FF' : 'black';
   const titleMarginTopPx = badgeText ? '6px' : '0px';

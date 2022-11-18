@@ -98,7 +98,5 @@ export const CurationClubsBase = styled.div`
 export const ClubList = styled.div`
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
-  overflow-y: hidden;
   gap: 10px;
 `;

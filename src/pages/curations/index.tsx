@@ -71,6 +71,9 @@ const Curations = () => {
       {newCuration.lists.clubLists.length > 0 && (
         <GridCardCount>{`총 ${newCuration.lists.clubLists.length}개`}</GridCardCount>
       )}
+      {newCuration.lists.eventLists.length > 0 && (
+        <GridCardCount>{`총 ${newCuration.lists.eventLists.length}개`}</GridCardCount>
+      )}
       <GridBox>
         {[...newCuration.lists.clubLists, ...newCuration.lists.eventLists].map(item => (
           <>
