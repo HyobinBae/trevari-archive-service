@@ -9,11 +9,9 @@ import { selectNewCurations, selectWishClubIds } from '../services/main.store';
 import { getNewCurations, getWishClubs } from '../services/main.api';
 import { INewCuration } from '../services/main.types';
 import { selectAuthenticated, selectUserId } from 'services/auth/auth.store';
-import { useNavigate } from 'react-router-dom';
 
 const NewCurationList = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const newCurations: INewCuration[] = useAppSelector(selectNewCurations);
   const authenticated = useAppSelector(selectAuthenticated);
   const userId = useAppSelector(selectUserId);
