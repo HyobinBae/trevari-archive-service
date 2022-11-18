@@ -277,10 +277,13 @@ export const GET_NEW_CURATION = gql`
           coverUrl
           description, leaderTitle,
           memberCount, maxMemberCount, applicationDeadline, openedAt
-          Place {
+          place {
             name
           }
-          meetingDatas {
+          clubGroup {
+            description
+          }
+          meetings {
             startedAt
           }
           seasonID
@@ -291,7 +294,7 @@ export const GET_NEW_CURATION = gql`
           description
           thumbnailUrl
           memberCount, maxMemberCount
-          Place {
+          place {
             name
           }
           hostName
@@ -319,13 +322,16 @@ export const GET_NEW_CURATIONS = gql`
           coverUrl
           description, leaderTitle, partnerDescriptionTitle
           memberCount, maxMemberCount, applicationDeadline, openedAt
-          Place {
+          place {
             name
           }
-          meetingDatas {
+          meetings {
             startedAt
           }
           seasonID
+          clubGroup {
+            description
+          }
         }
         eventLists {
           id
@@ -333,7 +339,7 @@ export const GET_NEW_CURATIONS = gql`
           description
           thumbnailUrl
           memberCount, maxMemberCount
-          Place {
+          place {
             name
           }
           hostName

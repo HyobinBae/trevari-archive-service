@@ -49,13 +49,15 @@ const NewCurationClubCard = ({
     description,
     leaderTitle,
     coverUrl,
-    Place: place,
-    meetingDatas,
+    place,
+    meetings,
+    clubGroup,
     seasonID,
     openedAt,
     memberCount,
     maxMemberCount,
   } = club;
+  const desc = description ? description : clubGroup && clubGroup.description;
   const dispatch = useAppDispatch();
   const selectedUserId = useAppSelector(selectUserId);
   const { isAgreedToAllMarketing } = useAppSelector(selectUser);
@@ -106,13 +108,13 @@ const NewCurationClubCard = ({
     }
   };
 
-  const firstMeeting = meetingDatas
-    ? format(Date.parse(meetingDatas[0].startedAt), 'M/d(EEE)', {
+  const firstMeeting = meetings
+    ? format(Date.parse(meetings[0].startedAt), 'M/d(EEE)', {
         locale: ko,
       })
     : '';
-  const meetingStartedAt = meetingDatas
-    ? format(Date.parse(meetingDatas[0].startedAt), 'HH:mm', {
+  const meetingStartedAt = meetings
+    ? format(Date.parse(meetings[0].startedAt), 'HH:mm', {
         locale: ko,
       })
     : '';
@@ -177,11 +179,9 @@ const NewCurationClubCard = ({
         </div>
         <DisplayCardTitle>{name}</DisplayCardTitle>
         <DisplayCardSubTitle>{leaderTitle}</DisplayCardSubTitle>
-        <DisplayCardParagraph style={{ display: 'block' }}>{description}</DisplayCardParagraph>
+        <DisplayCardParagraph style={{ display: 'block' }}>{desc}</DisplayCardParagraph>
         <DisplayCardPlaceInfo>{place?.name}</DisplayCardPlaceInfo>
-        {meetingDatas && (
-          <DisplayCardMeetingInfo>{`첫 모임 ${firstMeeting} ${meetingStartedAt}`}</DisplayCardMeetingInfo>
-        )}
+        {meetings && <DisplayCardMeetingInfo>{`첫 모임 ${firstMeeting} ${meetingStartedAt}`}</DisplayCardMeetingInfo>}
       </DisplayCardContent>
     </DisplayCard>
   );

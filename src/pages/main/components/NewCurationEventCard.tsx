@@ -24,7 +24,7 @@ interface NewCurationClubCardProps {
 }
 
 const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' }: NewCurationClubCardProps) => {
-  const { id, name, description, thumbnailUrl, Place: place, startedAt, hostName, memberCount, maxMemberCount } = event;
+  const { id, name, description, thumbnailUrl, place, startedAt, hostName, memberCount, maxMemberCount } = event;
   const meetingDate = startedAt
     ? format(Date.parse(startedAt), 'M/d(EEE)', {
         locale: ko,
