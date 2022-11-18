@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { body6, body7, body8, heading8, title2 } from '@trevari/typo';
+import { body6, body7, body8, heading10, heading8, title2 } from '@trevari/typo';
 
 export const Base = styled.div`
   width: 100%;
@@ -141,4 +141,19 @@ export const ClickMore = styled.a`
 export const GoToBookreviewText = styled.div`
   color: ${({ theme }) => theme.colors.orange900};
   font-size: 16px;
+`;
+
+export const GoApplyPageBox = styled.a`
+  background: ${({ theme }) => theme.colors.black};
+  display: flex;
+  justify-content: sapce-between;
+  align-items: center;
+  padding: 17px 20px;
+  margin-top: -5px;
+  div {
+    flex: 1;
+  }
+  ${heading10};
+  color: ${({ theme }) => theme.colors.orange900};
+  cursor: pointer;
 `;

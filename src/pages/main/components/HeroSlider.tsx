@@ -7,10 +7,12 @@ import 'swiper/css/pagination';
 
 import { useGetBannersQuery } from 'pages/main/services/main.api';
 import { Banner } from 'types/__generate__/user-backend-api';
-import { Base, GradiantWrap, ImgLinkWrap, SwiperImg } from 'pages/main/styles/main.style';
+import { Base, GradiantWrap, ImgLinkWrap, SwiperImg, GoApplyPageBox } from 'pages/main/styles/main.style';
 import 'pages/main/styles/main.css';
 import ga from 'pages/main/ga';
 import Loading from 'components/base/Loading';
+import { RightChevronIcon } from '@trevari/icons';
+import { endpoints } from 'config';
 
 const HeroSlider = () => {
   const { data: banners } = useGetBannersQuery({});
@@ -63,6 +65,10 @@ const HeroSlider = () => {
             })}
         </Swiper>
       </GradiantWrap>
+      <GoApplyPageBox href={`${endpoints.user_page_url}/apply`}>
+        <div>어떤 클럽을 찾으세요?</div>
+        <RightChevronIcon width="24" height="24" color="#FF7900" />
+      </GoApplyPageBox>
     </Base>
   );
 };

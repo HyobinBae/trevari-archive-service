@@ -67,7 +67,7 @@ const Curations = () => {
         <CurationBody>{newCuration.description}</CurationBody>
       </CurationInfoBox>
 
-      <Divider />
+      <Divider style={{ backgroundColor: '#F7F7F5' }} />
       {newCuration.lists.clubLists.length > 0 && (
         <GridCardCount>{`총 ${newCuration.lists.clubLists.length}개`}</GridCardCount>
       )}
