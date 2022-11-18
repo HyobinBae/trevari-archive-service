@@ -39,17 +39,17 @@ const NewCurationList = () => {
   };
   return (
     <Box>
-      {newCurations?.map(curation => (
+      {newCurations?.map((curation, index) => (
         <React.Fragment key={curation.id}>
           <NewCurationInfoCard curation={curation} />
           <NewCurationCardList
             lists={[...curation.lists.clubLists, ...curation.lists.eventLists]}
             wishClubIds={wishClubIds}
           />
-          <ButtonWrapper>
+          <ButtonWrapper isLast={newCurations.length === index + 1}>
             <Button
               onClick={() => onClickViewAllButton(curation.id)}
-              size="big"
+              size="large"
               fullWidth
               colorVariant="dark"
               variant="outline"
@@ -64,8 +64,8 @@ const NewCurationList = () => {
 };
 
 const Box = styled.div``;
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.div<{ isLast: boolean }>`
   padding: 0 20px;
-  margin: 24px 0 60px;
+  margin: ${({ isLast }) => (isLast ? '24px 0 64px' : '24px 0 60px')};
 `;
 export default NewCurationList;

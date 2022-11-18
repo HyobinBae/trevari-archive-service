@@ -48,7 +48,7 @@ const NewCurationClubCard = ({
     leaderTitle,
     coverUrl,
     Place: place,
-    meetings,
+    meetingDatas,
     seasonID,
     openedAt,
     memberCount,
@@ -104,13 +104,13 @@ const NewCurationClubCard = ({
     }
   };
 
-  const firstMeeting = meetings
-    ? format(Date.parse(meetings[0].startedAt), 'M/d(EEE)', {
+  const firstMeeting = meetingDatas
+    ? format(Date.parse(meetingDatas[0].startedAt), 'M/d(EEE)', {
         locale: ko,
       })
     : '';
-  const meetingStartedAt = meetings
-    ? format(Date.parse(meetings[0].startedAt), 'HH:mm', {
+  const meetingStartedAt = meetingDatas
+    ? format(Date.parse(meetingDatas[0].startedAt), 'HH:mm', {
         locale: ko,
       })
     : '';
@@ -177,7 +177,9 @@ const NewCurationClubCard = ({
         <DisplayCardSubTitle>{leaderTitle}</DisplayCardSubTitle>
         <DisplayCardParagraph style={{ display: 'block' }}>{description}</DisplayCardParagraph>
         <DisplayCardPlaceInfo>{place?.name}</DisplayCardPlaceInfo>
-        {meetings && <DisplayCardMeetingInfo>{`첫 모임 ${firstMeeting} ${meetingStartedAt}`}</DisplayCardMeetingInfo>}
+        {meetingDatas && (
+          <DisplayCardMeetingInfo>{`첫 모임 ${firstMeeting} ${meetingStartedAt}`}</DisplayCardMeetingInfo>
+        )}
       </DisplayCardContent>
     </DisplayCard>
   );

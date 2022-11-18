@@ -2,23 +2,13 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { format } from 'date-fns';
 import { isMobile } from 'react-device-detect';
-import {
-  MultiCard,
-  MultiCardContent,
-  MultiCardHero,
-  MultiCardParagraph,
-  MultiCardTitle,
-} from '@trevari/business-components';
 
 import { useGetPostsQuery } from 'pages/main/services/main.api';
-import Box from 'components/base/Box';
 import CurationTitle from 'pages/main/components/CurationTitle';
 import {
   Base,
-  BlogListBody,
   PostListWrap,
   DateFormat,
-  LayerSmallText,
   NoticeContents,
   NoticeItems,
   NoticeListBody,
@@ -28,42 +18,15 @@ import {
 import { Post } from 'types/__generate__/user-backend-api';
 import LineArrow from 'components/svgs/LineArrow';
 import { endpoints } from 'config';
-import ga from 'pages/main/ga';
+import { Divider } from 'pages/curations/curations.styles';
 
 const Posts = () => {
   const { data: posts } = useGetPostsQuery({ limit: 10, excludeClosedPost: true });
-  const blogs = posts?.filter(({ category }) => category !== '공지').slice(0, 3) || [];
   const notices = posts?.filter(({ category }) => category === '공지').slice(0, 3) || [];
-
-  const clickPost = () => {
-    ga.event({ category: '메인 페이지', action: '블로그 카드 클릭', label: '' });
-  };
 
   return (
     <Base>
-      <PostListWrap show={blogs?.length > 0}>
-        <CurationTitle title="블로그" more={`${endpoints.user_page_url}/blog`} />
-        <BlogListBody>
-          {blogs?.map((post: Post) => (
-            <Box style={{ marginBottom: '24px' }} key={post.id}>
-              <Link href={`${endpoints.user_page_url}/blog/show?id=${post.id}`} onClick={clickPost}>
-                <MultiCard hero={<MultiCardHero src={post.thumbnailUrl} alt="이미지" />} style={{ width: '100%' }}>
-                  <MultiCardContent>
-                    <MultiCardTitle>{post.title}</MultiCardTitle>
-                    <Box style={{ marginTop: '8px' }}>
-                      <MultiCardParagraph>{post.description}</MultiCardParagraph>
-                    </Box>
-                    <LayerSmallText>
-                      {' '}
-                      조회수 {post.viewCount} · {format(Date.parse(post.createdAt), 'yyyy.MM.dd')}{' '}
-                    </LayerSmallText>
-                  </MultiCardContent>
-                </MultiCard>
-              </Link>
-            </Box>
-          ))}
-        </BlogListBody>
-      </PostListWrap>
+      <Divider style={{ height: '10px', backgroundColor: '#F7F7F5' }} />
       <PostListWrap show={notices?.length > 0}>
         <CurationTitle title="공지사항" more={`${endpoints.user_page_url}/blog?category=공지`} />
         <NoticeListBody>
@@ -72,7 +35,6 @@ const Posts = () => {
               <NoticeItems>
                 <NoticeContents>
                   <TextOverflowForTitle>{title}</TextOverflowForTitle>
-                  {!isMobile && description && <TextOverflowForDescription>{description}</TextOverflowForDescription>}
                   <DateFormat>{format(new Date(createdAt) || new Date(updatedAt), 'yyyy.MM.dd')}</DateFormat>
                 </NoticeContents>
                 <LineArrow />

@@ -35,10 +35,10 @@ const CurationTitleBox = styled.div`
   div {
     padding: 5px 9px;
     border: 1px solid black;
+    border-right: unset;
   }
   div + div {
     flex: 1;
-    border-left: unset;
   }
 `;
 const CurationHeadingText = styled.div`

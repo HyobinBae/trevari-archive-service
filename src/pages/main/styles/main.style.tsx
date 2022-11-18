@@ -39,10 +39,8 @@ export const PostListWrap = styled.div<{ show: boolean }>`
   ${({ theme, show }) =>
     show
       ? `
-  padding: 54px 0 80px;
-  ${theme.breakPoint.mobile} {
-    padding: 20px 0;
-  }`
+  padding: 24px 0 56px;
+`
       : `
   display: none;
   `}
@@ -66,40 +64,24 @@ export const NoticeListBody = styled.div`
   ${({ theme }) => theme.breakPoint.mobile} {
     padding: 0 20px;
   }
-  ${({ theme }) => theme.breakPoint.desktop} {
-    display: grid;
-    display: -ms-grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 80px;
-    row-gap: 24px;
-  } ;
 `;
 
 export const NoticeItems = styled.div`
   ${({ theme }) => theme.breakPoint.mobile} {
     height: auto;
     width: 100%;
-    padding: 10px 0 5px 0;
   }
   display: flex;
   justify-content: space-between;
   height: auto;
-  margin: 0 0 24px;
   align-items: center;
   border-bottom: 1px solid #ecece9;
   cursor: pointer;
 `;
 
 export const NoticeContents = styled.div`
-  ${({ theme }) => theme.breakPoint.mobile} {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10px 0;
-  }
   max-width: 414px;
   width: 100%;
-  padding: 0 0 12px;
 `;
 
 export const TextOverflowForDescription = styled.p`
@@ -112,37 +94,20 @@ export const TextOverflowForDescription = styled.p`
   ${body6};
   color: ${({ theme }) => theme.colors.black};
   width: 100%;
-  margin: 0 0 10px;
+  margin: 8px 0 7px;
 `;
 
 export const TextOverflowForTitle = styled.p`
-  display: -webkit-box;
-  white-space: normal;
-  word-wrap: break-word;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  flex: 1;
   ${title2};
-  max-width: 424px;
-  width: 100%;
-  margin: 0 0 3px;
+  margin: 24px 0 8px 0;
   color: ${({ theme }) => theme.colors.black};
-  ${({ theme }) => theme.breakPoint.mobile} {
-    max-width: 286px;
-    width: 100%;
-    height: 100%;
-  } ;
 `;
 
 export const DateFormat = styled.p`
-  line-height: 12px;
   ${body8};
   color: ${({ theme }) => theme.colors.gray600};
-  margin-top: 13px;
-  ${({ theme }) => theme.breakPoint.mobile} {
-    color: ${({ theme }) => theme.colors.gray500};
-    margin-top: 8px;
-  } ;
+  margin: 8px 0 7px;
 `;
 
 export const CurationsContainer = styled.div`
