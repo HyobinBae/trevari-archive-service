@@ -39,7 +39,6 @@ const NewCurationCardList = ({ lists = [], wishClubIds = [] }: IProps) => {
           breakpoints={{
             500: {
               slidesPerView: 2.1,
-              spaceBetween: 20,
             },
           }}
         >

@@ -11,8 +11,8 @@ import { Base, GradiantWrap, ImgLinkWrap, SwiperImg, GoApplyPageBox } from 'page
 import 'pages/main/styles/main.css';
 import ga from 'pages/main/ga';
 import Loading from 'components/base/Loading';
-import { RightChevronIcon } from '@trevari/icons';
 import { endpoints } from 'config';
+import RightChevron from '../../../components/svgs/RightChevron';
 
 const HeroSlider = () => {
   const { data: banners } = useGetBannersQuery({});
@@ -67,7 +67,7 @@ const HeroSlider = () => {
       </GradiantWrap>
       <GoApplyPageBox href={`${endpoints.user_page_url}/apply`}>
         <div>어떤 클럽을 찾으세요?</div>
-        <RightChevronIcon width="24" height="24" color="#FF7900" />
+        <RightChevron width={24} height={24} fill={"#FF7900"} />
       </GoApplyPageBox>
     </Base>
   );

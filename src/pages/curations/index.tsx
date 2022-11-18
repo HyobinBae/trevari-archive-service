@@ -64,7 +64,7 @@ const Curations = () => {
     <Box style={{ paddingTop: '64px', minHeight: '100vh', paddingBottom: '67px' }}>
       <CurationInfoBox>
         <CurationTitle>{newCuration.head}</CurationTitle>
-        <CurationBody>{newCuration.description}</CurationBody>
+        <CurationBody>{newCuration.body}</CurationBody>
       </CurationInfoBox>
 
       <Divider style={{ backgroundColor: '#F7F7F5' }} />

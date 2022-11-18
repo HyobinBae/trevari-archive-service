@@ -35,8 +35,9 @@ const NewCurationList = () => {
   }, [dispatch, authenticated]);
 
   const onClickViewAllButton = (id: string) => {
-    navigate(`/curations/${id}`);
+    window.location.href = `/curations/${id}`;
   };
+
   return (
     <Box>
       {newCurations?.map((curation, index) => (
