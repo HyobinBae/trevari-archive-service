@@ -200,7 +200,7 @@ const IconWrapper = styled.div`
   position: absolute;
   top: 5px;
   right: 5px;
-  z-index: 1000;
+  z-index: 1;
 `;
 
 const DimLayer = styled.div`
