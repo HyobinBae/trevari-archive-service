@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { body4, body8, heading7, heading9, title2 } from '@trevari/typo';
+import { heading7, title2 } from '@trevari/typo';
 import ga from 'pages/main/ga';
 
 interface IProps {

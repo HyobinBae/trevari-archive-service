@@ -37,6 +37,7 @@ const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' 
     : '';
 
   const badgeText = maxMemberCount && memberCount && maxMemberCount * 0.7 <= memberCount ? '마감 임박' : '';
+  const titleMarginTopPx = badgeText ? '6px' : '0px';
   const onClickEventCard = () => {
     goToPage(`${endpoints.user_page_url}/events/show?eventID=${id}`);
   };
@@ -54,7 +55,7 @@ const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' 
     >
       <DisplayCardContent>
         <div>{badgeText && <Badge variant="filled">{badgeText}</Badge>}</div>
-        <DisplayCardTitle>{name}</DisplayCardTitle>
+        <DisplayCardTitle style={{ marginTop: titleMarginTopPx }}>{name}</DisplayCardTitle>
         <DisplayCardSubTitle>{hostName}</DisplayCardSubTitle>
         <DisplayCardParagraph style={{ display: 'block' }}>{description}</DisplayCardParagraph>
         <DisplayCardPlaceInfo>{place?.name}</DisplayCardPlaceInfo>

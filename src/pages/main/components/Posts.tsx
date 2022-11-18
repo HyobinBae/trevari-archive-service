@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { format } from 'date-fns';
-import { isMobile } from 'react-device-detect';
 
 import { useGetPostsQuery } from 'pages/main/services/main.api';
 import CurationTitle from 'pages/main/components/CurationTitle';
@@ -12,7 +11,6 @@ import {
   NoticeContents,
   NoticeItems,
   NoticeListBody,
-  TextOverflowForDescription,
   TextOverflowForTitle,
 } from 'pages/main/styles/main.style';
 import { Post } from 'types/__generate__/user-backend-api';
@@ -30,7 +28,7 @@ const Posts = () => {
       <PostListWrap show={notices?.length > 0}>
         <CurationTitle title="공지사항" more={`${endpoints.user_page_url}/blog?category=공지`} />
         <NoticeListBody>
-          {notices?.map(({ id, title, description, createdAt, updatedAt }: Post) => (
+          {notices?.map(({ id, title, createdAt, updatedAt }: Post) => (
             <Link href={`${endpoints.user_page_url}/blog/show?id=${id}`} key={id}>
               <NoticeItems>
                 <NoticeContents>

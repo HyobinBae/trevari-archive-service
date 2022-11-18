@@ -123,7 +123,7 @@ const NewCurationClubCard = ({
   };
   const badgeText = clubStatus(club);
   const badgeColor = badgeText === 'NEW' ? '#1371FF' : 'black';
-
+  const titleMarginTopPx = badgeText ? '6px' : '0px';
   const renderHearthIcon = () => (
     <IconWrapper onClick={handleClickBookmark}>
       {isWishClub ? <LoveFilled strokeColor="#FF7900" /> : <LoveOutlineOpacityApplied />}
@@ -176,7 +176,7 @@ const NewCurationClubCard = ({
             </Badge>
           )}
         </div>
-        <DisplayCardTitle>{name}</DisplayCardTitle>
+        <DisplayCardTitle style={{ marginTop: titleMarginTopPx }}>{name}</DisplayCardTitle>
         <DisplayCardSubTitle>{leaderTitle}</DisplayCardSubTitle>
         <DisplayCardParagraph style={{ display: 'block' }}>{desc}</DisplayCardParagraph>
         <DisplayCardPlaceInfo>{place?.name}</DisplayCardPlaceInfo>

@@ -36,7 +36,7 @@ export const Gradation = styled.div`
 `;
 
 export const PostListWrap = styled.div<{ show: boolean }>`
-  ${({ theme, show }) =>
+  ${({ show }) =>
     show
       ? `
   padding: 24px 0 56px;
