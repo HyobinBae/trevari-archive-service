@@ -24,11 +24,10 @@ import { selectUser } from 'services/user/user.store';
 import { updateUser } from 'services/user/user.api';
 import { clubStatus } from 'utils/club';
 import { heading9, title6 } from '@trevari/typo';
-import { RightChevronIcon } from '@trevari/icons';
 import LoveOutlineOpacityApplied from 'components/svgs/LoveOutlineOpacityApplied';
 import { goToPage } from 'utils';
 import { endpoints } from 'config';
-import RightChevron from '../../../components/svgs/RightChevron';
+import RightChevron from 'components/svgs/RightChevron';
 
 interface NewCurationClubCardProps {
   club: IClub;
@@ -145,7 +144,7 @@ const NewCurationClubCard = ({
       <DimLayer>
         <FlexWrap>
           <DarkLayerTextBox>
-            찜하고 오픈 알림 받기 <RightChevron /> {renderHearthIcon()}
+            찜하고 오픈 알림 받기 <RightChevron />
           </DarkLayerTextBox>
           <DarkLayerTextBottomText>
             {format(Date.parse(openedAt as string), 'M/d(EEE) HH:mm', { locale: ko })} 오픈 예정
@@ -204,7 +203,7 @@ const IconWrapper = styled.div`
   position: absolute;
   top: 5px;
   right: 5px;
-  z-index: 1;
+  z-index: 2;
 `;
 
 const DimLayer = styled.div`
@@ -215,7 +214,7 @@ const DimLayer = styled.div`
   height: 100%;
   text-align: center;
   background: ${({ theme }) => theme.colors.overlay50};
-  z-index: 10;
+  z-index: 1;
 `;
 const LayerTextWrap = styled.div`
   position: absolute;
