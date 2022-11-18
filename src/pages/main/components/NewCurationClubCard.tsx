@@ -28,6 +28,8 @@ import { RightChevronIcon } from '@trevari/icons';
 import LoveOutlineOpacityApplied from 'components/svgs/LoveOutlineOpacityApplied';
 import { goToPage } from 'utils';
 import { endpoints } from 'config';
+import RightChevron from '../../../components/svgs/RightChevron';
+
 interface NewCurationClubCardProps {
   club: IClub;
   isWishClub: boolean;
@@ -141,11 +143,11 @@ const NewCurationClubCard = ({
       <DimLayer>
         <FlexWrap>
           <DarkLayerTextBox>
-            찜하고 오픈 알림 받기 <RightChevronIcon fontSize="20" />
+            찜하고 오픈 알림 받기 <RightChevron /> {renderHearthIcon()}
           </DarkLayerTextBox>
-          <DarkLayerTextBox>
+          <DarkLayerTextBottomText>
             {format(Date.parse(openedAt as string), 'M/d(EEE) HH:mm', { locale: ko })} 오픈 예정
-          </DarkLayerTextBox>
+          </DarkLayerTextBottomText>
         </FlexWrap>
       </DimLayer>
     );
@@ -238,6 +240,16 @@ const DarkLayerTextBox = styled.div`
   padding: 7px 0 7px 5px;
   text-align: left;
   display: flex;
+  align-items: center;
+  ${title6};
+`;
+
+const DarkLayerTextBottomText = styled.div`
+  background-color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.white};
+  height: 30px;
+  display: flex;
+  justify-content: center;
   align-items: center;
   ${title6};
 `;
