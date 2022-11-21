@@ -47,6 +47,7 @@ const NewCurationList = () => {
           />
           <ButtonWrapper isLast={newCurations.length === index + 1}>
             <Button
+              style={{maxHeight: '44px', minHeight: '44px'}}
               onClick={() => onClickViewAllButton(curation.id)}
               size="large"
               fullWidth
