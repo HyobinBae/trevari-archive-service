@@ -30,7 +30,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "@trevari/business-components": "^0.3.1",
-    "@trevari/components": "^0.0.10",
+    "@trevari/components": "^0.0.11",
     "@trevari/design-token": "^0.0.5",
     "@trevari/icons": "^0.0.6",
     "@trevari/react-emotion-theme": "^0.0.5",
