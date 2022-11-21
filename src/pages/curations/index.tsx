@@ -29,7 +29,7 @@ const Curations = () => {
   const userId = useAppSelector(selectUserId);
 
   const onClickShowAllClubsButton = () => {
-    goToPage('https://dev.trevari.co.kr/apply');
+    goToPage('https://trevari.co.kr/apply');
   };
   useEffect(() => {
     dispatch(getNewCuration.initiate({ id: curationId || '' }));
