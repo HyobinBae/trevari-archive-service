@@ -1,2225 +1,5324 @@
-# This file was generated based on ".graphqlconfig". Do not edit manually.
-
-schema {
-    query: Query
-    mutation: Mutation
-}
-
-directive @cacheControl(maxAge: Int, scope: CacheControlScope) on OBJECT | FIELD_DEFINITION
-
-type Agit {
-    address: String!
-    availableRoomCount: Int!
-    holidays: [String]!
-    id: String!
-    name: String!
-    openTimetable: [typeOpenTimetable]!
-    roomCount: Int!
-}
-
-type B2bClub {
-    b2bClubGroup: B2bClubGroup
-    b2bClubGroupID: String
-    b2bClubHistory: B2bClubHistory
-    b2bClubHistoryID: String!
-    b2bCompany: B2bCompany
-    b2bCompanyID: String
-    b2bMeetings: [B2bMeeting]
-    category: Category
-    categoryID: String
-    closedAt: String
-    coverUrl: String
-    curriculum: String
-    dayOfSchedule: Int!
-    description: String
-    firstBookIntro: String
-    hashTag: String
-    id: String!
-    information: String
-    isClosed: Boolean!
-    leaderDescription: String
-    leaderIDs: [String]!
-    leaderImageUrl: String
-    leaders: [B2bUser]
-    maxMemberCount: Int!
-    memberCount: Int!
-    minBookreviewLength: Int!
-    name: String!
-    notice: String
-    openedAt: String
-    option: String
-    options: [String]!
-    partnerApplicationCount: Int!
-    partnerDescription: String
-    partnerDescriptionTitle: String
-    partnerIDs: [String]!
-    partnerImageUrl: String
-    partnerImageUrlUploadedAt: String
-    partners: [B2bUser]
-    place: Place
-    placeID: String!
-    price: Int!
-    quizUrl: String
-    runningTime: String!
-    seasonData: Season
-    seasonID: String!
-    smsTemplateType: String
-    subCoverUrl: String
-    subDescription: String
-    subHashTag: String
-    tagIDs: [String]!
-    timeOfSchedule: String!
-    type: String!
-    weekOfSchedule: Int!
-}
-
-type B2bClubApplication {
-    afterB2bClubApplicationID: String
-    b2bClub: B2bClub
-    b2bClubID: String!
-    b2bClubRoleID: String
-    b2bUser: B2bUser
-    b2bUserID: String!
-    beforeB2bClubApplicationID: String
-    companionCount: Int!
-    confirmedAt: String
-    createdAt: String
-    fee: Int
-    iamportUID: String
-    id: String!
-    membershipClosedAt: String
-    method: String!
-    price: Int!
-    refundAccountNumber: String
-    refundApplicatedAt: String
-    refundBankCode: String
-    refundBankName: String
-    refundHolder: String
-    refundPrice: Int
-    refundReason: String
-    refundScore: Int
-    refundedAt: String
-    seasonID: String!
-    status: String!
-    tossCancelRedirectUrl: String
-    tossPayToken: String
-    tossRedirectUrl: String
-    tossRefundNo: String
-    updatedAt: String
-    vbankAccountNumber: String
-    vbankBankCode: String
-    vbankBankName: String
-    vbankExpiredAt: String
-    vbankHolder: String
-}
-
-type B2bClubGroup {
-    createdAt: String!
-    description: String!
-    id: String!
-    information: String
-    name: String!
-    notice: String
-    test_column_1: String
-    test_column_1_title: String
-    test_column_2: String
-    test_column_3: String
-    test_column_3_title: String
-    updatedAt: String!
-}
-
-type B2bClubHistory {
-    createdAt: String
-    id: String!
-    name: String!
-    readContentIDs: [String]!
-    readContents: [Content]
-    sinceSeason: String!
-    updatedAt: String
-}
-
-type B2bCompany {
-    createdAt: String!
-    id: String!
-    isClosed: Boolean!
-    isPublicB2bBookreviewForInside: Boolean!
-    isPublicB2bBookreviewForOutside: Boolean!
-    logoUrl: String
-    name: String!
-    updatedAt: String!
-}
-
-type B2bEventApplication {
-    b2bEventRoleID: String
-    b2bUser: B2bUser
-    b2bUserID: String!
-    companionCount: Int!
-    confirmedAt: String
-    createdAt: String
-    event: Event
-    eventID: String!
-    iamportUID: String
-    id: String!
-    isMember: Boolean
-    method: String!
-    price: Int!
-    refundAccountNumber: String
-    refundApplicatedAt: String
-    refundBankCode: String
-    refundBankName: String
-    refundHolder: String
-    refundPrice: Int
-    refundReason: String
-    refundedAt: String
-    seasonID: String!
-    status: String!
-    tossCancelRedirectUrl: String
-    tossPayToken: String
-    tossRedirectUrl: String
-    tossRefundNo: String
-    updatedAt: String
-    vbankAccountNumber: String
-    vbankBankCode: String
-    vbankBankName: String
-    vbankExpiredAt: String
-    vbankHolder: String
-}
-
-type B2bMeeting {
-    b2bAttendanceCount: Int
-    b2bClub: B2bClub
-    b2bClubID: String!
-    b2bClubName: String!
-    bookreviewDeadline: String!
-    contentIDs: [String]!
-    contents: [Content]
-    endedAt: String!
-    id: String!
-    notice: String
-    order: Int!
-    place: Place
-    placeID: String!
-    presentNotice: String
-    presentUrl: String
-    presenter: B2bUser
-    presenterID: String
-    presenterIDs: [String]!
-    presenters: [B2bUser]
-    roomScheduleIDs: [String]!
-    roomSchedules: [RoomSchedule]
-    seasonID: String!
-    startedAt: String!
-    timetable: [B2bTimetableRow]!
-    topicPages: [String]
-}
-
-type B2bSpaceRental {
-    b2bUser: B2bUser
-    b2bUserID: String!
-    createdAt: String!
-    endedAt: String!
-    id: String!
-    isAccepted: Boolean
-    memberCount: Int!
-    place: Place
-    placeID: String!
-    reason: String!
-    request: String
-    roomScheduleIDs: [String]!
-    roomSchedules: [RoomSchedule]
-    smsNotice: String
-    startedAt: String!
-    updatedAt: String!
-}
-
-type B2bTimetableRow {
-    startTime: String!
-    task: String!
-}
-
-type B2bUser {
-    ads: [String]!
-    birthday: String
-    createdAt: String
-    description: String
-    email: String!
-    facebook: String
-    facebookID: String
-    gender: String
-    hasAuthenticatedPhoneNumber: Boolean!
-    id: String!
-    instagram: String
-    interests: [String]!
-    isAgreedToAllMarketing: Boolean
-    isAgreedToMarketingSms: Boolean!
-    isBlocked: Boolean!
-    isPublicAge: Boolean!
-    isPublicBookreview: Boolean!
-    isPublicClubActivity: Boolean!
-    isPublicGender: Boolean!
-    isPublicProfile: Boolean
-    kakaoID: String
-    keywords: [String]!
-    marketingAgreedAt: String
-    name: String!
-    password: String
-    phoneNumber: String!
-    point: Int!
-    profileImageUrl: String
-    readingVolume: Int
-    recommender: String
-    route: String
-    updatedAt: String
-}
-
-type Banner {
-    createdAt: String!
-    deletedAt: String
-    id: String!
-    isClosed: Boolean!
-    linkUrl: String!
-    mobileImageUrl: String!
-    order: Int!
-    pcImageUrl: String!
-    title: String!
-    updatedAt: String!
-}
-
-type BenefitCompany {
-    benefit: String!
-    categories: [String]!
-    createdAt: String!
-    id: String!
-    isClosed: Boolean!
-    logoUrl: String!
-    manual: String!
-    name: String!
-    order: Int!
-    updatedAt: String!
-}
-
-type Bookreview {
-    club: Club
-    clubID: String!
-    commentCount: Int!
-    comments: [BookreviewComment]
-    content: String
-    contentIDs: [String]!
-    contents: [Content]
-    createdAt: String
-    fileUrl: String
-    id: String!
-    isPublic: Boolean!
-    likeUserIDs: [String]!
-    meeting: Meeting
-    order: Int!
-    publishedAt: String
-    role: String
-    status: String!
-    title: String
-    updatedAt: String
-    user: User
-    userID: String!
-}
-
-type BookreviewComment {
-    bookreviewID: String!
-    content: String!
-    createdAt: String
-    id: String!
-    parentID: String
-    replies: [BookreviewComment]
-    updatedAt: String
-    user: User
-    userID: String!
-}
-
-type Category {
-    createdAt: String!
-    id: String!
-    name: String!
-    updatedAt: String!
-}
-
-type ChangeClubPayload {
-    clubRole: ClubRole
-}
-
-type ChangePasswordOnUserPayload {
-    user: User
-}
-
-type Club {
-    applicationDeadline: String
-    beforeSeasonID: String
-    category: Category
-    categoryID: String
-    closedAt: String
-    clubGroup: ClubGroup
-    clubGroupID: String
-    clubHistory: ClubHistory
-    clubHistoryID: String!
-    clubIntroductionCreatedAt: String
-    clubIntroductionStatus: String
-    clubIntroductionStatusUpdatedAt: String
-    clubPosts: [ClubPost]
-    coverUrl: String
-    curriculum: String
-    dayOfSchedule: Int!
-    description: String
-    endedAt: String
-    extensionStartedAt: String
-    firstBookIntro: String
-    hashTag: String
-    id: String!
-    information: String
-    isAllowedOutgoing: Boolean!
-    isClosed: Boolean!
-    leaderDescription: String
-    leaderIDs: [String]!
-    leaderImageUrl: String
-    leaderShare: Int
-    leaderTitle: String
-    leaders: [User]
-    maxMemberCount: Int!
-    meetings: [Meeting]
-    memberCount: Int!
-    minBookreviewLength: Int!
-    name: String!
-    notice: String
-    openedAt: String
-    option: String
-    options: [String]!
-    partnerApplicationCount: Int!
-    partnerDescription: String
-    partnerDescriptionTitle: String
-    partnerIDs: [String]!
-    partnerImageUrl: String
-    partnerImageUrlUploadedAt: String
-    partners: [User]
-    place: Place
-    placeID: String!
-    price: Int!
-    quizUrl: String
-    runningTime: String!
-    season: String!
-    seasonData: Season
-    seasonID: String!
-    smsTemplateType: String
-    subCoverUrl: String
-    subDescription: String
-    subHashTag: String
-    tagIDs: [String]!
-    timeOfSchedule: String!
-    type: String!
-    weekOfSchedule: Int!
-    wishedCount: Int!
-}
-
-type ClubApplication {
-    afterClubApplicationID: String
-    beforeClubApplicationID: String
-    cardName: String
-    club: Club
-    clubID: String!
-    clubRoleID: String
-    companionCount: Int!
-    confirmedAt: String
-    createdAt: String
-    exchangeableUsedPoint: Int
-    failReason: String
-    fee: Int
-    iamportUID: String
-    id: String!
-    membershipClosedAt: String
-    method: String!
-    noExchangeableUsedPoint: Int
-    orderId: String
-    price: Int!
-    refundAccountNumber: String
-    refundApplicatedAt: String
-    refundBankCode: String
-    refundBankName: String
-    refundHolder: String
-    refundPrice: Int
-    refundReason: String
-    refundScore: Int
-    refundedAt: String
-    refunds: [Refund]
-    season: String!
-    seasonID: String!
-    status: String!
-    tempBookApplication: TempBookApplication
-    tempCommunityTicket: TempCommunityTicket
-    tossCancelRedirectUrl: String
-    tossPayToken: String
-    tossRedirectUrl: String
-    tossRefundNo: String
-    updatedAt: String
-    user: User
-    userID: String!
-    vbankAccountNumber: String
-    vbankBankCode: String
-    vbankBankName: String
-    vbankExpiredAt: String
-    vbankHolder: String
-}
-
-type ClubGroup {
-    category: Category
-    categoryID: String
-    createdAt: String!
-    description: String!
-    id: String!
-    information: String
-    name: String!
-    notice: String
-    test_column_1: String
-    test_column_1_title: String
-    test_column_2: String
-    test_column_3: String
-    test_column_3_title: String
-    updatedAt: String!
-}
-
-type ClubHistory {
-    createdAt: String
-    id: String!
-    name: String!
-    readContentIDs: [String]!
-    readContents: [Content]
-    sinceSeason: String!
-    updatedAt: String
-}
-
-type ClubPost {
-    clubID: String!
-    comments: [ClubPostComment]
-    content: String
-    createdAt: String
-    id: String!
-    imageUrls: [String]!
-    isNotice: Boolean!
-    likeUserIDs: [String]!
-    poll: Poll
-    pollID: String
-    title: String
-    updatedAt: String
-    user: User
-    userID: String!
-}
-
-type ClubPostComment {
-    clubPostID: String!
-    content: String!
-    createdAt: String
-    id: String!
-    parentID: String
-    replies: [ClubPostComment]
-    updatedAt: String
-    user: User
-    userID: String!
-}
-
-type ClubReview {
-    club: Club
-    clubGroupID: String!
-    clubHistoryID: String!
-    clubID: String!
-    content: String!
-    createdAt: String!
-    dummyLikeCount: Int!
-    id: String!
-    imageUrl: String
-    isClosed: Boolean!
-    score: Int
-    title: String
-    updatedAt: String!
-    user: User
-    userID: String!
-}
-
-type ClubRole {
-    club: Club
-    clubApplication: ClubApplication
-    clubApplicationID: String
-    clubID: String!
-    createdAt: String!
-    experiencedSeasonCount: Int!
-    fee: String
-    id: String!
-    isFirstSeason: Boolean
-    isInvited: Boolean!
-    partnerAnswer: String
-    partnerAnswerReason: String
-    passedQuiz: Boolean
-    quizPushCount: Int
-    refundStatus: String
-    refundedAt: String
-    replacementPartnerMeetingOrder: Int
-    respondQuiz: Boolean
-    role: String!
-    season: String!
-    seasonData: Season
-    seasonID: String!
-    type: String
-    updatedAt: String!
-    user: User
-    userID: String!
-}
-
-type ClubsWithTag {
-    clubs: [Club]
-    tag: Tag
-}
-
-type ConfirmPhoneNumberPayload {
-    user: User
-}
-
-type Content {
-    author: String
-    description: String
-    id: String!
-    imageUrl: String
-    isbn: String
-    link: String
-    title: String
-    type: String!
-}
-
-type Coupon {
-    benefitCompany: BenefitCompany!
-    benefitCompanyID: String!
-    code: String!
-    expiredAt: String!
-    id: String!
-    isUsed: String!
-    seasonID: String
-    userID: String
-}
-
-type CreateBookreviewCommentPayout {
-    bookreviewComment: BookreviewComment
-}
-
-type CreateBookreviewPayload {
-    bookreview: Bookreview
-}
-
-type CreateClubReviewPayload {
-    clubReview: ClubReview
-}
-
-type CreateSpaceRentalPayload {
-    spaceRental: SpaceRental
-}
-
-type CreateUcmTestResultPayload {
-    ucmTestResult: UcmTestResult
-}
-
-type CreateUserPayload {
-    token: String
-    user: User
-}
-
-type CreateWishClubPayload {
-    wishClub: WishClub
-}
-
-type Device {
-    createdAt: String
-    id: String!
-    isAgreedToActivityPush: Boolean!
-    isAgreedToClubPush: Boolean!
-    isAgreedToMarketingPush: Boolean!
-    token: String!
-    updatedAt: String
-    user: User
-    userID: String!
-}
-
-type DisplayOrder {
-    id: String!
-    isDisplayed: Boolean!
-    itemID: String!
-    order: Int!
-    type: String!
-}
-
-type Event {
-    canApplyNotMember: Boolean
-    createdAt: String
-    description: String
-    endedAt: String
-    hostDescription: String
-    hostIDs: [String]
-    hostImageUrl: String
-    hostName: String
-    id: String
-    imageUrl: String
-    informations: [Information]
-    introduction: String
-    isAppliable: Boolean
-    isClosed: Boolean
-    isImportant: Boolean
-    isWide: Boolean
-    maxCompanionCount: Int
-    maxMemberCount: Int
-    memberCount: Int
-    mobileContent: String
-    name: String
-    notice: String
-    openStartedAt: String
-    place: Place
-    placeID: String
-    price: Int
-    priceForNotMember: Int
-    season: String
-    seasonID: String
-    smsNotice: String
-    startedAt: String
-    targetDescription: String
-    thumbnailUrl: String
-    timetable: String
-    updatedAt: String
-    webContent: String
-}
-
-type EventApplication {
-    companionCount: Int!
-    companionNames: String
-    confirmedAt: String
-    createdAt: String
-    event: Event
-    eventID: String!
-    eventRoleID: String
-    exchangeableUsedPoint: Int!
-    iamportUID: String
-    id: String!
-    isMember: Boolean
-    method: String!
-    noExchangeableUsedPoint: Int!
-    price: Int!
-    refundAccountNumber: String
-    refundApplicatedAt: String
-    refundBankCode: String
-    refundBankName: String
-    refundExchangeableUsedPoint: Int
-    refundHolder: String
-    refundNoExchangeableUsedPoint: Int
-    refundPrice: Int
-    refundReason: String
-    refundedAt: String
-    season: String!
-    seasonID: String!
-    status: String!
-    tossCancelRedirectUrl: String
-    tossPayToken: String
-    tossRedirectUrl: String
-    tossRefundNo: String
-    updatedAt: String
-    user: User
-    userID: String!
-    vbankAccountNumber: String
-    vbankBankCode: String
-    vbankBankName: String
-    vbankExpiredAt: String
-    vbankHolder: String
-}
-
-type EventRole {
-    companionCount: Int!
-    createdAt: String
-    event: Event
-    eventApplication: EventApplication
-    eventApplicationID: String!
-    eventID: String!
-    id: String!
-    isMember: Boolean
-    refundStatus: String
-    role: String!
-    season: String!
-    seasonID: String!
-    updatedAt: String
-    user: User
-    userID: String!
-}
-
-type ExtraNotice {
-    createdAt: String
-    description: String
-    id: String
-    informations: [TypeInformation]
-    name: String
-    updatedAt: String
-}
-
-type Faq {
-    category: String
-    createdAt: String
-    description: String
-    id: String
-    isClosed: Boolean
-    order: Int
-    title: String
-    updatedAt: String
-}
-
-type InactiveUser {
-    ads: [String]!
-    appleID: String
-    birthday: String
-    comment: String
-    countryCode: String!
-    createdAt: String
-    description: String
-    email: String!
-    facebook: String
-    facebookID: String
-    gender: String
-    hasAuthenticatedPhoneNumber: Boolean!
-    id: String!
-    instagram: String
-    interests: [String]!
-    isAgreedToAllMarketing: Boolean
-    isAgreedToMarketingSms: Boolean!
-    isBlocked: Boolean!
-    isPublicAge: Boolean!
-    isPublicBookreview: Boolean!
-    isPublicClubActivity: Boolean!
-    isPublicGender: Boolean!
-    isPublicProfile: Boolean
-    kakaoID: String
-    keywords: [String]!
-    marketingAgreedAt: String
-    name: String!
-    noExchangeablePoint: Int!
-    password: String
-    phoneNumber: String!
-    point: Int!
-    profileImageUrl: String
-    readingVolume: Int
-    recentLoginedAt: String
-    recommender: String
-    route: String
-    updatedAt: String
-}
-
-type Information {
-    content: String
-    title: String
-}
-
-type Leader {
-    account: String!
-    bank: String!
-    clubs: [Club]
-    createdAt: String!
-    deletedAt: String
-    id: String!
-    name: String!
-    socialSecurityNumber: String!
-    taxType: String!
-    updatedAt: String!
-    user: User
-    userID: String!
-}
-
-type LinkEmailOnUserPayload {
-    user: User
-}
-
-type LinkFacebookOnUserPayload {
-    user: User
-}
-
-type Meeting {
-    attendanceCount: Int
-    bookreviewDeadline: String!
-    club: Club
-    clubID: String!
-    clubName: String!
-    contentIDs: [String]!
-    contents: [Content]
-    endedAt: String!
-    id: String!
-    isBookreviewRequired: Boolean
-    notice: String
-    onlinePlace: OnlinePlace
-    onlinePlaceID: String
-    order: Int!
-    partnerClubRoles: [ClubRole]
-    place: Place
-    placeID: String!
-    presentNotice: String
-    presentUrl: String
-    presenter: User
-    presenterID: String
-    presenterIDs: [String]!
-    presenters: [User]
-    roomScheduleIDs: [String]!
-    roomSchedules: [RoomSchedule]
-    season: String!
-    seasonID: String!
-    startedAt: String!
-    status: String!
-    timetable: [timetableRow]!
-    topicPageStatus: String!
-    topicPages: [String]
-}
-
-type MemberInfo {
-    experience0: Int
-    experience1: Int
-    experience2: Int
-    experience3: Int
-    experience4: Int
-    experience5up: Int
-    experienceAvg: Float
-    female: Int
-    fifties: Int
-    forties: Int
-    isNotPublicAge: Int
-    male: Int
-    memberCount: Int
-    olders: Int
-    other: Int
-    readingVolume0: Int
-    readingVolume1: Int
-    readingVolume2: Int
-    readingVolume3: Int
-    readingVolume4: Int
-    readingVolume5up: Int
-    thirties: Int
-    twenties: Int
-}
-
-type Mutation {
-    addToCart(input: AddToCartInput!): Boolean!
-    cancelUser(id: String!): Boolean
-    changeClub(input: ChangeClubInput!): ChangeClubPayload
-    changePasswordOnUser(input: ChangePasswordOnUserInput!): ChangePasswordOnUserPayload
-    changeStatusEventApplicationWhenWaitingPayment(input: UpdateEventApplicationInput!): UpdateEventApplicationPayload
-    confirmPartnerApplication(id: String!): PartnerApplication
-    confirmPhoneNumber(input: ConfirmPhoneNumberInput!): ConfirmPhoneNumberPayload
-    createBookreview(input: CreateBookreviewInput!, isForced: Boolean): CreateBookreviewPayload!
-    createBookreviewComment(input: CreateBookreviewCommentInput!): CreateBookreviewCommentPayout
-    createClubReview(input: CreateClubReviewInput!): CreateClubReviewPayload
-    createDevice(input: CreateDeviceInput!): Device
-    createPushNotification(input: CreatePushNotificationInput): PushNotification
-    createSpaceRental(input: CreateSpaceRentalInput!): CreateSpaceRentalPayload
-    createUcmTestResult(input: CreateUcmTestResultInput!): CreateUcmTestResultPayload
-    createUser(input: CreateUserInput!): CreateUserPayload
-    createWishClub(input: CreateWishClubInput!): CreateWishClubPayload
-    deleteBookreview(id: String!): Boolean!
-    deleteBookreviewComment(id: String!): Boolean
-    deleteClubApplication(id: String!): Boolean
-    deleteDevice(id: String!): Boolean
-    deletePushNotification(id: String!): Boolean
-    deleteWishClub(clubID: String!, userID: String!): Boolean!
-    generatePreSignedUrl(fileName: String!): String
-    initiateCheckout(input: InitiateCheckoutInput!): Boolean!
-    issueCoupons(input: IssueCouponsInput!): Boolean!
-    linkEmailOnUser(input: LinkEmailOnUserInput!): LinkEmailOnUserPayload
-    linkFacebookOnUser(input: LinkFacebookOnUserInput!): LinkFacebookOnUserPayload
-    outgoingCancel(input: OutgoingCancelInput!): MutationResult
-    outgoingRequest(input: OutgoingRequestInput!): MutationResult
-    pageView(input: PageViewInput!): Boolean!
-    purchase(input: PurchaseInput!): Boolean!
-    refundEvent(input: RefundEventInput!): RefundEventPayload
-    sendPushNotifications(input: SendPushNotificationsInput): [PushNotification]
-    toggleLikeOnBookreviewTemp(id: String!, userID: String!): ToggleLikeOnBookreviewPayload
-    unlinkFacebookOnUser(id: String!): Boolean
-    updateBookreview(input: UpdateBookreviewInput!, isForced: Boolean): UpdateBookreviewPayload!
-    updateBookreviewComment(input: UpdateBookreviewCommentInput!): UpdateBookreviewCommentPayout
-    updateClubApplication(input: UpdateClubApplicationInput!): UpdateClubApplicationPayload
-    updateClubReview(input: UpdateClubReviewInput!): UpdateClubReviewPayload
-    updateDevice(input: UpdateDeviceInput!): Device
-    updateFailClubApplication(input: UpdateClubApplicationInput!): UpdateClubApplicationPayload
-    updatePartnerApplication(input: UpdatePartnerApplicationInput!): UpdatePartnerApplicationPayload
-    updatePushNotification(input: UpdatePushNotificationInput): PushNotification
-    updateRecentLoginedAt(id: String!): Boolean
-    updateUser(input: UpdateUserInput!, isForced: Boolean): UpdateUserPayload
-    updateVbankOnClubApplication(id: String!): ClubApplication
-    viewContent(input: ViewContentInput!): Boolean!
-}
-
-type MutationResult {
-    code: String!
-    msg: String!
-}
-
-type Notice {
-    createdAt: String
-    description: String
-    id: String
-    isClosed: Boolean
-    order: Int
-    title: String
-    updatedAt: String
-}
-
-type OnlinePlace {
-    id: String!
-    information: String
-    name: String!
-    url: String
-}
-
-type OutgoingVoucher {
-    expiredAt: String!
-    id: String!
-    state: String!
-}
-
-type PartnerApplication {
-    assignedClub: Club
-    assignedClubID: String
-    confirmedAt: String
-    createdAt: String!
-    id: String!
-    rank: Int!
-    score: Int!
-    season: String!
-    seasonID: String!
-    selectedClubIDs: [String]!
-    selectedClubs: [Club]
-    selectedClubsReason: [String]!
-    updatedAt: String!
-    user: User
-    userID: String!
-}
-
-type PinNumber {
-    clientName: String
-    club: Club
-    clubID: String
-    id: String!
-    pinNumber: String!
-    price: Int!
-    seasonID: String
-    user: User
-    userID: String
-}
-
-type Place {
-    address: String
-    id: String!
-    imageUrl: String
-    mapUrl: String
-    name: String
-}
-
-type PointHistory {
-    admin: User
-    adminID: String!
-    amount: Int!
-    category: String!
-    createdAt: String!
-    id: String!
-    noExchangeableAmount: Int!
-    reason: String!
-    seasonID: String
-    signedAt: String!
-    subCategory: String!
-    updatedAt: String!
-    user: User
-    userID: String!
-}
-
-type Policy {
-    content: String!
-    createdAt: String
-    id: String!
-    title: String!
-    updatedAt: String
-}
-
-type Poll {
-    clubID: String!
-    createdAt: String
-    endedAt: String!
-    id: String!
-    isAnonymous: Boolean!
-    isMultipleChoice: Boolean!
-    optionIDs: [String]!
-    pollOptions: [PollOption]
-    title: String!
-    updatedAt: String
-}
-
-type PollOption {
-    createdAt: String
-    id: String!
-    respondUserIDs: [String]!
-    respondUsers: [User]
-    text: String
-    updatedAt: String
-}
-
-type Post {
-    buttonDescription: String
-    buttonText: String
-    buttonUrl: String
-    category: String
-    content: String!
-    createdAt: String!
-    description: String
-    id: String!
-    isClosed: Boolean!
-    isPopular: Boolean!
-    isShowMainPage: Boolean!
-    thumbnailUrl: String!
-    title: String!
-    updatedAt: String!
-    viewCount: Int!
-}
-
-type PushNotification {
-    body: String!
-    category: String!
-    createdAt: String!
-    data: String
-    device: Device
-    deviceID: String!
-    id: String!
-    status: String!
-    templateCode: String
-    title: String!
-    updatedAt: String!
-}
-
-type Query {
-    banners(limit: Int, offset: Int, where: BannersWhereInput): [Banner]!
-    benefitCompanies(options: BenefitCompaniesOptions): [BenefitCompany]
-    benefitCompany(id: String!): BenefitCompany
-    bookreview(id: String!): Bookreview
-    bookreviewByUserIDAndMeetingID(meetingID: String!, userID: String!): Bookreview
-    bookreviewComments(bookreviewID: String!): [BookreviewComment]
-    bookreviewsTemp(options: BookreviewsOptions): [Bookreview]!
-    canExtendClub(clubID: String!, userID: String!): Boolean
-    categories: [Category]
-    category(id: String!): Category
-    checkAvailablePhoneNumber(countryCode: String!, phoneNumber: String!): Boolean
-    club(id: String!): Club
-    clubApplication(id: String!): ClubApplication
-    clubApplications(limit: Int!, offset: Int!, order: [[String]], where: ClubApplicationsWhereInput!): [ClubApplication]
-    clubGroup(id: String!): ClubGroup
-    clubGroups(limit: Int!, offset: Int!, where: ClubGroupsWhereInput!): [ClubGroup]
-    clubHistories(limit: Int!, offset: Int!, where: ClubHistoriesWhereInput!): [ClubHistory]
-    clubHistory(id: String!): ClubHistory
-    clubPostComment(id: String!): ClubPostComment
-    clubPostComments(limit: Int, offset: Int, where: ClubPostCommentsWhereInput): [ClubPostComment]
-    clubReview(id: String!): ClubReview
-    clubReviews(limit: Int!, offset: Int!, order: [[String]], where: ClubReviewsWhereInput!): [ClubReview]
-    clubRole(id: String!): ClubRole
-    clubRoles(limit: Int, offset: Int, where: ClubRolesWhereInput): [ClubRole]
-    clubWithTagDatas(options: ClubWithTagDatasInput): [ClubsWithTag]
-    clubs(containsFullClub: Boolean, isTopAllMostFullClubs: Boolean, limit: Int, mostFullClubConditionPercent: Int, offset: Int, order: String, randomSeed: Float, searchByLeaderName: Boolean, where: ClubsWhereInput): [Club]
-    clubsCount(containsFullClub: Boolean, mostFullClubConditionPercent: Int, where: ClubsWhereInput): Int
-    clubsWithTag(containsFullClub: Boolean, isTopAllMostFullClubs: Boolean, limit: Int, mostFullClubConditionPercent: Int, offset: Int, where: ClubsWithTagWhereInput): ClubsWithTag
-    coupons(options: CouponsOptions!): [Coupon]!
-    currentTime: String
-    device(id: String!): Device
-    devices(limit: Int, offset: Int, where: DevicesWhereInput): [Device]
-    displayOrder(id: String!): DisplayOrder
-    displayOrders(limit: Int, offset: Int, where: DisplayOrdersWhereInput): [DisplayOrder]
-    event(id: String!): Event
-    eventApplication(id: String!): EventApplication
-    eventApplications(limit: Int!, offset: Int!, where: EventApplicationsWhereInput!): [EventApplication]
-    eventRole(id: String!): EventRole
-    eventRoles(limit: Int, offset: Int, where: EventRolesWhereInput): [EventRole]
-    events(limit: Int, offset: Int, where: EventsWhereInput): [Event]
-    extraNotice(id: String!): ExtraNotice
-    extraNotices: [ExtraNotice]
-    faq(id: String!): Faq
-    faqs(category: String, where: FaqsWhereInput): [Faq]
-    findEmail(name: String!, phoneNumber: String!): Boolean
-    getAppleID(accessToken: String): String
-    hasExperienceEvent(eventID: String, userID: String!): Boolean
-    hasExperiencedSeason(userID: String!): Boolean!
-    hasIssueableCoupon(benefitCompanyID: String!, userID: String!): Boolean!
-    hasMembership(checkDate: String, roles: [String], seasons: [String], serviceID: String, userID: String!): Boolean
-    hasMembershipByClubID(clubID: String!, userID: String!): Boolean
-    hasPaidClubApplication(clubGroupID: String, userID: String!): Boolean
-    hasTicket(serviceID: String, userID: String!): Boolean
-    inactiveUsers(limit: Int, offset: Int, where: InactiveUsersWhereInput): [InactiveUser]
-    infoDatasOfMainpage: infoDatasOfMainpagePayload!
-    isAppliableEvent(eventID: String!, userID: String!): Boolean
-    isAppliablePartner(userID: String!): Boolean!
-    isAttended(meetingID: String!, userID: String!): Boolean!
-    isKTMembership(clubID: String!, userID: String!): Boolean
-    isLastMeetingOver(seasonID: String!, userID: String!): Boolean!
-    isNewbie(userID: String!): Boolean
-    isVaildPinNumber(pinNumber: String!, price: Int!): Boolean
-    issuedCoupons(benefitCompanyID: String!, userID: String!): [Coupon]!
-    lastMeetingOverUsers: [User]
-    leader(id: String, userID: String): Leader
-    leaders(limit: Int, offset: Int, order: Int, where: LeadersWhereInput): [Leader]
-    mainManualPosts(ids: [String]): [Post]
-    mainPosts(excludeClosedPost: Boolean, limit: Int, offset: Int): [Post]
-    meeting(clubID: String!, order: Int!): Meeting
-    meetingByID(id: String!): Meeting
-    meetings(limit: Int, offset: Int, order: [[String]], where: MeetingsWhereInput): [Meeting]
-    memberCount(clubID: String!): Int
-    memberInfoByClub(id: String!): MemberInfo
-    memberInfoBySeasonID(seasonID: String!): MemberInfo
-    nextSeasonClub(prevClubID: String!): Club
-    notice(id: String!): Notice
-    notices: [Notice]
-    outgoingVoucher(userId: String!): [OutgoingVoucher]
-    partnerApplication(id: String!): PartnerApplication
-    partnerApplications(limit: Int!, offset: Int!, where: PartnerApplicationsWhereInput!): [PartnerApplication]
-    partnerAssigningSeason: Season
-    pinNumbers(limit: Int, offset: Int, where: PinNumbersWhereInput): [PinNumber]
-    place(id: String!): Place
-    places: [Place]
-    pointHistories(limit: Int, offset: Int, where: PointHistoriesWhereInput): [PointHistory]
-    policy(id: String!): Policy
-    popularPosts(excludeClosedPost: Boolean, limit: Int, offset: Int): [Post]
-    post(id: String!): Post
-    posts(where: PostsWhereInput): [Post]
-    productMapping(clubID: String!, meetingIDs: [String]): Boolean
-    pushNotification(id: String!): PushNotification
-    pushNotifications(limit: Int, offset: Int, where: PushNotificationsWhereInput): [PushNotification]
-    recruitment(id: String!): Recruitment
-    recruitments(where: RecruitmentWhereInput): [Recruitment]
-    refund(id: String!): Refund
-    refunds(limit: Int, offset: Int, order: String, where: RefundWhereInput): [Refund]
-    roomSchedules(limit: Int, offset: Int, where: RoomSchedulesWhereInput): [RoomSchedule]
-    season(id: String!): Season
-    seasons(where: SeasonsWhereInput): [Season]
-    spaceRentals(limit: Int, offset: Int, where: SpaceRentalWhereInput): [SpaceRental]
-    tag(id: String!): Tag
-    tags(limit: Int!, offset: Int!, where: TagsWhereInput!): [Tag]
-    tempBookApplication(clubApplicationID: String!): TempBookApplication
-    user(id: String!): User
-    userByEmail(email: String!): User
-    usersByBatching(ids: [String]!): [User]
-    validSeasons: [VaildSeason]
-    video(id: String!): Video
-    wallet(userID: String!): Wallet
-    wishClubs(limit: Int, offset: Int, where: WishClubsWhereInput): [WishClub]
-}
-
-type Recruitment {
-    content: String!
-    createdAt: String
-    description: String!
-    id: String!
-    isClosed: Boolean!
-    thumbnailUrl: String!
-    title: String!
-    updatedAt: String
-}
-
-type Refund {
-    clubApplication: ClubApplication
-    clubApplicationID: String!
-    comment: String
-    createdAt: String
-    deletedAt: String
-    exchangeableUsedPoint: Int
-    gateway: String
-    id: String!
-    method: String
-    noExchangeableUsedPoint: Int
-    outgoingCoupon: Boolean!
-    price: Int
-    reason: String!
-    refundedAt: String!
-    refundedBy: String!
-    total: Int!
-    updatedAt: String
-}
-
-type RefundEventPayload {
-    eventApplication: EventApplication
-}
-
-type ReservationInformation {
-    activities: [String]
-    readings: [String]
-    relationships: [String]
-}
-
-type Room {
-    agit: Agit
-    agitID: String!
-    id: String!
-    maxMemberCount: Int!
-    name: String!
-    openTimetable: [typeOpenTimetable]!
-}
-
-type RoomSchedule {
-    b2bMeeting: B2bMeeting
-    b2bMeetingID: String
-    b2bSpaceRental: B2bSpaceRental
-    b2bSpaceRentalID: String
-    endedAt: String!
-    id: String!
-    meeting: Meeting
-    meetingID: String
-    room: Room
-    roomID: String!
-    spaceRental: SpaceRental
-    spaceRentalID: String
-    startedAt: String!
-    type: String!
+directive @cacheControl(
+  maxAge: Int
+  scope: CacheControlScope
+) on OBJECT | FIELD_DEFINITION
+input AcceptB2bSpaceRentalInput {
+  id: String!
+  isAccepted: Boolean!
 }
 
-type Season {
-    allOpenStartedAt: String
-    assigningRank: Int!
-    createdAt: String!
-    endedAt: String!
-    extentionOpenStartedAt: String
-    firstRefundStartedAt: String
-    fourthRefundStartedAt: String
-    id: String!
-    isPeriodToAskExistingPartner: Boolean!
-    isPeriodToShowMembers: Boolean!
-    isTopAllMostFullClubs: Boolean!
-    memberOpenStartedAt: String
-    mostFullClubConditionPercent: Int!
-    newPartnerApplicationUrl: String
-    nextSeason: String
-    nextSeasonData: Season
-    openEndedAt: String
-    openStatus: String!
-    refundEndedAt: String
-    secondRefundStartedAt: String
-    startedAt: String!
-    thirdRefundStartedAt: String
-    updatedAt: String!
+type AcceptB2bSpaceRentalPayload {
+  b2bSpaceRental: B2bSpaceRental
 }
 
-type SpaceRental {
-    createdAt: String!
-    endedAt: String!
-    id: String!
-    isAccepted: Boolean
-    memberCount: Int!
-    place: Place
-    placeID: String!
-    reason: String!
-    request: String
-    roomScheduleIDs: [String]!
-    roomSchedules: [RoomSchedule]
-    smsNotice: String
-    startedAt: String!
-    updatedAt: String!
-    user: User
-    userID: String!
+input AcceptSpaceRentalInput {
+  id: String!
+  isAccepted: Boolean!
 }
 
-type Tag {
-    clubGroupId: String
-    createdAt: String!
-    description: String
-    id: String!
-    isPublic: Boolean!
-    name: String!
-    options: [String]!
-    seasonID: String!
-    subName: String
-    updatedAt: String!
+type AcceptSpaceRentalPayload {
+  spaceRental: SpaceRental
 }
-
-type TempBookApplication {
-    addressFirstLine: String
-    addressSecondLine: String
-    addressZipCode: String
-    clubApplicationID: String!
-    exchangeableUsedPoint: Int!
-    id: String!
-    noExchangeableUsedPoint: Int!
-    productOptionID: String!
-    receiverName: String
-    receiverPhoneNumber: String
-    title: String!
-    unitPrice: Int!
-}
-
-type TempCommunityTicket {
-    cardName: String
-    clubApplicationID: String!
-    clubID: String!
-    createdAt: String
-    id: String!
-    isRefunded: Boolean!
-    updatedAt: String
-    userID: String!
-}
-
-type Ticket {
-    serviceId: String
-}
-
-type ToggleLikeOnBookreviewPayload {
-    bookreview: Bookreview
-}
-
-type TypeInformation {
-    clubID: String
-    content: String
-    isClosed: Boolean
-    isClosedInApp: Boolean
-    isClosedInAppHome: Boolean
-    isClosedNoticeInCS: Boolean
-    isClosedNoticeInHome: Boolean
-    tabs: [TypeTab]
-    title: String
-}
-
-type TypeTab {
-    content: String
-    isClosed: Boolean
-    name: String
-    seoText: String
-}
-
-type UcmTestResult {
-    answers: [String]
-    finishedAt: String
-    id: String
-    tagID: String
-    userID: String
-}
-
-type UpdateBookreviewCommentPayout {
-    bookreviewComment: BookreviewComment
-}
-
-type UpdateBookreviewPayload {
-    bookreview: Bookreview
-}
-
-type UpdateClubApplicationPayload {
-    clubApplication: ClubApplication
-}
-
-type UpdateClubReviewPayload {
-    clubReview: ClubReview
-}
-
-type UpdateEventApplicationPayload {
-    eventApplication: EventApplication
-}
-
-type UpdatePartnerApplicationPayload {
-    partnerApplication: PartnerApplication
-}
-
-type UpdateUserPayload {
-    user: User
-}
-
-type User {
-    ads: [String]
-    appleID: String
-    birthday: String
-    comment: String
-    countryCode: String
-    createdAt: String
-    description: String
-    email: String
-    facebook: String
-    facebookID: String
-    gender: String
-    hasAuthenticatedPhoneNumber: Boolean
-    id: String!
-    instagram: String
-    interests: [String]
-    isAgreedToAllMarketing: Boolean
-    isAgreedToMarketingSms: Boolean
-    isBlocked: Boolean
-    isInactivated: Boolean!
-    isPublicAge: Boolean
-    isPublicBookreview: Boolean
-    isPublicClubActivity: Boolean
-    isPublicGender: Boolean
-    isPublicProfile: Boolean
-    kakaoID: String
-    keywords: [String]
-    marketingAgreedAt: String
-    name: String!
-    noExchangeablePoint: Int
-    password: String
-    phoneNumber: String
-    point: Int
-    profileImageUrl: String
-    readingVolume: Int
-    recentLoginedAt: String
-    recommender: String
-    route: String
-    updatedAt: String
-}
-
-type VaildSeason {
-    seasonID: String
-}
-
-type Video {
-    id: String!
-    link: String!
-    props: JSON!
-}
-
-type Wallet {
-    id: String!
-    tickets: [Ticket]
-    userId: String!
-}
-
-type WishClub {
-    club: Club!
-    clubID: String!
-    createdAt: String!
-    deletedAt: String
-    isReceivedSms: Boolean!
-    season: String!
-    seasonID: String
-    updatedAt: String!
-    userID: String!
-}
-
-type infoDatasOfMainpagePayload {
-    countMeetings: Int!
-    countOfPostingBookreview: Int!
-    countOfReadingContents: Int!
-    countUsers: Int!
-    duringYearOfTrevari: Int!
-}
-
-type timetableRow {
-    startTime: String!
-    task: String!
-}
-
-type typeOpenTimetable {
-    day: Int
-    periods: [typePeriod]
-}
-
-type typePeriod {
-    endedAt: String
-    startedAt: String
-}
-
-enum CacheControlScope {
-    PRIVATE
-    PUBLIC
-}
-
-"The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
-scalar JSON
 
 input Account {
-    accountNumber: String!
-    bankCode: String!
-    bankName: String!
-    userName: String!
+  bankCode: String!
+  bankName: String!
+  accountNumber: String!
+  userName: String!
+}
+
+input AddContentIDOnB2bMeetingInput {
+  id: String!
+  contentID: String!
+  b2bClubHistoryID: String!
+}
+
+type AddContentIDOnB2bMeetingPayload {
+  b2bMeeting: B2bMeeting
+}
+
+input AddContentIDOnMeetingInput {
+  id: String!
+  contentID: String!
+  clubHistoryID: String!
+  contentTitle: String
+}
+
+type AddContentIDOnMeetingPayload {
+  meeting: Meeting
+}
+
+input AddTagIDOnClubInput {
+  clubID: String!
+  tagID: String!
+}
+
+type AddTagIDOnClubPayload {
+  club: Club
 }
 
 input AddToCartInput {
-    contentID: String
-    contentName: String
-    eventID: String
-    eventSourceUrl: String
-    fbc: String
-    fbp: String
-    pixelIDs: [String]
-    price: Int
+  contentID: String
+  contentName: String
+  price: Int
+  eventID: String
+  eventSourceUrl: String
+  fbp: String
+  fbc: String
+  pixelIDs: [String]
+}
+
+input AddToWishlistInput {
+  contentID: String
+  contentName: String
+  price: Int
+  eventID: String
+  eventSourceUrl: String
+  fbp: String
+  fbc: String
+  pixelIDs: [String]
+}
+
+type Admin {
+  facebookID: String
+  userID: String
+  name: String
+}
+
+type Agit {
+  id: String!
+  name: String!
+  address: String!
+  roomCount: Int!
+  availableRoomCount: Int!
+  openTimetable: [typeOpenTimetable]!
+  holidays: [String]!
+}
+
+input ApplyB2bClubInput {
+  b2bUserID: String!
+  b2bClubID: String!
+  method: String!
+  tossRedirectUrl: String
+  tossCancelRedirectUrl: String
+  beforeB2bClubApplicationID: String
+  refunB2bdAccount: Account
+  pinNumber: String
+}
+
+type ApplyB2bClubPayload {
+  b2bClubApplication: B2bClubApplication
+}
+
+input ApplyB2bEventInput {
+  b2bUserID: String!
+  eventID: String!
+  method: String!
+  companionCount: Int!
+  tossRedirectUrl: String
+  tossCancelRedirectUrl: String
+}
+
+type ApplyB2bEventPayload {
+  b2bEventApplication: B2bEventApplication
+}
+
+input ApplyEventInput {
+  userID: String!
+  eventID: String!
+  method: String!
+  companionCount: Int!
+  tossRedirectUrl: String
+  tossCancelRedirectUrl: String
+  usedPoint: Int
+}
+
+type ApplyEventPayload {
+  eventApplication: EventApplication
+}
+
+input attachmentInput {
+  author_name: String!
+  color: String!
+  text: String!
+}
+
+type Attendance {
+  id: String!
+  clubID: String!
+  order: Int!
+  userID: String!
+  isMember: Boolean!
+  status: String!
+  createdAt: String
+  updatedAt: String
+  user: User
+  club: Club
+}
+
+input AttendancesWhereInput {
+  clubID: String
+  order: Int
+  meetingStartedAt: String
+  placeID: String
+}
+
+input B2bAccount {
+  bankCode: String!
+  bankName: String!
+  accountNumber: String!
+  b2bUserName: String!
+}
+
+type B2bAttendance {
+  id: String!
+  b2bClubID: String!
+  order: Int!
+  b2bUserID: String!
+  isMember: Boolean!
+  status: String!
+  createdAt: String
+  updatedAt: String
+  b2bUser: B2bUser
+  b2bClub: B2bClub
+}
+
+input B2bAttendancesWhereInput {
+  b2bClubID: String
+  order: Int
+  b2bMeetingStartedAt: String
+  placeID: String
+}
+
+type B2bBookreview {
+  id: String!
+  b2bClubID: String!
+  order: Int!
+  contentIDs: [String]!
+  b2bUserID: String!
+  role: String
+  title: String
+  content: String
+  isPublic: Boolean!
+  status: String!
+  commentCount: Int!
+  likeB2bUserIDs: [String]!
+  fileUrl: String
+  publishedAt: String
+  createdAt: String
+  updatedAt: String
+  contents: [Content]
+  b2bClub: B2bClub
+  b2bMeeting: B2bMeeting
+  b2bUser: B2bUser
+}
+
+type B2bBookreviewComment {
+  id: String!
+  b2bBookreviewID: String!
+  content: String!
+  b2bUserID: String!
+  createdAt: String
+  updatedAt: String
+  b2bUser: B2bUser
+}
+
+input B2bBookreviewsOptions {
+  limit: Int
+  offset: Int
+  where: B2bBookreviewsWhereInput
+}
+
+input B2bBookreviewsWhereInput {
+  b2bUserID: String
+  status: String
+  b2bClubID: String
+  order: Int
+}
+
+type B2bClub {
+  id: String!
+  seasonID: String!
+  name: String!
+  coverUrl: String
+  price: Int!
+  type: String!
+  dayOfSchedule: Int!
+  weekOfSchedule: Int!
+  timeOfSchedule: String!
+  placeID: String!
+  partnerIDs: [String]!
+  leaderIDs: [String]!
+  isClosed: Boolean!
+  partnerApplicationCount: Int!
+  memberCount: Int!
+  maxMemberCount: Int!
+  minBookreviewLength: Int!
+  b2bClubGroupID: String
+  b2bClubHistoryID: String!
+  categoryID: String
+  runningTime: String!
+  tagIDs: [String]!
+  option: String
+  options: [String]!
+  information: String
+  leaderDescription: String
+  leaderImageUrl: String
+  partnerDescription: String
+  partnerImageUrl: String
+  curriculum: String
+  notice: String
+  description: String
+  openedAt: String
+  closedAt: String
+  partnerImageUrlUploadedAt: String
+  smsTemplateType: String
+  quizUrl: String
+  partnerDescriptionTitle: String
+  firstBookIntro: String
+  hashTag: String
+  subHashTag: String
+  subDescription: String
+  subCoverUrl: String
+  b2bCompanyID: String
+  place: Place
+  leaders: [B2bUser]
+  partners: [B2bUser]
+  b2bMeetings: [B2bMeeting]
+  b2bClubGroup: B2bClubGroup
+  b2bClubHistory: B2bClubHistory
+  category: Category
+  seasonData: Season
+  b2bCompany: B2bCompany
+}
+
+type B2bClubApplication {
+  id: String!
+  b2bUserID: String!
+  b2bClubID: String!
+  seasonID: String!
+  price: Int!
+  companionCount: Int!
+  method: String!
+  status: String!
+  b2bClubRoleID: String
+  refundPrice: Int
+  fee: Int
+  tossPayToken: String
+  tossRefundNo: String
+  iamportUID: String
+  tossRedirectUrl: String
+  tossCancelRedirectUrl: String
+  confirmedAt: String
+  refundApplicatedAt: String
+  membershipClosedAt: String
+  refundedAt: String
+  refundBankCode: String
+  refundBankName: String
+  refundHolder: String
+  refundAccountNumber: String
+  vbankBankCode: String
+  vbankBankName: String
+  vbankHolder: String
+  vbankAccountNumber: String
+  vbankExpiredAt: String
+  refundReason: String
+  beforeB2bClubApplicationID: String
+  afterB2bClubApplicationID: String
+  refundScore: Int
+  createdAt: String
+  updatedAt: String
+  b2bUser: B2bUser
+  b2bClub: B2bClub
+}
+
+input B2bClubApplicationsWhereInput {
+  seasonID: String
+  b2bClubID: String
+  b2bUserID: String
+  b2bCtatus: String
+  method: String
+}
+
+type B2bClubGroup {
+  id: String!
+  name: String!
+  description: String!
+  notice: String
+  information: String
+  test_column_1: String
+  test_column_1_title: String
+  test_column_2: String
+  test_column_3: String
+  test_column_3_title: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+input B2bClubGroupsWhereInput {
+  name: String
+}
+
+input B2bClubHistoriesWhereInput {
+  name: String
+}
+
+type B2bClubHistory {
+  id: String!
+  name: String!
+  sinceSeason: String!
+  readContentIDs: [String]!
+  createdAt: String
+  updatedAt: String
+  readContents: [Content]
+}
+
+type B2bClubReview {
+  id: String!
+  b2bClubID: String!
+  b2bClubGroupID: String!
+  b2bClubHistoryID: String!
+  b2bUserID: String!
+  isClosed: Boolean!
+  content: String!
+  createdAt: String!
+  updatedAt: String!
+  dummyLikeCount: Int!
+  imageUrl: String
+  title: String
+  score: Int
+  b2bUser: B2bUser
+  b2bClub: B2bClub
+}
+
+input B2bClubReviewsWhereInput {
+  b2bClubGroupID: String
+  b2bClubHistoryID: String
+  b2bClubID: String
+  b2bUserID: String
+  isClosed: Boolean
+}
+
+type B2bClubRole {
+  id: String!
+  b2bUserID: String!
+  b2bClubID: String!
+  role: String!
+  seasonID: String!
+  createdAt: String!
+  updatedAt: String!
+  isInvited: Boolean!
+  experiencedSeasonCount: Int!
+  fee: String
+  b2bClubApplicationID: String
+  refundStatus: String
+  refundedAt: String
+  partnerAnswer: String
+  isFirstSeason: Boolean
+  type: String
+  respondQuiz: Boolean
+  passedQuiz: Boolean
+  quizPushCount: Int
+  b2bClub: B2bClub
+  b2bClubApplication: B2bClubApplication
+  seasonData: Season
+  b2bUser: B2bUser
+}
+
+input B2bClubRolesWhereInput {
+  seasonID: String
+  b2bClubID: String
+  b2bUserID: String
+  role: String
+  seasons: [String]
+  includesRefundedRole: Boolean
+  needsToConfirmSeason: Boolean
+  isPastSeason: Boolean
+  isOpenPeriodRefundedRole: Boolean
+}
+
+input B2bClubsWhereInput {
+  seasonID: String
+  name: String
+  b2bClubGroupID: String
+  b2bClubHistoryID: String
+  tagID: String
+  categoryIDs: [String]
+  placeIDs: [String]
+  prices: [Int]
+  days: [Int]
+  isClosed: Boolean
+  types: [String]
+  noHasPartner: Boolean
+  option: String
+  options: [String]
+  hasClosedAt: Boolean
+  tagIDs: [String]
+}
+
+input B2bCompaniesWhereInput {
+  name: String
+}
+
+type B2bCompany {
+  id: String!
+  name: String!
+  isClosed: Boolean!
+  isPublicB2bBookreviewForOutside: Boolean!
+  isPublicB2bBookreviewForInside: Boolean!
+  logoUrl: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+type B2bCoupon {
+  id: String!
+  benefitCompanyID: String!
+  code: String!
+  expiredAt: String!
+  isUsed: String!
+  seasonID: String
+  b2bUserID: String
+  benefitCompany: BenefitCompany!
+}
+
+input B2bCouponsOptions {
+  limit: Int
+  offset: Int
+  where: B2bCouponsOptionsWhere
+}
+
+input B2bCouponsOptionsWhere {
+  isExpired: Boolean
+  b2bUserID: String
+}
+
+type B2bEventApplication {
+  id: String!
+  b2bUserID: String!
+  eventID: String!
+  seasonID: String!
+  price: Int!
+  method: String!
+  status: String!
+  companionCount: Int!
+  refundPrice: Int
+  b2bEventRoleID: String
+  tossPayToken: String
+  tossRefundNo: String
+  iamportUID: String
+  tossRedirectUrl: String
+  tossCancelRedirectUrl: String
+  confirmedAt: String
+  refundApplicatedAt: String
+  refundedAt: String
+  refundBankCode: String
+  refundBankName: String
+  refundHolder: String
+  refundAccountNumber: String
+  vbankBankCode: String
+  vbankBankName: String
+  vbankHolder: String
+  vbankAccountNumber: String
+  vbankExpiredAt: String
+  refundReason: String
+  isMember: Boolean
+  createdAt: String
+  updatedAt: String
+  b2bUser: B2bUser
+  event: Event
+}
+
+input B2bEventApplicationsWhereInput {
+  seasonID: String
+  eventID: String
+  b2bUserID: String
+  status: String
+}
+
+type B2bEventRole {
+  id: String!
+  b2bUserID: String!
+  eventID: String!
+  b2bEventApplicationID: String!
+  role: String!
+  companionCount: Int!
+  seasonID: String!
+  refundStatus: String
+  isMember: Boolean
+  createdAt: String
+  updatedAt: String
+  event: Event
+  b2bUser: B2bUser
+  b2bEventApplication: B2bEventApplication
+}
+
+input B2bEventRolesWhereInput {
+  b2bUserID: String
+  eventID: String
+  seasonID: String
+  includesRefundedRole: Boolean
+}
+
+type B2bFaq {
+  id: String
+  category: String
+  title: String
+  description: String
+  order: Int
+  isClosed: Boolean
+  createdAt: String
+  updatedAt: String
+}
+
+input B2bFaqsWhereInput {
+  category: String
+  title: String
+  description: String
+}
+
+type B2bMeeting {
+  id: String!
+  b2bClubID: String!
+  order: Int!
+  b2bClubName: String!
+  seasonID: String!
+  placeID: String!
+  contentIDs: [String]!
+  timetable: [B2bTimetableRow]!
+  presenterIDs: [String]!
+  topicPages: [String]
+  presentUrl: String
+  presenterID: String
+  presentNotice: String
+  notice: String
+  bookreviewDeadline: String!
+  startedAt: String!
+  endedAt: String!
+  roomScheduleIDs: [String]!
+  b2bAttendanceCount: Int
+  b2bClub: B2bClub
+  place: Place
+  presenter: B2bUser
+  contents: [Content]
+  presenters: [B2bUser]
+  roomSchedules: [RoomSchedule]
+}
+
+input B2bMeetingsWhereInput {
+  placeID: String
+  seasonID: String
+  b2bClubName: String
+  b2bClubID: String
+  minStartedAt: String
+  startedAt: String
+  bookreviewDeadline: String
+  isClosed: Boolean
+  isClosedCompany: Boolean
+  hasContents: Boolean
+  isbn: String
+  hasClosedAt: Boolean
+  categoryIDs: [String]
+  days: [String]
+  placeIDs: [String]
+  types: [String]
+  period: inputPeriod
+  meetingPlaceIDs: [String]
+}
+
+type B2bPartnerTodo {
+  id: String!
+  title: String!
+  seasonID: String!
+  ddayMeeting: String!
+  order: Int!
+  b2bMeetingID: Boolean!
+  isChecked: Boolean!
+  dday: Int
+  createdAt: String
+  deletedAt: String
+  updatedAt: String
+}
+
+input B2bPartnerTodosWhereInput {
+  b2bMeetingID: String!
+}
+
+type B2bSpaceRental {
+  id: String!
+  placeID: String!
+  b2bUserID: String!
+  reason: String!
+  memberCount: Int!
+  startedAt: String!
+  endedAt: String!
+  createdAt: String!
+  updatedAt: String!
+  isAccepted: Boolean
+  request: String
+  smsNotice: String
+  roomScheduleIDs: [String]!
+  place: Place
+  b2bUser: B2bUser
+  roomSchedules: [RoomSchedule]
+}
+
+input B2bSpaceRentalWhereInput {
+  startedDate: String
+  placeID: String
+  isAccepted: Boolean
+  period: inputPeriod
+}
+
+type B2bTimetableRow {
+  startTime: String!
+  task: String!
+}
+
+input B2bTimetableRowInput {
+  startTime: String!
+  task: String!
+}
+
+type B2bUser {
+  id: String!
+  email: String!
+  name: String!
+  phoneNumber: String!
+  interests: [String]!
+  ads: [String]!
+  isAgreedToMarketingSms: Boolean!
+  isAgreedToAllMarketing: Boolean
+  hasAuthenticatedPhoneNumber: Boolean!
+  keywords: [String]!
+  readingVolume: Int
+  gender: String
+  birthday: String
+  route: String
+  facebookID: String
+  kakaoID: String
+  password: String
+  recommender: String
+  point: Int!
+  isBlocked: Boolean!
+  createdAt: String
+  updatedAt: String
+  profileImageUrl: String
+  description: String
+  instagram: String
+  facebook: String
+  isPublicProfile: Boolean
+  marketingAgreedAt: String
+  isPublicAge: Boolean!
+  isPublicGender: Boolean!
+  isPublicClubActivity: Boolean!
+  isPublicBookreview: Boolean!
+}
+
+input B2bUsersWhereInput {
+  name: String
+  phoneNumber: String
+}
+
+type Banner {
+  id: String!
+  title: String!
+  pcImageUrl: String!
+  mobileImageUrl: String!
+  linkUrl: String!
+  order: Int!
+  isClosed: Boolean!
+  createdAt: String!
+  updatedAt: String!
+  deletedAt: String
 }
 
 input BannersWhereInput {
-    isClosed: Boolean
+  isClosed: Boolean
 }
 
 input BenefitCompaniesOptions {
-    limit: Int
-    offset: Int
-    where: BenefitCompaniesWhere
+  limit: Int
+  offset: Int
+  where: BenefitCompaniesWhere
 }
 
 input BenefitCompaniesWhere {
-    isClosed: Boolean
-    userID: String
+  userID: String
+  isClosed: Boolean
+}
+
+type BenefitCompany {
+  id: String!
+  name: String!
+  benefit: String!
+  categories: [String]!
+  manual: String!
+  createdAt: String!
+  updatedAt: String!
+  logoUrl: String!
+  order: Int!
+  isClosed: Boolean!
+}
+
+type BlockUserPayload {
+  user: User
+}
+
+type Book {
+  title: String
+  author: String
+  description: String
+  imageUrl: String
+  isbn: String
+  link: String
+}
+
+type Bookreview {
+  id: String!
+  clubID: String!
+  order: Int!
+  contentIDs: [String]!
+  userID: String!
+  role: String
+  title: String
+  content: String
+  isPublic: Boolean!
+  status: String!
+  commentCount: Int!
+  likeUserIDs: [String]!
+  fileUrl: String
+  publishedAt: String
+  createdAt: String
+  updatedAt: String
+  contents: [Content]
+  club: Club
+  meeting: Meeting
+  user: User
+  comments: [BookreviewComment]
+}
+
+type BookreviewComment {
+  id: String!
+  bookreviewID: String!
+  content: String!
+  userID: String!
+  parentID: String
+  createdAt: String
+  updatedAt: String
+  user: User
+  replies: [BookreviewComment]
+}
+
+input BookreviewCommentsWhereInput {
+  parentID: String
+  bookreviewID: String!
 }
 
 input BookreviewsOptions {
-    limit: Int
-    offset: Int
-    where: BookreviewsWhereInput
+  limit: Int
+  offset: Int
+  where: BookreviewsWhereInput
 }
 
 input BookreviewsWhereInput {
-    clubID: String
-    order: Int
-    status: String
-    userID: String
+  userID: String
+  status: String
+  clubID: String
+  order: Int
+}
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
+
+type CalculateB2bEvnetApplicationPayload {
+  pointCount: Int
+  memberCount: Int
+  notMemberCount: Int
+}
+
+type CalculateEvnetApplicationPayload {
+  pointCount: Int
+  memberCount: Int
+  notMemberCount: Int
+}
+
+type CallNumbers {
+  sendNo: String
+}
+
+type Category {
+  id: String!
+  name: String!
+  createdAt: String!
+  updatedAt: String!
 }
 
 input ChangeClubInput {
-    clubRoleID: String!
-    nextClubID: String!
+  clubRoleID: String!
+  nextClubID: String!
+  changedClubMembershipPayload: ChangedClubMembershipInput
+}
+
+type ChangeClubPayload {
+  clubRole: ClubRole
+}
+
+input ChangedClubMembershipEventPayloadClub {
+  community: MeetingId
+  meetings: [MeetingId]
+}
+
+input ChangedClubMembershipInput {
+  orderId: String
+  prevClub: ChangedClubMembershipEventPayloadClub
+  changedClub: ChangedClubMembershipEventPayloadClub
+  differencePrice: Int
+  changedAt: String
+  isAlreadyRefund: Boolean
+  method: String
+}
+
+input ChangePasswordOnB2bUserInput {
+  id: String!
+  originalPassword: String!
+  newPassword: String!
+}
+
+type ChangePasswordOnB2bUserPayload {
+  b2bUser: B2bUser
 }
 
 input ChangePasswordOnUserInput {
-    id: String!
-    newPassword: String!
-    originalPassword: String!
+  id: String!
+  originalPassword: String!
+  newPassword: String!
+}
+
+type ChangePasswordOnUserPayload {
+  user: User
+}
+
+input CloseMembershipInput {
+  id: String!
+  refundInfo: RefundInfoInput
+}
+
+type CloseMembershipPayload {
+  clubApplication: ClubApplication
+}
+
+type Club {
+  id: String!
+  season: String!
+  seasonID: String!
+  name: String!
+  coverUrl: String
+  price: Int!
+  type: String!
+  dayOfSchedule: Int!
+  weekOfSchedule: Int!
+  timeOfSchedule: String!
+  placeID: String!
+  partnerIDs: [String]!
+  leaderIDs: [String]!
+  isClosed: Boolean!
+  partnerApplicationCount: Int!
+  memberCount: Int!
+  maxMemberCount: Int!
+  minBookreviewLength: Int!
+  clubGroupID: String
+  clubHistoryID: String!
+  categoryID: String
+  runningTime: String!
+  tagIDs: [String]!
+  wishedCount: Int!
+  isAllowedOutgoing: Boolean!
+  options: [String]!
+  option: String
+  information: String
+  leaderDescription: String
+  leaderImageUrl: String
+  leaderTitle: String
+  leaderShare: Int
+  partnerDescription: String
+  partnerImageUrl: String
+  curriculum: String
+  notice: String
+  description: String
+  openedAt: String
+  closedAt: String
+  partnerImageUrlUploadedAt: String
+  smsTemplateType: String
+  quizUrl: String
+  partnerDescriptionTitle: String
+  firstBookIntro: String
+  hashTag: String
+  subHashTag: String
+  subDescription: String
+  subCoverUrl: String
+  beforeSeasonID: String
+  applicationDeadline: String
+  endedAt: String
+  extensionStartedAt: String
+  clubIntroductionStatus: String
+  clubIntroductionCreatedAt: String
+  clubIntroductionStatusUpdatedAt: String
+  place: Place
+  leaders: [User]
+  partners: [User]
+  meetings: [Meeting]
+  clubGroup: ClubGroup
+  clubHistory: ClubHistory
+  category: Category
+  seasonData: Season
+}
+
+type ClubApplication {
+  id: String!
+  userID: String!
+  clubID: String!
+  season: String!
+  seasonID: String!
+  price: Int!
+  companionCount: Int!
+  method: String!
+  status: String!
+  clubRoleID: String
+  refundPrice: Int
+  fee: Int
+  tossPayToken: String
+  tossRefundNo: String
+  iamportUID: String
+  tossRedirectUrl: String
+  tossCancelRedirectUrl: String
+  confirmedAt: String
+  refundApplicatedAt: String
+  membershipClosedAt: String
+  refundedAt: String
+  refundBankCode: String
+  refundBankName: String
+  refundHolder: String
+  refundAccountNumber: String
+  vbankBankCode: String
+  vbankBankName: String
+  vbankHolder: String
+  vbankAccountNumber: String
+  vbankExpiredAt: String
+  refundReason: String
+  beforeClubApplicationID: String
+  afterClubApplicationID: String
+  exchangeableUsedPoint: Int
+  noExchangeableUsedPoint: Int
+  refundScore: Int
+  createdAt: String
+  updatedAt: String
+  cardName: String
+  failReason: String
+  orderId: String
+  user: User
+  club: Club
+  refunds: [Refund]
+  tempCommunityTicket: TempCommunityTicket
 }
 
 input ClubApplicationsWhereInput {
-    clubID: String
-    method: String
-    season: String
-    seasonID: String
-    secondMeetingStartedAt: String
-    status: String
-    thirdMeetingStartedAt: String
-    userID: String
+  season: String
+  seasonID: String
+  clubID: String
+  userID: String
+  status: String
+  method: String
+  secondMeetingStartedAt: String
+  thirdMeetingStartedAt: String
+}
+
+type ClubGroup {
+  id: String!
+  name: String!
+  description: String!
+  notice: String
+  information: String
+  test_column_1: String
+  test_column_1_title: String
+  test_column_2: String
+  test_column_3: String
+  test_column_3_title: String
+  categoryID: String
+  createdAt: String!
+  updatedAt: String!
+  category: Category
 }
 
 input ClubGroupsWhereInput {
-    name: String
+  name: String
 }
 
 input ClubHistoriesWhereInput {
-    name: String
+  name: String
 }
 
-input ClubPostCommentsWhereInput {
-    clubPostID: String
-    content: String
-    parentID: String
-    userID: String
+type ClubHistory {
+  id: String!
+  name: String!
+  sinceSeason: String!
+  readContentIDs: [String]!
+  createdAt: String
+  updatedAt: String
+  readContents: [Content]
+}
+
+type ClubReview {
+  id: String!
+  clubID: String!
+  clubGroupID: String!
+  clubHistoryID: String!
+  userID: String!
+  isClosed: Boolean!
+  content: String!
+  createdAt: String!
+  updatedAt: String!
+  dummyLikeCount: Int!
+  imageUrl: String
+  title: String
+  score: Int
+  user: User
+  club: Club
 }
 
 input ClubReviewsWhereInput {
-    clubGroupID: String
-    clubHistoryID: String
-    clubID: String
-    isClosed: Boolean
-    userID: String
+  clubGroupID: String
+  clubHistoryID: String
+  clubID: String
+  userID: String
+  isClosed: Boolean
+}
+
+type ClubRole {
+  id: String!
+  userID: String!
+  clubID: String!
+  role: String!
+  season: String!
+  seasonID: String!
+  createdAt: String!
+  updatedAt: String!
+  isInvited: Boolean!
+  experiencedSeasonCount: Int!
+  fee: String
+  clubApplicationID: String
+  refundStatus: String
+  refundedAt: String
+  partnerAnswer: String
+  partnerAnswerReason: String
+  replacementPartnerMeetingOrder: Int
+  isFirstSeason: Boolean
+  type: String
+  respondQuiz: Boolean
+  passedQuiz: Boolean
+  quizPushCount: Int
+  club: Club
+  clubApplication: ClubApplication
+  seasonData: Season
+  user: User
 }
 
 input ClubRolesWhereInput {
-    clubID: String
-    createdInADay: String
-    includesClosedClubs: Boolean
-    includesRefundedRole: Boolean
-    isOpenPeriodRefundedRole: Boolean
-    isPastSeason: Boolean
-    needsToConfirmSeason: Boolean
-    refundStatuses: [String]
-    role: String
-    season: String
-    seasonID: String
-    seasons: [String]
-    userID: String
-}
-
-input ClubWithTagDatasInput {
-    limit: Int
-    offset: Int
-    where: ClubWithTagDatasWhere
-}
-
-input ClubWithTagDatasWhere {
-    containsFullClub: Boolean
-    isAppliablePeriod: String
-    isClosed: Boolean
-    isOpenClub: Boolean
-    isTopAllMostFullClubs: Boolean
-    mostFullClubConditionPercent: Int
-    randomSeed: Float
-    seasonID: String
-    tagIDs: [String]
-    types: [String]
+  season: String
+  seasons: [String]
+  seasonID: String
+  clubID: String
+  userID: String
+  role: String
+  refundStatuses: [String]
+  includesRefundedRole: Boolean
+  needsToConfirmSeason: Boolean
+  isPastSeason: Boolean
+  isOpenPeriodRefundedRole: Boolean
+  includesClosedClubs: Boolean
+  createdInADay: String
 }
 
 input ClubsWhereInput {
-    categoryIDs: [String]
-    clubGroupID: String
-    clubHistoryID: String
-    clubIntroductionStatus: String
-    clubStatus: String
-    days: [Int]
-    extensionStartedAt: String
-    firstMeetingStartedDay: String
-    hasClosedAt: Boolean
-    isAppliablePeriod: String
-    isClosed: Boolean
-    isFullMemberCount: Boolean
-    isOpenClub: Boolean
-    name: String
-    noHasPartner: Boolean
-    option: String
-    options: [String]
-    partnerIDs: [String]
-    placeIDs: [String]
-    prices: [Int]
-    season: String
-    seasonID: String
-    tagID: String
-    tagIDs: [String]
-    types: [String]
-    underMemberCount: Int
-    weeks: [Int]
+  season: String
+  seasonID: String
+  name: String
+  clubGroupID: String
+  clubHistoryID: String
+  tagID: String
+  categoryIDs: [String]
+  placeIDs: [String]
+  prices: [Int]
+  days: [Int]
+  weeks: [Int]
+  isClosed: Boolean
+  types: [String]
+  noHasPartner: Boolean
+  option: String
+  hasClosedAt: Boolean
+  tagIDs: [String]
+  isAppliablePeriod: String
+  underMemberCount: Int
+  firstMeetingStartedDay: String
+  clubStatus: String
+  isFullMemberCount: Boolean
+  isOpenClub: Boolean
+  options: [String]
+  extensionStartedAt: String
+  clubIntroductionStatus: String
+  partnerIDs: [String]
+}
+
+type ClubsWithTag {
+  clubs: [Club]
+  tag: Tag
 }
 
 input ClubsWithTagWhereInput {
-    isClosed: Boolean!
-    season: String
-    seasonID: String
-    tagID: String!
+  season: String
+  seasonID: String
+  tagID: String!
+  isClosed: Boolean!
 }
 
-input ConfirmPhoneNumberInput {
-    countryCode: String!
-    id: String!
-    phoneNumber: String!
+input ClubWithTagDatasInput {
+  limit: Int
+  offset: Int
+  where: ClubWithTagDatasWhere
+}
+
+input ClubWithTagDatasWhere {
+  randomSeed: Float
+  isTopAllMostFullClubs: Boolean
+  mostFullClubConditionPercent: Int
+  containsFullClub: Boolean
+  tagIDs: [String]
+  seasonID: String
+  isClosed: Boolean
+  isAppliablePeriod: String
+  isOpenClub: Boolean
+  types: [String]
+}
+
+input ConfirmB2bClubApplicationInput {
+  id: String!
+}
+
+type ConfirmB2bClubApplicationPayload {
+  b2bClubApplication: B2bClubApplication
+}
+
+input ConfirmB2bEventApplicationInput {
+  id: String!
+}
+
+type ConfirmB2bEventApplicationPayload {
+  b2bEventApplication: B2bEventApplication
+}
+
+input ConfirmB2bEventRefundInput {
+  id: String!
+}
+
+type ConfirmB2bEventRefundPayload {
+  b2bEventApplication: B2bEventApplication
+}
+
+input ConfirmEventApplicationInput {
+  id: String!
+}
+
+type ConfirmEventApplicationPayload {
+  eventApplication: EventApplication
+}
+
+input ConfirmEventRefundInput {
+  id: String!
+}
+
+type ConfirmEventRefundPayload {
+  eventApplication: EventApplication
+}
+
+type Content {
+  id: String!
+  type: String!
+  title: String
+  author: String
+  description: String
+  imageUrl: String
+  isbn: String
+  link: String
+}
+
+type Coupon {
+  id: String!
+  benefitCompanyID: String!
+  code: String!
+  expiredAt: String!
+  isUsed: String!
+  userID: String
+  seasonID: String
+  benefitCompany: BenefitCompany!
 }
 
 input CouponsOptions {
-    limit: Int
-    offset: Int
-    where: CouponsOptionsWhere
+  limit: Int
+  offset: Int
+  where: CouponsOptionsWhere
 }
 
 input CouponsOptionsWhere {
-    benefitCompanyID: String
-    isExpired: Boolean
-    seasonID: String
-    userID: String
+  isExpired: Boolean
+  userID: String
+  seasonID: String
+  benefitCompanyID: String
+}
+
+input CreateAdminInput {
+  userID: String!
+  name: String
+  facebookID: String
+}
+
+type CreateAdminPayload {
+  admin: Admin
+}
+
+input CreateB2bAttendanceInput {
+  b2bClubID: String!
+  order: Int!
+  b2bUserID: String!
+  isMember: Boolean!
+  status: String!
+}
+
+type CreateB2bAttendancePayload {
+  b2bAttendance: B2bAttendance
+}
+
+input CreateB2bBookreviewCommentInput {
+  b2bBookreviewID: String!
+  content: String!
+  b2bUserID: String!
+}
+
+type CreateB2bBookreviewCommentPayout {
+  b2bBookreviewComment: B2bBookreviewComment
+}
+
+input CreateB2bBookreviewInput {
+  b2bClubID: String!
+  order: Int!
+  b2bUserID: String!
+  title: String
+  content: String
+  isPublic: Boolean!
+  status: String!
+  fileUrl: String
+  publishedAt: String
+}
+
+type CreateB2bBookreviewPayload {
+  b2bBookreview: B2bBookreview
+}
+
+input CreateB2bClubGroupInput {
+  name: String!
+  description: String!
+  notice: String
+  information: String
+  test_column_1: String
+  test_column_1_title: String
+  test_column_2: String
+  test_column_3: String
+  test_column_3_title: String
+}
+
+type CreateB2bClubGroupPayload {
+  b2bClubGroup: B2bClubGroup
+}
+
+input CreateB2bClubHistoryInput {
+  name: String!
+  sinceSeason: String!
+  readContentIDs: [String]
+}
+
+type CreateB2bClubHistoryPayload {
+  b2bClubHistory: B2bClubHistory
+}
+
+input CreateB2bClubInput {
+  seasonID: String
+  name: String!
+  coverUrl: String
+  price: Int!
+  type: String!
+  dayOfSchedule: Int!
+  weekOfSchedule: Int!
+  timeOfSchedule: String!
+  runningTime: String!
+  placeID: String!
+  partnerIDs: [String]
+  leaderIDs: [String]
+  isClosed: Boolean!
+  partnerApplicationCount: Int
+  maxMemberCount: Int!
+  minBookreviewLength: Int!
+  b2bClubGroupID: String!
+  b2bClubHistoryID: String!
+  categoryID: String!
+  options: [String]!
+  tagIDs: [String]
+  option: String
+  information: String
+  leaderDescription: String
+  leaderImageUrl: String
+  partnerDescription: String
+  partnerImageUrl: String
+  curriculum: String
+  notice: String
+  openedAt: String
+  closedAt: String
+  smsTemplateType: String
+  quizUrl: String
+  partnerDescriptionTitle: String
+  firstBookIntro: String
+  hashTag: String
+  subHashTag: String
+  subDescription: String
+  subCoverUrl: String
+  description: String
+  b2bCompanyID: String
+}
+
+type CreateB2bClubPayload {
+  b2bClub: B2bClub
+}
+
+input CreateB2bClubReviewInput {
+  b2bClubID: String!
+  b2bClubGroupID: String!
+  b2bClubHistoryID: String!
+  b2bUserID: String!
+  isClosed: Boolean!
+  content: String!
+  dummyLikeCount: Int
+  imageUrl: String
+  title: String
+  score: Int
+}
+
+type CreateB2bClubReviewPayload {
+  b2bClubReview: B2bClubReview
+}
+
+input CreateB2bCompanyInput {
+  name: String!
+  isClosed: Boolean
+  isPublicB2bBookreviewForOutside: Boolean
+  isPublicB2bBookreviewForInside: Boolean
+  logoUrl: String
+}
+
+type CreateB2bCompanyPayload {
+  b2bCompany: B2bCompany
+}
+
+input CreateB2bFaq {
+  category: String!
+  title: String!
+  description: String!
+  order: Int
+  isClosed: Boolean!
+}
+
+input CreateB2bMeetingInput {
+  b2bClubID: String!
+  order: Int!
+}
+
+type CreateB2bMeetingPayload {
+  b2bMeeting: B2bMeeting
+}
+
+input CreateB2bPartnerTodosInput {
+  b2bClubType: String!
+  b2bMeetingID: String!
+  seasonID: String
+}
+
+type CreateB2bPartnerTodosPayload {
+  b2bPartnerTodos: [B2bPartnerTodo]
+}
+
+input CreateB2bSpaceRentalInput {
+  placeID: String!
+  b2bUserID: String!
+  reason: String!
+  memberCount: Int!
+  startedAt: String!
+  endedAt: String!
+  request: String
+}
+
+type CreateB2bSpaceRentalPayload {
+  b2bSpaceRental: B2bSpaceRental
+}
+
+input CreateB2bUserInput {
+  email: String!
+  name: String!
+  phoneNumber: String!
+  isAgreedToAllMarketing: Boolean!
+  isAgreedToMarketingSms: Boolean!
+  keywords: [String]
+  readingVolume: Int
+  gender: String
+  birthday: String
+  facebookID: String
+  kakaoID: String
+  password: String
+  route: String
+  recommender: String
+  interests: [String]
+  ads: [String]
+  isPublicAge: Boolean
+  isPublicGender: Boolean
+  isPublicClubActivity: Boolean
+  isPublicBookreview: Boolean
+}
+
+type CreateB2bUserPayload {
+  b2bUser: B2bUser
+  token: String
+}
+
+input CreateBannerInput {
+  title: String!
+  pcImageUrl: String!
+  mobileImageUrl: String!
+  linkUrl: String!
+  isClosed: Boolean!
+}
+
+input CreateBenefitCompanyInput {
+  name: String!
+  benefit: String!
+  categories: [String]!
+  manual: String!
+  logoUrl: String!
+  order: Int!
+  isClosed: Boolean!
+}
+
+type CreateBenefitCompanyPayload {
+  benefitCompany: BenefitCompany
 }
 
 input CreateBookreviewCommentInput {
-    bookreviewID: String!
-    content: String!
-    parentID: String
-    userID: String!
+  bookreviewID: String!
+  content: String!
+  userID: String!
+  parentID: String
+}
+
+type CreateBookreviewCommentPayout {
+  bookreviewComment: BookreviewComment
 }
 
 input CreateBookreviewInput {
-    clubID: String!
-    content: String
-    fileUrl: String
-    isPublic: Boolean!
-    meetingID: String
-    order: Int!
-    publishedAt: String
-    status: String!
-    title: String
-    userID: String!
+  clubID: String!
+  order: Int!
+  userID: String!
+  title: String
+  content: String
+  isPublic: Boolean!
+  status: String!
+  fileUrl: String
+  publishedAt: String
+  meetingID: String
+}
+
+type CreateBookreviewPayload {
+  bookreview: Bookreview
+}
+
+input CreateClubGroupInput {
+  name: String!
+  description: String!
+  notice: String
+  information: String
+  test_column_1: String
+  test_column_1_title: String
+  test_column_2: String
+  test_column_3: String
+  test_column_3_title: String
+  categoryID: String
+}
+
+type CreateClubGroupPayload {
+  clubGroup: ClubGroup
+}
+
+input CreateClubHistoryInput {
+  name: String!
+  sinceSeason: String!
+  readContentIDs: [String]
+}
+
+type CreateClubHistoryPayload {
+  clubHistory: ClubHistory
+}
+
+input CreateClubInput {
+  season: String
+  seasonID: String
+  name: String!
+  coverUrl: String
+  price: Int!
+  type: String!
+  dayOfSchedule: Int!
+  weekOfSchedule: Int!
+  timeOfSchedule: String!
+  runningTime: String!
+  placeID: String!
+  partnerIDs: [String]
+  leaderIDs: [String]
+  isClosed: Boolean!
+  partnerApplicationCount: Int
+  maxMemberCount: Int!
+  minBookreviewLength: Int!
+  clubGroupID: String!
+  clubHistoryID: String!
+  categoryID: String!
+  isAllowedOutgoing: Boolean!
+  options: [String]!
+  tagIDs: [String]
+  option: String
+  information: String
+  leaderDescription: String
+  leaderImageUrl: String
+  leaderTitle: String
+  partnerDescription: String
+  partnerImageUrl: String
+  curriculum: String
+  notice: String
+  openedAt: String
+  closedAt: String
+  smsTemplateType: String
+  quizUrl: String
+  partnerDescriptionTitle: String
+  firstBookIntro: String
+  hashTag: String
+  subHashTag: String
+  subDescription: String
+  subCoverUrl: String
+  extensionStartedAt: String
+  description: String
+  replacementPartners: [replacementPartner]
+}
+
+type CreateClubPayload {
+  club: Club
 }
 
 input CreateClubReviewInput {
-    clubGroupID: String!
-    clubHistoryID: String!
-    clubID: String!
-    content: String!
-    dummyLikeCount: Int
-    imageUrl: String
-    isClosed: Boolean!
-    score: Int
-    title: String
-    userID: String!
+  clubID: String!
+  clubGroupID: String!
+  clubHistoryID: String!
+  userID: String!
+  isClosed: Boolean!
+  content: String!
+  dummyLikeCount: Int
+  imageUrl: String
+  title: String
+  score: Int
 }
 
-input CreateDeviceInput {
-    isAgreedToActivityPush: Boolean!
-    isAgreedToClubPush: Boolean!
-    isAgreedToMarketingPush: Boolean!
-    token: String!
-    userID: String!
+type CreateClubReviewPayload {
+  clubReview: ClubReview
+}
+
+input CreateContentInput {
+  type: String!
+  title: String
+  author: String
+  description: String
+  imageUrl: String
+  isbn: String
+  link: String
+}
+
+type CreateContentPayload {
+  content: Content
+}
+
+input CreateCurationInput {
+  title: String!
+  head: String!
+  body: String!
+  description: String!
+  coverUrl: String!
+  isDisplay: Boolean
+  order: Int
+  listIDs: ListIDs!
+}
+
+input CreateDisplayOrderInput {
+  type: String!
+  isDisplayed: Boolean!
+  order: Int!
+  itemID: String!
+}
+
+input CreateEvent {
+  name: String
+  season: String
+  seasonID: String
+  imageUrl: String
+  thumbnailUrl: String
+  price: Int
+  maxMemberCount: Int
+  placeID: String
+  hostIDs: [String]
+  hostDescription: String
+  informations: [InputInformation]
+  isClosed: Boolean
+  isAppliable: Boolean
+  isImportant: Boolean
+  maxCompanionCount: Int
+  openStartedAt: String
+  startedAt: String
+  endedAt: String
+  canApplyNotMember: Boolean
+  priceForNotMember: Int
+  description: String
+  isWide: Boolean
+  webContent: String
+  mobileContent: String
+  notice: String
+  introduction: String
+  targetDescription: String
+  hostImageUrl: String
+  timetable: String
+  hostName: String
+  smsNotice: String
+}
+
+input CreateExtraNotice {
+  name: String!
+  description: String!
+  informations: [InputExtraNoticeInformation]
+}
+
+input CreateFaq {
+  category: String!
+  title: String!
+  description: String!
+  order: Int
+  isClosed: Boolean!
+}
+
+input CreateLeaderInput {
+  userID: String!
+  name: String!
+  bank: String!
+  account: String!
+  socialSecurityNumber: String!
+  taxType: String!
+}
+
+type CreateLeaderPayload {
+  leader: Leader
+}
+
+input CreateLeaderPaymentInput {
+  leaderID: String!
+  clubID: String!
+  season: String!
+  numberOfLeader: Int!
+  price: Int!
+  bank: String!
+  account: String!
+  taxType: String!
+  email: String!
+  leaderShare: Int!
+  totalMemberCount: Int!
+  totalMemberPayment: Int!
+  fee33MemberCount: Int
+  fee33MemberTotalPayment: Int
+  fee66MemberCount: Int
+  fee66MemberTotalPayment: Int
+  quarterRefundCount: Int
+  quarterRefundTotalAmount: Int
+  revenue: Int!
+  VAT: Int!
+  revenueExcludingVAT: Int!
+  revenueShare: Int!
+  incomeTax: Int!
+  localIncomeTax: Int!
+  trevariUsageAmount: Int
+  finalTotalPayment: Int!
+  willBePaid: Boolean!
+  receiptSent: Boolean!
+  transferred: Boolean!
+  comment: String
+  etcRefundCount: Int
+  etcRefundTotalPayment: Int
+  refundDescription: JSON
+}
+
+type CreateLeaderPaymentPayload {
+  leaderPayment: LeaderPayment
+}
+
+input CreateMarketingInput {
+  seasonID: String!
+  date: String!
+  cost: Int!
+  channel: String
+  memo: String
+  product: String
+}
+
+input CreateMeetingInput {
+  clubID: String!
+  order: Int!
+  onlinePlaceID: String
+  isBookreviewRequired: Boolean
+}
+
+type CreateMeetingPayload {
+  meeting: Meeting
+}
+
+input CreateNoticeInput {
+  title: String!
+  description: String!
+  order: Int
+  isClosed: Boolean
+}
+
+type CreateNoticePayload {
+  notice: Notice
+}
+
+input CreateOnlinePlace {
+  id: String
+  name: String!
+  url: String
+  information: String
+}
+
+input CreatePartnerApplicationInput {
+  userID: String!
+  assignedClubID: String
+  season: String
+  seasonID: String
+  rank: Int!
+  score: Int!
+  selectedClubIDs: [String]
+  selectedClubsReason: [String]
+}
+
+type CreatePartnerApplicationPayload {
+  partnerApplication: PartnerApplication
+}
+
+input CreatePartnerTodosInput {
+  clubType: String!
+  meetingID: String!
+  season: String
+  seasonID: String
+}
+
+type CreatePartnerTodosPayload {
+  partnerTodos: [PartnerTodo]
+}
+
+input CreatePaybackInput {
+  orderId: String!
+  paymentMethod: String!
+  paybackPrice: Int!
+  paybackNote: String
+  accountUserName: String
+  accountNumber: String
+  bankCode: String
+}
+
+type CreatePaybackPayload {
+  payback: Payback
+}
+
+input CreatePlace {
+  id: String
+  name: String!
+  address: String!
+  mapUrl: String!
+  imageUrl: String
+}
+
+input CreatePointHistoryInput {
+  userID: String!
+  category: String!
+  subCategory: String!
+  reason: String!
+  adminID: String!
+  amount: Int!
+  noExchangeableAmount: Int!
+  seasonID: String
+  signedAt: String!
+}
+
+type CreatePointHistoryPayload {
+  pointHistory: PointHistory
+}
+
+input CreatePolicyInput {
+  title: String!
+  content: String!
+}
+
+type CreatePolicyPayload {
+  policy: Policy
+}
+
+input CreatePollInput {
+  clubID: String!
+  title: String!
+  endedAt: String!
+  isMultipleChoice: Boolean!
+  isAnonymous: Boolean!
+  optionIDs: [String]!
+}
+
+input CreatePollOptionInput {
+  respondUserIDs: [String]!
+  text: String
+}
+
+input CreatePost {
+  isClosed: Boolean!
+  title: String!
+  description: String
+  category: String
+  content: String!
+  buttonUrl: String
+  buttonText: String
+  buttonDescription: String
+  thumbnailUrl: String!
+  isPopular: Boolean!
+  isShowMainPage: Boolean!
 }
 
 input CreatePushNotificationInput {
-    body: String!
-    category: String!
-    data: String
-    deviceID: String!
-    status: String!
-    templateCode: String
-    title: String!
+  title: String!
+  body: String!
+  status: String!
+  templateCode: String
+  deviceID: String!
+  data: String
+  category: String!
+}
+
+input CreateRecruitmentInput {
+  title: String!
+  content: String!
+  isClosed: Boolean!
+  description: String!
+  thumbnailUrl: String!
+}
+
+type CreateRecruitmentPayload {
+  recruitment: Recruitment
+}
+
+input CreateRefundInput {
+  clubApplicationID: String!
+  reason: String!
+  exchangeableUsedPoint: Int
+  noExchangeableUsedPoint: Int
+  outgoingCoupon: Boolean!
+  method: String
+  gateway: String
+  price: Int
+  total: Int!
+  refundedAt: String!
+  refundedBy: String!
+  comment: String
+}
+
+input CreateRoomSchedulesInput {
+  roomSchedules: [CreateRoomSchedulesRoomScheduleInput]
+}
+
+input CreateRoomSchedulesRoomScheduleInput {
+  roomID: String!
+  startedAt: String!
+  endedAt: String!
+  type: String!
+  meetingID: String
+  spaceRentalID: String
+  b2bMeetingID: String
+  b2bSpaceRentalID: String
 }
 
 input CreateSpaceRentalInput {
-    endedAt: String!
-    memberCount: Int!
-    placeID: String!
-    reason: String!
-    request: String
-    startedAt: String!
-    userID: String!
+  placeID: String!
+  userID: String!
+  reason: String!
+  memberCount: Int!
+  startedAt: String!
+  endedAt: String!
+  request: String
+}
+
+type CreateSpaceRentalPayload {
+  spaceRental: SpaceRental
+}
+
+input CreateTagInput {
+  description: String
+  subName: String
+  name: String!
+  seasonID: String!
+  isPublic: Boolean!
+}
+
+type CreateTagPayload {
+  tag: Tag
+}
+
+input CreateTdtdSubscriberInput {
+  phoneNumber: String!
+  scanTitle: String!
+  scanResult: String!
+  expiredAt: String
+}
+
+type CreateTdtdSubscriberPayload {
+  tdtdSubscriber: TdtdSubscriber
 }
 
 input CreateUcmTestResultInput {
-    answers: [String]!
-    finishedAt: String!
-    tagID: String
-    userID: String
+  userID: String
+  answers: [String]!
+  tagID: String
+  finishedAt: String!
+}
+
+type CreateUcmTestResultPayload {
+  ucmTestResult: UcmTestResult
+}
+
+input CreateUserInAppleMobileInput {
+  email: String!
+  name: String!
+  isAgreedToAllMarketing: Boolean!
+  isAgreedToMarketingSms: Boolean!
+  appleID: String!
 }
 
 input CreateUserInput {
-    ads: [String]
-    appleID: String
-    birthday: String
-    countryCode: String!
-    email: String!
-    facebookID: String
-    gender: String
-    interests: [String]
-    isAgreedToAllMarketing: Boolean!
-    isAgreedToMarketingSms: Boolean!
-    isPublicAge: Boolean
-    isPublicBookreview: Boolean
-    isPublicClubActivity: Boolean
-    isPublicGender: Boolean
-    kakaoID: String
-    keywords: [String]
-    name: String!
-    password: String
-    phoneNumber: String!
-    readingVolume: Int
-    recommender: String
-    route: String
+  email: String!
+  name: String!
+  phoneNumber: String!
+  countryCode: String!
+  isAgreedToAllMarketing: Boolean!
+  isAgreedToMarketingSms: Boolean!
+  keywords: [String]
+  readingVolume: Int
+  gender: String
+  birthday: String
+  facebookID: String
+  kakaoID: String
+  appleID: String
+  password: String
+  route: String
+  recommender: String
+  interests: [String]
+  ads: [String]
+  isPublicAge: Boolean
+  isPublicGender: Boolean
+  isPublicClubActivity: Boolean
+  isPublicBookreview: Boolean
 }
 
-input CreateWishClubInput {
-    clubID: String!
-    season: String
-    seasonID: String
-    userID: String!
+type CreateUserPayload {
+  user: User
+  token: String
 }
 
-input DevicesWhereInput {
-    id: String
-    isAgreedToActivityPush: Boolean
-    isAgreedToClubPush: Boolean
-    isAgreedToMarketingPush: Boolean
-    token: String
-    userID: String
+type Curation {
+  id: String
+  title: String
+  head: String
+  body: String
+  description: String
+  coverUrl: String
+  isDisplay: Boolean
+  order: Int
+  lists: JSON
+}
+
+type CurationResultLists {
+  clubLists: [IClub]
+  eventLists: [IEvent]
+}
+
+type CurationResultWithLists {
+  id: String
+  title: String
+  head: String
+  body: String
+  description: String
+  coverUrl: String
+  isDisplay: Boolean
+  order: Int
+  lists: CurationResultLists
+  createdAt: String
+}
+
+input CurationsWhereInput {
+  title: String
+}
+
+type CurrentStepOfClubIntroductionPayload {
+  total: Int
+  completed: Int
+}
+
+type deleteAssignedClubIDOnPartnerApplication {
+  partnerApplication: PartnerApplication
+}
+
+input DeleteContentIDOnB2bMeetingInput {
+  id: String!
+  contentID: String!
+  b2bClubHistoryID: String!
+}
+
+type DeleteContentIDOnB2bMeetingPayload {
+  b2bMeeting: B2bMeeting
+}
+
+input DeleteContentIDOnMeetingInput {
+  id: String!
+  contentID: String!
+  clubHistoryID: String!
+}
+
+type DeleteContentIDOnMeetingPayload {
+  meeting: Meeting
+}
+
+type deleteSelectedClubIDsOnPartnerApplicationPayload {
+  partnerApplication: PartnerApplication
+}
+
+input DeleteTagIDOnClubInput {
+  clubID: String!
+  tagID: String!
+}
+
+type DeleteTagIDOnClubPayload {
+  club: Club
+}
+
+type Device {
+  id: String!
+  userID: String!
+  token: String!
+  isAgreedToMarketingPush: Boolean!
+  isAgreedToClubPush: Boolean!
+  isAgreedToActivityPush: Boolean!
+  createdAt: String
+  updatedAt: String
+  user: User
+}
+
+type DisplayOrder {
+  id: String!
+  type: String!
+  isDisplayed: Boolean!
+  order: Int!
+  itemID: String!
 }
 
 input DisplayOrdersWhereInput {
-    isDisplayed: Boolean
-    type: String
+  type: String
+  isDisplayed: Boolean
+}
+
+type Event {
+  id: String
+  name: String
+  season: String
+  seasonID: String
+  price: Int
+  maxMemberCount: Int
+  memberCount: Int
+  placeID: String
+  hostIDs: [String]
+  hostDescription: String
+  imageUrl: String
+  informations: [Information]
+  isAppliable: Boolean
+  isImportant: Boolean
+  maxCompanionCount: Int
+  openStartedAt: String
+  startedAt: String
+  endedAt: String
+  createdAt: String
+  updatedAt: String
+  place: Place
+  canApplyNotMember: Boolean
+  priceForNotMember: Int
+  description: String
+  isWide: Boolean
+  webContent: String
+  mobileContent: String
+  isClosed: Boolean
+  thumbnailUrl: String
+  notice: String
+  introduction: String
+  targetDescription: String
+  hostImageUrl: String
+  timetable: String
+  hostName: String
+  smsNotice: String
+}
+
+type EventApplication {
+  id: String!
+  userID: String!
+  eventID: String!
+  season: String!
+  seasonID: String!
+  price: Int!
+  exchangeableUsedPoint: Int!
+  noExchangeableUsedPoint: Int!
+  method: String!
+  status: String!
+  companionCount: Int!
+  companionNames: String
+  refundPrice: Int
+  refundExchangeableUsedPoint: Int
+  refundNoExchangeableUsedPoint: Int
+  eventRoleID: String
+  tossPayToken: String
+  tossRefundNo: String
+  iamportUID: String
+  tossRedirectUrl: String
+  tossCancelRedirectUrl: String
+  confirmedAt: String
+  refundApplicatedAt: String
+  refundedAt: String
+  refundBankCode: String
+  refundBankName: String
+  refundHolder: String
+  refundAccountNumber: String
+  vbankBankCode: String
+  vbankBankName: String
+  vbankHolder: String
+  vbankAccountNumber: String
+  vbankExpiredAt: String
+  refundReason: String
+  isMember: Boolean
+  createdAt: String
+  updatedAt: String
+  user: User
+  event: Event
 }
 
 input EventApplicationsWhereInput {
-    eventID: String
-    season: String
-    seasonID: String
-    status: String
-    userID: String
+  season: String
+  seasonID: String
+  eventID: String
+  userID: String
+  status: String
+}
+
+type EventRole {
+  id: String!
+  userID: String!
+  eventID: String!
+  eventApplicationID: String!
+  role: String!
+  companionCount: Int!
+  season: String!
+  seasonID: String!
+  refundStatus: String
+  isMember: Boolean
+  createdAt: String
+  updatedAt: String
+  event: Event
+  user: User
+  eventApplication: EventApplication
 }
 
 input EventRolesWhereInput {
-    eventID: String
-    includesRefundedRole: Boolean
-    season: String
-    seasonID: String
-    userID: String
+  userID: String
+  eventID: String
+  season: String
+  seasonID: String
+  includesRefundedRole: Boolean
 }
 
 input EventsWhereInput {
-    isAppliable: Boolean
-    isClosed: Boolean
-    isImportant: Boolean
-    name: String
-    season: String
-    seasonID: String
-    startedDay: String
+  season: String
+  seasonID: String
+  isClosed: Boolean
+  name: String
+  isImportant: Boolean
+  isAppliable: Boolean
+  startedDay: String
+}
+
+type ExtraNotice {
+  id: String
+  name: String
+  description: String
+  informations: [TypeInformation]
+  createdAt: String
+  updatedAt: String
+}
+
+type Faq {
+  id: String
+  category: String
+  title: String
+  description: String
+  order: Int
+  isClosed: Boolean
+  createdAt: String
+  updatedAt: String
 }
 
 input FaqsWhereInput {
-    categories: [String]
-    category: String
-    description: String
-    title: String
+  category: String
+  title: String
+  description: String
+  categories: [String]
+}
+
+type HosidamTestResultTemp {
+  id: String
+  userID: String
+  content: String
+}
+
+input HosidamTestResultTempsWhereInput {
+  userID: String
+}
+
+type IClub {
+  id: String
+  season: String
+  seasonID: String
+  name: String
+  coverUrl: String
+  price: Int
+  type: [String]
+  option: String
+  dayOfSchedule: Int
+  weekOfSchedule: Int
+  timeOfSchedule: String
+  runningTime: String
+  placeID: String
+  partnerIDs: [String]
+  leaderIDs: [String]
+  isClosed: Boolean
+  partnerApplicationCount: Int
+  memberCount: Int
+  maxMemberCount: Int
+  minBookreviewLength: Int
+  wishedCount: Int
+  isAllowedOutgoing: Boolean
+  endedAt: String
+  tagIDs: [String]
+  options: [String]
+  clubGroupID: String
+  clubHistoryID: String
+  categoryID: String
+  information: String
+  leaderDescription: String
+  leaderImageUrl: String
+  leaderTitle: String
+  partnerDescription: String
+  partnerImageUrl: String
+  curriculum: String
+  notice: String
+  description: String
+  openedAt: String
+  closedAt: String
+  partnerImageUrlUploadedAt: String
+  smsTemplateType: String
+  quizUrl: String
+  partnerDescriptionTitle: String
+  firstBookIntro: String
+  hashTag: String
+  subDescription: String
+  subHashTag: String
+  subCoverUrl: String
+  beforeSeasonID: String
+  applicationDeadline: String
+  extensionStartedAt: String
+  clubIntroductionStatus: String
+  clubIntroductionCreatedAt: String
+  clubIntroductionStatusUpdatedAt: String
+  meetingDatas: [IMeeting]
+  leaderShare: Int
+}
+
+type IEvent {
+  id: String
+  name: String
+  season: String
+  seasonID: String
+  price: Int
+  maxMemberCount: Int
+  memberCount: Int
+  placeID: String
+  hostIDs: [String]
+  hostDescription: String
+  imageUrl: String
+  informations: [Information]
+  isAppliable: Boolean
+  isImportant: Boolean
+  maxCompanionCount: Int
+  openStartedAt: String
+  startedAt: String
+  endedAt: String
+  createdAt: String
+  updatedAt: String
+  place: Place
+  canApplyNotMember: Boolean
+  priceForNotMember: Int
+  description: String
+  isWide: Boolean
+  webContent: String
+  mobileContent: String
+  isClosed: Boolean
+  thumbnailUrl: String
+  notice: String
+  introduction: String
+  targetDescription: String
+  hostImageUrl: String
+  timetable: String
+  hostName: String
+  smsNotice: String
+}
+
+type IMeeting {
+  id: String
+  clubID: String
+  order: Int
+  clubName: String
+  season: String
+  seasonID: String
+  placeID: String
+  onlinePlaceID: String
+  contentIDs: [String]
+  bookreviewDeadline: String
+  startedAt: String
+  endedAt: String
+  timetable: [ITimeTable]
+  presenterIDs: [String]
+  status: String
+  topicPageStatus: String
+  roomScheduleIDs: [String]
+  presentNotice: String
+  topicPages: [String]
+  presentUrl: String
+  presenterID: String
+  notice: String
+  firstContentRegisteredAt: String
+  lastContentRegisteredAt: String
+  isBookreviewRequired: Boolean
+}
+
+input ImportB2bCouponsInput {
+  url: String!
+}
+
+type ImportB2bCouponsPayload {
+  b2bCoupons: [B2bCoupon]
+}
+
+input ImportB2bUserInfo {
+  seasonID: String
+  b2bClubID: String
+  name: String
+  phoneNumber: String
+  email: String
+}
+
+input ImportCouponsInput {
+  url: String!
+  b2cCount: Int!
+  b2bCount: Int!
+}
+
+type ImportCouponsPayload {
+  coupons: [Coupon]
+}
+
+input ImportLeadersInput {
+  url: String!
+}
+
+input ImportMarketingInput {
+  url: String!
+}
+
+type ImportMarketingPayload {
+  marketings: [Marketing]
+}
+
+input ImportPartnerApplicationInput {
+  url: String!
+}
+
+type ImportPartnerApplicationPayload {
+  partnerApplications: [PartnerApplication]
+}
+
+input ImportPointHistoryInput {
+  url: String!
+}
+
+type ImportPointHistoryPayload {
+  pointHistories: [PointHistory]
+}
+
+input ImportRefundsInput {
+  url: String!
+}
+
+type InactiveUser {
+  id: String!
+  email: String!
+  name: String!
+  phoneNumber: String!
+  countryCode: String!
+  interests: [String]!
+  ads: [String]!
+  isAgreedToMarketingSms: Boolean!
+  isAgreedToAllMarketing: Boolean
+  hasAuthenticatedPhoneNumber: Boolean!
+  keywords: [String]!
+  readingVolume: Int
+  gender: String
+  birthday: String
+  route: String
+  facebookID: String
+  kakaoID: String
+  password: String
+  recommender: String
+  point: Int!
+  noExchangeablePoint: Int!
+  isBlocked: Boolean!
+  createdAt: String
+  updatedAt: String
+  profileImageUrl: String
+  description: String
+  instagram: String
+  facebook: String
+  isPublicProfile: Boolean
+  marketingAgreedAt: String
+  isPublicAge: Boolean!
+  isPublicGender: Boolean!
+  isPublicClubActivity: Boolean!
+  isPublicBookreview: Boolean!
+  recentLoginedAt: String
+  comment: String
 }
 
 input InactiveUsersWhereInput {
-    beforeMarketingAgreedAt: String
-    email: String
-    isAgreedToMarketingSms: Boolean
-    minRecentLogineAt: String
-    name: String
-    phoneNumber: String
+  name: String
+  phoneNumber: String
+  beforeMarketingAgreedAt: String
+  isAgreedToMarketingSms: Boolean
+  minRecentLogineAt: String
+  email: String
+}
+
+type infoDatasOfMainpagePayload {
+  countUsers: Int!
+  countMeetings: Int!
+  countOfReadingContents: Int!
+  countOfPostingBookreview: Int!
+  duringYearOfTrevari: Int!
+}
+
+type Information {
+  title: String
+  content: String
 }
 
 input InitiateCheckoutInput {
-    contentID: String
-    eventID: String
-    eventSourceUrl: String
-    fbc: String
-    fbp: String
-    pixelIDs: [String]
-    price: Int
+  contentID: String
+  price: Int
+  eventID: String
+  eventSourceUrl: String
+  fbp: String
+  fbc: String
+  pixelIDs: [String]
 }
 
-input IssueCouponsInput {
-    benefitCompanyID: String!
-    onGoingSeasons: [String]
-    userID: String!
+input InputExtraNoticeInformation {
+  title: String
+  content: String
+  clubID: String
+  tabs: [InputTab]
+  isClosed: Boolean
+  isClosedNoticeInHome: Boolean
+  isClosedNoticeInCS: Boolean
+  isClosedInAppHome: Boolean
+  isClosedInApp: Boolean
 }
 
-input LeadersWhereInput {
-    account: String
-    bank: String
-    name: String
-    socialSecurityNumber: String
-    taxType: String
-    userID: String
-}
-
-input LinkEmailOnUserInput {
-    id: String!
-    password: String!
-}
-
-input LinkFacebookOnUserInput {
-    accessToken: String!
-    id: String!
-}
-
-input MeetingsWhereInput {
-    bookreviewDeadline: String
-    categoryIDs: [String]
-    clubID: String
-    days: [String]
-    hasClosedAt: Boolean
-    hasContents: Boolean
-    hasOpenedAt: Boolean
-    isAllowedOutgoing: Boolean
-    isClosed: Boolean
-    isOpened: Boolean
-    isbn: String
-    meetingPlaceIDs: [String]
-    minStartedAt: String
-    options: [String]
-    order: Int
-    period: inputPeriod
-    placeID: String
-    placeIDs: [String]
-    searchByBook: Boolean
-    searchKeyword: String
-    season: String
-    seasonID: String
-    startedAt: String
-    status: String
-    statuses: [String]
-    types: [String]
-}
-
-input OutgoingCancelInput {
-    meetingId: String!
-    userId: String!
-}
-
-input OutgoingRequestInput {
-    meetingId: String!
-    userId: String!
-}
-
-input PageViewInput {
-    eventID: String
-    eventSourceUrl: String
-    fbc: String
-    fbp: String
-    pixelIDs: [String]
-}
-
-input PartnerApplicationsWhereInput {
-    rank: Int
-    season: String
-    seasonID: String
-    userID: String
-}
-
-input PinNumbersWhereInput {
-    clientName: String
-    clubID: String
-    pinNumber: String
-    price: Int
-    seasonID: String
-    userID: String
-}
-
-input PointHistoriesWhereInput {
-    category: String
-    userID: String
-}
-
-input PostsWhereInput {
-    category: String
-    isPopular: Boolean
-    title: String
-}
-
-input PurchaseInput {
-    contentID: String
-    eventID: String
-    eventSourceUrl: String
-    fbc: String
-    fbp: String
-    pixelIDs: [String]
-    price: Int
-}
-
-input PushNotificationPayload {
-    bookreviewCommentID: String
-    bookreviewID: String
-    bookreviewTitle: String
-    clubID: String
-    clubName: String
-    clubPostCommentID: String
-    clubPostID: String
-    clubRoleID: String
-    contents: String
-    detailPeriod: String
-    meetingID: String
-    replyText: String
-    season: String
-    text: String
-    userName: String
-}
-
-input PushNotificationsWhereInput {
-    category: String
-    deviceID: String
-    status: String
-    templateCode: String
-    title: String
-}
-
-input RecruitmentWhereInput {
-    isClosed: Boolean
-}
-
-input RefundEventInput {
-    eventRoleID: String!
-    exchangeablePoint: Int
-    isRemainMebership: Boolean
-    noExchangeablePoint: Int
-    reason: String
-    refundAccount: Account
-    refundPrice: Int
-}
-
-input RefundWhereInput {
-    clubApplicationID: String
-    gateway: String
-    method: String
-    outgoingCoupon: Boolean
-    reason: String
-    userID: String
-}
-
-input RoomSchedulesWhereInput {
-    agitID: String
-    period: inputPeriod
-}
-
-input SeasonsWhereInput {
-    dateToComfirmValidSeason: String
-    isPeriodToAskExistingPartner: Boolean
-    openStatus: String
-}
-
-input SendPushNotificationsInput {
-    code: String
-    payload: PushNotificationPayload
-    userID: String!
-}
-
-input SpaceRentalWhereInput {
-    isAccepted: Boolean
-    period: inputPeriod
-    placeID: String
-    placeIDs: [String]
-    startedDate: String
-}
-
-input TagsWhereInput {
-    ids: [String]
-    isPublic: Boolean
-    name: String
-    options: [String]
-    seasonID: String
-}
-
-input UpdateBookreviewCommentInput {
-    content: String!
-    id: String!
-}
-
-input UpdateBookreviewInput {
-    content: String
-    fileUrl: String
-    id: String!
-    isPublic: Boolean
-    publishedAt: String
-    status: String
-    title: String
-}
-
-input UpdateClubApplicationInput {
-    afterClubApplicationID: String
-    beforeClubApplicationID: String
-    cardName: String
-    clubID: String
-    clubRoleID: String
-    companionCount: Int
-    confirmedAt: String
-    failReason: String
-    fee: Int
-    iamportUID: String
-    id: String!
-    membershipClosedAt: String
-    method: String
-    orderId: String
-    price: Int
-    refundAccountNumber: String
-    refundApplicatedAt: String
-    refundBankCode: String
-    refundBankName: String
-    refundHolder: String
-    refundPrice: Int
-    refundReason: String
-    refundScore: Int
-    refundedAt: String
-    season: String
-    seasonID: String
-    status: String
-    tossCancelRedirectUrl: String
-    tossPayToken: String
-    tossRedirectUrl: String
-    tossRefundNo: String
-    userID: String
-    vbankAccountNumber: String
-    vbankBankCode: String
-    vbankBankName: String
-    vbankExpiredAt: String
-    vbankHolder: String
-}
-
-input UpdateClubReviewInput {
-    clubGroupID: String
-    clubHistoryID: String
-    clubID: String
-    content: String
-    dummyLikeCount: Int
-    id: String!
-    imageUrl: String
-    isClosed: Boolean
-    score: Int
-    title: String
-    userID: String
-}
-
-input UpdateDeviceInput {
-    id: String!
-    isAgreedToActivityPush: Boolean
-    isAgreedToClubPush: Boolean
-    isAgreedToMarketingPush: Boolean
-    token: String
-    userID: String
-}
-
-input UpdateEventApplicationInput {
-    id: String!
-    status: String
-}
-
-input UpdatePartnerApplicationInput {
-    ID: String
-    assignedClubID: String
-    id: String!
-    rank: Int
-    score: Int
-    season: String
-    seasonID: String
-    selectedClubIDs: [String]
-    selectedClubsReason: [String]
-    userID: String
-}
-
-input UpdatePushNotificationInput {
-    body: String
-    category: String
-    data: String
-    deviceID: String
-    id: String!
-    status: String
-    templateCode: String
-    title: String
-}
-
-input UpdateUserInput {
-    ads: [String]
-    appleID: String
-    birthday: String
-    comment: String
-    countryCode: String
-    description: String
-    email: String
-    facebook: String
-    facebookID: String
-    gender: String
-    id: String!
-    instagram: String
-    interests: [String]
-    isAgreedToAllMarketing: Boolean
-    isAgreedToMarketingSms: Boolean
-    isPublicAge: Boolean
-    isPublicBookreview: Boolean
-    isPublicClubActivity: Boolean
-    isPublicGender: Boolean
-    isPublicProfile: Boolean
-    kakaoID: String
-    keywords: [String]
-    marketingAgreedAt: String
-    name: String
-    password: String
-    phoneNumber: String
-    profileImageUrl: String
-    readingVolume: Int
-    recommender: String
-    route: String
-}
-
-input ViewContentInput {
-    contentID: String
-    contentName: String
-    eventID: String
-    eventSourceUrl: String
-    fbc: String
-    fbp: String
-    pixelIDs: [String]
-    price: Int
-}
-
-input WishClubsWhereInput {
-    clubID: String
-    isAppliablePeriod: Boolean
-    isClosed: Boolean
-    isFullClub: Boolean
-    isReceivedSms: Boolean
-    season: String
-    seasonID: String
-    userID: String
+input InputInformation {
+  title: String
+  content: String
 }
 
 input inputPeriod {
-    endedAt: String
-    startedAt: String
+  startedAt: String
+  endedAt: String
 }
+
+input InputTab {
+  name: String
+  content: String
+  isClosed: Boolean
+  seoText: String
+}
+
+input IssueB2bCouponsInput {
+  onGoingSeasons: [String]!
+  benefitCompanyID: String!
+  b2bUserID: String!
+}
+
+input IssueCouponsInput {
+  onGoingSeasons: [String]
+  benefitCompanyID: String!
+  userID: String!
+}
+
+type ITimeTable {
+  startTime: String
+  task: String
+}
+
+# The `JSON` scalar type
+ represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+scalar JSON
+
+type Leader {
+  id: String!
+  userID: String!
+  name: String!
+  bank: String!
+  account: String!
+  socialSecurityNumber: String!
+  taxType: String!
+  updatedAt: String!
+  createdAt: String!
+  deletedAt: String
+  clubs: [Club]
+  user: User
+}
+
+type LeaderPayment {
+  id: String!
+  leaderID: String!
+  clubID: String!
+  season: String!
+  numberOfLeader: Int!
+  price: Int!
+  bank: String!
+  account: String!
+  taxType: String!
+  email: String!
+  leaderShare: Int!
+  totalMemberCount: Int!
+  totalMemberPayment: Int!
+  fee33MemberCount: Int
+  fee33MemberTotalPayment: Int
+  fee66MemberCount: Int
+  fee66MemberTotalPayment: Int
+  quarterRefundCount: Int
+  quarterRefundTotalAmount: Int
+  revenue: Int!
+  VAT: Int!
+  revenueExcludingVAT: Int!
+  revenueShare: Int!
+  incomeTax: Int!
+  localIncomeTax: Int!
+  trevariUsageAmount: Int
+  finalTotalPayment: Int!
+  willBePaid: Boolean!
+  receiptSent: Boolean!
+  transferred: Boolean!
+  createdAt: String!
+  updatedAt: String!
+  comment: String
+  leader: Leader
+  club: Club
+  etcRefundCount: Int
+  etcRefundTotalPayment: Int
+  refundDescription: JSON
+}
+
+input LeaderPaymentWhereInput {
+  season: String
+  willBePaid: Boolean
+  receiptSent: Boolean
+  transferred: Boolean
+  fee33MemberCount: Int
+  fee66MemberCount: Int
+}
+
+input LeadersWhereInput {
+  name: String
+  userID: String
+  bank: String
+  account: String
+  socialSecurityNumber: String
+  taxType: String
+}
+
+input LinkEmailOnUserInput {
+  id: String!
+  password: String!
+}
+
+type LinkEmailOnUserPayload {
+  user: User
+}
+
+input LinkFacebookOnUserInput {
+  id: String!
+  accessToken: String!
+}
+
+type LinkFacebookOnUserPayload {
+  user: User
+}
+
+input ListIDs {
+  clubIDs: [String]
+  eventIDs: [String]
+}
+
+type Marketing {
+  seasonID: String
+  id: String
+  date: String!
+  cost: Int!
+  channel: String
+  memo: String
+  product: String
+  createdAt: String
+  updatedAt: String
+}
+
+input MarketingsWhereInput {
+  seasonID: String
+  date: String
+  cost: Int
+  channel: String
+  memo: String
+  product: String
+}
+
+type Meeting {
+  id: String!
+  clubID: String!
+  order: Int!
+  clubName: String!
+  season: String!
+  seasonID: String!
+  placeID: String!
+  onlinePlaceID: String
+  contentIDs: [String]!
+  timetable: [timetableRow]!
+  presenterIDs: [String]!
+  topicPages: [String]
+  presentUrl: String
+  presenterID: String
+  presentNotice: String
+  notice: String
+  bookreviewDeadline: String!
+  startedAt: String!
+  endedAt: String!
+  status: String!
+  topicPageStatus: String!
+  roomScheduleIDs: [String]!
+  attendanceCount: Int
+  club: Club
+  place: Place
+  onlinePlace: OnlinePlace
+  presenter: User
+  contents: [Content]
+  presenters: [User]
+  partnerClubRoles: [ClubRole]
+  roomSchedules: [RoomSchedule]
+  isBookreviewRequired: Boolean
+}
+
+input MeetingId {
+  id: String
+}
+
+input MeetingsWhereInput {
+  placeID: String
+  season: String
+  seasonID: String
+  searchKeyword: String
+  clubID: String
+  minStartedAt: String
+  startedAt: String
+  bookreviewDeadline: String
+  isClosed: Boolean
+  isOpened: Boolean
+  hasContents: Boolean
+  isbn: String
+  hasClosedAt: Boolean
+  hasOpenedAt: Boolean
+  categoryIDs: [String]
+  days: [String]
+  placeIDs: [String]
+  types: [String]
+  isAllowedOutgoing: Boolean
+  order: Int
+  status: String
+  statuses: [String]
+  options: [String]
+  period: inputPeriod
+  meetingPlaceIDs: [String]
+  searchByBook: Boolean
+}
+
+type MemberInfo {
+  memberCount: Int
+  female: Int
+  male: Int
+  other: Int
+  isNotPublicAge: Int
+  twenties: Int
+  thirties: Int
+  forties: Int
+  fifties: Int
+  olders: Int
+  experience0: Int
+  experience1: Int
+  experience2: Int
+  experience3: Int
+  experience4: Int
+  experience5up: Int
+  experienceAvg: Float
+  readingVolume0: Int
+  readingVolume1: Int
+  readingVolume2: Int
+  readingVolume3: Int
+  readingVolume4: Int
+  readingVolume5up: Int
+}
+
+type MostFullClubWishUser {
+  name: String!
+  phoneNumber: String!
+  clubID: String!
+  clubName: String!
+  countryCode: String
+}
+
+type Mutation {
+  createAdmin(input: CreateAdminInput!): CreateAdminPayload
+  deleteAdmin(userID: String!): Boolean
+  createAttendances(clubID: String!, order: Int!, sendsSms: Boolean!): Boolean
+  deleteAttendance(id: String!): Boolean
+  updateAttendance(input: UpdateAttendanceInput!): UpdateAttendancePayload
+  createBanner(input: CreateBannerInput!): Banner!
+  updateBanner(input: UpdateBannerInput!): Banner!
+  deleteBanner(id: String!): Boolean!
+  updateBanners(input: [UpdateBannersInput]!): [Banner]!
+  createBenefitCompany(
+    input: CreateBenefitCompanyInput!
+  ): CreateBenefitCompanyPayload
+  deleteBenefitCompany(id: String!): Boolean
+  updateBenefitCompany(
+    input: UpdateBenefitCompanyInput!
+  ): UpdateBenefitCompanyPayload
+  createBookreview(
+    input: CreateBookreviewInput!
+    isForced: Boolean
+  ): CreateBookreviewPayload!
+  deleteBookreview(id: String!): Boolean!
+  updateBookreview(
+    input: UpdateBookreviewInput!
+    isForced: Boolean
+  ): UpdateBookreviewPayload!
+  createBookreviewComment(
+    input: CreateBookreviewCommentInput!
+  ): CreateBookreviewCommentPayout
+  deleteBookreviewComment(id: String!): Boolean
+  updateBookreviewComment(
+    input: UpdateBookreviewCommentInput!
+  ): UpdateBookreviewCommentPayout
+  createPinNumbers(price: Int!, count: Int!, clientName: String): [PinNumber]
+  deletePinNumber(id: String!): Boolean
+  importPinNumber(url: String!): [PinNumber]
+  deleteCategory(id: String!): Boolean
+  updateCategory(input: UpdateCategoryInput!): UpdateCategoryPayload
+  addTagIDOnClub(input: AddTagIDOnClubInput!): AddTagIDOnClubPayload
+  deleteTagIDOnClub(input: DeleteTagIDOnClubInput!): DeleteTagIDOnClubPayload
+  createClub(input: CreateClubInput!): CreateClubPayload
+  updateClub(input: UpdateClubInput!): UpdateClubPayload
+  copyToNextClub(clubID: String!): Boolean
+  deleteClubRefund(clubRefundID: String!): Boolean
+  deleteClub(id: String!): Boolean
+  closeClub(id: String!, sendsSms: Boolean): Boolean
+  updateRecentWishedCountOfClubs(
+    startOfPeriod: String!
+    endOfPeriod: String!
+  ): Boolean!
+  deleteClubApplication(id: String!): Boolean
+  updateVbankOnClubApplication(id: String!): ClubApplication
+  closeMembership(input: CloseMembershipInput!): CloseMembershipPayload
+  updateClubApplication(
+    input: UpdateClubApplicationInput!
+  ): UpdateClubApplicationPayload
+  updateFailClubApplication(
+    input: UpdateClubApplicationInput!
+  ): UpdateClubApplicationPayload
+  createClubGroup(input: CreateClubGroupInput!): CreateClubGroupPayload
+  deleteClubGroup(id: String!): Boolean
+  updateClubGroup(input: UpdateClubGroupInput!): UpdateClubGroupPayload
+  createClubHistory(input: CreateClubHistoryInput!): CreateClubHistoryPayload
+  deleteClubHistory(id: String!): Boolean
+  updateClubHistory(input: UpdateClubHistoryInput!): UpdateClubHistoryPayload
+  createClubReview(input: CreateClubReviewInput!): CreateClubReviewPayload
+  deleteClubReview(id: String!): Boolean
+  updateClubReview(input: UpdateClubReviewInput!): UpdateClubReviewPayload
+  changeClub(input: ChangeClubInput!): ChangeClubPayload
+  updateClubRole(input: UpdateClubRoleInput!): UpdateClubRolePayload
+  addQuizPushCount(clubRoleID: String!): UpdateClubRolePayload
+  sendQuizResultSms(clubRoleID: String!, result: String!): UpdateClubRolePayload
+  createContent(input: CreateContentInput!): CreateContentPayload
+  deleteContent(id: String!): Boolean
+  updateContent(input: UpdateContentInput!): UpdateContentPayload
+  importCoupons(input: ImportCouponsInput!): ImportCouponsPayload
+  issueCoupons(input: IssueCouponsInput!): Boolean!
+  createDisplayOrder(input: CreateDisplayOrderInput!): DisplayOrder
+  updateDisplayOrder(input: UpdateDisplayOrderInput!): DisplayOrder
+  createEvent(event: CreateEvent!): Event
+  deleteEvent(id: String!): Boolean
+  updateEvent(event: UpdateEvent!): Event
+  applyEvent(input: ApplyEventInput!): ApplyEventPayload
+  deleteEventApplication(id: String!): Boolean
+  updateVbankOnEventApplication(id: String!): EventApplication
+  confirmEventApplication(
+    input: ConfirmEventApplicationInput!
+  ): ConfirmEventApplicationPayload
+  refundEvent(input: RefundEventInput!): RefundEventPayload
+  confirmEventRefund(input: ConfirmEventRefundInput!): ConfirmEventRefundPayload
+  updateEventApplication(
+    input: UpdateEventApplicationInput!
+  ): UpdateEventApplicationPayload
+  changeStatusEventApplicationWhenWaitingPayment(
+    input: UpdateEventApplicationInput!
+  ): UpdateEventApplicationPayload
+  changeUserOnEventRole(id: String!, userID: String!): Boolean
+  createExtraNotice(extraNotice: CreateExtraNotice!): ExtraNotice
+  deleteExtraNotice(id: String!): Boolean
+  updateExtraNotice(extraNotice: UpdateExtraNotice!): ExtraNotice
+  createFaq(faq: CreateFaq!): Faq
+  deleteFaq(id: String!): Boolean
+  updateFaq(faq: UpdateFaq!): Faq
+  createMarketing(input: CreateMarketingInput!): Marketing
+  deleteMarketing(date: String!): Boolean
+  importMarketing(input: ImportMarketingInput!): ImportMarketingPayload
+  updateMarketing(input: UpdateMarketingInput!): Marketing
+  addContentIDOnMeeting(
+    input: AddContentIDOnMeetingInput!
+  ): AddContentIDOnMeetingPayload
+  createMeeting(input: CreateMeetingInput!): CreateMeetingPayload
+  deleteContentIDOnMeeting(
+    input: DeleteContentIDOnMeetingInput!
+  ): DeleteContentIDOnMeetingPayload
+  updateMeeting(input: UpdateMeetingInput!): UpdateMeetingPayload
+  createNotice(input: CreateNoticeInput!): CreateNoticePayload
+  deleteNotice(id: String!): Boolean
+  updateNotice(input: UpdateNoticeInput!): UpdateNoticePayload
+  createPartnerApplication(
+    input: CreatePartnerApplicationInput!
+  ): CreatePartnerApplicationPayload
+  confirmPartnerApplication(id: String!): PartnerApplication
+  updatePartnerApplication(
+    input: UpdatePartnerApplicationInput!
+  ): UpdatePartnerApplicationPayload
+  deleteAssignedClubIDOnPartnerApplication(
+    id: String!
+  ): deleteAssignedClubIDOnPartnerApplication
+  deletePartnerApplication(id: String!): Boolean
+  deleteSelectedClubIDsOnPartnerApplication(
+    id: String!
+  ): deleteSelectedClubIDsOnPartnerApplicationPayload
+  importPartnerApplication(
+    input: ImportPartnerApplicationInput!
+  ): ImportPartnerApplicationPayload
+  createPartnerTodos(input: CreatePartnerTodosInput!): CreatePartnerTodosPayload
+  updatePartnerTodo(input: UpdatePartnerTodoInput!): UpdatePartnerTodoPayload
+  createPointHistory(input: CreatePointHistoryInput!): CreatePointHistoryPayload
+  deletePointHistory(id: String!): Boolean!
+  importPointHistory(input: ImportPointHistoryInput!): ImportPointHistoryPayload
+  createPolicy(input: CreatePolicyInput!): CreatePolicyPayload
+  deletePolicy(id: String!): Boolean
+  updatePolicy(input: UpdatePolicyInput!): UpdatePolicyPayload
+  createPoll(input: CreatePollInput): Poll
+  updatePoll(input: UpdatePollInput): Poll
+  deletePoll(id: String!): Boolean
+  createPollOption(input: CreatePollOptionInput): PollOption
+  updatePollOption(input: UpdatePollOptionInput): PollOption
+  deletePollOption(id: String!): Boolean
+  createPost(input: CreatePost!): Post
+  deletePost(id: String!): Boolean
+  updatePost(input: UpdatePost!): Post
+  createPlace(input: CreatePlace!): Place
+  deletePlace(id: String!): Boolean
+  updatePlace(input: UpdatePlace!): Place
+  createOnlinePlace(input: CreateOnlinePlace!): OnlinePlace
+  deleteOnlinePlace(id: String!): Boolean
+  updateOnlinePlace(input: UpdateOnlinePlace!): OnlinePlace
+  createRecruitment(input: CreateRecruitmentInput!): CreateRecruitmentPayload
+  deleteRecruitment(id: String!): Boolean
+  updateRecruitment(input: UpdateRecruitmentInput!): UpdateRecruitmentPayload
+  createRoomSchedules(input: CreateRoomSchedulesInput!): [RoomSchedule]!
+  generatePreSignedUrl(fileName: String!): String
+  updateSeason(input: UpdateSeasonInput!): UpdateSeasonPayload
+  acceptSpaceRental(
+    input: AcceptSpaceRentalInput!
+    smsNotice: String
+  ): AcceptSpaceRentalPayload
+  createSpaceRental(input: CreateSpaceRentalInput!): CreateSpaceRentalPayload
+  deleteSpaceRental(id: String!): Boolean
+  createTag(input: CreateTagInput!): CreateTagPayload
+  deleteTag(id: String!): Boolean!
+  updateTag(input: UpdateTagInput!): UpdateTagPayload
+  deleteSmsTemplate(type: String!): Boolean
+  updateSmsTemplate(input: UpdateSmsTemplateInput!): UpdateSmsTemplatePayload
+  deleteSurvey(id: String!): Boolean!
+  updateSurvey(input: UpdateSurveyInput!): UpdateSurveyPayload
+  cancelUser(id: String!): Boolean
+  createUser(input: CreateUserInput!): CreateUserPayload
+  linkEmailOnUser(input: LinkEmailOnUserInput!): LinkEmailOnUserPayload
+  linkFacebookOnUser(input: LinkFacebookOnUserInput!): LinkFacebookOnUserPayload
+  resetPasswordOnUser(
+    input: ResetPasswordOnUserInput!
+  ): ResetPasswordOnUserPayload
+  changePasswordOnUser(
+    input: ChangePasswordOnUserInput!
+  ): ChangePasswordOnUserPayload
+  updateUser(input: UpdateUserInput!, isForced: Boolean): UpdateUserPayload
+  convertToInactiveUsers(ids: [String]!): Boolean
+  unlinkFacebookOnUser(id: String!): Boolean
+  deleteUser(id: String!): Boolean
+  updateMarketingAgreedAt: Boolean
+  updateRecentLoginedAt(id: String!): Boolean
+  convertToBlocked(id: String!): BlockUserPayload
+  convertToUnBlocked(id: String!): UnBlockUserPayload
+  createUserInAppleMobile(
+    input: CreateUserInAppleMobileInput!
+  ): CreateUserPayload
+  createUcmTestResult(
+    input: CreateUcmTestResultInput!
+  ): CreateUcmTestResultPayload
+  convertToActiveUser(
+    email: String
+    password: String
+    facebookID: String
+    kakaoID: String
+    phoneNumber: String!
+    isEncryptedPassword: Boolean
+  ): Boolean
+  test: String
+  createLeader(input: CreateLeaderInput!): CreateLeaderPayload!
+  updateLeader(input: UpdateLeaderInput): UpdateLeaderPayload!
+  deleteLeader(id: String!): Boolean
+  importLeaders(input: ImportLeadersInput!): [Leader]
+  createLeaderPayment(
+    input: CreateLeaderPaymentInput!
+  ): CreateLeaderPaymentPayload!
+  deleteLeaderPayment(id: String!): Boolean
+  updateLeaderPayment(
+    input: UpdateLeaderPaymentInput!
+  ): UpdateLeaderPaymentPayload!
+  createRefund(input: CreateRefundInput!): Refund
+  deleteRefund(id: String!): Boolean
+  updateRefund(input: UpdateRefundInput!): Refund
+  importRefunds(input: ImportRefundsInput!): [Refund]
+  partnerLogin(
+    method: String!
+    accessToken: String
+    kakaoID: String
+    email: String
+    password: String
+  ): String
+  pageView(input: PageViewInput!): Boolean!
+  purchase(input: PurchaseInput!): Boolean!
+  initiateCheckout(input: InitiateCheckoutInput!): Boolean!
+  viewContent(input: ViewContentInput!): Boolean!
+  addToWishlist(input: AddToWishlistInput!): Boolean!
+  addToCart(input: AddToCartInput!): Boolean!
+  b2bPartnerLogin(
+    method: String!
+    accessToken: String
+    email: String
+    password: String
+  ): String
+  createB2bCompany(input: CreateB2bCompanyInput): CreateB2bCompanyPayload
+  updateB2bCompany(input: UpdateB2bCompanyInput): UpdateB2bCompanyPayload
+  deleteB2bCompany(id: String!): Boolean!
+  createB2bAttendance(
+    input: CreateB2bAttendanceInput
+  ): CreateB2bAttendancePayload
+  deleteB2bAttendance(id: String!): Boolean
+  updateB2bAttendance(
+    input: UpdateB2bAttendanceInput!
+  ): UpdateB2bAttendancePayload
+  createB2bBookreview(
+    input: CreateB2bBookreviewInput!
+    isForced: Boolean
+  ): CreateB2bBookreviewPayload!
+  deleteB2bBookreview(id: String!): Boolean!
+  updateB2bBookreview(
+    input: UpdateB2bBookreviewInput!
+    isForced: Boolean
+  ): UpdateB2bBookreviewPayload!
+  toggleLikeOnB2bBookreviewTemp(
+    id: String!
+    b2bUserID: String!
+  ): ToggleLikeOnB2bBookreviewPayload
+  createB2bBookreviewComment(
+    input: CreateB2bBookreviewCommentInput!
+  ): CreateB2bBookreviewCommentPayout
+  deleteB2bBookreviewComment(id: String!): Boolean
+  updateB2bBookreviewComment(
+    input: UpdateB2bBookreviewCommentInput!
+  ): UpdateB2bBookreviewCommentPayout
+  createB2bClub(input: CreateB2bClubInput!): CreateB2bClubPayload
+  updateB2bClub(input: UpdateB2bClubInput!): UpdateB2bClubPayload
+  applyB2bClub(input: ApplyB2bClubInput!): ApplyB2bClubPayload
+  deleteB2bClubApplication(id: String!): Boolean
+  updateVbankOnB2bClubApplication(id: String!): B2bClubApplication
+  confirmB2bClubApplication(
+    input: ConfirmB2bClubApplicationInput!
+  ): ConfirmB2bClubApplicationPayload
+  importB2bUserInfo(userInfos: [ImportB2bUserInfo]): Boolean
+  updateB2bClubApplication(
+    input: UpdateB2bClubApplicationInput!
+  ): UpdateB2bClubApplicationPayload
+  createB2bClubGroup(input: CreateB2bClubGroupInput!): CreateB2bClubGroupPayload
+  deleteB2bClubGroup(id: String!): Boolean
+  updateB2bClubGroup(input: UpdateB2bClubGroupInput!): UpdateB2bClubGroupPayload
+  createB2bClubHistory(
+    input: CreateB2bClubHistoryInput!
+  ): CreateB2bClubHistoryPayload
+  deleteB2bClubHistory(id: String!): Boolean
+  updateB2bClubHistory(
+    input: UpdateB2bClubHistoryInput!
+  ): UpdateB2bClubHistoryPayload
+  createB2bClubReview(
+    input: CreateB2bClubReviewInput!
+  ): CreateB2bClubReviewPayload
+  deleteB2bClubReview(id: String!): Boolean
+  updateB2bClubReview(
+    input: UpdateB2bClubReviewInput!
+  ): UpdateB2bClubReviewPayload
+  updateB2bClubRole(input: UpdateB2bClubRoleInput!): UpdateB2bClubRolePayload
+  addB2bQuizPushCount(b2bClubRoleID: String!): UpdateB2bClubRolePayload
+  applyB2bEvent(input: ApplyB2bEventInput!): ApplyB2bEventPayload
+  deleteB2bEventApplication(id: String!): Boolean
+  updateVbankOnB2bEventApplication(id: String!): B2bEventApplication
+  confirmB2bEventApplication(
+    input: ConfirmB2bEventApplicationInput!
+  ): ConfirmB2bEventApplicationPayload
+  refundB2bEvent(input: RefundB2bEventInput!): RefundB2bEventPayload
+  confirmB2bEventRefund(
+    input: ConfirmB2bEventRefundInput!
+  ): ConfirmB2bEventRefundPayload
+  changeB2bUserOnB2bEventRole(id: String!, b2bUserID: String!): Boolean
+  addContentIDOnB2bMeeting(
+    input: AddContentIDOnB2bMeetingInput!
+  ): AddContentIDOnB2bMeetingPayload
+  createB2bMeeting(input: CreateB2bMeetingInput!): CreateB2bMeetingPayload
+  deleteContentIDOnB2bMeeting(
+    input: DeleteContentIDOnB2bMeetingInput!
+  ): DeleteContentIDOnB2bMeetingPayload
+  updateB2bMeeting(input: UpdateB2bMeetingInput!): UpdateB2bMeetingPayload
+  createB2bPartnerTodos(
+    input: CreateB2bPartnerTodosInput!
+  ): CreateB2bPartnerTodosPayload
+  updateB2bPartnerTodo(
+    input: UpdateB2bPartnerTodoInput!
+  ): UpdateB2bPartnerTodoPayload
+  acceptB2bSpaceRental(
+    input: AcceptB2bSpaceRentalInput!
+    smsNotice: String
+  ): AcceptB2bSpaceRentalPayload
+  createB2bSpaceRental(
+    input: CreateB2bSpaceRentalInput!
+  ): CreateB2bSpaceRentalPayload
+  deleteB2bSpaceRental(id: String!): Boolean
+  cancelB2bUser(id: String!): Boolean
+  createB2bUser(input: CreateB2bUserInput!): CreateB2bUserPayload
+  resetPasswordOnB2bUser(
+    input: ResetPasswordOnB2bUserInput!
+  ): ResetPasswordOnB2bUserPayload
+  changePasswordOnB2bUser(
+    input: ChangePasswordOnB2bUserInput!
+  ): ChangePasswordOnB2bUserPayload
+  updateB2bUser(input: UpdateB2bUserInput!): UpdateB2bUserPayload
+  importB2bCoupons(input: ImportB2bCouponsInput!): ImportB2bCouponsPayload
+  issueB2bCoupons(input: IssueB2bCouponsInput!): Boolean!
+  createB2bFaq(b2bFaq: CreateB2bFaq!): B2bFaq
+  deleteB2bFaq(id: String!): Boolean
+  updateB2bFaq(b2bFaq: UpdateB2bFaq!): B2bFaq
+  createTdtdSubscriber(
+    input: CreateTdtdSubscriberInput!
+  ): CreateTdtdSubscriberPayload
+  deleteTdtdSubscriber(id: String!): Boolean
+  postSms(input: PostSmsInput): PostSmsPayload
+  postAdSms(input: PostSmsInput): PostSmsPayload
+  outgoingConfirm(input: OutgoingConfirmInput!): MutationResult
+  outgoingCancel(input: OutgoingCancelInput!): MutationResult
+  createPushNotification(input: CreatePushNotificationInput): PushNotification
+  sendPushNotifications(input: SendPushNotificationsInput): [PushNotification]
+  createPayback(input: CreatePaybackInput!): CreatePaybackPayload
+  createCuration(input: CreateCurationInput): Curation
+  updateCuration(input: UpdateCurationInput): Curation
+  updateCurationsByOrder(
+    input: [UpdateCurationsByOrderInput!]
+  ): [CurationResultWithLists]
+  deleteCuration(id: String!): Boolean!
+}
+
+type MutationResult {
+  code: String!
+  msg: String!
+}
+
+type Notice {
+  id: String
+  title: String
+  description: String
+  order: Int
+  isClosed: Boolean
+  createdAt: String
+  updatedAt: String
+}
+
+type OnlinePlace {
+  id: String!
+  name: String!
+  url: String
+  information: String
+}
+
+input OutgoingCancelInput {
+  outgoingServiceId: String!
+}
+
+input OutgoingConfirmInput {
+  outgoingServiceId: String!
+  paymentType: String!
+  usedVoucherId: String
+  paymentPrice: Int!
+}
+
+type OutgoingRequest {
+  serviceId: String!
+  userId: String!
+  meetingId: String!
+  state: String!
+  clubName: String!
+  order: String!
+  season: Int!
+}
+
+type OutgoingVoucher {
+  id: String!
+  expiredAt: String!
+  state: String!
+}
+
+input PageViewInput {
+  eventID: String
+  eventSourceUrl: String
+  fbp: String
+  fbc: String
+  pixelIDs: [String]
+}
+
+type PartnerApplication {
+  id: String!
+  assignedClubID: String
+  userID: String!
+  season: String!
+  seasonID: String!
+  rank: Int!
+  score: Int!
+  selectedClubIDs: [String]!
+  selectedClubsReason: [String]!
+  confirmedAt: String
+  createdAt: String!
+  updatedAt: String!
+  assignedClub: Club
+  user: User
+  selectedClubs: [Club]
+}
+
+input PartnerApplicationsWhereInput {
+  season: String
+  seasonID: String
+  userID: String
+  rank: Int
+}
+
+type PartnerTodo {
+  id: String!
+  title: String!
+  season: String!
+  seasonID: String!
+  ddayMeeting: String!
+  order: Int!
+  meetingID: Boolean!
+  isChecked: Boolean!
+  dday: Int
+  createdAt: String
+  deletedAt: String
+  updatedAt: String
+}
+
+input PartnerTodosWhereInput {
+  meetingID: String!
+}
+
+type Payback {
+  id: String!
+  orderId: String!
+  paymentMethod: String!
+  paybackAmount: Int!
+  paybackPrice: Int!
+  paybackExchangeablePoint: Int!
+  paybackNoExchangeablePoint: Int!
+  paidbackAt: String!
+  paybackNote: String
+  accountUserName: String
+  accountNumber: String
+  bankCode: String
+  createdByUserId: String
+  createdAt: String
+  updatedByUserId: String
+  updatedAt: String
+  deletedAt: String
+  clubApplication: ClubApplication
+}
+
+input PaybacksWhereInput {
+  orderId: String
+  paymentMethod: String
+  paidbackStartDate: String
+  paidbackEndDate: String
+  clubIDs: [String]
+  userIDs: [String]
+}
+
+type PinNumber {
+  id: String!
+  pinNumber: String!
+  price: Int!
+  clubID: String
+  userID: String
+  seasonID: String
+  clientName: String
+  club: Club
+  user: User
+}
+
+input PinNumbersWhereInput {
+  userID: String
+  clubID: String
+  seasonID: String
+  pinNumber: String
+  clientName: String
+  price: Int
+}
+
+type Place {
+  id: String!
+  name: String
+  address: String
+  mapUrl: String
+  imageUrl: String
+}
+
+input PointHistoriesWhereInput {
+  category: String
+  userID: String
+}
+
+type PointHistory {
+  id: String!
+  userID: String!
+  category: String!
+  subCategory: String!
+  reason: String!
+  adminID: String!
+  amount: Int!
+  noExchangeableAmount: Int!
+  seasonID: String
+  signedAt: String!
+  createdAt: String!
+  updatedAt: String!
+  user: User
+  admin: User
+}
+
+type Policy {
+  id: String!
+  title: String!
+  content: String!
+  createdAt: String
+  updatedAt: String
+}
+
+type Poll {
+  id: String!
+  clubID: String!
+  title: String!
+  endedAt: String!
+  isMultipleChoice: Boolean!
+  isAnonymous: Boolean!
+  optionIDs: [String]!
+  createdAt: String
+  updatedAt: String
+  pollOptions: [PollOption]
+}
+
+type PollOption {
+  id: String!
+  respondUserIDs: [String]!
+  text: String
+  createdAt: String
+  updatedAt: String
+  respondUsers: [User]
+}
+
+input PollOptionsWhereInput {
+  text: String
+}
+
+input PollsWhereInput {
+  clubID: String
+  isMultipleChoice: Boolean
+  isAnonymous: Boolean
+}
+
+type Post {
+  id: String!
+  isClosed: Boolean!
+  title: String!
+  description: String
+  category: String
+  content: String!
+  buttonUrl: String
+  buttonText: String
+  buttonDescription: String
+  thumbnailUrl: String!
+  viewCount: Int!
+  createdAt: String!
+  updatedAt: String!
+  isPopular: Boolean!
+  isShowMainPage: Boolean!
+}
+
+input PostSmsInput {
+  title: String
+  contents: String
+  to: [String]
+  from: String
+}
+
+type PostSmsPayload {
+  code: String
+  msg: String
+}
+
+input PostsWhereInput {
+  category: String
+  title: String
+  isPopular: Boolean
+}
+
+input PurchaseInput {
+  contentID: String
+  price: Int
+  eventID: String
+  eventSourceUrl: String
+  fbp: String
+  fbc: String
+  pixelIDs: [String]
+}
+
+type PushNotification {
+  id: String!
+  title: String!
+  body: String!
+  status: String!
+  templateCode: String
+  deviceID: String!
+  data: String
+  category: String!
+  createdAt: String!
+  updatedAt: String!
+  device: Device
+}
+
+input PushNotificationPayload {
+  clubName: String
+  contents: String
+  detailPeriod: String
+  season: String
+  userName: String
+  text: String
+  replyText: String
+  bookreviewTitle: String
+  clubID: String
+  meetingID: String
+  clubRoleID: String
+  clubPostID: String
+  bookreviewID: String
+  clubPostCommentID: String
+  bookreviewCommentID: String
+}
+
+type Query {
+  admins: [Admin]
+  agit(id: String): Agit
+  agits(limit: Int, offset: Int): [Agit]
+  attendances(where: AttendancesWhereInput!): [Attendance]
+  isAttended(userID: String!, meetingID: String!): Boolean!
+  isAttendedCountInRange(
+    userID: String!
+    minCount: Int!
+    maxCount: Int!
+  ): Boolean!
+  banner(id: String!): Banner!
+  banners(limit: Int, offset: Int, where: BannersWhereInput): [Banner]!
+  benefitCompanies(options: BenefitCompaniesOptions): [BenefitCompany]
+  benefitCompany(id: String!): BenefitCompany
+  searchBooks(type: String!, keyword: String!): [Book]
+  bookreview(id: String!): Bookreview
+  bookreviewByUserIDAndMeetingID(
+    userID: String!
+    meetingID: String!
+  ): Bookreview
+  bookreviews(
+    limit: Int!
+    offset: Int!
+    where: BookreviewsWhereInput!
+  ): [Bookreview]
+  bookreviewsTemp(options: BookreviewsOptions): [Bookreview]!
+  bookreviewComments(bookreviewID: String!): [BookreviewComment]
+  bookreviewCommentsTemp(
+    limit: Int
+    offset: Int
+    where: BookreviewCommentsWhereInput
+    order: [[String]]
+  ): [BookreviewComment]
+  category(id: String!): Category
+  categories: [Category]
+  club(id: String!): Club
+  clubs(
+    limit: Int
+    offset: Int
+    where: ClubsWhereInput
+    order: String
+    randomSeed: Float
+    mostFullClubConditionPercent: Int
+    isTopAllMostFullClubs: Boolean
+    containsFullClub: Boolean
+    searchByLeaderName: Boolean
+  ): [Club]
+  clubsInAdmin(limit: Int, offset: Int, where: ClubsWhereInput): [Club]
+  clubsWithTag(
+    limit: Int
+    offset: Int
+    where: ClubsWithTagWhereInput
+    mostFullClubConditionPercent: Int
+    isTopAllMostFullClubs: Boolean
+    containsFullClub: Boolean
+  ): ClubsWithTag
+  clubWithTagDatas(options: ClubWithTagDatasInput): [ClubsWithTag]
+  clubsCount(
+    where: ClubsWhereInput
+    containsFullClub: Boolean
+    mostFullClubConditionPercent: Int
+  ): Int
+  virtualClubs(date: String!): [Club]
+  virtualClubsJSONWithPeriod(startedAt: String!, endedAt: String!): JSON
+  nextSeasonClub(prevClubID: String!): Club
+  prevSeasonClub(clubID: String!): Club
+  currentStepOfClubIntroduction(
+    clubID: String!
+  ): CurrentStepOfClubIntroductionPayload
+  productMapping(clubID: String!, meetingIDs: [String]): Boolean
+  memberInfoByClub(id: String!): MemberInfo
+  memberInfoBySeasonID(seasonID: String!): MemberInfo
+  clubApplication(id: String!): ClubApplication
+  clubApplications(
+    limit: Int!
+    offset: Int!
+    where: ClubApplicationsWhereInput!
+    order: [[String]]
+  ): [ClubApplication]
+  hasPaidClubApplication(userID: String!, clubGroupID: String): Boolean
+  clubGroup(id: String!): ClubGroup
+  clubGroups(
+    limit: Int!
+    offset: Int!
+    where: ClubGroupsWhereInput!
+  ): [ClubGroup]
+  clubHistory(id: String!): ClubHistory
+  clubHistories(
+    limit: Int!
+    offset: Int!
+    where: ClubHistoriesWhereInput!
+  ): [ClubHistory]
+  clubReview(id: String!): ClubReview
+  clubReviews(
+    limit: Int!
+    offset: Int!
+    where: ClubReviewsWhereInput!
+    order: [[String]]
+  ): [ClubReview]
+  clubRole(id: String!): ClubRole
+  clubRoles(limit: Int, offset: Int, where: ClubRolesWhereInput): [ClubRole]
+  isLastMeetingOver(seasonID: String!, userID: String!): Boolean!
+  hasExperiencedSeason(userID: String!): Boolean!
+  isAppliablePartner(userID: String!): Boolean!
+  hasMembership(
+    userID: String!
+    seasons: [String]
+    checkDate: String
+    roles: [String]
+    serviceID: String
+  ): Boolean
+  hasMembershipByClubID(userID: String!, clubID: String!): Boolean
+  canExtendClub(userID: String!, clubID: String!): Boolean
+  memberCount(clubID: String!): Int
+  hasTicket(userID: String!, serviceID: String): Boolean
+  coupons(options: CouponsOptions!): [Coupon]!
+  hasIssueableCoupon(userID: String!, benefitCompanyID: String!): Boolean!
+  issuedCoupons(userID: String!, benefitCompanyID: String!): [Coupon]!
+  displayOrder(id: String!): DisplayOrder
+  displayOrders(
+    limit: Int
+    offset: Int
+    where: DisplayOrdersWhereInput
+  ): [DisplayOrder]
+  isVaildPinNumber(pinNumber: String!, price: Int!): Boolean
+  isKTMembership(userID: String!, clubID: String!): Boolean
+  pinNumbers(limit: Int, offset: Int, where: PinNumbersWhereInput): [PinNumber]
+  event(id: String!): Event
+  events(limit: Int, offset: Int, where: EventsWhereInput): [Event]
+  eventApplication(id: String!): EventApplication
+  eventApplications(
+    limit: Int!
+    offset: Int!
+    where: EventApplicationsWhereInput!
+  ): [EventApplication]
+  calculateEvnetApplication(eventID: String!): CalculateEvnetApplicationPayload
+  hasExperienceEvent(userID: String!, eventID: String): Boolean
+  isAppliableEvent(userID: String!, eventID: String!): Boolean
+  eventRole(id: String!): EventRole
+  eventRoles(limit: Int, offset: Int, where: EventRolesWhereInput): [EventRole]
+  extraNotice(id: String!): ExtraNotice
+  extraNotices: [ExtraNotice]
+  faq(id: String!): Faq
+  faqs(category: String, where: FaqsWhereInput): [Faq]
+  hosidamTestResultTemp(id: String!): HosidamTestResultTemp
+  hosidamTestResultTemps(
+    limit: Int
+    offset: Int
+    where: HosidamTestResultTempsWhereInput
+  ): [HosidamTestResultTemp]
+  marketing(id: String!): Marketing
+  marketings(limit: Int, offset: Int, where: MarketingsWhereInput): [Marketing]
+  meeting(clubID: String!, order: Int!): Meeting
+  meetingByID(id: String!): Meeting
+  meetings(
+    limit: Int
+    offset: Int
+    where: MeetingsWhereInput
+    order: [[String]]
+  ): [Meeting]
+  notice(id: String!): Notice
+  notices: [Notice]
+  partnerApplication(id: String!): PartnerApplication
+  partnerApplications(
+    limit: Int!
+    offset: Int!
+    where: PartnerApplicationsWhereInput!
+  ): [PartnerApplication]
+  partnerTodo(id: String!): PartnerTodo
+  partnerTodos(where: PartnerTodosWhereInput!): [PartnerTodo]
+  pointHistories(
+    where: PointHistoriesWhereInput
+    limit: Int
+    offset: Int
+  ): [PointHistory]
+  policy(id: String!): Policy
+  policies: [Policy]
+  post(id: String!): Post
+  posts(where: PostsWhereInput): [Post]
+  popularPosts(offset: Int, limit: Int, excludeClosedPost: Boolean): [Post]
+  mainPosts(offset: Int, limit: Int, excludeClosedPost: Boolean): [Post]
+  mainManualPosts(ids: [String]): [Post]
+  place(id: String!): Place
+  places: [Place]
+  poll(id: String!): Poll
+  polls(limit: Int, offset: Int, where: PollsWhereInput): [Poll]
+  pollOption(id: String!): PollOption
+  pollOptions(
+    limit: Int
+    offset: Int
+    where: PollOptionsWhereInput
+  ): [PollOption]
+  onlinePlace(id: String!): OnlinePlace
+  onlinePlaces: [OnlinePlace]
+  recruitment(id: String!): Recruitment
+  recruitments(where: RecruitmentWhereInput): [Recruitment]
+  rooms(limit: Int, offset: Int, where: RoomsWhereInput): [Room]
+  roomSchedules(
+    limit: Int
+    offset: Int
+    where: RoomSchedulesWhereInput
+  ): [RoomSchedule]
+  season(id: String!): Season
+  partnerAssigningSeason: Season
+  seasons(where: SeasonsWhereInput): [Season]
+  validSeasons: [VaildSeason]
+  spaceRentals(
+    limit: Int
+    offset: Int
+    where: SpaceRentalWhereInput
+  ): [SpaceRental]
+  tag(id: String!): Tag
+  tags(limit: Int!, offset: Int!, where: TagsWhereInput!): [Tag]
+  smsTemplate(type: String!): SmsTemplate
+  smsTemplates(where: SmsTemplatesWhereInput): [SmsTemplate]
+  smsTemplatesByBatching(types: [String]!): [SmsTemplate]
+  survey(id: String!): Survey
+  surveys(limit: Int, offset: Int, where: SurveysWhereInput): [Survey]
+  findEmail(name: String!, phoneNumber: String!): Boolean
+  user(id: String!): User
+  userByEmail(email: String!): User
+  checkAvailablePhoneNumber(phoneNumber: String!, countryCode: String!): Boolean
+  users(limit: Int, offset: Int, where: UsersWhereInput): [User]
+  usersByBatching(ids: [String]!): [User]
+  lastMeetingOverUsers: [User]
+  scheduledClubBookmarkUsers(
+    startOfPeriod: String!
+    endOfPeriod: String!
+  ): [ScheduledClubBookmarkUser]
+  inactiveUsers(
+    limit: Int
+    offset: Int
+    where: InactiveUsersWhereInput
+  ): [InactiveUser]
+  leader(id: String, userID: String): Leader
+  leaders(
+    limit: Int
+    offset: Int
+    where: LeadersWhereInput
+    order: Int
+  ): [Leader]
+  leaderPayment(id: String): LeaderPayment
+  leaderPayments(
+    limit: Int
+    offset: Int
+    where: LeaderPaymentWhereInput
+  ): [LeaderPayment]
+  refund(id: String!): Refund
+  refunds(
+    where: RefundWhereInput
+    limit: Int
+    offset: Int
+    order: String
+  ): [Refund]
+  partnerLogin(
+    method: String!
+    accessToken: String
+    email: String
+    password: String
+    kakaoID: String
+  ): String
+  b2bUserLogin(email: String, password: String): String
+  b2bPartnerLogin(
+    method: String!
+    accessToken: String
+    email: String
+    password: String
+  ): String
+  b2bCompany(id: String!): B2bCompany
+  b2bCompanies(
+    limit: Int
+    offset: Int
+    where: B2bCompaniesWhereInput
+  ): [B2bCompany]
+  b2bAttendances(where: B2bAttendancesWhereInput!): [B2bAttendance]
+  b2bBookreview(id: String!): B2bBookreview
+  b2bBookreviews(
+    limit: Int!
+    offset: Int!
+    where: B2bBookreviewsWhereInput!
+  ): [B2bBookreview]
+  b2bBookreviewsTemp(options: B2bBookreviewsOptions): [B2bBookreview]!
+  hasAuthReadingB2bBookreviews(b2bClubID: String!, b2bUserID: String!): Boolean
+  b2bBookreviewComments(b2bBookreviewID: String!): [B2bBookreviewComment]
+  b2bClub(id: String!): B2bClub
+  b2bClubs(
+    limit: Int
+    offset: Int
+    where: B2bClubsWhereInput
+    randomSeed: Float
+    mostFullB2bClubConditionPercent: Int
+    isTopAllMostFullB2bClubs: Boolean
+    containsFullB2bClub: Boolean
+  ): [B2bClub]
+  b2bClubApplication(id: String!): B2bClubApplication
+  b2bClubApplications(
+    limit: Int!
+    offset: Int!
+    where: B2bClubApplicationsWhereInput!
+  ): [B2bClubApplication]
+  b2bClubGroup(id: String!): B2bClubGroup
+  b2bClubGroups(
+    limit: Int!
+    offset: Int!
+    where: B2bClubGroupsWhereInput!
+  ): [B2bClubGroup]
+  b2bClubHistory(id: String!): B2bClubHistory
+  b2bClubHistories(
+    limit: Int!
+    offset: Int!
+    where: B2bClubHistoriesWhereInput!
+  ): [B2bClubHistory]
+  b2bClubReview(id: String!): B2bClubReview
+  b2bClubReviews(
+    limit: Int!
+    offset: Int!
+    where: B2bClubReviewsWhereInput!
+  ): [B2bClubReview]
+  b2bClubRole(id: String!): B2bClubRole
+  b2bClubRoles(
+    limit: Int
+    offset: Int
+    where: B2bClubRolesWhereInput
+  ): [B2bClubRole]
+  hasB2bMembership(
+    b2bUserID: String!
+    seasons: [String]
+    checkDate: String
+    roles: [String]
+  ): Boolean
+  b2bEventApplication(id: String!): B2bEventApplication
+  b2bEventApplications(
+    limit: Int!
+    offset: Int!
+    where: B2bEventApplicationsWhereInput!
+  ): [B2bEventApplication]
+  calculateB2bEvnetApplication(
+    eventID: String!
+  ): CalculateB2bEvnetApplicationPayload
+  b2bEventRole(id: String!): B2bEventRole
+  b2bEventRoles(
+    limit: Int
+    offset: Int
+    where: B2bEventRolesWhereInput
+  ): [B2bEventRole]
+  b2bMeeting(b2bClubID: String!, order: Int!): B2bMeeting
+  b2bMeetings(
+    limit: Int
+    offset: Int
+    where: B2bMeetingsWhereInput
+  ): [B2bMeeting]
+  b2bPartnerTodos(where: B2bPartnerTodosWhereInput!): [B2bPartnerTodo]
+  b2bSpaceRentals(
+    limit: Int
+    offset: Int
+    where: B2bSpaceRentalWhereInput
+  ): [B2bSpaceRental]
+  findB2bEmail(name: String!, phoneNumber: String!): Boolean
+  b2bUser(id: String!): B2bUser
+  b2bUserByEmail(email: String!): B2bUser
+  b2bUsers(limit: Int, offset: Int, where: B2bUsersWhereInput): [B2bUser]
+  b2bUsersByBatching(ids: [String]!): [B2bUser]
+  b2bCoupons(options: B2bCouponsOptions!): [B2bCoupon]!
+  hasIssueableB2bCoupon(
+    b2bUserID: String!
+    benefitCompanyID: String!
+    onGoingSeasons: [String]!
+  ): Boolean!
+  b2bFaq(id: String!): Faq
+  b2bFaqs(category: String, where: B2bFaqsWhereInput): [B2bFaq]
+  currentTime: String
+  sendBackendHealthyToSlack(
+    message: sendBackendHealthyToSlackInput!
+    webhookUrl: String!
+  ): Boolean
+  missedMostFullClubWishUsers(
+    seasonID: String!
+    isTest: Boolean
+  ): [MostFullClubWishUser]
+  mostFullClubWishUsers(
+    clubID: String!
+    seasonID: String!
+    isTest: Boolean
+  ): [MostFullClubWishUser]
+  infoDatasOfMainpage: infoDatasOfMainpagePayload!
+  tdtdSubscriber(id: String!): TdtdSubscriber
+  tdtdSubscribers: [TdtdSubscriber]
+  wallet(userID: String!): Wallet
+  video(id: String!): Video
+  sms(status: String, begin: String, end: String, to: String): [Sms]
+  callNumbers: [CallNumbers]
+  outgoingRequest(userId: String!): [OutgoingRequest]
+  outgoingVoucher(userId: String!): [OutgoingVoucher]
+  getPaybacks(
+    where: PaybacksWhereInput
+    order: [[String]]
+    limit: Int
+    offset: Int
+  ): [Payback]
+  curation(id: String!): CurationResultWithLists
+  curations(limit: Int, offset: Int): [CurationResultWithLists]
+  curationsByTitle(
+    limit: Int
+    offset: Int
+    where: CurationsWhereInput!
+  ): [CurationResultWithLists]
+}
+
+type Recruitment {
+  id: String!
+  title: String!
+  content: String!
+  isClosed: Boolean!
+  description: String!
+  thumbnailUrl: String!
+  createdAt: String
+  updatedAt: String
+}
+
+input RecruitmentWhereInput {
+  isClosed: Boolean
+}
+
+type Refund {
+  id: String!
+  clubApplicationID: String!
+  reason: String!
+  exchangeableUsedPoint: Int
+  noExchangeableUsedPoint: Int
+  outgoingCoupon: Boolean!
+  method: String
+  gateway: String
+  price: Int
+  total: Int!
+  refundedAt: String!
+  refundedBy: String!
+  comment: String
+  createdAt: String
+  updatedAt: String
+  deletedAt: String
+  clubApplication: ClubApplication
+}
+
+input RefundB2bEventInput {
+  b2bEventRoleID: String!
+  reason: String
+  refundB2bAccount: B2bAccount
+  isRemainMebership: Boolean
+  refundPrice: Int
+}
+
+type RefundB2bEventPayload {
+  b2bEventApplication: B2bEventApplication
+}
+
+input RefundEventInput {
+  eventRoleID: String!
+  reason: String
+  refundAccount: Account
+  refundPrice: Int
+  exchangeablePoint: Int
+  noExchangeablePoint: Int
+  isRemainMebership: Boolean
+}
+
+type RefundEventPayload {
+  eventApplication: EventApplication
+}
+
+input RefundInfoInput {
+  refundPrice: Int!
+  fee: Int!
+  refundExchangeablePoint: Int!
+  refundNoExchangeablePoint: Int!
+}
+
+input RefundWhereInput {
+  clubApplicationID: String
+  reason: String
+  outgoingCoupon: Boolean
+  method: String
+  gateway: String
+  userID: String
+}
+
+input replacementPartner {
+  partnerID: String
+  order: Int
+}
+
+input ResetPasswordOnB2bUserInput {
+  email: String!
+  phoneNumber: String!
+  sendingMethod: String
+}
+
+type ResetPasswordOnB2bUserPayload {
+  b2bUser: B2bUser
+}
+
+input ResetPasswordOnUserInput {
+  email: String!
+  phoneNumber: String!
+  sendingMethod: String
+}
+
+type ResetPasswordOnUserPayload {
+  user: User
+}
+
+type Room {
+  id: String!
+  agitID: String!
+  name: String!
+  maxMemberCount: Int!
+  openTimetable: [typeOpenTimetable]!
+  agit: Agit
+}
+
+type RoomSchedule {
+  id: String!
+  roomID: String!
+  startedAt: String!
+  endedAt: String!
+  type: String!
+  meetingID: String
+  spaceRentalID: String
+  b2bMeetingID: String
+  b2bSpaceRentalID: String
+  room: Room
+  meeting: Meeting
+  b2bMeeting: B2bMeeting
+  spaceRental: SpaceRental
+  b2bSpaceRental: B2bSpaceRental
+}
+
+input RoomSchedulesWhereInput {
+  agitID: String
+  period: inputPeriod
+}
+
+input RoomsWhereInput {
+  agitID: String
+}
+
+type ScheduledClubBookmarkUser {
+  clubName: String!
+  userName: String!
+  userPhoneNumber: String!
+  clubID: String!
+  userCountryCode: String
+}
+
+type Season {
+  id: String!
+  startedAt: String!
+  endedAt: String!
+  nextSeason: String
+  isPeriodToAskExistingPartner: Boolean!
+  assigningRank: Int!
+  newPartnerApplicationUrl: String
+  openStatus: String!
+  isTopAllMostFullClubs: Boolean!
+  isPeriodToShowMembers: Boolean!
+  mostFullClubConditionPercent: Int!
+  extentionOpenStartedAt: String
+  memberOpenStartedAt: String
+  allOpenStartedAt: String
+  openEndedAt: String
+  firstRefundStartedAt: String
+  secondRefundStartedAt: String
+  thirdRefundStartedAt: String
+  fourthRefundStartedAt: String
+  refundEndedAt: String
+  createdAt: String!
+  updatedAt: String!
+  nextSeasonData: Season
+}
+
+input SeasonsWhereInput {
+  openStatus: String
+  isPeriodToAskExistingPartner: Boolean
+  dateToComfirmValidSeason: String
+}
+
+input sendBackendHealthyToSlackInput {
+  attachments: [attachmentInput]!
+  icon_emoji: String!
+  username: String!
+}
+
+input SendPushNotificationsInput {
+  userID: String!
+  code: String
+  payload: PushNotificationPayload
+}
+
+type Sms {
+  status: String
+  title: String
+  contents: String
+  to: String
+  from: String
+  createdAt: String
+}
+
+type SmsTemplate {
+  type: String!
+  title: String!
+  text: String!
+  isMarketing: Boolean!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input SmsTemplatesWhereInput {
+  type: String
+}
+
+type SpaceRental {
+  id: String!
+  placeID: String!
+  userID: String!
+  reason: String!
+  memberCount: Int!
+  startedAt: String!
+  endedAt: String!
+  createdAt: String!
+  updatedAt: String!
+  roomScheduleIDs: [String]!
+  isAccepted: Boolean
+  request: String
+  smsNotice: String
+  place: Place
+  user: User
+  roomSchedules: [RoomSchedule]
+}
+
+input SpaceRentalWhereInput {
+  startedDate: String
+  placeID: String
+  isAccepted: Boolean
+  period: inputPeriod
+  placeIDs: [String]
+}
+
+type Survey {
+  id: String!
+  name: String!
+  phoneNumber: String!
+  placeIDs: [String]!
+  days: [String]!
+  types: [String]!
+  categoryIDs: [String]!
+  sectionIDs: [String]!
+  createdAt: String!
+  updatedAt: String!
+  season: String!
+  seasonID: String!
+  resultClubIDs: [String]!
+  isAgreePrivatePolicy: Boolean
+  isAgreeCall: Boolean
+  consultedAt: String
+  comment: String
+  categories: [Category]!
+  places: [Place]!
+  resultClubs: [Club]!
+}
+
+input SurveysWhereInput {
+  season: String
+  seasonID: String
+  isFinishedConsult: Boolean
+  isAgreeCall: Boolean
+}
+
+type Tag {
+  id: String!
+  name: String!
+  seasonID: String!
+  isPublic: Boolean!
+  options: [String]!
+  updatedAt: String!
+  createdAt: String!
+  description: String
+  subName: String
+  clubGroupId: String
+}
+
+input TagsWhereInput {
+  seasonID: String
+  ids: [String]
+  isPublic: Boolean
+  options: [String]
+  name: String
+}
+
+type TdtdSubscriber {
+  phoneNumber: String!
+  scanTitle: String!
+  scanResult: String!
+  expiredAt: String
+}
+
+type TempCommunityTicket {
+  id: String!
+  userID: String!
+  clubID: String!
+  clubApplicationID: String!
+  isRefunded: Boolean!
+  createdAt: String
+  updatedAt: String
+  cardName: String
+}
+
+type Ticket {
+  serviceId: String
+}
+
+type timetableRow {
+  startTime: String!
+  task: String!
+}
+
+input timetableRowInput {
+  startTime: String!
+  task: String!
+}
+
+type ToggleLikeOnB2bBookreviewPayload {
+  b2bBookreview: B2bBookreview
+}
+
+type TypeInformation {
+  title: String
+  content: String
+  clubID: String
+  tabs: [TypeTab]
+  isClosed: Boolean
+  isClosedNoticeInHome: Boolean
+  isClosedNoticeInCS: Boolean
+  isClosedInAppHome: Boolean
+  isClosedInApp: Boolean
+}
+
+type typeOpenTimetable {
+  day: Int
+  periods: [typePeriod]
+}
+
+type typePeriod {
+  startedAt: String
+  endedAt: String
+}
+
+type TypeTab {
+  name: String
+  content: String
+  isClosed: Boolean
+  seoText: String
+}
+
+type UcmTestResult {
+  id: String
+  userID: String
+  answers: [String]
+  tagID: String
+  finishedAt: String
+}
+
+type UnBlockUserPayload {
+  user: User
+}
+
+input UpdateAttendanceInput {
+  id: String!
+  status: String
+}
+
+type UpdateAttendancePayload {
+  attendance: Attendance
+}
+
+input UpdateB2bAttendanceInput {
+  id: String!
+  status: String
+}
+
+type UpdateB2bAttendancePayload {
+  b2bAttendance: B2bAttendance
+}
+
+input UpdateB2bBookreviewCommentInput {
+  id: String!
+  content: String!
+}
+
+type UpdateB2bBookreviewCommentPayout {
+  b2bBookreviewComment: B2bBookreviewComment
+}
+
+input UpdateB2bBookreviewInput {
+  id: String!
+  title: String
+  content: String
+  isPublic: Boolean
+  status: String
+  fileUrl: String
+}
+
+type UpdateB2bBookreviewPayload {
+  b2bBookreview: B2bBookreview
+}
+
+input UpdateB2bClubApplicationInput {
+  id: String!
+  b2bUserID: String
+  b2bClubID: String
+  season: String
+  seasonID: String
+  price: Int
+  companionCount: Int
+  method: String
+  status: String
+  b2bClubRoleID: String
+  refundPrice: Int
+  fee: Int
+  tossPayToken: String
+  tossRefundNo: String
+  iamportUID: String
+  tossRedirectUrl: String
+  tossCancelRedirectUrl: String
+  confirmedAt: String
+  refundApplicatedAt: String
+  membershipClosedAt: String
+  refundedAt: String
+  refundBankCode: String
+  refundBankName: String
+  refundHolder: String
+  refundAccountNumber: String
+  vbankBankCode: String
+  vbankBankName: String
+  vbankHolder: String
+  vbankAccountNumber: String
+  vbankExpiredAt: String
+  refundReason: String
+  beforeB2bClubApplicationID: String
+  afterB2bClubApplicationID: String
+  refundScore: Int
+}
+
+type UpdateB2bClubApplicationPayload {
+  b2bClubApplication: B2bClubApplication
+}
+
+input UpdateB2bClubGroupInput {
+  id: String!
+  name: String
+  description: String
+  notice: String
+  information: String
+  test_column_1: String
+  test_column_1_title: String
+  test_column_2: String
+  test_column_3: String
+  test_column_3_title: String
+}
+
+type UpdateB2bClubGroupPayload {
+  b2bClubGroup: B2bClubGroup
+}
+
+input UpdateB2bClubHistoryInput {
+  id: String!
+  name: String
+  sinceSeason: String
+  readContentIDs: [String]
+}
+
+type UpdateB2bClubHistoryPayload {
+  b2bClubHistory: B2bClubHistory
+}
+
+input UpdateB2bClubInput {
+  id: String!
+  seasonID: String
+  name: String
+  coverUrl: String
+  price: Int
+  type: String
+  option: String
+  dayOfSchedule: Int
+  weekOfSchedule: Int
+  timeOfSchedule: String
+  runningTime: String
+  placeID: String
+  options: [String]
+  partnerIDs: [String]
+  leaderIDs: [String]
+  isClosed: Boolean
+  partnerApplicationCount: Int
+  memberCount: Int
+  maxMemberCount: Int
+  minBookreviewLength: Int
+  b2bClubGroupID: String
+  b2bClubHistoryID: String
+  categoryID: String
+  tagIDs: [String]
+  information: String
+  leaderDescription: String
+  leaderImageUrl: String
+  partnerDescription: String
+  partnerImageUrl: String
+  curriculum: String
+  notice: String
+  description: String
+  closedAt: String
+  openedAt: String
+  smsTemplateType: String
+  quizUrl: String
+  partnerDescriptionTitle: String
+  firstBookIntro: String
+  hashTag: String
+  subHashTag: String
+  subDescription: String
+  b2bCompanyID: String
+  subCoverUrl: String
+}
+
+type UpdateB2bClubPayload {
+  b2bClub: B2bClub
+}
+
+input UpdateB2bClubReviewInput {
+  id: String!
+  b2bClubID: String
+  b2bClubGroupID: String
+  b2bClubHistoryID: String
+  b2bUserID: String
+  isClosed: Boolean
+  content: String
+  dummyLikeCount: Int
+  imageUrl: String
+  title: String
+  score: Int
+}
+
+type UpdateB2bClubReviewPayload {
+  b2bClubReview: B2bClubReview
+}
+
+input UpdateB2bClubRoleInput {
+  id: String!
+  b2bUserID: String
+  b2bClubID: String
+  b2bClubApplicationID: String
+  role: String
+  seasonID: String
+  refundStatus: String
+  refundedAt: String
+  partnerAnswer: String
+  respondQuiz: Boolean
+  passedQuiz: Boolean
+  quizPushCount: Int
+  isInvited: Boolean
+}
+
+type UpdateB2bClubRolePayload {
+  b2bClubRole: B2bClubRole
+}
+
+input UpdateB2bCompanyInput {
+  id: String!
+  name: String!
+  isClosed: Boolean
+  isPublicB2bBookreviewForOutside: Boolean
+  isPublicB2bBookreviewForInside: Boolean
+  logoUrl: String
+}
+
+type UpdateB2bCompanyPayload {
+  b2bCompany: B2bCompany
+}
+
+input UpdateB2bFaq {
+  id: String!
+  category: String!
+  title: String!
+  description: String!
+  order: Int
+  isClosed: Boolean!
+}
+
+input UpdateB2bMeetingInput {
+  id: String!
+  bookreviewDeadline: String
+  notice: String
+  startedAt: String
+  endedAt: String
+  presentUrl: String
+  topicPages: [String]
+  presentNotice: String
+  presenterID: String
+  placeID: String
+  contentIDs: [String]
+  timetable: [B2bTimetableRowInput]
+  presenterIDs: [String]
+}
+
+type UpdateB2bMeetingPayload {
+  b2bMeeting: B2bMeeting
+}
+
+input UpdateB2bPartnerTodoInput {
+  id: String!
+  title: String
+  seasonID: String
+  ddayMeeting: String
+  order: Int
+  b2bMeetingID: Boolean
+  isChecked: Boolean
+  dday: Int
+}
+
+type UpdateB2bPartnerTodoPayload {
+  b2bPartnerTodo: B2bPartnerTodo
+}
+
+input UpdateB2bUserInput {
+  id: String!
+  email: String
+  gender: String
+  birthday: String
+  facebookID: String
+  kakaoID: String
+  password: String
+  name: String
+  phoneNumber: String
+  route: String
+  recommender: String
+  interests: [String]
+  ads: [String]
+  isAgreedToMarketingSms: Boolean
+  isAgreedToAllMarketing: Boolean
+  keywords: [String]
+  readingVolume: Int
+  profileImageUrl: String
+  description: String
+  instagram: String
+  facebook: String
+  isPublicProfile: Boolean
+  marketingAgreedAt: String
+  isPublicAge: Boolean
+  isPublicGender: Boolean
+  isPublicClubActivity: Boolean
+  isPublicBookreview: Boolean
+}
+
+type UpdateB2bUserPayload {
+  b2bUser: B2bUser
+}
+
+input UpdateBannerInput {
+  id: String!
+  title: String
+  pcImageUrl: String
+  mobileImageUrl: String
+  linkUrl: String
+  isClosed: Boolean
+}
+
+input UpdateBannersInput {
+  id: String!
+  order: Int!
+}
+
+input UpdateBenefitCompanyInput {
+  id: String!
+  name: String
+  benefit: String
+  categories: [String]
+  manual: String
+  logoUrl: String
+  order: Int
+  isClosed: Boolean
+}
+
+type UpdateBenefitCompanyPayload {
+  benefitCompany: BenefitCompany
+}
+
+input UpdateBookreviewCommentInput {
+  id: String!
+  content: String!
+}
+
+type UpdateBookreviewCommentPayout {
+  bookreviewComment: BookreviewComment
+}
+
+input UpdateBookreviewInput {
+  id: String!
+  title: String
+  content: String
+  isPublic: Boolean
+  status: String
+  fileUrl: String
+  publishedAt: String
+}
+
+type UpdateBookreviewPayload {
+  bookreview: Bookreview
+}
+
+input UpdateCategoryInput {
+  id: String!
+  name: String
+}
+
+type UpdateCategoryPayload {
+  category: Category
+}
+
+input UpdateClubApplicationInput {
+  id: String!
+  userID: String
+  clubID: String
+  season: String
+  seasonID: String
+  price: Int
+  companionCount: Int
+  method: String
+  status: String
+  clubRoleID: String
+  refundPrice: Int
+  fee: Int
+  tossPayToken: String
+  tossRefundNo: String
+  iamportUID: String
+  tossRedirectUrl: String
+  tossCancelRedirectUrl: String
+  confirmedAt: String
+  refundApplicatedAt: String
+  membershipClosedAt: String
+  refundedAt: String
+  refundBankCode: String
+  refundBankName: String
+  refundHolder: String
+  refundAccountNumber: String
+  vbankBankCode: String
+  vbankBankName: String
+  vbankHolder: String
+  vbankAccountNumber: String
+  vbankExpiredAt: String
+  refundReason: String
+  beforeClubApplicationID: String
+  afterClubApplicationID: String
+  refundScore: Int
+  cardName: String
+  failReason: String
+  orderId: String
+}
+
+type UpdateClubApplicationPayload {
+  clubApplication: ClubApplication
+}
+
+input UpdateClubGroupInput {
+  id: String!
+  name: String
+  categoryID: String
+  description: String
+  notice: String
+  information: String
+  test_column_1: String
+  test_column_1_title: String
+  test_column_2: String
+  test_column_3: String
+  test_column_3_title: String
+}
+
+type UpdateClubGroupPayload {
+  clubGroup: ClubGroup
+}
+
+input UpdateClubHistoryInput {
+  id: String!
+  name: String
+  sinceSeason: String
+  readContentIDs: [String]
+}
+
+type UpdateClubHistoryPayload {
+  clubHistory: ClubHistory
+}
+
+input UpdateClubInput {
+  id: String!
+  season: String
+  seasonID: String
+  name: String
+  coverUrl: String
+  price: Int
+  type: String
+  option: String
+  options: [String]
+  dayOfSchedule: Int
+  weekOfSchedule: Int
+  timeOfSchedule: String
+  runningTime: String
+  placeID: String
+  partnerIDs: [String]
+  leaderIDs: [String]
+  isClosed: Boolean
+  partnerApplicationCount: Int
+  memberCount: Int
+  maxMemberCount: Int
+  minBookreviewLength: Int
+  clubGroupID: String
+  clubHistoryID: String
+  categoryID: String
+  tagIDs: [String]
+  information: String
+  leaderDescription: String
+  leaderImageUrl: String
+  leaderTitle: String
+  leaderShare: Int
+  partnerDescription: String
+  partnerImageUrl: String
+  curriculum: String
+  notice: String
+  description: String
+  closedAt: String
+  openedAt: String
+  smsTemplateType: String
+  quizUrl: String
+  partnerDescriptionTitle: String
+  firstBookIntro: String
+  hashTag: String
+  subHashTag: String
+  subDescription: String
+  subCoverUrl: String
+  replacementPartners: [replacementPartner]
+  isAllowedOutgoing: Boolean
+  endedAt: String
+  extensionStartedAt: String
+  clubIntroductionStatus: String
+  clubIntroductionCreatedAt: String
+  clubIntroductionStatusUpdatedAt: String
+  sendFeedbackNotiSms: Boolean
+}
+
+type UpdateClubPayload {
+  club: Club
+}
+
+input UpdateClubReviewInput {
+  id: String!
+  clubID: String
+  clubGroupID: String
+  clubHistoryID: String
+  userID: String
+  isClosed: Boolean
+  content: String
+  dummyLikeCount: Int
+  imageUrl: String
+  title: String
+  score: Int
+}
+
+type UpdateClubReviewPayload {
+  clubReview: ClubReview
+}
+
+input UpdateClubRoleInput {
+  id: String!
+  userID: String
+  clubID: String
+  clubApplicationID: String
+  role: String
+  season: String
+  seasonID: String
+  refundStatus: String
+  refundedAt: String
+  partnerAnswer: String
+  respondQuiz: Boolean
+  passedQuiz: Boolean
+  quizPushCount: Int
+  isInvited: Boolean
+  partnerAnswerReason: String
+  replacementPartnerMeetingOrder: Int
+}
+
+type UpdateClubRolePayload {
+  clubRole: ClubRole
+}
+
+input UpdateContentInput {
+  id: String!
+  type: String
+  title: String
+  author: String
+  description: String
+  imageUrl: String
+  isbn: String
+  link: String
+}
+
+type UpdateContentPayload {
+  content: Content
+}
+
+input UpdateCurationInput {
+  id: String
+  title: String
+  head: String
+  body: String
+  description: String
+  coverUrl: String
+  isDisplay: Boolean
+  order: Int
+  listIDs: ListIDs!
+}
+
+input UpdateCurationsByOrderInput {
+  id: String!
+  order: Int!
+}
+
+input UpdateDisplayOrderInput {
+  id: String!
+  type: String
+  isDisplayed: Boolean
+  order: Int
+  itemID: String
+}
+
+input UpdateEvent {
+  id: String
+  name: String
+  season: String
+  seasonID: String
+  imageUrl: String
+  thumbnailUrl: String
+  price: Int
+  maxMemberCount: Int
+  placeID: String
+  hostIDs: [String]
+  hostDescription: String
+  informations: [InputInformation]
+  isClosed: Boolean
+  isAppliable: Boolean
+  isImportant: Boolean
+  maxCompanionCount: Int
+  openStartedAt: String
+  startedAt: String
+  endedAt: String
+  canApplyNotMember: Boolean
+  priceForNotMember: Int
+  description: String
+  isWide: Boolean
+  webContent: String
+  mobileContent: String
+  notice: String
+  introduction: String
+  targetDescription: String
+  hostImageUrl: String
+  timetable: String
+  hostName: String
+  smsNotice: String
+}
+
+input UpdateEventApplicationInput {
+  id: String!
+  status: String
+}
+
+type UpdateEventApplicationPayload {
+  eventApplication: EventApplication
+}
+
+input UpdateExtraNotice {
+  id: String!
+  name: String!
+  description: String!
+  informations: [InputExtraNoticeInformation]
+}
+
+input UpdateFaq {
+  id: String!
+  category: String!
+  title: String!
+  description: String!
+  order: Int
+  isClosed: Boolean!
+}
+
+input UpdateLeaderInput {
+  id: String!
+  userID: String
+  name: String
+  bank: String
+  account: String
+  socialSecurityNumber: String
+  taxType: String
+}
+
+type UpdateLeaderPayload {
+  leader: Leader
+}
+
+input UpdateLeaderPaymentInput {
+  id: String!
+  leaderID: String
+  clubID: String
+  season: String
+  numberOfLeader: Int
+  price: Int
+  bank: String
+  account: String
+  taxType: String
+  email: String
+  leaderShare: Int
+  totalMemberCount: Int
+  totalMemberPayment: Int
+  fee33MemberCount: Int
+  fee33MemberTotalPayment: Int
+  fee66MemberCount: Int
+  fee66MemberTotalPayment: Int
+  quarterRefundCount: Int
+  quarterRefundTotalAmount: Int
+  revenue: Int
+  VAT: Int
+  revenueExcludingVAT: Int
+  revenueShare: Int
+  incomeTax: Int
+  localIncomeTax: Int
+  trevariUsageAmount: Int
+  finalTotalPayment: Int
+  willBePaid: Boolean
+  receiptSent: Boolean
+  transferred: Boolean
+  comment: String
+  etcRefundCount: Int
+  etcRefundTotalPayment: Int
+  refundDescription: JSON
+}
+
+type UpdateLeaderPaymentPayload {
+  leaderPayment: LeaderPayment
+}
+
+input UpdateMarketingInput {
+  id: String!
+  seasonID: String
+  date: String
+  cost: Int
+  channel: String
+  memo: String
+  product: String
+}
+
+input UpdateMeetingInput {
+  id: String!
+  bookreviewDeadline: String
+  notice: String
+  startedAt: String
+  endedAt: String
+  presentUrl: String
+  topicPages: [String]
+  presenterID: String
+  placeID: String
+  onlinePlaceID: String
+  contentIDs: [String]
+  presentNotice: String
+  timetable: [timetableRowInput]
+  presenterIDs: [String]
+  status: String
+  topicPageStatus: String
+  updateApplicationDeadline: Boolean
+}
+
+type UpdateMeetingPayload {
+  meeting: Meeting
+}
+
+input UpdateNoticeInput {
+  id: String!
+  title: String
+  description: String
+  order: Int
+  isClosed: Boolean
+}
+
+type UpdateNoticePayload {
+  notice: Notice
+}
+
+input UpdateOnlinePlace {
+  id: String!
+  name: String
+  url: String
+  information: String
+}
+
+input UpdatePartnerApplicationInput {
+  id: String!
+  userID: String
+  assignedClubID: String
+  season: String
+  seasonID: String
+  ID: String
+  rank: Int
+  score: Int
+  selectedClubIDs: [String]
+  selectedClubsReason: [String]
+}
+
+type UpdatePartnerApplicationPayload {
+  partnerApplication: PartnerApplication
+}
+
+input UpdatePartnerTodoInput {
+  id: String!
+  title: String
+  season: String
+  seasonID: String
+  ddayMeeting: String
+  order: Int
+  meetingID: Boolean
+  isChecked: Boolean
+  dday: Int
+}
+
+type UpdatePartnerTodoPayload {
+  partnerTodo: PartnerTodo
+}
+
+input UpdatePlace {
+  id: String!
+  name: String
+  imageUrl: String
+  address: String
+  mapUrl: String
+}
+
+input UpdatePolicyInput {
+  id: String!
+  title: String
+  content: String
+}
+
+type UpdatePolicyPayload {
+  policy: Policy
+}
+
+input UpdatePollInput {
+  id: String!
+  clubID: String
+  title: String
+  endedAt: String
+  isMultipleChoice: Boolean
+  isAnonymous: Boolean
+  optionIDs: [String]
+}
+
+input UpdatePollOptionInput {
+  id: String!
+  respondUserIDs: [String]
+  text: String
+}
+
+input UpdatePost {
+  id: String!
+  isClosed: Boolean!
+  title: String!
+  description: String
+  category: String
+  content: String
+  buttonUrl: String
+  buttonText: String
+  buttonDescription: String
+  thumbnailUrl: String!
+  isPopular: Boolean!
+  isShowMainPage: Boolean!
+}
+
+input UpdateRecruitmentInput {
+  id: String!
+  title: String
+  content: String
+  isClosed: Boolean
+  description: String
+  thumbnailUrl: String
+}
+
+type UpdateRecruitmentPayload {
+  recruitment: Recruitment
+}
+
+input UpdateRefundInput {
+  id: String!
+  clubApplicationID: String
+  reason: String
+  exchangeableUsedPoint: Int
+  noExchangeableUsedPoint: Int
+  outgoingCoupon: Boolean
+  method: String
+  gateway: String
+  price: Int
+  total: Int
+  refundedAt: String
+  refundedBy: String
+  comment: String
+}
+
+input UpdateSeasonInput {
+  id: String!
+  startedAt: String
+  endedAt: String
+  nextSeason: String
+  isPeriodToAskExistingPartner: Boolean
+  assigningRank: Int
+  newPartnerApplicationUrl: String
+  openStatus: String
+  isTopAllMostFullClubs: Boolean
+  isPeriodToShowMembers: Boolean
+  mostFullClubConditionPercent: Int
+  extentionOpenStartedAt: String
+  memberOpenStartedAt: String
+  allOpenStartedAt: String
+  openEndedAt: String
+  firstRefundStartedAt: String
+  secondRefundStartedAt: String
+  thirdRefundStartedAt: String
+  fourthRefundStartedAt: String
+  refundEndedAt: String
+}
+
+type UpdateSeasonPayload {
+  season: Season
+}
+
+input UpdateSmsTemplateInput {
+  type: String!
+  title: String
+  text: String
+  isMarketing: Boolean
+}
+
+type UpdateSmsTemplatePayload {
+  smsTemplate: SmsTemplate
+}
+
+input UpdateSurveyInput {
+  id: String!
+  name: String
+  phoneNumber: String
+  placeIDs: [String]
+  days: [String]
+  types: [String]
+  categoryIDs: [String]
+  sectionIDs: [String]
+  isAgreePrivatePolicy: Boolean
+  isAgreeCall: Boolean
+  season: String
+  seasonID: String
+  resultClubIDs: [String]
+  consultedAt: String
+  comment: String
+}
+
+type UpdateSurveyPayload {
+  survey: Survey
+}
+
+input UpdateTagInput {
+  id: String!
+  subName: String
+  description: String
+  name: String
+  seasonID: String
+  isPublic: Boolean
+  clubGroupId: String
+}
+
+type UpdateTagPayload {
+  tag: Tag
+}
+
+input UpdateUserInput {
+  id: String!
+  email: String
+  gender: String
+  birthday: String
+  facebookID: String
+  kakaoID: String
+  appleID: String
+  password: String
+  name: String
+  phoneNumber: String
+  countryCode: String
+  route: String
+  recommender: String
+  interests: [String]
+  ads: [String]
+  isAgreedToMarketingSms: Boolean
+  isAgreedToAllMarketing: Boolean
+  keywords: [String]
+  readingVolume: Int
+  profileImageUrl: String
+  description: String
+  instagram: String
+  facebook: String
+  isPublicProfile: Boolean
+  marketingAgreedAt: String
+  isPublicAge: Boolean
+  isPublicGender: Boolean
+  isPublicClubActivity: Boolean
+  isPublicBookreview: Boolean
+  comment: String
+}
+
+type UpdateUserPayload {
+  user: User
+}
+
+type User {
+  id: String!
+  name: String!
+  isInactivated: Boolean!
+  email: String
+  phoneNumber: String
+  countryCode: String
+  interests: [String]
+  ads: [String]
+  isAgreedToMarketingSms: Boolean
+  isAgreedToAllMarketing: Boolean
+  hasAuthenticatedPhoneNumber: Boolean
+  keywords: [String]
+  readingVolume: Int
+  gender: String
+  birthday: String
+  route: String
+  facebookID: String
+  kakaoID: String
+  appleID: String
+  password: String
+  recommender: String
+  point: Int
+  noExchangeablePoint: Int
+  isBlocked: Boolean
+  createdAt: String
+  updatedAt: String
+  profileImageUrl: String
+  description: String
+  instagram: String
+  facebook: String
+  isPublicProfile: Boolean
+  marketingAgreedAt: String
+  isPublicAge: Boolean
+  isPublicGender: Boolean
+  isPublicClubActivity: Boolean
+  isPublicBookreview: Boolean
+  recentLoginedAt: String
+  comment: String
+}
+
+input UsersWhereInput {
+  name: String
+  phoneNumber: String
+  beforeMarketingAgreedAt: String
+  isAgreedToMarketingSms: Boolean
+  beforeRecentLogineAt: String
+  email: String
+  includeNullForBeforeRecentLoginedAtWhereClause: Boolean
+  hasAuthenticatedPhoneNumber: Boolean
+  startOfPeriodForRecentLoginedAt: String
+  endOfPeriodForRecentLoginedAt: String
+  isInactivated: Boolean
+}
+
+type VaildSeason {
+  seasonID: String
+}
+
+type Video {
+  id: String!
+  link: String!
+  props: JSON!
+}
+
+input ViewContentInput {
+  contentID: String
+  contentName: String
+  price: Int
+  eventID: String
+  eventSourceUrl: String
+  fbp: String
+  fbc: String
+  pixelIDs: [String]
+}
+
+type Wallet {
+  id: String!
+  userId: String!
+  tickets: [Ticket]
+}
+

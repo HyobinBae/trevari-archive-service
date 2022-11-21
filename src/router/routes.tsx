@@ -24,6 +24,7 @@ const Main = Loadable(() => import('pages/main'));
 const Menu = Loadable(() => import('pages/menu'));
 const Goods = Loadable(() => import('pages/goods'));
 const External = Loadable(() => import('pages/external'));
+const Curations = Loadable(() => import('pages/curations'));
 const LoadingP = Loadable(() => import('components/base/LoadingPage'));
 
 export default () => {
@@ -65,6 +66,7 @@ export default () => {
         <Route path="/menu" element={<Menu />} />
         <Route path="/goods" element={<Goods />} />
         <Route path="/external" element={<External />} />
+        <Route path="/curations/:curationId" element={<Curations />} />
         <Route path="*" element={<LoadingP />} />
       </Routes>
     </Layout>

@@ -4,3 +4,4 @@ export const SCHEDULED_CLUB_TAG = {
   id: '384eb598-2304-42b7-a920-04a7f217ac09',
   name: '오픈 예정 클럽'
 }
+export const CURATION_CARD_ASPECT_RATIO = 0.865

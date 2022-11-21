@@ -69,7 +69,6 @@ export default Layout;
 const Base = styled.div`
   position: relative;
   margin: 0 auto;
-  background: #eeeeee;
   max-width: 500px;
   width: 100%;
   min-height: 100vh;

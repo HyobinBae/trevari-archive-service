@@ -258,3 +258,95 @@ export const GET_MAIN_POSTS = gql`
     }
   }
 `;
+
+export const GET_NEW_CURATION = gql`
+  query curation($id: String!) {
+    curation(id: $id) {
+      id
+      title
+      head
+      body
+      description
+      coverUrl
+      isDisplay
+      order
+      lists  {
+        clubLists {
+          id
+          name
+          coverUrl
+          description, leaderTitle,
+          memberCount, maxMemberCount, applicationDeadline, openedAt
+          place {
+            name
+          }
+          clubGroup {
+            description
+          }
+          meetings {
+            startedAt
+          }
+          seasonID
+        }
+        eventLists {
+          id
+          name
+          description
+          thumbnailUrl
+          memberCount, maxMemberCount
+          place {
+            name
+          }
+          hostName
+          startedAt
+        }
+      }  
+    }
+  }
+`
+export const GET_NEW_CURATIONS = gql`
+  query curations($limit: Int, $offset: Int) {
+    curations(limit: $limit, offset: $offset) {
+      id
+      title
+      head
+      body
+      description
+      coverUrl
+      isDisplay
+      order
+      lists  {
+        clubLists {
+          id
+          name
+          coverUrl
+          description, leaderTitle, partnerDescriptionTitle
+          memberCount, maxMemberCount, applicationDeadline, openedAt
+          place {
+            name
+          }
+          meetings {
+            startedAt
+          }
+          seasonID
+          clubGroup {
+            description
+          }
+        }
+        eventLists {
+          id
+          name
+          description
+          thumbnailUrl
+          memberCount, maxMemberCount
+          place {
+            name
+          }
+          hostName
+          startedAt
+        }
+      }  
+    }
+  }
+`
+

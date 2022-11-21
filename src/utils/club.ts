@@ -31,6 +31,7 @@ export const STATUS_BADGE: IObject = {
 
 export const clubStatus = (club: Club) => {
   const { memberCount, maxMemberCount, applicationDeadline, openedAt } = club;
+  if (!openedAt) return ''
   const isFullClub = memberCount >= maxMemberCount;
   const sessionClubTypes = ['라이브 세션 클럽', '비디오 세션 클럽', '몰아보기 세션 클럽'];
   const isMostFullClub =

@@ -6,6 +6,8 @@ import {
   GET_CURATION_DISPLAY_ORDERS,
   GET_CURATION_LIST,
   GET_MAIN_POSTS,
+  GET_NEW_CURATION,
+  GET_NEW_CURATIONS,
   GET_WISH_CLUBS,
 } from 'pages/main/services/main.graphql';
 import {
@@ -21,6 +23,7 @@ import {
   QueryWishClubsArgs,
   CreateWishClubPayload, QueryClubsArgs, Club,
 } from 'types/__generate__/user-backend-api';
+import { INewCuration } from './main.types';
 
 export const mainApi = backend.injectEndpoints({
   overrideExisting: true,
@@ -115,6 +118,24 @@ export const mainApi = backend.injectEndpoints({
       }),
       transformResponse: ({ mainPosts }: { mainPosts: Array<Post> }) => mainPosts,
     }),
+    getNewCuration: build.query<INewCuration, {id: string}>({
+      query: ({id}) => ({
+        document: GET_NEW_CURATION,
+        variables: {
+          id
+        }
+      }),
+      transformResponse: ({ curation }: { curation: INewCuration }) => curation,
+    }),
+    getNewCurations: build.query<INewCuration[], {limit: number,offset: number}>({
+      query: ({limit, offset}) => ({
+        document: GET_NEW_CURATIONS,
+        variables: {
+          limit,offset
+        }
+      }),
+      transformResponse: ({ curations }: { curations: INewCuration[] }) => curations,
+    })
   }),
 });
 
@@ -125,6 +146,8 @@ export const {
   useGetScheduledClubsQuery,
   useGetCurationsQuery,
   useGetPostsQuery,
+  useGetNewCurationQuery,
+  useGetNewCurationsQuery
 } = mainApi;
 
 export const {
@@ -137,5 +160,7 @@ export const {
     deleteWishClub,
     getCurationDisplayOrders,
     getCurations,
+    getNewCuration,
+    getNewCurations
   },
 } = mainApi;
