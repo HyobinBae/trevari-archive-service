@@ -60,6 +60,7 @@ const Curations = () => {
       : `calc((100vw - 50px) * ${CURATION_CARD_ASPECT_RATIO} / 2)`;
 
   if (!newCuration) return <LoadingPage />;
+  const cardLength = [...newCuration.lists.clubLists, ...newCuration.lists.eventLists].length;
   return (
     <Box style={{ paddingTop: '64px', minHeight: '100vh', paddingBottom: '67px' }}>
       <CurationInfoBox>
@@ -68,12 +69,7 @@ const Curations = () => {
       </CurationInfoBox>
 
       <Divider style={{ backgroundColor: '#F7F7F5' }} />
-      {newCuration.lists.clubLists.length > 0 && (
-        <GridCardCount>{`총 ${newCuration.lists.clubLists.length}개`}</GridCardCount>
-      )}
-      {newCuration.lists.eventLists.length > 0 && (
-        <GridCardCount>{`총 ${newCuration.lists.eventLists.length}개`}</GridCardCount>
-      )}
+      <GridCardCount>{`총 ${cardLength}개`}</GridCardCount>
       <GridBox>
         {[...newCuration.lists.clubLists, ...newCuration.lists.eventLists].map(item => (
           <>
