@@ -51,4 +51,5 @@ export const clubStatus = (club: Club) => {
   } else if (isNewOpenedClub) {
     return 'NEW';
   }
+  return '';
 };
