@@ -40,6 +40,9 @@ const HeroSlider = () => {
     },
   };
 
+  const onClickFindClubBox = () => {
+    ga.event({ action: '버튼 클릭', category: '메인 페이지', label: '어떤 클럽을 찾으세요?' });
+  };
   if (!banners) return <Loading />;
   return (
     <Base>
@@ -65,9 +68,9 @@ const HeroSlider = () => {
             })}
         </Swiper>
       </GradiantWrap>
-      <GoApplyPageBox href={`${endpoints.user_page_url}/apply`}>
+      <GoApplyPageBox href={`${endpoints.user_page_url}/apply`} onClick={onClickFindClubBox}>
         <div>어떤 클럽을 찾으세요?</div>
-        <RightChevron width={24} height={24} fill={"#FF7900"} />
+        <RightChevron width={24} height={24} fill={'#FF7900'} />
       </GoApplyPageBox>
     </Base>
   );
