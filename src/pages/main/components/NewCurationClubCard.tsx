@@ -28,6 +28,7 @@ import LoveOutlineOpacityApplied from 'components/svgs/LoveOutlineOpacityApplied
 import { goToPage } from 'utils';
 import { endpoints } from 'config';
 import RightChevron from 'components/svgs/RightChevron';
+import { useNavigation } from 'hooks/useNavigation';
 
 interface NewCurationClubCardProps {
   club: IClub;
@@ -120,6 +121,10 @@ const NewCurationClubCard = ({
 
   const onClickClubCard = () => {
     if (!openingReservation) {
+      const { title } = useNavigation();
+      const category = title === '홈' ? '메인 페이지' : '큐레이션 페이지';
+      const clubStatus = isFullClub ? '마감' : badgeText;
+      ga.event({ category, action: `${clubStatus}클럽 카드 클릭`, label: `${name}^${id}` });
       goToPage(`${endpoints.user_page_url}/clubs/show?clubID=${id}`);
     }
   };
