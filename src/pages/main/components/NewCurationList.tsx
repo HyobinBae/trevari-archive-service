@@ -9,6 +9,7 @@ import { selectNewCurations, selectWishClubIds } from '../services/main.store';
 import { getNewCurations, getWishClubs } from '../services/main.api';
 import { INewCuration } from '../services/main.types';
 import { selectAuthenticated, selectUserId } from 'services/auth/auth.store';
+import ga from '../ga';
 
 const NewCurationList = () => {
   const dispatch = useAppDispatch();
@@ -32,7 +33,8 @@ const NewCurationList = () => {
     }
   }, [dispatch, authenticated]);
 
-  const onClickViewAllButton = (id: string) => {
+  const onClickViewAllButton = (id: string, title: string) => {
+    ga.event({ action: '버튼 클릭', category: '메인 페이지', label: `전체보기^${title}` });
     window.location.href = `/curations/${id}`;
   };
 
@@ -47,8 +49,8 @@ const NewCurationList = () => {
           />
           <ButtonWrapper isLast={newCurations.length === index + 1}>
             <Button
-              style={{maxHeight: '44px', minHeight: '44px'}}
-              onClick={() => onClickViewAllButton(curation.id)}
+              style={{ maxHeight: '44px', minHeight: '44px' }}
+              onClick={() => onClickViewAllButton(curation.id, curation.title)}
               size="large"
               fullWidth
               colorVariant="dark"
