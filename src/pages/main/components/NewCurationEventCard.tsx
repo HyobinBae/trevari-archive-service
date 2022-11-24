@@ -27,6 +27,7 @@ interface NewCurationClubCardProps {
 
 const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' }: NewCurationClubCardProps) => {
   const { id, name, description, thumbnailUrl, place, startedAt, hostName, memberCount, maxMemberCount } = event;
+  const { title } = useNavigation();
   const meetingDate = startedAt
     ? format(Date.parse(startedAt), 'M/d(EEE)', {
         locale: ko,
@@ -41,7 +42,6 @@ const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' 
   const badgeText = maxMemberCount && memberCount && maxMemberCount * 0.7 <= memberCount ? '마감 임박' : '';
   const titleMarginTopPx = badgeText ? '6px' : '0px';
   const onClickEventCard = () => {
-    const { title } = useNavigation();
     const category = title === '홈' ? '메인 페이지' : '큐레이션 페이지';
     ga.event({ category, action: `이벤트 카드 클릭`, label: `${name}^${id}` });
     goToPage(`${endpoints.user_page_url}/events/show?eventID=${id}`);

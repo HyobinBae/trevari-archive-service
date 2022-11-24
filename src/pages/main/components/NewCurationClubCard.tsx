@@ -57,6 +57,7 @@ const NewCurationClubCard = ({
     memberCount,
     maxMemberCount,
   } = club;
+  const { title } = useNavigation();
   const desc = description ? description : clubGroup && clubGroup.description;
   const dispatch = useAppDispatch();
   const selectedUserId = useAppSelector(selectUserId);
@@ -121,7 +122,6 @@ const NewCurationClubCard = ({
 
   const onClickClubCard = () => {
     if (!openingReservation) {
-      const { title } = useNavigation();
       const category = title === '홈' ? '메인 페이지' : '큐레이션 페이지';
       const clubStatus = isFullClub ? '마감' : badgeText;
       ga.event({ category, action: `${clubStatus}클럽 카드 클릭`, label: `${name}^${id}` });
