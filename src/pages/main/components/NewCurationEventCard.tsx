@@ -13,7 +13,9 @@ import { Badge } from '@trevari/components';
 import { endpoints } from 'config';
 import { format } from 'date-fns';
 import ko from 'date-fns/locale/ko';
+import { useNavigation } from 'hooks/useNavigation';
 import { goToPage } from 'utils';
+import ga from '../ga';
 
 import { IEvent } from '../services/main.types';
 
@@ -39,6 +41,9 @@ const NewCurationEventCard = ({ event, cardWidth = '152px', imgHeight = '138px' 
   const badgeText = maxMemberCount && memberCount && maxMemberCount * 0.7 <= memberCount ? '마감 임박' : '';
   const titleMarginTopPx = badgeText ? '6px' : '0px';
   const onClickEventCard = () => {
+    const { title } = useNavigation();
+    const category = title === '홈' ? '메인 페이지' : '큐레이션 페이지';
+    ga.event({ category, action: `이벤트 카드 클릭`, label: `${name}^${id}` });
     goToPage(`${endpoints.user_page_url}/events/show?eventID=${id}`);
   };
   return (

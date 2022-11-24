@@ -18,6 +18,8 @@ import NewCurationEventCard from 'pages/main/components/NewCurationEventCard';
 import LoadingPage from 'components/base/LoadingPage';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { CURATION_CARD_ASPECT_RATIO } from 'pages/main/const';
+import { endpoints } from 'config';
+import ga from 'pages/main/ga';
 
 const Curations = () => {
   const { width } = useWindowSize();
@@ -29,7 +31,8 @@ const Curations = () => {
   const userId = useAppSelector(selectUserId);
 
   const onClickShowAllClubsButton = () => {
-    goToPage('https://trevari.co.kr/apply');
+    ga.event({ action: '버튼 클릭', category: '큐레이션 페이지', label: `모든 클럽 보러가기^${newCuration?.title}` });
+    goToPage(`${endpoints.user_page_url}/apply`);
   };
   useEffect(() => {
     dispatch(getNewCuration.initiate({ id: curationId || '' }));
