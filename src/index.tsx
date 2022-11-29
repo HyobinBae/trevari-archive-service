@@ -1,21 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import ReactFbq from 'react-fbq';
 
-import { TrevariThemeProvider } from '@trevari/react-emotion-theme';
-import { init as initApm } from '@elastic/apm-rum';
-import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
+import {TrevariThemeProvider} from '@trevari/react-emotion-theme';
+import {init as initApm} from '@elastic/apm-rum';
+import {persistStore} from 'redux-persist';
+import {PersistGate} from 'redux-persist/integration/react';
 
 import EnhancedRouter from 'router';
 import {store} from 'services/store';
 
 import reportWebVitals from './reportWebVitals';
 import 'styles/index.css';
-import { PIXEL_ID } from 'pages/main/pixel';
-import {getToken} from "./utils/auth";
-import {validateAuth} from "./services/auth/auth.store";
+import {PIXEL_ID} from 'pages/main/pixel';
 import {IS_PRODUCTION} from "./config";
 
 export const persistor = persistStore(store);
