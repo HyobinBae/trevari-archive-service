@@ -31,7 +31,7 @@ const bottomNavs = [
     icon: <LoveOutlinedIcon width={24} height={24} color={'#6E6E6C'} />,
     activeIcon: <LoveFilledIcon width={24} height={24} />,
     label: '찜',
-    to: `${endpoints.user_page_url}/wishList`,
+    to: '/wishList',
   },
   {
     icon: <MyOutlinedIcon width={24} height={24} />,
