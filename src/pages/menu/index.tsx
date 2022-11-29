@@ -100,7 +100,6 @@ const Menu = () => {
       <MenuContainer>
         <Accordion
           title={'클럽'}
-          className={''}
           notiBadge={<NotiBadgeIcon width={8} height={10}/>}
           onClick={showMoreChildrenOnClickAction}
           isShowMoreChildren={isShowMoreChildren}
