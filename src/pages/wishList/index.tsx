@@ -47,7 +47,7 @@ const WishList = () => {
       ? `calc(450px * ${CURATION_CARD_ASPECT_RATIO} / 2)`
       : `calc((100vw - 50px) * ${CURATION_CARD_ASPECT_RATIO} / 2)`;
 
-  if (!wishClubs) return <LoadingPage />;
+  if (!authenticated || !wishClubs) return <LoadingPage />;
   return (
     <Box style={{ paddingTop: '48px', minHeight: '100vh', paddingBottom: '67px' }}>
       <GridCardCount>{`총 ${wishClubs.length}개`}</GridCardCount>
