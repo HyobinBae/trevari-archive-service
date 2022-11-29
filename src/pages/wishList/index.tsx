@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 
 import { body6, heading11 } from '@trevari/typo';
