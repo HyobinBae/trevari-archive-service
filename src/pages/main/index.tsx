@@ -22,7 +22,7 @@ function Main() {
   const userId = useAppSelector(selectUserId);
   const dispatch = useAppDispatch();
 
-  if(validateAuth(getToken().id)){
+  if(validateAuth(getToken())){
     myApm.setUserContext(store.getState().user.user.id)
   }
 
