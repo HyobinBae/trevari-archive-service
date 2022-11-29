@@ -26,7 +26,7 @@ export const persistor = persistStore(store);
     serviceName: 'trevari-web',
     serverUrl: process.env.ELASTIC_APM_SERVER_URL,
     serviceVersion: '',
-    environment: process.env.NODE_ENV,
+    environment: 'hyejin',
   });
   ReactFbq.initialize({ id: PIXEL_ID });
   console.log("===id()"+store.getState().user.user.id)
