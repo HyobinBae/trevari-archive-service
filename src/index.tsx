@@ -14,7 +14,6 @@ import { store } from 'services/store';
 import reportWebVitals from './reportWebVitals';
 import 'styles/index.css';
 import { PIXEL_ID } from 'pages/main/pixel';
-import { IS_PRODUCTION } from 'config';
 import {getToken} from "./utils/auth";
 import {validateAuth} from "./services/auth/auth.store";
 
