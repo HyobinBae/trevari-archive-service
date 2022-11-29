@@ -4,18 +4,12 @@ import { useTheme } from '@emotion/react';
 import { Accordion, Badge } from '@trevari/components';
 
 import Box from 'components/base/Box';
-import {
-  BadgeWrap,
-  ChildDiv,
-  MenuContainer,
-  MenuItem,
-  MenuItemAnchor,
-} from 'pages/menu/menu.styles';
+import { BadgeWrap, ChildDiv, MenuContainer, MenuItem, MenuItemAnchor } from 'pages/menu/menu.styles';
 import { selectHasPartnerMembership } from 'services/user/user.store';
 import { endpoints } from 'config';
 import { goToPage } from 'utils';
 import ga from 'pages/main/ga';
-import { MinusIcon, PlusIcon, NotiBadgeIcon } from '@trevari/icons';
+import { MinusIcon, NotiBadgeIcon, PlusIcon } from '@trevari/icons';
 
 const Menu = () => {
   const {
