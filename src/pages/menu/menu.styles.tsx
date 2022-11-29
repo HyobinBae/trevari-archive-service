@@ -21,7 +21,7 @@ export const MenuItemAnchor = styled.a`
 export const MenuItem = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;    
+  justify-content: flex-start;
   ${heading8};
 `;
 
@@ -30,9 +30,6 @@ export const BadgeWrap = styled.div`
   align-items: center;
   justify-content: flex-start;
   margin-left: 6px;
-`;
-
-export const ChildDivWrapper = styled.div`
 `;
 
 export const ChildDiv = styled.div`

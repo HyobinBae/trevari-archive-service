@@ -6,7 +6,7 @@ import { Accordion, Badge } from '@trevari/components';
 import Box from 'components/base/Box';
 import {
   BadgeWrap,
-  ChildDiv, ChildDivWrapper,
+  ChildDiv,
   MenuContainer,
   MenuItem,
   MenuItemAnchor,
@@ -34,7 +34,7 @@ const Menu = () => {
   };
 
   const accordionChildren =
-    <ChildDivWrapper>
+    <div>
       <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply`)}>
         모든 클럽 보기
       </ChildDiv>
@@ -47,7 +47,7 @@ const Menu = () => {
       <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/onlineclubs`)}>
         클럽장 구독 클럽
       </ChildDiv>
-    </ChildDivWrapper>;
+    </div>;
 
   const menuItems = [
     {
