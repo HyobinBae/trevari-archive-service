@@ -110,15 +110,15 @@ const Menu = () => {
           {accordionChildren}
         </Accordion>
         {menuItems.map(({ title, onClick, badge }) => {
-        return (
-          <MenuItemAnchor key={title} onClick={onClick}>
-            <MenuItem>
-              {title}
-              {badge}
-            </MenuItem>
-          </MenuItemAnchor>
-        );
-      })}
+          return (
+            <MenuItemAnchor key={title} onClick={onClick}>
+              <MenuItem>
+                {title}
+                {badge}
+              </MenuItem>
+            </MenuItemAnchor>
+          );
+        })}
       </MenuContainer>
     </Box>
   );
