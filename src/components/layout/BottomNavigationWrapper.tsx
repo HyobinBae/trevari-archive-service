@@ -4,7 +4,7 @@ import {
   HomeFilledIcon,
   HomeOutlinedIcon,
   LoveFilledIcon,
-  LoveOutlinedIcon,
+  LoveOutlinedIcon, MenuFilledIcon,
   MenuIcon,
   MyFilledIcon,
   MyOutlinedIcon,
@@ -13,7 +13,6 @@ import { BottomNavigation, BottomNavigationItem } from '@trevari/business-compon
 
 import { endpoints } from 'config';
 import ga from 'pages/main/ga';
-import MenuSvgIcon from '../svgs/MenuSvgIcon';
 
 const bottomNavs = [
   {
@@ -24,7 +23,7 @@ const bottomNavs = [
   },
   {
     icon: <MenuIcon width={24} height={24} color={'#6E6E6C'} />,
-    activeIcon: <MenuSvgIcon width={24} height={24} color={'#000'} />,
+    activeIcon: <MenuFilledIcon width={24} height={24} color={'#000'} />,
     label: '메뉴',
     to: '/menu',
   },

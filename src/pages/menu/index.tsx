@@ -17,9 +17,7 @@ import { selectHasPartnerMembership } from 'services/user/user.store';
 import { endpoints } from 'config';
 import { goToPage } from 'utils';
 import ga from 'pages/main/ga';
-import NotiBadge from '../../components/svgs/NotiBadge';
-import Plus from '../../components/svgs/Plus';
-import Minus from '../../components/svgs/Minus';
+import { MinusIcon, PlusIcon, NotiBadgeIcon } from '@trevari/icons';
 
 const Menu = () => {
   const {
@@ -43,12 +41,12 @@ const Menu = () => {
       onClick: () => menuItemClickAction(`${endpoints.user_page_url}/apply`, '모든 클럽 보기'),
       badge:(
         <NotiBadgeDiv>
-          <NotiBadge />
+          <NotiBadgeIcon width={8} height={10}/>
         </NotiBadgeDiv>
       ),
       more: (
         <div onClick={moreOnClickAction}>
-          {isMoreChild ? <Plus /> : <Minus />}
+          {isMoreChild ? <PlusIcon /> : <MinusIcon />}
         </div>
       ),
       moreOnClick: () => menuItemClickAction(`${endpoints.user_page_url}/apply`, '모든 클럽 보기'),
