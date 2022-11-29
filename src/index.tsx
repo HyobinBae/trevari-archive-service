@@ -22,17 +22,14 @@ export const persistor = persistStore(store);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 // if (IS_PRODUCTION) {
-  const myApm = initApm({
+  export const myApm = initApm({
     serviceName: 'trevari-web',
     serverUrl: process.env.ELASTIC_APM_SERVER_URL,
     serviceVersion: '',
     environment: 'hyejin',
   });
   ReactFbq.initialize({ id: PIXEL_ID });
-  console.log("===id()"+store.getState().user.user.id)
-    if(validateAuth(getToken())){
-        myApm.setUserContext(store.getState().user.user.id)
-    }
+
 // }
 
 ReactDOM.render(
