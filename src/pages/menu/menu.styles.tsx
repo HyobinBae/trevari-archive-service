@@ -18,14 +18,6 @@ export const MenuItemAnchor = styled.a`
   }
 `;
 
-export const MenuItemAnchorNotHover = styled.a`
-  display: block;  
-  width: 100%;
-  cursor: pointer;
-  color: black;
-  box-sizing: border-box;
-`;
-
 export const MenuItem = styled.div`
   display: flex;
   align-items: center;
@@ -33,28 +25,11 @@ export const MenuItem = styled.div`
   ${heading8};
 `;
 
-export const MenuItemNotHover = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;  
-  ${heading8};
-  padding: 12px 20px;
-`;
-
-export const MenuItemSub = styled.div`
-  display: flex;
-`;
-
 export const BadgeWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   margin-left: 6px;
-`;
-export const NotiBadgeDiv = styled.div`
-  display: flex;
-  align-self: flex-start;
-  margin-left: 2px;
 `;
 
 export const ChildDivWrapper = styled.div`

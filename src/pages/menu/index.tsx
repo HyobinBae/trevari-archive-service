@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@emotion/react';
-import { Badge } from '@trevari/components';
+import { Accordion, Badge } from '@trevari/components';
 
 import Box from 'components/base/Box';
 import {
@@ -9,9 +9,7 @@ import {
   ChildDiv, ChildDivWrapper,
   MenuContainer,
   MenuItem,
-  MenuItemAnchor, MenuItemAnchorNotHover, MenuItemNotHover,
-  MenuItemSub,
-  NotiBadgeDiv,
+  MenuItemAnchor,
 } from 'pages/menu/menu.styles';
 import { selectHasPartnerMembership } from 'services/user/user.store';
 import { endpoints } from 'config';
@@ -23,7 +21,7 @@ const Menu = () => {
   const {
     colors: { orange900, white },
   } = useTheme();
-  const [isMoreChild, setIsMoreChild] = useState(true);
+  const [isShowMoreChildren, setIsShowMoreChildren] = useState(true);
   const hasPartnerMembership = useSelector(selectHasPartnerMembership);
 
   const menuItemClickAction = (url: string, name: string) => {
@@ -31,42 +29,27 @@ const Menu = () => {
     goToPage(url);
   };
 
-  const moreOnClickAction = () => {
-    setIsMoreChild(!isMoreChild);
+  const showMoreChildrenOnClickAction = () => {
+    setIsShowMoreChildren(!isShowMoreChildren);
   };
 
+  const accordionChildren =
+    <ChildDivWrapper>
+      <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply`)}>
+        모든 클럽 보기
+      </ChildDiv>
+      <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply?typeFilter=%ED%95%A8%EA%BB%98%20%EB%A7%8C%EB%93%9C%EB%8A%94%20%ED%81%B4%EB%9F%BD`)}>
+        함께 만드는 클럽
+      </ChildDiv>
+      <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply?typeFilter=%ED%81%B4%EB%9F%BD%EC%9E%A5%20%EC%9E%88%EB%8A%94%20%ED%81%B4%EB%9F%BD`)}>
+        클럽장 있는 클럽
+      </ChildDiv>
+      <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/onlineclubs`)}>
+        클럽장 구독 클럽
+      </ChildDiv>
+    </ChildDivWrapper>;
+
   const menuItems = [
-    {
-      title: '클럽',
-      onClick: () => menuItemClickAction(`${endpoints.user_page_url}/apply`, '모든 클럽 보기'),
-      badge:(
-        <NotiBadgeDiv>
-          <NotiBadgeIcon width={8} height={10}/>
-        </NotiBadgeDiv>
-      ),
-      more: (
-        <div onClick={moreOnClickAction}>
-          {isMoreChild ? <PlusIcon /> : <MinusIcon />}
-        </div>
-      ),
-      moreOnClick: () => menuItemClickAction(`${endpoints.user_page_url}/apply`, '모든 클럽 보기'),
-      child: (
-        <ChildDivWrapper>
-          <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply`)}>
-            모든 클럽 보기
-          </ChildDiv>
-          <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply?typeFilter=%ED%95%A8%EA%BB%98%20%EB%A7%8C%EB%93%9C%EB%8A%94%20%ED%81%B4%EB%9F%BD`)}>
-            함께 만드는 클럽
-          </ChildDiv>
-          <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply?typeFilter=%ED%81%B4%EB%9F%BD%EC%9E%A5%20%EC%9E%88%EB%8A%94%20%ED%81%B4%EB%9F%BD`)}>
-            클럽장 있는 클럽
-          </ChildDiv>
-          <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/onlineclubs`)}>
-            클럽장 구독 클럽
-          </ChildDiv>
-        </ChildDivWrapper>
-      )
-    },
     {
       title: '커뮤니티 이벤트',
       onClick: () => menuItemClickAction(`${endpoints.user_page_url}/events`, '커뮤니티 이벤트'),
@@ -115,29 +98,27 @@ const Menu = () => {
   return (
     <Box style={{ paddingTop: '48px' }}>
       <MenuContainer>
-        {menuItems.map(({ title, onClick, badge, more, child }) => {
-          return title === '클럽' ? (
-            <MenuItemAnchorNotHover key={title} >
-              <MenuItemNotHover>
-                <MenuItemSub onClick={onClick}>
-                  {title}
-                  {badge}
-                </MenuItemSub>
-                <div>
-                  {more}
-                </div>
-              </MenuItemNotHover>
-              {isMoreChild && child}
-            </MenuItemAnchorNotHover>
-          ) : (
-            <MenuItemAnchor key={title} onClick={onClick}>
-              <MenuItem>
-                {title}
-                {badge}
-              </MenuItem>
-            </MenuItemAnchor>
-          );
-        })}
+        <Accordion
+          title={'클럽'}
+          className={''}
+          notiBadge={<NotiBadgeIcon width={8} height={10}/>}
+          onClick={showMoreChildrenOnClickAction}
+          isShowMoreChildren={isShowMoreChildren}
+          openIcon={<PlusIcon/>}
+          closeIcon={<MinusIcon/>}
+        >
+          {accordionChildren}
+        </Accordion>
+        {menuItems.map(({ title, onClick, badge }) => {
+        return (
+          <MenuItemAnchor key={title} onClick={onClick}>
+            <MenuItem>
+              {title}
+              {badge}
+            </MenuItem>
+          </MenuItemAnchor>
+        );
+      })}
       </MenuContainer>
     </Box>
   );
