@@ -16,21 +16,22 @@ import 'styles/index.css';
 import { PIXEL_ID } from 'pages/main/pixel';
 import {getToken} from "./utils/auth";
 import {validateAuth} from "./services/auth/auth.store";
+import {IS_PRODUCTION} from "./config";
 
 export const persistor = persistStore(store);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-// if (IS_PRODUCTION) {
+if (IS_PRODUCTION) {
   export const myApm = initApm({
     serviceName: 'trevari-web',
     serverUrl: process.env.ELASTIC_APM_SERVER_URL,
     serviceVersion: '',
-    environment: 'hyejin',
+    environment: process.env.NODE_ENV,
   });
   ReactFbq.initialize({ id: PIXEL_ID });
 
-// }
+}
 
 ReactDOM.render(
   <React.StrictMode>
