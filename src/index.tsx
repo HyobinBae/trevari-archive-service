@@ -16,28 +16,25 @@ import 'styles/index.css';
 import { PIXEL_ID } from 'pages/main/pixel';
 import {getToken} from "./utils/auth";
 import {validateAuth} from "./services/auth/auth.store";
+import {IS_PRODUCTION} from "./config";
 
 export const persistor = persistStore(store);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-// if (IS_PRODUCTION) {
+if (IS_PRODUCTION) {
   const myApm = initApm({
     serviceName: 'trevari-web',
     serverUrl: 'https://c0b7c3d540624325a041607b770d97ad.apm.ap-northeast-2.aws.elastic-cloud.com:443',
     serviceVersion: '',
-    environment: 'hyejin',
+    environment: process.env.NODE_ENV,
   });
   ReactFbq.initialize({ id: PIXEL_ID });
-// }
 
-if(validateAuth(getToken())){
-    myApm.setUserContext(getToken())
+    if(validateAuth(getToken())){
+        myApm.setUserContext(getToken())
+    }
 }
-
-myApm.setInitialPageLoadName("start root")
-myApm.startTransaction("test start", "test start");
-
 
 ReactDOM.render(
   <React.StrictMode>
