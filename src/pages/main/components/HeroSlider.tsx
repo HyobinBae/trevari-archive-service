@@ -10,12 +10,12 @@ import { Banner } from 'types/__generate__/user-backend-api';
 import { Base, GradiantWrap, ImgLinkWrap, SwiperImg, GoApplyPageBox } from 'pages/main/styles/main.style';
 import 'pages/main/styles/main.css';
 import ga from 'pages/main/ga';
-import Loading from 'components/base/Loading';
 import { endpoints } from 'config';
 import RightChevron from '../../../components/svgs/RightChevron';
+import { Loading } from '@trevari/components';
 
 const HeroSlider = () => {
-  const { data: banners } = useGetBannersQuery({});
+  const { data: banners, isLoading } = useGetBannersQuery({});
 
   const clickBanner = (title: string) => {
     console.log('!rolling banner title!', title);
@@ -43,7 +43,7 @@ const HeroSlider = () => {
   const onClickFindClubBox = () => {
     ga.event({ action: '버튼 클릭', category: '메인 페이지', label: '어떤 클럽을 찾으세요?' });
   };
-  if (!banners) return <Loading />;
+  if (isLoading) return <Loading variant="banner" />;
   return (
     <Base>
       <GradiantWrap>

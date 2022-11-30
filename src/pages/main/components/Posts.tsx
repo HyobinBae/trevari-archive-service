@@ -17,18 +17,20 @@ import { Post } from 'types/__generate__/user-backend-api';
 import LineArrow from 'components/svgs/LineArrow';
 import { endpoints } from 'config';
 import { Divider } from 'pages/curations/curations.styles';
+import { Loading } from '@trevari/components';
 
 const Posts = () => {
-  const { data: posts } = useGetPostsQuery({ limit: 10, excludeClosedPost: true });
-  const notices = posts?.filter(({ category }) => category === '공지').slice(0, 3) || [];
+  const { data: posts, isLoading } = useGetPostsQuery({ limit: 10, excludeClosedPost: true });
 
+  if (isLoading) return <Loading variant="post" />;
+  const notices = posts?.filter(({ category }) => category === '공지').slice(0, 3) || [];
   return (
     <Base>
       <Divider style={{ height: '10px', backgroundColor: '#F7F7F5' }} />
-      <PostListWrap show={notices?.length > 0}>
+      <PostListWrap show={notices.length > 0}>
         <CurationTitle title="공지사항" more={`${endpoints.user_page_url}/blog?category=공지`} />
         <NoticeListBody>
-          {notices?.map(({ id, title, createdAt, updatedAt }: Post) => (
+          {notices.map(({ id, title, createdAt, updatedAt }: Post) => (
             <Link href={`${endpoints.user_page_url}/blog/show?id=${id}`} key={id}>
               <NoticeItems>
                 <NoticeContents>
