@@ -9,6 +9,8 @@ import { useLocation } from 'react-router-dom';
 
 import { useAppSelector } from 'services/store';
 import { selectToast } from 'services/ui.store';
+import { getNavigationInfoInLocalStorage, setNavigationInfoInLocalStorage } from '../../utils/navigation';
+import { selectNavigationLocation, setNavigationLocation } from '../../services/navigation/navigation.store';
 
 interface IProps {
   hideTopNav?: boolean;
@@ -23,6 +25,36 @@ const Layout = ({ children }: IProps) => {
   const { width } = useWindowSize();
   const [viewMode, setViewMode] = useState<'center' | 'full'>('full');
   const [hideBottomNav, setHideBottomNav] = useState(false);
+  const [initialActiveTab, setInitialActiveTab] = useState('');
+  const navigationLocation = useAppSelector(selectNavigationLocation);
+
+  useEffect(() => {
+    if (typeof pathname !== 'undefined') {
+      setNavigationLocation(pathname);
+      setNavigationInfoInLocalStorage(pathname);
+      const newUrlForRemoveNavigationInfoQuery = location.href.split('?')[0];
+      window.history.pushState({}, document.title, newUrlForRemoveNavigationInfoQuery);
+    } else {
+      setBottomNavigation();
+    }
+  }, []);
+
+const changeNavigationInfo = async (tabFromChild: string) => {
+  setInitialActiveTab(tabFromChild);
+  setNavigationInfoInLocalStorage(tabFromChild);
+  setNavigationLocation(tabFromChild);
+};
+
+const setBottomNavigation = async () => {
+    const navigationInfoInLocalStorage = getNavigationInfoInLocalStorage();
+    if (navigationInfoInLocalStorage === 'null') {
+      setNavigationLocation(pathname);
+      setNavigationInfoInLocalStorage(pathname);
+    } else {
+      setNavigationLocation(navigationInfoInLocalStorage);
+    }
+    setInitialActiveTab(navigationInfoInLocalStorage);
+  };
 
   useEffect(() => {
     if (pathname === '/goods') {
@@ -50,13 +82,15 @@ const Layout = ({ children }: IProps) => {
           <FullWindow>
             <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />
             {children}
-            {!hideBottomNav && <BottomNavigation />}
+            {!hideBottomNav && <BottomNavigation initialActiveTab={initialActiveTab}
+                                                 changeNavigationInfo={() => changeNavigationInfo}/>}
           </FullWindow>
         ) : (
           <CenterWindow>
             <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />
             {children}
-            {!hideBottomNav && <BottomNavigation />}
+            {!hideBottomNav && <BottomNavigation initialActiveTab={initialActiveTab}
+                                                 changeNavigationInfo={() => changeNavigationInfo}/>}
           </CenterWindow>
         )}
       </Body>
