@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@emotion/react';
 import { Accordion, Badge } from '@trevari/components';
@@ -11,10 +11,12 @@ import { goToPage } from 'utils';
 import ga from 'pages/main/ga';
 import { MinusIcon, NotiBadgeIcon, PlusIcon } from '@trevari/icons';
 
+
 const Menu = () => {
   const {
     colors: { orange900, white },
   } = useTheme();
+
   const [isShowMoreChildren, setIsShowMoreChildren] = useState(true);
   const hasPartnerMembership = useSelector(selectHasPartnerMembership);
 
@@ -43,7 +45,7 @@ const Menu = () => {
       </ChildDiv>
     </div>;
 
-  const menuItems = [
+  const menuItems = hasPartnerMembership ? [
     {
       title: '커뮤니티 이벤트',
       onClick: () => menuItemClickAction(`${endpoints.user_page_url}/events`, '커뮤니티 이벤트'),
@@ -61,14 +63,33 @@ const Menu = () => {
       ),
     },
     {
-      title: hasPartnerMembership ? '파트너 어드민' : '파트너 지원하기',
+      title: '파트너 어드민',
       onClick: () =>
         menuItemClickAction(
-          hasPartnerMembership
-            ? 'https://partners.trevari.co.kr/'
-            : 'https://trevari.co.kr/blog/show?id=40ef561e-9b31-4a40-882b-02c83cc194c4',
-          hasPartnerMembership ? '파트너 어드민' : '파트너 지원하기',
+          'https://partners.trevari.co.kr/',
+          '파트너 어드민',
         ),
+      badge: null,
+    },
+    {
+      title: '굿즈',
+      onClick: () => menuItemClickAction('/goods', '슈퍼마켙'),
+      badge: null,
+    },
+    {
+      title: '매거진',
+      onClick: () => menuItemClickAction(`${endpoints.user_page_url}/blog`, '블로그'),
+      badge: null,
+    },
+  ] : [
+    {
+      title: '커뮤니티 이벤트',
+      onClick: () => menuItemClickAction(`${endpoints.user_page_url}/events`, '커뮤니티 이벤트'),
+      badge: null,
+    },
+    {
+      title: '다른 클럽 놀러가기',
+      onClick: () => menuItemClickAction(`${endpoints.user_page_url}/meetings`, '다른 클럽 놀러가기'),
       badge: (
         <BadgeWrap>
           <Badge variant="filled" size="small" backgroundColor={orange900} color={white}>
