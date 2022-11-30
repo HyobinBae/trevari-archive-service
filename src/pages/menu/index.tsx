@@ -21,7 +21,8 @@ const Menu = () => {
 
   const menuItemClickAction = (url: string, name: string) => {
     ga.event({ category: '메뉴 페이지', action: '버튼 클릭', label: name });
-    goToPage(url);
+    goToPage(`${url}?navigationInfo=/menu`);
+
   };
 
   const showMoreChildrenOnClickAction = () => {
@@ -30,16 +31,16 @@ const Menu = () => {
 
   const accordionChildren =
     <div>
-      <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply`)}>
+      <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply?navigationInfo=/menu`)}>
         모든 클럽 보기
       </ChildDiv>
-      <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply?typeFilter=%ED%95%A8%EA%BB%98%20%EB%A7%8C%EB%93%9C%EB%8A%94%20%ED%81%B4%EB%9F%BD`)}>
+      <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply?typeFilter=%ED%95%A8%EA%BB%98%20%EB%A7%8C%EB%93%9C%EB%8A%94%20%ED%81%B4%EB%9F%BD&navigationInfo=/menu`)}>
         함께 만드는 클럽
       </ChildDiv>
-      <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply?typeFilter=%ED%81%B4%EB%9F%BD%EC%9E%A5%20%EC%9E%88%EB%8A%94%20%ED%81%B4%EB%9F%BD`)}>
+      <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply?typeFilter=%ED%81%B4%EB%9F%BD%EC%9E%A5%20%EC%9E%88%EB%8A%94%20%ED%81%B4%EB%9F%BD&navigationInfo=/menu`)}>
         클럽장 있는 클럽
       </ChildDiv>
-      <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/onlineclubs`)}>
+      <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/onlineclubs?navigationInfo=/menu`)}>
         클럽장 구독 클럽
       </ChildDiv>
     </div>;
