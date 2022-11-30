@@ -26,7 +26,6 @@ const Layout = ({ children }: IProps) => {
   const [viewMode, setViewMode] = useState<'center' | 'full'>('full');
   const [hideBottomNav, setHideBottomNav] = useState(false);
   const [initialActiveTab, setInitialActiveTab] = useState('');
-  const navigationLocation = useAppSelector(selectNavigationLocation);
 
   useEffect(() => {
     if (typeof pathname !== 'undefined') {

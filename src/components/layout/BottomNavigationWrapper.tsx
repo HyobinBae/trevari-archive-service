@@ -14,9 +14,7 @@ import { BottomNavigation, BottomNavigationItem } from '@trevari/business-compon
 
 import { endpoints } from 'config';
 import ga from 'pages/main/ga';
-import { useAppSelector } from '../../services/store';
-import { selectNavigationLocation } from '../../services/navigation/navigation.store';
-import { getNavigationInfoInLocalStorage, setNavigationInfoInLocalStorage } from '../../utils/navigation';
+import { getNavigationInfoInLocalStorage } from '../../utils/navigation';
 
 const bottomNavs = [
   {
