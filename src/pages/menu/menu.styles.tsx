@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { heading8 } from '@trevari/typo';
+import { body4, heading8 } from '@trevari/typo';
 
 export const MenuContainer = styled.div`
   height: 100vh;
@@ -17,15 +17,26 @@ export const MenuItemAnchor = styled.a`
     background: ${({theme}) => theme.colors.gray200}
   }
 `;
+
 export const MenuItem = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;  
+  justify-content: flex-start;
   ${heading8};
 `;
+
 export const BadgeWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   margin-left: 6px;
+`;
+
+export const ChildDiv = styled.div`
+  :hover, :visited {
+    background: ${({theme}) => theme.colors.gray200}
+  };
+  padding: 12px 20px;
+  ${body4};
+  color: ${({theme}) => theme.colors.gray700};
 `;

@@ -4,7 +4,7 @@ import {
   HomeFilledIcon,
   HomeOutlinedIcon,
   LoveFilledIcon,
-  LoveOutlinedIcon,
+  LoveOutlinedIcon, MenuFilledIcon,
   MenuIcon,
   MyFilledIcon,
   MyOutlinedIcon,
@@ -23,7 +23,7 @@ const bottomNavs = [
   },
   {
     icon: <MenuIcon width={24} height={24} color={'#6E6E6C'} />,
-    activeIcon: <MenuIcon width={24} height={24} color={'#000'} />,
+    activeIcon: <MenuFilledIcon width={24} height={24} color={'#000'} />,
     label: '메뉴',
     to: '/menu',
   },
