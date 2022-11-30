@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   HomeFilledIcon,
   HomeOutlinedIcon,
   LoveFilledIcon,
-  LoveOutlinedIcon, MenuFilledIcon,
+  LoveOutlinedIcon,
+  MenuFilledIcon,
   MenuIcon,
   MyFilledIcon,
   MyOutlinedIcon,
@@ -13,6 +14,9 @@ import { BottomNavigation, BottomNavigationItem } from '@trevari/business-compon
 
 import { endpoints } from 'config';
 import ga from 'pages/main/ga';
+import { useAppSelector } from '../../services/store';
+import { selectNavigationLocation } from '../../services/navigation/navigation.store';
+import { getNavigationInfoInLocalStorage, setNavigationInfoInLocalStorage } from '../../utils/navigation';
 
 const bottomNavs = [
   {
@@ -41,9 +45,29 @@ const bottomNavs = [
   },
 ];
 
-const BottomNavigationWrapper = () => {
+interface IProps {
+  initialActiveTab: null | string;
+  changeNavigationInfo: () => void;
+}
+
+const BottomNavigationWrapper = ({initialActiveTab,
+                                 changeNavigationInfo}: IProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [isActive, setIsActive] = useState('');
+
+  useEffect(() => {
+    const myReferrer = document.referrer;
+    if (myReferrer.length === 0) {
+      changeNavigationInfo(pathname);
+    }
+  }, []);
+
+  useEffect(() => {
+    const navigationInfoInLocalStorage = getNavigationInfoInLocalStorage();
+    setIsActive(navigationInfoInLocalStorage);
+  }, [initialActiveTab]);
+
 
   const handleRedirect = (to: string, name: string) => {
     const gaCategory = pathname === '/' ? '메인 페이지' : pathname === '/menu' ? '메뉴 페이지' : '';
@@ -58,7 +82,7 @@ const BottomNavigationWrapper = () => {
     <BottomNavigation>
       {bottomNavs.map(bottomItem => {
         const { icon, activeIcon, label, to } = bottomItem;
-        const isActive = pathname === to;
+        const isActiveItem = isActive === to;
         return (
           <BottomNavigationItem
             key={label}
@@ -66,7 +90,7 @@ const BottomNavigationWrapper = () => {
             activeIcon={activeIcon}
             label={label}
             onClick={() => handleRedirect(to, label)}
-            isActive={isActive}
+            isActive={isActiveItem}
           />
         );
       })}

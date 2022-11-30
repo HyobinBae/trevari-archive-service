@@ -11,6 +11,7 @@ import main from 'pages/main/services/main.store';
 import auth from 'services/auth/auth.store';
 import user from 'services/user/user.store';
 import ui from 'services/ui.store';
+import navigation from 'services/navigation/navigation.store';
 
 const persistConfig = {
   key: 'root',
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   auth,
   user,
   ui,
+  navigation
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
