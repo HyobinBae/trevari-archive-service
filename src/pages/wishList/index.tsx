@@ -25,7 +25,7 @@ const WishList = () => {
   const isGuest = userId === 'guest';
   useEffect(() => {
     if (isGuest) {
-      goToPage(endpoints.user_login_page_url);
+      goToPage(`${endpoints.user_login_page_url}/?redirectionUrl=/wishList`);
       return;
     }
     if (authenticated) {
