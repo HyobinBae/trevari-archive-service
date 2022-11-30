@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@emotion/react';
 import { Accordion, Badge } from '@trevari/components';
@@ -10,7 +10,6 @@ import { endpoints } from 'config';
 import { goToPage } from 'utils';
 import ga from 'pages/main/ga';
 import { MinusIcon, NotiBadgeIcon, PlusIcon } from '@trevari/icons';
-
 
 const Menu = () => {
   const {
