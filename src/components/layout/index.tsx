@@ -10,7 +10,7 @@ import { useLocation } from 'react-router-dom';
 import { useAppSelector } from 'services/store';
 import { selectToast } from 'services/ui.store';
 import { getNavigationInfoInLocalStorage, setNavigationInfoInLocalStorage } from '../../utils/navigation';
-import { selectNavigationLocation, setNavigationLocation } from '../../services/navigation/navigation.store';
+import { setNavigationLocation } from '../../services/navigation/navigation.store';
 
 interface IProps {
   hideTopNav?: boolean;
