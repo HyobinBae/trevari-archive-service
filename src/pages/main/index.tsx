@@ -12,6 +12,16 @@ import { useMobileDetect } from 'hooks/useDetectMobile';
 import NewCurationList from 'pages/main/components/NewCurationList';
 import {getToken} from "../../utils/auth";
 import {myApm} from "../../index";
+import {isNil} from "lodash";
+
+function getUserId() {
+  try {
+    return store.getState().user.user.id ?? '';
+  }
+  catch (e) {
+    return '';
+  }
+}
 
 function Main() {
   const [isOpenPopup, setIsOpenPopup] = useState(false);
@@ -23,7 +33,7 @@ function Main() {
   const dispatch = useAppDispatch();
 
   if(validateAuth(getToken())){
-    myApm.setUserContext(store.getState().user.user.id)
+      myApm.setUserContext({id:getUserId()})
   }
 
   useEffect(() => {
