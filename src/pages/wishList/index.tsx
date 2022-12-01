@@ -12,7 +12,6 @@ import EmptyEmoji from 'components/svgs/EmptyEmoji';
 import NewCurationClubCard from 'pages/main/components/NewCurationClubCard';
 import { CURATION_CARD_ASPECT_RATIO } from 'pages/main/const';
 import { getWishClubs, useGetWishClubsQuery } from 'pages/main/services/main.api';
-import { selectWishClubs } from 'pages/main/services/main.store';
 import { Loading } from '@trevari/components';
 
 const WishList = () => {
