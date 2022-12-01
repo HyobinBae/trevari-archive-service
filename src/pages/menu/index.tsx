@@ -118,8 +118,8 @@ const Menu = () => {
           notiBadge={<NotiBadgeIcon width={8} height={10}/>}
           onClick={showMoreChildrenOnClickAction}
           isShowMoreChildren={isShowMoreChildren}
-          openIcon={<PlusIcon/>}
-          closeIcon={<MinusIcon/>}
+          openIcon={<MinusIcon/>}
+          closeIcon={<PlusIcon/>}
         >
           {accordionChildren}
         </Accordion>
