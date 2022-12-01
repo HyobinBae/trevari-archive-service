@@ -82,14 +82,14 @@ const setBottomNavigation = async () => {
             <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />
             {children}
             {!hideBottomNav && <BottomNavigation initialActiveTab={initialActiveTab}
-                                                 changeNavigationInfo={() => changeNavigationInfo}/>}
+                                                 changeNavigationInfo={changeNavigationInfo}/>}
           </FullWindow>
         ) : (
           <CenterWindow>
             <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />
             {children}
             {!hideBottomNav && <BottomNavigation initialActiveTab={initialActiveTab}
-                                                 changeNavigationInfo={() => changeNavigationInfo}/>}
+                                                 changeNavigationInfo={changeNavigationInfo}/>}
           </CenterWindow>
         )}
       </Body>

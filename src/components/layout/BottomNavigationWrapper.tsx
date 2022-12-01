@@ -45,7 +45,7 @@ const bottomNavs = [
 
 interface IProps {
   initialActiveTab: null | string;
-  changeNavigationInfo: () => void;
+  changeNavigationInfo: (to: string) => void;
 }
 
 const BottomNavigationWrapper = ({initialActiveTab,
@@ -68,6 +68,7 @@ const BottomNavigationWrapper = ({initialActiveTab,
 
 
   const handleRedirect = (to: string, name: string) => {
+    changeNavigationInfo(to);
     const gaCategory = pathname === '/' ? '메인 페이지' : pathname === '/menu' ? '메뉴 페이지' : '';
     if (to === '/menu') {
       navigate('/menu');
