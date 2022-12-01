@@ -3,7 +3,7 @@ import { body4, heading8 } from '@trevari/typo';
 
 export const MenuContainer = styled.div`
   height: 100vh;
-  padding: 72px 0 0 0;
+  padding: 40px 0 0 0;
   box-sizing: border-box;
 `;
 export const MenuItemAnchor = styled.a`
@@ -32,9 +32,13 @@ export const BadgeWrap = styled.div`
   margin-left: 6px;
 `;
 
+export const ChildDivWrapper = styled.div`
+  background: ${({theme}) => theme.colors.gray100}
+`;
+
 export const ChildDiv = styled.div`
-  :hover, :visited {
-    background: ${({theme}) => theme.colors.gray200}
+  :hover, :visited, :active {
+    background: ${({theme}) => theme.colors.gray300}
   };
   padding: 12px 20px;
   ${body4};

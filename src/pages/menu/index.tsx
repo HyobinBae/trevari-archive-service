@@ -4,7 +4,7 @@ import { useTheme } from '@emotion/react';
 import { Accordion, Badge } from '@trevari/components';
 
 import Box from 'components/base/Box';
-import { BadgeWrap, ChildDiv, MenuContainer, MenuItem, MenuItemAnchor } from 'pages/menu/menu.styles';
+import { BadgeWrap, ChildDiv, ChildDivWrapper, MenuContainer, MenuItem, MenuItemAnchor } from 'pages/menu/menu.styles';
 import { selectHasPartnerMembership } from 'services/user/user.store';
 import { endpoints } from 'config';
 import { goToPage } from 'utils';
@@ -21,8 +21,7 @@ const Menu = () => {
 
   const menuItemClickAction = (url: string, name: string) => {
     ga.event({ category: '메뉴 페이지', action: '버튼 클릭', label: name });
-    goToPage(`${url}?navigationInfo=/menu`);
-
+    url === '/goods' ? goToPage(url) : goToPage(`${url}?navigationInfo=/menu`);
   };
 
   const showMoreChildrenOnClickAction = () => {
@@ -30,7 +29,7 @@ const Menu = () => {
   };
 
   const accordionChildren =
-    <div>
+    <ChildDivWrapper>
       <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/apply?navigationInfo=/menu`)}>
         모든 클럽 보기
       </ChildDiv>
@@ -43,7 +42,7 @@ const Menu = () => {
       <ChildDiv onClick={() => goToPage(`${endpoints.user_page_url}/onlineclubs?navigationInfo=/menu`)}>
         클럽장 구독 클럽
       </ChildDiv>
-    </div>;
+    </ChildDivWrapper>;
 
   const menuItems = hasPartnerMembership ? [
     {
