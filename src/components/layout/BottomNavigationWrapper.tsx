@@ -6,7 +6,7 @@ import {
   LoveFilledIcon,
   LoveOutlinedIcon,
   MenuFilledIcon,
-  MenuIcon,
+  MenuOutlinedIcon,
   MyFilledIcon,
   MyOutlinedIcon,
 } from '@trevari/icons';
@@ -24,7 +24,7 @@ const bottomNavs = [
     to: '/',
   },
   {
-    icon: <MenuIcon width={24} height={24} color={'#6E6E6C'} />,
+    icon: <MenuOutlinedIcon width={24} height={24} color={'#6E6E6C'} />,
     activeIcon: <MenuFilledIcon width={24} height={24} color={'#000'} />,
     label: '메뉴',
     to: '/menu',
