@@ -76,13 +76,13 @@ const WishList = () => {
 const GridCardCount = styled.span`
   ${body6};
   display: block;
-  margin-top: 31px;
+  margin-top: 24px;
   padding-left: 20px;
   color: ${({ theme }) => theme.colors.gray600};
 `;
 const GridBox = styled.div`
   display: grid;
-  margin: 12px 0 40px;
+  margin: 12px 0 80px;
   padding: 0 20px;
   column-gap: 9px;
   row-gap: 24px;
