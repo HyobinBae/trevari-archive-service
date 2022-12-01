@@ -1,5 +1,8 @@
 import styled from '@emotion/styled';
 import { body4, heading8 } from '@trevari/typo';
+import { useMobileDetect } from '../../hooks/useDetectMobile';
+
+const mobileDetect = useMobileDetect();
 
 export const MenuContainer = styled.div`
   height: 100vh;
@@ -14,6 +17,9 @@ export const MenuItemAnchor = styled.a`
   color: black;
   box-sizing: border-box;
   :hover, :visited {
+    background: ${({theme}) => mobileDetect.isMobile() ? 'initial' : theme.colors.gray200}
+  }
+  :active {
     background: ${({theme}) => theme.colors.gray200}
   }
 `;
@@ -37,9 +43,12 @@ export const ChildDivWrapper = styled.div`
 `;
 
 export const ChildDiv = styled.div`
-  :hover, :visited, :active {
-    background: ${({theme}) => theme.colors.gray300}
+ :hover, :visited  {
+    background: ${({theme}) => mobileDetect.isMobile() ? 'initial' : theme.colors.gray300}
   };
+ :active {
+    background: ${({theme}) => mobileDetect.isIos() ? 'initial' : theme.colors.gray300}
+  }
   padding: 12px 20px;
   ${body4};
   color: ${({theme}) => theme.colors.gray700};
