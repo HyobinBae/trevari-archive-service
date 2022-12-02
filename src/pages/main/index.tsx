@@ -4,21 +4,19 @@ import ReactFbq from 'react-fbq';
 import HeroSlider from 'pages/main/components/HeroSlider';
 import Posts from 'pages/main/components/Posts';
 import FooterComp from 'components/layout/Footer';
-import {store, useAppDispatch, useAppSelector} from 'services/store';
-import {selectUserId, validateAuth} from 'services/auth/auth.store';
+import { store, useAppDispatch, useAppSelector } from 'services/store';
+import { selectUserId, validateAuth } from 'services/auth/auth.store';
 import { pageView } from 'services/analytics/analytics.store';
 import AppDownloadPopup from 'pages/main/components/AppDownloadPopup';
 import { useMobileDetect } from 'hooks/useDetectMobile';
 import NewCurationList from 'pages/main/components/NewCurationList';
-import {getToken} from "../../utils/auth";
-import {myApm} from "../../index";
-import {isNil} from "lodash";
+import { getToken } from '../../utils/auth';
+import { myApm } from '../../index';
 
 function getUserId() {
   try {
     return store.getState().user.user.id ?? '';
-  }
-  catch (e) {
+  } catch (e) {
     return '';
   }
 }
@@ -32,8 +30,8 @@ function Main() {
   const userId = useAppSelector(selectUserId);
   const dispatch = useAppDispatch();
 
-  if(validateAuth(getToken())){
-      myApm.setUserContext({id:getUserId()})
+  if (validateAuth(getToken())) {
+    myApm.setUserContext({ id: getUserId() });
   }
 
   useEffect(() => {
