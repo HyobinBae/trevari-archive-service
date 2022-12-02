@@ -47,7 +47,7 @@ export const ChildDiv = styled.div`
     background: ${({theme}) => mobileDetect.isMobile() ? 'initial' : theme.colors.gray300}
   };
  :active {
-    background: ${({theme}) => mobileDetect.isIos() ? 'initial' : theme.colors.gray300}
+    background: ${({theme}) => theme.colors.gray300}
   }
   padding: 12px 20px;
   ${body4};
