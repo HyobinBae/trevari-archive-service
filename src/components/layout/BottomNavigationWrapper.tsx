@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   HomeFilledIcon,
   HomeOutlinedIcon,
   LoveFilledIcon,
   LoveOutlinedIcon,
-  MenuIcon,
+  MenuFilledIcon,
+  MenuOutlinedIcon,
   MyFilledIcon,
   MyOutlinedIcon,
 } from '@trevari/icons';
@@ -13,6 +14,7 @@ import { BottomNavigation, BottomNavigationItem } from '@trevari/business-compon
 
 import { endpoints } from 'config';
 import ga from 'pages/main/ga';
+import { getNavigationInfoInLocalStorage } from '../../utils/navigation';
 
 const bottomNavs = [
   {
@@ -22,8 +24,8 @@ const bottomNavs = [
     to: '/',
   },
   {
-    icon: <MenuIcon width={24} height={24} color={'#6E6E6C'} />,
-    activeIcon: <MenuIcon width={24} height={24} color={'#000'} />,
+    icon: <MenuOutlinedIcon width={24} height={24} color={'#6E6E6C'} />,
+    activeIcon: <MenuFilledIcon width={24} height={24} color={'#000'} />,
     label: '메뉴',
     to: '/menu',
   },
@@ -31,7 +33,7 @@ const bottomNavs = [
     icon: <LoveOutlinedIcon width={24} height={24} color={'#6E6E6C'} />,
     activeIcon: <LoveFilledIcon width={24} height={24} />,
     label: '찜',
-    to: `${endpoints.user_page_url}/wishList`,
+    to: '/wishList',
   },
   {
     icon: <MyOutlinedIcon width={24} height={24} />,
@@ -41,11 +43,32 @@ const bottomNavs = [
   },
 ];
 
-const BottomNavigationWrapper = () => {
+interface IProps {
+  initialActiveTab: null | string;
+  changeNavigationInfo: (to: string) => void;
+}
+
+const BottomNavigationWrapper = ({initialActiveTab,
+                                 changeNavigationInfo}: IProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [isActive, setIsActive] = useState('');
+
+  useEffect(() => {
+    const myReferrer = document.referrer;
+    if (myReferrer.length === 0) {
+      changeNavigationInfo(pathname);
+    }
+  }, []);
+
+  useEffect(() => {
+    const navigationInfoInLocalStorage = getNavigationInfoInLocalStorage();
+    setIsActive(navigationInfoInLocalStorage);
+  }, [initialActiveTab]);
+
 
   const handleRedirect = (to: string, name: string) => {
+    changeNavigationInfo(to);
     const gaCategory = pathname === '/' ? '메인 페이지' : pathname === '/menu' ? '메뉴 페이지' : '';
     if (to === '/menu') {
       navigate('/menu');
@@ -58,7 +81,7 @@ const BottomNavigationWrapper = () => {
     <BottomNavigation>
       {bottomNavs.map(bottomItem => {
         const { icon, activeIcon, label, to } = bottomItem;
-        const isActive = pathname === to;
+        const isActiveItem = isActive === to;
         return (
           <BottomNavigationItem
             key={label}
@@ -66,7 +89,7 @@ const BottomNavigationWrapper = () => {
             activeIcon={activeIcon}
             label={label}
             onClick={() => handleRedirect(to, label)}
-            isActive={isActive}
+            isActive={isActiveItem}
           />
         );
       })}

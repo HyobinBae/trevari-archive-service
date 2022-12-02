@@ -35,6 +35,7 @@ interface NewCurationClubCardProps {
   isWishClub: boolean;
   cardWidth?: string;
   imgHeight?: string;
+  wishClubRefetch?: (() => void) | null;
 }
 
 const NewCurationClubCard = ({
@@ -42,6 +43,7 @@ const NewCurationClubCard = ({
   isWishClub,
   cardWidth = '152px',
   imgHeight = '138px',
+  wishClubRefetch = null,
 }: NewCurationClubCardProps) => {
   const {
     id,
@@ -66,11 +68,11 @@ const NewCurationClubCard = ({
   const isFullClub = memberCount >= maxMemberCount;
   const openingReservation = isBefore(new Date(), Date.parse(openedAt as string));
 
-  const handleClickBookmark = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleClickBookmark = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
     dispatch(confirmAuth());
     if (isWishClub) {
-      dispatch(deleteWishClub.initiate({ clubID: id, userID: selectedUserId }));
+      await dispatch(deleteWishClub.initiate({ clubID: id, userID: selectedUserId }));
     } else {
       dispatch(
         createWishClub.initiate({
@@ -106,6 +108,9 @@ const NewCurationClubCard = ({
           setAgreedToReceiveMarketingInfo(true);
         }
       }
+    }
+    if (wishClubRefetch) {
+      wishClubRefetch();
     }
   };
 
