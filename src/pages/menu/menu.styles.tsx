@@ -5,7 +5,7 @@ import { useMobileDetect } from '../../hooks/useDetectMobile';
 const mobileDetect = useMobileDetect();
 
 export const MenuContainer = styled.div`
-  height: 100vh;
+  height: ${() => mobileDetect.isApp() ? 'initial' : '100vh'};
   padding: 40px 0 0 0;
   box-sizing: border-box;
 `;
@@ -17,10 +17,10 @@ export const MenuItemAnchor = styled.a`
   color: black;
   box-sizing: border-box;
   :hover, :visited {
-    background: ${({theme}) => mobileDetect.isMobile() ? 'initial' : theme.colors.gray200}
+    background: ${({theme}) => mobileDetect.isMobile() ? 'initial' : theme.colors.gray200};
   }
   :active {
-    background: ${({theme}) => theme.colors.gray200}
+    background: ${({theme}) => theme.colors.gray200};
   }
 `;
 
