@@ -13,15 +13,12 @@ import NewCurationClubCard from 'pages/main/components/NewCurationClubCard';
 import { CURATION_CARD_ASPECT_RATIO } from 'pages/main/const';
 import { getWishClubs, useGetWishClubsQuery } from 'pages/main/services/main.api';
 import { Loading } from '@trevari/components';
-import { selectWishClubs } from '../main/services/main.store';
-import { WishClub } from '../../types/__generate__/user-backend-api';
 
 const WishList = () => {
   const { width } = useWindowSize();
   const dispatch = useAppDispatch();
   const authenticated = useAppSelector(selectAuthenticated);
   const userId = useAppSelector(selectUserId);
-  const wishClubList: Array<WishClub> | null = useAppSelector(selectWishClubs);
   const { data: wishClubs, isLoading } = useGetWishClubsQuery({
     where: {
       userID: userId,
@@ -64,13 +61,14 @@ const WishList = () => {
         <Loading flicker variant="gridCardList" />
       </LoadingContainer>
     );
-  const cardLength = wishClubList ? wishClubList.length : 0;
+  const cardLength = wishClubs ? wishClubs.length : 0;
+
   return (
     <Box style={{ paddingTop: '48px', minHeight: '100vh', paddingBottom: '67px' }}>
       <GridCardCount>{`총 ${cardLength}개`}</GridCardCount>
-      {wishClubList && wishClubList?.length > 0 ? (
+      {wishClubs && wishClubs?.length > 0 ? (
         <GridBox>
-          {wishClubList?.map(item => (
+          {wishClubs?.map(item => (
             <NewCurationClubCard
               isWishClub={true}
               cardWidth="100%"
