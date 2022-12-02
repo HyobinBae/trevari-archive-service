@@ -109,7 +109,7 @@ const EmptyDescription = styled.p`
   ${heading11};
   margin-top: 30px;
 `;
-const LoadingContainer = styled.div`
+export const LoadingContainer = styled.div`
   padding: 110px 20px;
 `;
 export default WishList;

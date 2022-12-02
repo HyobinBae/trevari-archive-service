@@ -12,7 +12,7 @@ import { CurationInfoBox, CurationTitle, CurationBody, Divider } from 'pages/cur
 import Box from 'components/base/Box';
 import NewCurationClubCard from 'pages/main/components/NewCurationClubCard';
 import { body6 } from '@trevari/typo';
-import { Button } from '@trevari/components';
+import { Button, Loading } from '@trevari/components';
 import { goToPage } from 'utils';
 import NewCurationEventCard from 'pages/main/components/NewCurationEventCard';
 import LoadingPage from 'components/base/LoadingPage';
@@ -20,6 +20,7 @@ import { useWindowSize } from 'hooks/useWindowSize';
 import { CURATION_CARD_ASPECT_RATIO } from 'pages/main/const';
 import { endpoints } from 'config';
 import ga from 'pages/main/ga';
+import { LoadingContainer } from 'pages/wishList';
 
 const Curations = () => {
   const { width } = useWindowSize();
@@ -62,7 +63,12 @@ const Curations = () => {
       ? `calc(450px * ${CURATION_CARD_ASPECT_RATIO} / 2)`
       : `calc((100vw - 50px) * ${CURATION_CARD_ASPECT_RATIO} / 2)`;
 
-  if (!newCuration) return <LoadingPage />;
+  if (!newCuration)
+    return (
+      <LoadingContainer>
+        <Loading variant="gridCardList" flicker />;
+      </LoadingContainer>
+    );
   const cardLength = [...newCuration.lists.clubLists, ...newCuration.lists.eventLists].length;
   return (
     <Box style={{ paddingTop: '64px', minHeight: '100vh', paddingBottom: '67px' }}>
