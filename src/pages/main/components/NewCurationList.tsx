@@ -39,13 +39,13 @@ const NewCurationList = () => {
   if (isLoading)
     return (
       <>
-        <Loading variant="curation" />
+        <Loading flicker variant="curation" />
         <ListContainer>
-          <Loading variant="flexCardList" />
+          <Loading flicker variant="flexCardList" />
         </ListContainer>
-        <Loading variant="curation" />
+        <Loading flicker variant="curation" />
         <ListContainer>
-          <Loading variant="flexCardList" />
+          <Loading flicker variant="flexCardList" />
         </ListContainer>
       </>
     );

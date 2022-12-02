@@ -43,7 +43,7 @@ const HeroSlider = () => {
   const onClickFindClubBox = () => {
     ga.event({ action: '버튼 클릭', category: '메인 페이지', label: '어떤 클럽을 찾으세요?' });
   };
-  if (isLoading) return <Loading variant="banner" />;
+  if (isLoading) return <Loading flicker variant="banner" />;
   return (
     <Base>
       <GradiantWrap>

@@ -22,7 +22,7 @@ import { Loading } from '@trevari/components';
 const Posts = () => {
   const { data: posts, isLoading } = useGetPostsQuery({ limit: 10, excludeClosedPost: true });
 
-  if (isLoading) return <Loading variant="post" />;
+  if (isLoading) return <Loading flicker variant="post" />;
   const notices = posts?.filter(({ category }) => category === '공지').slice(0, 3) || [];
   return (
     <Base>

@@ -56,7 +56,7 @@ const WishList = () => {
   if (!authenticated || isLoading)
     return (
       <LoadingContainer>
-        <Loading variant="gridCardList" />;
+        <Loading flicker variant="gridCardList" />;
       </LoadingContainer>
     );
   return (

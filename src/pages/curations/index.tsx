@@ -15,7 +15,6 @@ import { body6 } from '@trevari/typo';
 import { Button, Loading } from '@trevari/components';
 import { goToPage } from 'utils';
 import NewCurationEventCard from 'pages/main/components/NewCurationEventCard';
-import LoadingPage from 'components/base/LoadingPage';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { CURATION_CARD_ASPECT_RATIO } from 'pages/main/const';
 import { endpoints } from 'config';
