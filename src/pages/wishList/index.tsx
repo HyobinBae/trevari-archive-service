@@ -56,12 +56,13 @@ const WishList = () => {
   if (!authenticated || isLoading)
     return (
       <LoadingContainer>
-        <Loading flicker variant="gridCardList" />;
+        <Loading flicker variant="gridCardList" />
       </LoadingContainer>
     );
+  const cardLength = wishClubs ? wishClubs.length : 0;
   return (
     <Box style={{ paddingTop: '48px', minHeight: '100vh', paddingBottom: '67px' }}>
-      <GridCardCount>{`총 ${wishClubs?.length}개`}</GridCardCount>
+      <GridCardCount>{`총 ${cardLength}개`}</GridCardCount>
       {wishClubs && wishClubs?.length > 0 ? (
         <GridBox>
           {wishClubs?.map(item => (
