@@ -18,10 +18,10 @@ export const MenuItemAnchor = styled.a`
   box-sizing: border-box;
   :hover, :visited {
     background: ${({theme}) => mobileDetect.isMobile() ? 'initial' : theme.colors.gray200};
-  }
+  };
   :active {
     background: ${({theme}) => theme.colors.gray200};
-  }
+  };
 `;
 
 export const MenuItem = styled.div`
@@ -44,11 +44,11 @@ export const ChildDivWrapper = styled.div`
 
 export const ChildDiv = styled.div`
  :hover, :visited  {
-    background: ${({theme}) => mobileDetect.isMobile() ? 'initial' : theme.colors.gray300}
+    background: ${({theme}) => mobileDetect.isMobile() ? 'initial' : theme.colors.gray300};
   };
  :active {
-    background: ${({theme}) => theme.colors.gray300}
-  }
+    background: ${({theme}) => theme.colors.gray300};
+  };
   padding: 12px 20px;
   ${body4};
   color: ${({theme}) => theme.colors.gray700};
