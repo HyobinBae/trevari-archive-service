@@ -11,7 +11,7 @@ import Box from 'components/base/Box';
 import EmptyEmoji from 'components/svgs/EmptyEmoji';
 import NewCurationClubCard from 'pages/main/components/NewCurationClubCard';
 import { CURATION_CARD_ASPECT_RATIO } from 'pages/main/const';
-import { getWishClubs, useGetWishClubsQuery } from 'pages/main/services/main.api';
+import { useGetWishClubsQuery } from 'pages/main/services/main.api';
 import { Loading } from '@trevari/components';
 
 const WishList = () => {
@@ -19,7 +19,11 @@ const WishList = () => {
   const dispatch = useAppDispatch();
   const authenticated = useAppSelector(selectAuthenticated);
   const userId = useAppSelector(selectUserId);
-  const { data: wishClubs, isLoading } = useGetWishClubsQuery({
+  const {
+    data: wishClubs,
+    isLoading,
+    refetch,
+  } = useGetWishClubsQuery({
     where: {
       userID: userId,
       isClosed: false,
@@ -35,19 +39,6 @@ const WishList = () => {
       goToPage(`${endpoints.user_login_page_url}/?redirectionUrl=/wishList`);
       return;
     }
-    if (authenticated) {
-      dispatch(
-        getWishClubs.initiate({
-          where: {
-            userID: userId,
-            isClosed: false,
-            isFullClub: false,
-            isAppliablePeriod: true,
-          },
-        }),
-      );
-    }
-
   }, [dispatch, authenticated, userId]);
 
   const cardImgHeight =
@@ -75,6 +66,7 @@ const WishList = () => {
               key={item.clubID}
               club={item.club}
               imgHeight={cardImgHeight}
+              wishClubRefetch={refetch}
             />
           ))}
         </GridBox>
