@@ -14,17 +14,17 @@ import { store } from 'services/store';
 import reportWebVitals from './reportWebVitals';
 import 'styles/index.css';
 import { PIXEL_ID } from 'pages/main/pixel';
+import {IS_PRODUCTION} from "./config";
 
 export const persistor = persistStore(store);
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-
-export const myApm = initApm({
+export const myApm = IS_PRODUCTION ? initApm({
   serviceName: 'trevari-web',
-  serverUrl: process.env.ELASTIC_APM_SERVER_URL,
+  serverUrl: 'https://c0b7c3d540624325a041607b770d97ad.apm.ap-northeast-2.aws.elastic-cloud.com:443',
   serviceVersion: '',
   environment: process.env.NODE_ENV,
-});
+}) : initApm(undefined);
+
 ReactFbq.initialize({ id: PIXEL_ID });
 
 ReactDOM.render(
