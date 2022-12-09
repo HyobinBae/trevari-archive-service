@@ -16,7 +16,7 @@ import { Button, Loading } from '@trevari/components';
 import { goToPage } from 'utils';
 import NewCurationEventCard from 'pages/main/components/NewCurationEventCard';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { CURATION_CARD_ASPECT_RATIO } from 'pages/main/const';
+import { CURATION_CARD_ASPECT_RATIO, EVENT_CURATION_ID } from 'pages/main/const';
 import { endpoints } from 'config';
 import ga from 'pages/main/ga';
 import { LoadingContainer } from 'pages/wishList';
@@ -31,8 +31,9 @@ const Curations = () => {
   const userId = useAppSelector(selectUserId);
 
   const onClickShowAllClubsButton = () => {
-    ga.event({ action: '버튼 클릭', category: '큐레이션 페이지', label: `모든 클럽 보러가기^${newCuration?.title}` });
-    goToPage(`${endpoints.user_page_url}/apply`);
+    const path = isEventCuration ? '/events' : '/apply';
+    ga.event({ action: '버튼 클릭', category: '큐레이션 페이지', label: `${buttonText}^${newCuration?.title}` });
+    goToPage(`${endpoints.user_page_url}${path}`);
   };
   useEffect(() => {
     dispatch(getNewCuration.initiate({ id: curationId || '' }));
@@ -69,6 +70,8 @@ const Curations = () => {
       </LoadingContainer>
     );
   const cardLength = [...newCuration.lists.clubLists, ...newCuration.lists.eventLists].length;
+  const isEventCuration = newCuration.id === EVENT_CURATION_ID;
+  const buttonText = isEventCuration ? '모든 이벤트 보러가기' : '모든 클럽 보러가기';
   return (
     <Box style={{ paddingTop: '64px', minHeight: '100vh', paddingBottom: '67px' }}>
       <CurationInfoBox>
@@ -97,7 +100,7 @@ const Curations = () => {
       </GridBox>
       <ButtonWrapper>
         <Button size="big" fullWidth onClick={onClickShowAllClubsButton}>
-          모든 클럽 보러가기
+          {buttonText}
         </Button>
       </ButtonWrapper>
     </Box>
