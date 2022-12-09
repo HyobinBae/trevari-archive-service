@@ -94,7 +94,7 @@ const NewCurationCardList = ({ lists = [], wishClubIds = [] }: IProps) => {
               {getType(item) === 'subscriptionClub' && (
                 <NewCurationSubscriptionClubCard
                   subscriptionClub={item}
-                  cardWidth="100%"
+                  cardWidth={cardWidth}
                   imgHeight={cardImgHeight}
                 />
               )}

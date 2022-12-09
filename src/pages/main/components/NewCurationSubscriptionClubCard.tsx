@@ -14,6 +14,7 @@ import ga from '../ga';
 
 import {ISubscriptionClub} from '../services/main.types';
 import {formatOnlineClubsSchedule} from "../../../utils/subscriptionClub";
+import {TREVARI_IMG_URL} from "../const";
 
 interface NewCurationClubCardProps {
   subscriptionClub: ISubscriptionClub;
@@ -21,7 +22,7 @@ interface NewCurationClubCardProps {
   imgHeight?: string;
 }
 
-const NewCurationSubscriptionClubCard = ({ subscriptionClub, cardWidth = '152px', imgHeight = '138px' }: NewCurationClubCardProps) => {
+const NewCurationSubscriptionClubCard = ({ subscriptionClub, cardWidth, imgHeight }: NewCurationClubCardProps) => {
   const { id, content, liveSchedule } = subscriptionClub;
   const name = subscriptionClub.title;
   const place = '온라인(Youtube)';
@@ -41,7 +42,7 @@ const NewCurationSubscriptionClubCard = ({ subscriptionClub, cardWidth = '152px'
       hero={
         <DisplayCardHero>
           <ImageWindow style={{ height: imgHeight }}>
-            <Image src={`https://image.trevari.co.kr/static/${content.detailPageTitleImageUrl as string}`} alt="이미지" />
+            <Image src={`${TREVARI_IMG_URL}/static/${content.detailPageTitleImageUrl as string}`} alt="이미지" />
           </ImageWindow>
         </DisplayCardHero>
       }
