@@ -55,7 +55,7 @@ const NewCurationList = () => {
         <React.Fragment key={curation.id}>
           <NewCurationInfoCard curation={curation} />
           <NewCurationCardList
-            lists={[...curation.lists.clubLists, ...curation.lists.eventLists]}
+            lists={[...curation.lists.clubLists, ...curation.lists.eventLists, ...curation.lists.subscriptionClubLists]}
             wishClubIds={wishClubIds}
           />
           <ButtonWrapper isLast={newCurations.length === index + 1}>

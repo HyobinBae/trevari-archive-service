@@ -49,7 +49,6 @@ const NewCurationSubscriptionClubCard = ({ subscriptionClub, cardWidth = '152px'
     >
       <DisplayCardContent>
         <DisplayCardTitle>{name}</DisplayCardTitle>
-        {/*<DisplayCardParagraph style={{ display: 'block' }}>{description}</DisplayCardParagraph>*/}
         <DisplayCardPlaceInfo>{place}</DisplayCardPlaceInfo>
         <DisplayCardMeetingInfo>{schedule}</DisplayCardMeetingInfo>
       </DisplayCardContent>
