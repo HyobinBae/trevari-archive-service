@@ -26,7 +26,7 @@ const NewCurationCardList = ({ lists = [], wishClubIds = [] }: IProps) => {
   const getType = (item: IClub | IEvent | ISubscriptionClub) => {
     if ('coverUrl' in item) {
       return 'club';
-    } else if ('' in item) {
+    } else if ('maxMemberCount' in item) {
       return 'event';
     } else {
       return 'subscriptionClub';
