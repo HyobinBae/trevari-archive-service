@@ -349,7 +349,7 @@ export const GET_NEW_CURATIONS = gql`
           id
           title
           content {
-            landingPageImageUrl
+            detailPageTitleImageUrl
           }
           liveSchedule {
             weekOfLiveSchedule

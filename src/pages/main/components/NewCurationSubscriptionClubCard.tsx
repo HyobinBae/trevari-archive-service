@@ -41,7 +41,7 @@ const NewCurationSubscriptionClubCard = ({ subscriptionClub, cardWidth = '152px'
       hero={
         <DisplayCardHero>
           <ImageWindow style={{ height: imgHeight }}>
-            <Image src={content.landingPageImageUrl as string} alt="이미지" />
+            <Image src={`https://image.trevari.co.kr/static/${content.detailPageTitleImageUrl as string}`} alt="이미지" />
           </ImageWindow>
         </DisplayCardHero>
       }
