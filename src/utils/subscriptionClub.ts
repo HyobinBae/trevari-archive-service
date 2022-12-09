@@ -19,12 +19,12 @@ export const formatOnlineClubsSchedule = (
 
   let result: string;
   if (isKoreanFormat) {
-    result = '매달 ' + weekString + ' 번째 ' + days[dayOfSchedule - 1] + '요일';
+    result = '매월 ' + weekString + ' 번째 ' + days[dayOfSchedule - 1] + '요일';
     if (hasTime) {
       result += ' ' + timeOfSchedule.split(':')[0] + '시 ' + timeOfSchedule.split(':')[1] + '분';
     }
   } else {
-    result = '매달 ' + weekString + ' 번째 ' + days[dayOfSchedule - 1] + '요일';
+    result = '매월 ' + weekString + ' 번째 ' + days[dayOfSchedule - 1] + '요일';
     if (hasTime) {
       result += ' ' + timeOfSchedule.split(':')[0] + ':' + timeOfSchedule.split(':')[1];
     }
