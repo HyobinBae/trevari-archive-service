@@ -4,7 +4,6 @@ import {
   DisplayCardContent,
   DisplayCardHero,
   DisplayCardMeetingInfo,
-  DisplayCardParagraph,
   DisplayCardPlaceInfo,
   DisplayCardTitle,
 } from '@trevari/business-components';
