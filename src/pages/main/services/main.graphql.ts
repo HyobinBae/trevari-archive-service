@@ -345,6 +345,18 @@ export const GET_NEW_CURATIONS = gql`
           hostName
           startedAt
         }
+        subscriptionClubLists {
+          id
+          title
+          content {
+            landingPageImageUrl
+          }
+          liveSchedule {
+            weekOfLiveSchedule
+            dayOfLiveSchedule
+            startTimeOfLiveSchedule
+          }
+        }
       }  
     }
   }

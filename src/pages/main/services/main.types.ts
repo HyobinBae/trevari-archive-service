@@ -5,12 +5,10 @@ export interface IClub extends Club {
   meetings: Meeting[];
   Place: Place
   meetingDatas: Meeting[]
-  typename: string;
 }
 
 export interface IEvent extends Event {
   Place: Place
-  typename: string;
 }
 
 export interface ICuration extends ClubsWithTag {
@@ -35,8 +33,48 @@ export interface INewCuration {
   lists : {
     clubLists: IClub[]
     eventLists: IEvent[]
+    subscriptionClubLists: ISubscriptionClub[]
   }
   createdAt: string
   isBookmark: boolean
 }
 
+export interface ISubscriptionClub {
+  id: string;
+  title: string;
+  leaderName: string;
+  clubMonthlyPrice: number;
+  liveSchedule: ISubscriptionLiveSchedule;
+  regularBillingSchedule: ISubscriptionRegularBillingSchedule;
+  content: ISubscriptionContent;
+  openedAt: Date;
+  closedAt?: Date;
+  startedDateAt?: Date;
+  endedDateAt?: Date;
+  currentOrderDate?: string;
+  nextOrderDate?: string;
+  liveDate?: string;
+}
+
+export interface ISubscriptionLiveSchedule {
+  weekOfLiveSchedule: number;
+  dayOfLiveSchedule: number;
+  startTimeOfLiveSchedule: string;
+  endTimeOfLiveSchedule: string;
+}
+
+export interface ISubscriptionRegularBillingSchedule {
+  weekOfSchedule: number;
+  dayOfSchedule: number;
+  timeOfSchedule: string;
+}
+
+export interface ISubscriptionContent {
+  landingPageImageUrl: string;
+  detailPageTitleImageUrl: string;
+  detailPageImageUrls: string[];
+  place: string;
+  enterLiveLink: string;
+  archiveLink: string;
+  notice: string;
+}
