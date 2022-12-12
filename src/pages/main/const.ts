@@ -5,4 +5,3 @@ export const SCHEDULED_CLUB_TAG = {
   name: '오픈 예정 클럽'
 }
 export const CURATION_CARD_ASPECT_RATIO = 0.865
-export const TREVARI_IMG_URL = 'https://image.trevari.co.kr';
