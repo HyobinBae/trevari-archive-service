@@ -1,25 +1,34 @@
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import styled from '@emotion/styled';
 
-import { useAppDispatch, useAppSelector } from 'services/store';
-import { selectNewCuration, selectWishClubIds } from 'pages/main/services/main.store';
-import { getNewCuration, getWishClubs } from 'pages/main/services/main.api';
-import { IClub, IEvent, INewCuration } from 'pages/main/services/main.types';
-import { selectAuthenticated, selectUserId } from 'services/auth/auth.store';
+import {useAppDispatch, useAppSelector} from 'services/store';
+import {selectNewCuration, selectWishClubIds} from 'pages/main/services/main.store';
+import {getNewCuration, getWishClubs} from 'pages/main/services/main.api';
+import {IClub, IEvent, INewCuration, ISubscriptionClub} from 'pages/main/services/main.types';
+import {selectAuthenticated, selectUserId} from 'services/auth/auth.store';
 
-import { useParams } from 'react-router-dom';
-import { CurationInfoBox, CurationTitle, CurationBody, Divider } from 'pages/curations/curations.styles';
+import {useParams} from 'react-router-dom';
+import {CurationBody, CurationInfoBox, CurationTitle, Divider} from 'pages/curations/curations.styles';
 import Box from 'components/base/Box';
 import NewCurationClubCard from 'pages/main/components/NewCurationClubCard';
-import { body6 } from '@trevari/typo';
-import { Button, Loading } from '@trevari/components';
-import { goToPage } from 'utils';
+import {body6} from '@trevari/typo';
+import {Button, Loading} from '@trevari/components';
+import {goToPage} from 'utils';
 import NewCurationEventCard from 'pages/main/components/NewCurationEventCard';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { CURATION_CARD_ASPECT_RATIO, EVENT_CURATION_ID } from 'pages/main/const';
+import { CURATION_CARD_ASPECT_RATIO } from 'pages/main/const';
 import { endpoints } from 'config';
 import ga from 'pages/main/ga';
-import { LoadingContainer } from 'pages/wishList';
+import {LoadingContainer} from 'pages/wishList';
+import NewCurationSubscriptionClubCard from "../main/components/NewCurationSubscriptionClubCard";
+import {isNil} from "lodash";
+
+enum CurationType {
+  NONE,
+  CLUB,
+  EVENT,
+  SUBSCRIPTION
+}
 
 const Curations = () => {
   const { width } = useWindowSize();
@@ -30,8 +39,28 @@ const Curations = () => {
   const newCuration: INewCuration | null = useAppSelector(selectNewCuration);
   const userId = useAppSelector(selectUserId);
 
+  const getCurationType = (newCuration: INewCuration | null) : CurationType => {
+    if(isNil(newCuration) || isNil(newCuration.lists)) {
+      return CurationType.NONE;
+    }
+
+    if(newCuration.lists.eventLists.length > 0) {
+      return CurationType.EVENT;
+    }
+
+    if(newCuration.lists.clubLists.length > 0) {
+      return CurationType.CLUB;
+    }
+
+    if(newCuration.lists.subscriptionClubLists.length > 0) {
+      return CurationType.SUBSCRIPTION;
+    }
+
+    return CurationType.NONE;
+  }
+
   const onClickShowAllClubsButton = () => {
-    const path = isEventCuration ? '/events' : '/apply';
+    const path = curationType === CurationType.EVENT ? '/events' : '/apply';
     ga.event({ action: '버튼 클릭', category: '큐레이션 페이지', label: `${buttonText}^${newCuration?.title}` });
     goToPage(`${endpoints.user_page_url}${path}`);
   };
@@ -51,11 +80,14 @@ const Curations = () => {
     }
   }, [dispatch, authenticated, newCuration]);
 
-  const isClubCuration = (item: IClub | IEvent) => {
+  const getType = (item: IClub | IEvent | ISubscriptionClub) => {
     if ('coverUrl' in item) {
-      return true;
+      return 'club';
+    } else if ('maxMemberCount' in item) {
+      return 'event';
+    } else {
+      return 'subscriptionClub';
     }
-    return false;
   };
 
   const cardImgHeight =
@@ -69,9 +101,11 @@ const Curations = () => {
         <Loading variant="gridCardList" flicker />;
       </LoadingContainer>
     );
-  const cardLength = [...newCuration.lists.clubLists, ...newCuration.lists.eventLists].length;
-  const isEventCuration = newCuration.id === EVENT_CURATION_ID;
-  const buttonText = isEventCuration ? '모든 이벤트 보러가기' : '모든 클럽 보러가기';
+  const cardLength = [...newCuration.lists.clubLists, ...newCuration.lists.eventLists, ...newCuration.lists.subscriptionClubLists].length;
+  const curationType = getCurationType(newCuration);
+  const buttonText = curationType === CurationType.EVENT ? '모든 이벤트 보러가기' : '모든 클럽 보러가기';
+  const visibleButton = curationType !== CurationType.SUBSCRIPTION;
+
   return (
     <Box style={{ paddingTop: '64px', minHeight: '100vh', paddingBottom: '67px' }}>
       <CurationInfoBox>
@@ -82,9 +116,9 @@ const Curations = () => {
       <Divider style={{ backgroundColor: '#F7F7F5' }} />
       <GridCardCount>{`총 ${cardLength}개`}</GridCardCount>
       <GridBox>
-        {[...newCuration.lists.clubLists, ...newCuration.lists.eventLists].map(item => (
+        {[...newCuration.lists.clubLists, ...newCuration.lists.eventLists, ...newCuration.lists.subscriptionClubLists].map(item => (
           <>
-            {isClubCuration(item) ? (
+            {getType(item) === 'club' && (
               <NewCurationClubCard
                 isWishClub={wishClubIds.includes(item.id)}
                 cardWidth="100%"
@@ -92,17 +126,35 @@ const Curations = () => {
                 club={item}
                 imgHeight={cardImgHeight}
               />
-            ) : (
-              <NewCurationEventCard cardWidth="100%" key={item.id} event={item} imgHeight={cardImgHeight} />
+            )}
+            {getType(item) === 'event' && (
+              <NewCurationEventCard
+                cardWidth="100%"
+                key={item.id}
+                event={item}
+                imgHeight={cardImgHeight}
+              />
+            )}
+            {getType(item) === 'subscriptionClub' && (
+              <NewCurationSubscriptionClubCard
+                cardWidth="100%"
+                key={item.id}
+                subscriptionClub={item}
+                imgHeight={cardImgHeight}
+              />
             )}
           </>
         ))}
       </GridBox>
-      <ButtonWrapper>
-        <Button size="big" fullWidth onClick={onClickShowAllClubsButton}>
-          {buttonText}
-        </Button>
-      </ButtonWrapper>
+
+      {visibleButton && (
+          <ButtonWrapper>
+            <Button size="big" fullWidth onClick={onClickShowAllClubsButton}>
+              {buttonText}
+            </Button>
+          </ButtonWrapper>
+      )}
+
     </Box>
   );
 };
