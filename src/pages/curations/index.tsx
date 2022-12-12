@@ -101,7 +101,7 @@ const Curations = () => {
         <Loading variant="gridCardList" flicker />;
       </LoadingContainer>
     );
-  const cardLength = [...newCuration.lists.clubLists, ...newCuration.lists.eventLists].length;
+  const cardLength = [...newCuration.lists.clubLists, ...newCuration.lists.eventLists, ...newCuration.lists.subscriptionClubLists].length;
   const curationType = getCurationType(newCuration);
   const buttonText = curationType === CurationType.EVENT ? '모든 이벤트 보러가기' : '모든 클럽 보러가기';
   const visibleButton = curationType !== CurationType.SUBSCRIPTION;
