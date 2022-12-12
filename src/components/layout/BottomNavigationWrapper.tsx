@@ -48,11 +48,11 @@ interface IProps {
   changeNavigationInfo: (to: string) => void;
 }
 
-const BottomNavigationWrapper = ({initialActiveTab,
-                                 changeNavigationInfo}: IProps) => {
+const BottomNavigationWrapper = ({ initialActiveTab, changeNavigationInfo }: IProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [isActive, setIsActive] = useState('');
+  const hideBottomNavigation = pathname.includes('/bookreviews/show');
 
   useEffect(() => {
     const myReferrer = document.referrer;
@@ -66,7 +66,6 @@ const BottomNavigationWrapper = ({initialActiveTab,
     setIsActive(navigationInfoInLocalStorage);
   }, [initialActiveTab]);
 
-
   const handleRedirect = (to: string, name: string) => {
     changeNavigationInfo(to);
     const gaCategory = pathname === '/' ? '메인 페이지' : pathname === '/menu' ? '메뉴 페이지' : '';
@@ -78,22 +77,28 @@ const BottomNavigationWrapper = ({initialActiveTab,
   };
 
   return (
-    <BottomNavigation>
-      {bottomNavs.map(bottomItem => {
-        const { icon, activeIcon, label, to } = bottomItem;
-        const isActiveItem = isActive === to;
-        return (
-          <BottomNavigationItem
-            key={label}
-            icon={icon}
-            activeIcon={activeIcon}
-            label={label}
-            onClick={() => handleRedirect(to, label)}
-            isActive={isActiveItem}
-          />
-        );
-      })}
-    </BottomNavigation>
+    <>
+      {hideBottomNavigation ? (
+        <div></div>
+      ) : (
+        <BottomNavigation>
+          {bottomNavs.map(bottomItem => {
+            const { icon, activeIcon, label, to } = bottomItem;
+            const isActiveItem = isActive === to;
+            return (
+              <BottomNavigationItem
+                key={label}
+                icon={icon}
+                activeIcon={activeIcon}
+                label={label}
+                onClick={() => handleRedirect(to, label)}
+                isActive={isActiveItem}
+              />
+            );
+          })}
+        </BottomNavigation>
+      )}
+    </>
   );
 };
 

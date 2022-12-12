@@ -16,6 +16,6 @@ export const CurationBody = styled.div`
 export const Divider = styled.div`
   width: 100%;
   height: 1px;
-  background: red;
+  background: #f7f7f5;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray300};
 `;

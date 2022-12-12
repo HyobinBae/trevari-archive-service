@@ -70,7 +70,7 @@ export default () => {
         <Route path="/external" element={<External />} />
         <Route path="/curations/:curationId" element={<Curations />} />
         <Route path="/wishList" element={<WishList />} />
-        <Route path="/bookreviews/:bookreivewID" element={<BookReviewShow />} />
+        <Route path="/bookreviews/show/:bookreivewID" element={<BookReviewShow />} />
         <Route path="*" element={<LoadingP />} />
       </Routes>
     </Layout>

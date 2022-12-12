@@ -12,22 +12,10 @@ interface BookreviewContentProps {
 const BookreviewContent = ({ bookreview, userID }: BookreviewContentProps) => {
   const { contents, content, title, commentCount, likeUserIDs } = bookreview;
   const alreadyLikedBookrivew = !likeUserIDs.includes(userID);
-  console.log(alreadyLikedBookrivew);
   return (
     <Base>
       <Title>{title}</Title>
       <div dangerouslySetInnerHTML={{ __html: content || '' }} />
-      <IconBox>
-        {alreadyLikedBookrivew ? (
-          <LoveFilled width={20} height={20} strokeColor="#FF7900" />
-        ) : (
-          <LoveOutline width={20} height={20} />
-        )}
-        {/* <Love fill={alreadyLikedBookrivew ? '#FF7900' : 'none'} /> */}
-        <IconText>좋아요 {likeUserIDs.length}</IconText>
-        <CommentOutlineIcon />
-        <IconText>댓글 {commentCount || 0}</IconText>
-      </IconBox>
     </Base>
   );
 };
