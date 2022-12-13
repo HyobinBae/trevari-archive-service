@@ -22,7 +22,12 @@ const BookReviewShow = () => {
   if (isLoading) return <Loading variant="gridCardList" />;
   return (
     <div>
-      <Profile user={bookreview?.user} clubName={bookreview?.club?.name || ''} publishedAt={bookreview?.publishedAt} />
+      <Profile
+        user={bookreview?.user}
+        clubName={bookreview?.club?.name || ''}
+        publishedAt={bookreview?.publishedAt}
+        isMyBookreview={bookreview?.user.id === user.id}
+      />
       <BookreviewContent bookreview={bookreview!} />
       <BookreviewComments likeUserIDs={bookreview?.likeUserIDs} comments={bookreview?.comments} user={user} />
     </div>
