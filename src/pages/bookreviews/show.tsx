@@ -5,9 +5,9 @@ import { selectAuthenticated } from 'services/auth/auth.store';
 import { useAppDispatch, useAppSelector } from 'services/store';
 import { selectUser } from 'services/user/user.store';
 import { useGetBookreviewQuery } from './services/api';
-import ProfileInBookreviewPage from 'pages/main/components/ProfileInBookreviewPage';
 import BookreviewContent from 'pages/main/components/BookreviewContent';
 import BookreviewComments from 'pages/main/components/BookreviewComments';
+import Profile from 'pages/main/components/Profile';
 
 const BookReviewShow = () => {
   const { bookreivewID } = useParams();
@@ -22,11 +22,7 @@ const BookReviewShow = () => {
   if (isLoading) return <Loading variant="gridCardList" />;
   return (
     <div>
-      <ProfileInBookreviewPage
-        user={bookreview?.user}
-        clubName={bookreview?.club?.name || ''}
-        publishedAt={bookreview?.publishedAt}
-      />
+      <Profile user={bookreview?.user} clubName={bookreview?.club?.name || ''} publishedAt={bookreview?.publishedAt} />
       <BookreviewContent bookreview={bookreview!} />
       <BookreviewComments likeUserIDs={bookreview?.likeUserIDs} comments={bookreview?.comments} user={user} />
     </div>

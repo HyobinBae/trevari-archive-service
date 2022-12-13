@@ -4,7 +4,6 @@ import { User } from 'types/__generate__/user-backend-api';
 import { body8, title6 } from '@trevari/typo';
 import { DEFAULT_PROFILE_IMAGE } from '../const';
 import { formatRelativeTime } from 'utils/format';
-import Kebab from 'components/svgs/Kebab';
 
 interface ProfileInBookreviewPageProps {
   user: User;
@@ -24,22 +23,22 @@ const ProfileInBookreviewPage = ({
     e.src = DEFAULT_PROFILE_IMAGE;
   };
   return (
-    <Base isBookreviewProfile={isBookreviewProfile}>
+    <Base>
       <ProfileImage src={profileImageUrl || DEFAULT_PROFILE_IMAGE} onError={onImageError}></ProfileImage>
       <Box>
         <span>{name}</span>
         <span>{clubName}</span>
       </Box>
       <PublishedTime>{formatRelativeTime(publishedAt)}</PublishedTime>
-      <Kebab />
     </Base>
   );
 };
 
-const Base = styled.div<{ isBookreviewProfile: boolean }>`
-  padding: ${({ isBookreviewProfile }) => (isBookreviewProfile ? '68px 20px 0' : '20px')};
+const Base = styled.div`
+  padding: 20px 0 20px 20px;
   display: flex;
   align-items: center;
+  flex: 1;
 `;
 const ProfileImage = styled.img`
   width: 32px;

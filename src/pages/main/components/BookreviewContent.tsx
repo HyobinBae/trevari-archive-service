@@ -21,7 +21,7 @@ const BookreviewContent = ({ bookreview, userID }: BookreviewContentProps) => {
 };
 
 const Base = styled.div`
-  padding: 20px;
+  padding: 0 20px 20px;
   p {
     margin: unset;
   }

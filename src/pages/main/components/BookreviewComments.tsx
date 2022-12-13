@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Button, Modal } from '@trevari/components';
-import ModalBase from '@trevari/components/lib/Modal/ModalBase';
 import { CommentOutlineIcon } from '@trevari/icons';
 import { body4, body5, body6, title4 } from '@trevari/typo';
 import LoveFilled from 'components/svgs/LoveFilled';
