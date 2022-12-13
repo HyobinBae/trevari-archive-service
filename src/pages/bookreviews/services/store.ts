@@ -14,7 +14,7 @@ const initialState: BookreviewState = {
 };
 
 export const bookreviewStore = createSlice({
-  name: 'bookreivew',
+  name: 'bookreview',
   initialState,
   reducers: {},
   extraReducers: builder => {

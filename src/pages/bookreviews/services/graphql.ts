@@ -133,3 +133,15 @@ export const DELETE_BOOKREVIEW_COMMENT = gql`
     deleteBookreviewComment(id: $id)
   }
 `;
+
+export const TOGGLE_LIKE_BOOKREVIEW_COMMENT = gql`
+  mutation toggleLikeOnBookreviewComment($id: String!, userID: String!) {
+    toggleLikeOnBookreviewComment(id: $id, userID, $userID)
+  }
+`;
+
+export const REPORT_BOOKREVIEW_COMMENT = gql`
+  mutation reportOnBookreviewComment($id: String!, userID: String, reason: String!) {
+    reportOnBookreviewComment(id: $id, userID: $userID, reason: $reason)
+  }
+`;
