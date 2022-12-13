@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import { BottomSheet, BottomSheetRef } from 'react-spring-bottom-sheet';
+import { useEffect, useState } from 'react';
+import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css';
 
 import Kebab from 'components/svgs/Kebab';
@@ -18,7 +18,6 @@ interface ProfileProps {
 }
 
 const Profile = ({ user, clubName, publishedAt, isBookreviewProfile = true, isMyBookreview }: ProfileProps) => {
-  const sheetRef = useRef<BottomSheetRef>();
   const { width } = useWindowSize();
   const [isOpenMoreList, setOpenMoreList] = useState<boolean>(false);
 
@@ -30,6 +29,10 @@ const Profile = ({ user, clubName, publishedAt, isBookreviewProfile = true, isMy
     {
       text: '수정하기',
       onAction: () => console.log(2),
+    },
+    {
+      text: '링크 복사하기',
+      onAction: () => console.log(3),
     },
   ];
 
@@ -47,7 +50,6 @@ const Profile = ({ user, clubName, publishedAt, isBookreviewProfile = true, isMy
     setOpenMoreList(false);
   };
   useEffect(() => onDismiss, []);
-  console.log(isOpenMoreList);
 
   const bottomSheetLeftMarginPx = width > 500 ? 'calc(50vw - 250px)' : 0;
   return (
@@ -72,7 +74,7 @@ const Profile = ({ user, clubName, publishedAt, isBookreviewProfile = true, isMy
           '--rsbs-max-w': '500px',
         }}
       >
-        <MoreItems actions={isMyBookreview ? MORE_ACTIONS_OF_MY_BOOKREVIEW : MORE_ACTIONS} />
+        <MoreItems actions={!isMyBookreview ? MORE_ACTIONS_OF_MY_BOOKREVIEW : MORE_ACTIONS} />
       </BottomSheet>
     </>
   );
@@ -92,5 +94,6 @@ const MoreButtonWrapper = styled.div`
   position: relative;
   width: 24px;
   height: 24px;
+  cursor: pointer;
 `;
 export default Profile;

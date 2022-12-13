@@ -57,7 +57,7 @@ const Button = styled.button<{ red: boolean }>`
   height: 100%;
   color: ${({ theme, red }) => (red ? theme.colors.red900 : theme.colors.black)};
   :hover {
-    background-color: ${({ theme }) => theme.colors.gray200};
+    background-color: ${({ theme }) => theme.colors.orange50};
   }
   ${({ theme }) => theme.breakPoint.mobile} {
     margin-bottom: 6px;

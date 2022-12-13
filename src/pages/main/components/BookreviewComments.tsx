@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { Button, Modal } from '@trevari/components';
 import { CommentOutlineIcon } from '@trevari/icons';
 import { body4, body5, body6, title4 } from '@trevari/typo';
 import LoveFilled from 'components/svgs/LoveFilled';
@@ -10,6 +9,7 @@ import { useRef, useState } from 'react';
 import { BookreviewComment, User } from 'types/__generate__/user-backend-api';
 import { DEFAULT_PROFILE_IMAGE } from '../const';
 import Comment from './Comment';
+import BaseModal from './ModalBase';
 
 const BookreviewComments = ({
   likeUserIDs,
@@ -22,7 +22,12 @@ const BookreviewComments = ({
 }) => {
   const { width } = useWindowSize();
   const inputRef = useRef<HTMLInputElement>(null);
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [selectedCommentID, setSelectedCommentID] = useState('');
+  const [modalState, setModalState] = useState({
+    replyConfirm: false,
+    deleteComment: false,
+  });
+  const { replyConfirm, deleteComment } = modalState;
   const [inputState, setInputState] = useState({
     type: 'comment',
     value: '',
@@ -32,8 +37,11 @@ const BookreviewComments = ({
   const { type, value, targetCommentID } = inputState;
   const bottomInputContentWidth = width > 500 ? '500px' : '100%';
   const alreadyLikedBookrivew = likeUserIDs.includes(user.id);
-  const onToggleModal = () => {
-    setIsOpenModal(prev => !prev);
+  const onToggleModal = (name: string) => {
+    setModalState({
+      ...modalState,
+      [name]: !modalState[name],
+    });
   };
   const onClickReply = (name: string, id: string) => {
     setInputState({
@@ -42,7 +50,7 @@ const BookreviewComments = ({
       targetCommentID: id,
     });
     if (value) {
-      onToggleModal();
+      onToggleModal('replyConfirm');
       return;
     }
     onChangeInput('value', name);
@@ -58,11 +66,13 @@ const BookreviewComments = ({
   };
   const onConfirm = () => {
     onChangeInput('value', inputState.targetUsername);
-    setIsOpenModal(prev => !prev);
+    onToggleModal('replyConfirm');
+
     if (inputRef.current) {
       inputRef.current.focus();
     }
   };
+  const replyConfirmModalText = `작성중인 내용이 있습니다.\n그래도 취소하시겠습니까?\n작성한 내용은 모두 사라집니다.`;
   return (
     <>
       <IconBox>
@@ -79,7 +89,7 @@ const BookreviewComments = ({
       <CommentsCountText>총 {comments.length} 개의 댓글</CommentsCountText>
       <CommentContainer>
         {comments.map(comment => (
-          <Comment key={comment.id} comment={comment} onClickReply={onClickReply} />
+          <Comment key={comment.id} comment={comment} onClickReply={onClickReply} loggedUserID={user.id} />
         ))}
       </CommentContainer>
       <InputContainer width={bottomInputContentWidth}>
@@ -91,21 +101,12 @@ const BookreviewComments = ({
           value={inputState.value}
         />
       </InputContainer>
-      <Modal open={isOpenModal}>
-        <ModalText>
-          작성중인 내용이 있습니다.
-          <br />
-          그래도 취소하시겠습니까?
-          <br />
-          작성한 내용은 모두 사라집니다.
-        </ModalText>
-        <ButtonWrapper>
-          <Button color="dark" variant="weak" colorVariant="dark" onClick={onToggleModal}>
-            취소
-          </Button>
-          <Button onClick={onConfirm}>확인</Button>
-        </ButtonWrapper>
-      </Modal>
+      <BaseModal
+        open={replyConfirm}
+        text={replyConfirmModalText}
+        onCancel={() => onToggleModal('replyConfirm')}
+        onConfirm={onConfirm}
+      />
     </>
   );
 };
