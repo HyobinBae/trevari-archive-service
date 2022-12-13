@@ -21,11 +21,25 @@ const Comment = ({ comment, onClickReply }: CommentProps) => {
         <IconText onClick={() => onClickReply(`@${user!.name} `, id)}>답글 쓰기</IconText>
       </IconWrapper>
       <Divider />
+      {replies?.map(reply => {
+        const { user: replyUser, createdAt: replyCreatedAt, content: replyContent, id: replyID } = reply;
+        return (
+          <ReplyBase key={replyID}>
+            <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} isBookreviewProfile={false} />
+            <Content>{replyContent}</Content>
+            <IconWrapper>
+              <CommentOutlineIcon />
+              <IconText onClick={() => onClickReply(`@${user!.name} `, id)}>답글 쓰기</IconText>
+            </IconWrapper>
+            <Divider />
+          </ReplyBase>
+        );
+      })}
     </div>
   );
 };
-const Base = styled.div`
-  padding: 20px;
+const ReplyBase = styled.div`
+  padding-left: 48px;
 `;
 const IconWrapper = styled.div`
   display: flex;
