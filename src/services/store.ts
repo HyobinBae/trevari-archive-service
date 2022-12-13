@@ -21,6 +21,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   [backend.reducerPath]: backend.reducer,
+  [bookreviewBackend.reducerPath]: bookreviewBackend.reducer,
   main,
   auth,
   user,
@@ -46,7 +47,7 @@ export const store = configureStore({
     }),
     ...middlewares,
     backend.middleware,
-    // bookreviewBackend.middleware
+    bookreviewBackend.middleware,
   ],
   devTools: !IS_PRODUCTION,
 });

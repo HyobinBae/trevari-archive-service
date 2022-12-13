@@ -9,7 +9,7 @@ import {
   TOGGLE_LIKE_BOOKREVIEW_COMMENT,
 } from './graphql';
 
-export const bookreviewApi = backend.injectEndpoints({
+export const bookreviewApi = bookreviewBackend.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
     getBookreview: build.query<Array<Bookreview>, { id: string }>({
