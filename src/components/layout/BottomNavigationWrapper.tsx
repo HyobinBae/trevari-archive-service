@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
+  BookFilledIcon,
+  BookNavigationIcon,
   HomeFilledIcon,
   HomeOutlinedIcon,
   LoveFilledIcon,
@@ -34,6 +36,12 @@ const bottomNavs = [
     activeIcon: <LoveFilledIcon width={24} height={24} />,
     label: '찜',
     to: '/wishList',
+  },
+  {
+    icon: <BookNavigationIcon width={24} height={24} color={'#6E6E6C'} />,
+    activeIcon: <BookFilledIcon width={24} height={24}/>,
+    label: '독후감',
+    to: '/bookreviews',
   },
   {
     icon: <MyOutlinedIcon width={24} height={24} />,

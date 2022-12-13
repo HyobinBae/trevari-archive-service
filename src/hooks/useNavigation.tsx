@@ -5,7 +5,7 @@ export const useNavigation = () => {
   const location = useLocation();
   const { pathname } = location;
 
-  const needNotificationButtonPageList = ['/', '/menu', '/wishList'];
+  const needNotificationButtonPageList = ['/', '/menu', '/wishList', '/bookreviews'];
   const [title, setTitle] = useState<string | null>(null);
   const [navigation, setNavigation] = useState<{
     path: string;
@@ -33,6 +33,8 @@ export const useNavigation = () => {
       return '메뉴';
     } else if (navigation.path === '/wishList') {
       return '찜 리스트';
+    } else if (navigation.path === '/bookreviews') {
+      return '독후감';
     } else {
       return null;
     }
