@@ -74,3 +74,62 @@ export const GET_BOOKREVIEW = gql`
     }
   }
 `;
+
+export const CREATE_BOOKREVIEW_COMMENT = gql`
+  mutation createBookreviewComment($input: CreateBookreviewCommentInput!) {
+    createBookreviewComment(input: $input) {
+      bookreviewComment {
+        id
+        parentID
+        bookreviewID
+        content
+        createdAt
+        userID
+        user {
+          id
+          name
+          email
+          profileImageUrl
+        }
+        replies {
+          id
+          bookreviewID
+          userID
+          user {
+            id
+            name
+            email
+            profileImageUrl
+          }
+          content
+          parentID
+          createdAt
+        }
+      }
+    }
+  }
+`;
+
+export const UPDATE_BOOKREVIEW_COMMENT = gql`
+  mutation updateBookreviewComment($input: UpdateBookreviewCommentInput!) {
+    updateBookreviewComment(input: $input) {
+      bookreviewComment {
+        id
+        bookreviewID
+        content
+        createdAt
+        userID
+        user {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
+export const DELETE_BOOKREVIEW_COMMENT = gql`
+  mutation deleteBookreviewComment($id: String!) {
+    deleteBookreviewComment(id: $id)
+  }
+`;
