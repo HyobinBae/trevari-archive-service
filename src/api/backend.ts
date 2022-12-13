@@ -38,7 +38,7 @@ export const bookreviewClient = new GraphQLClient(endpoints.bookreview_api_graph
 
 export const bookreviewBackend = createApi({
   baseQuery: graphqlRequestBaseQuery({
-    client,
+    client: bookreviewClient,
     prepareHeaders: async (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
       if (token) {

@@ -38,15 +38,16 @@ if (!IS_PRODUCTION) {
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
+  middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    })
-      .concat(middlewares)
-      .concat(backend.middleware)
-      .concat(bookreviewBackend.middleware),
+    }),
+    ...middlewares,
+    backend.middleware,
+    // bookreviewBackend.middleware
+  ],
   devTools: !IS_PRODUCTION,
 });
 
