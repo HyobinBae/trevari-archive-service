@@ -9,14 +9,8 @@ interface ProfileInBookreviewPageProps {
   user: User;
   clubName?: string;
   publishedAt: string;
-  isBookreviewProfile?: boolean;
 }
-const ProfileInBookreviewPage = ({
-  user,
-  clubName,
-  publishedAt,
-  isBookreviewProfile = true,
-}: ProfileInBookreviewPageProps) => {
+const ProfileInBookreviewPage = ({ user, clubName, publishedAt }: ProfileInBookreviewPageProps) => {
   const { name, profileImageUrl } = user;
 
   const onImageError = e => {

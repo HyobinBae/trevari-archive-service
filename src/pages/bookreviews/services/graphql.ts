@@ -244,3 +244,13 @@ export const GET_BOOKREIVEW_LIKEUSERS = gql`
     }
   }
 `;
+export const GET_BOOKREVIEW_COMMENT_LIKEUSERS = gql`
+  query bookreviewCommentLikeUsers($id: String!) {
+    bookreviewCommentLikeUsers(id: $id) {
+      id
+      name
+      profileImageUrl
+      role
+    }
+  }
+`;

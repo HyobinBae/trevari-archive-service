@@ -13,12 +13,16 @@ import BaseModal from './ModalBase';
 import { useAppDispatch } from 'services/store';
 import {
   deleteBookreviewComment,
+  getBookreviewCommentLikeUsers,
   reportOnBookreviewComment,
   toggleLikeOnBookreviewComment,
 } from 'pages/bookreviews/services/api';
 import LoveFilled from 'components/svgs/LoveFilled';
 import LoveOutline from 'components/svgs/LoveOutline';
 import CommentOutline from 'components/svgs/CommentOutline';
+import { LikeUser } from 'pages/bookreviews/services/types';
+import ProfileInLikeUserModal from './ProfileInLikeUserModal';
+import LikeUserModal from './LikeUserModal';
 
 interface CommentProps {
   comment: BookreviewComment;
@@ -32,14 +36,17 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
     userID: '',
     commentID: '',
   });
+  const [likeUsers, setLikeUsers] = useState<LikeUser[]>([]);
+
   const dispatch = useAppDispatch();
   const { width } = useWindowSize();
   const [modalState, setModalState] = useState({
     deleteReply: false,
     deleteComment: false,
+    likeUserList: false,
     selectedCommentID: '',
   });
-  const { deleteReply, deleteComment, selectedCommentID } = modalState;
+  const { deleteReply, deleteComment, selectedCommentID, likeUserList } = modalState;
 
   const [isOpenMoreList, setOpenMoreList] = useState(false);
   const onToggleModal = (name: string, id?: string) => {
@@ -49,7 +56,11 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
       selectedCommentID: id || modalState.selectedCommentID,
     });
   };
-
+  const onClickBookreviewLikeUsers = async (id: string) => {
+    const resultAction = await dispatch(getBookreviewCommentLikeUsers.initiate({ id }));
+    setLikeUsers(resultAction.data);
+    onToggleModal('likeUserList');
+  };
   const isMyComment = loggedUserID === selectedComment.userID;
 
   const MORE_ACTIONS_OF_MY_COMMENT = [
@@ -118,7 +129,7 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
             <LoveOutline width={20} height={20} />
           )}
         </div>
-        <IconText>좋아요 {likeUserIDs.length}</IconText>
+        <IconText onClick={() => onClickBookreviewLikeUsers(id)}>좋아요 {likeUserIDs.length}</IconText>
         <div onClick={() => onClickReply(`@${user!.name} `, id)}>
           <CommentOutline />
           <IconText>답글 쓰기</IconText>
@@ -146,7 +157,9 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
                     <LoveOutline width={20} height={20} />
                   )}
                 </div>
-                <IconText>좋아요 {likeUserIDs?.length || 0}</IconText>
+                <IconText onClick={() => onClickBookreviewLikeUsers(replyID)}>
+                  좋아요 {likeUserIDs?.length || 0}
+                </IconText>
                 <div onClick={() => onClickReply(`@${replyUser!.name} `, id)}>
                   <CommentOutline />
                   <IconText>답글 쓰기</IconText>
@@ -179,6 +192,9 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
         onCancel={() => onToggleModal('deleteReply')}
         onConfirm={onConfirmDeleteReply}
       />
+      {likeUserList && (
+        <LikeUserModal users={likeUsers} onClose={() => onToggleModal('likeUserList')} browserWidth={width} />
+      )}
     </div>
   );
 };

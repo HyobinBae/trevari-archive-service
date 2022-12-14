@@ -9,6 +9,7 @@ import {
   REPORT_BOOKREVIEW_COMMENT,
   TOGGLE_LIKE_BOOKREVIEW_COMMENT,
   TOGGLE_LIKE_BOOKREVIEW,
+  GET_BOOKREVIEW_COMMENT_LIKEUSERS,
 } from './graphql';
 import { LikeUser } from './types';
 
@@ -33,6 +34,17 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
         },
       }),
       transformResponse: ({ bookreviewLikeUsers }: { bookreviewLikeUsers: LikeUser[] }) => bookreviewLikeUsers,
+      providesTags: ['Bookreview'],
+    }),
+    getBookreviewCommentLikeUsers: build.query<LikeUser[], { id: string }>({
+      query: ({ id }) => ({
+        document: GET_BOOKREVIEW_COMMENT_LIKEUSERS,
+        variables: {
+          id,
+        },
+      }),
+      transformResponse: ({ bookreviewCommentLikeUsers }: { bookreviewCommentLikeUsers: LikeUser[] }) =>
+        bookreviewCommentLikeUsers,
       providesTags: ['Bookreview'],
     }),
     toggleLikeOnBookreview: build.mutation({
@@ -119,6 +131,7 @@ export const {
     createBookreviewComment,
     updateBookreviewComment,
     deleteBookreviewComment,
+    getBookreviewCommentLikeUsers,
     reportOnBookreviewComment,
     toggleLikeOnBookreviewComment,
   },

@@ -17,6 +17,7 @@ import { useRef, useState } from 'react';
 import { useAppDispatch } from 'services/store';
 import { BookreviewComment, User } from 'types/__generate__/user-backend-api';
 import Comment from './Comment';
+import LikeUserModal from './LikeUserModal';
 import BaseModal from './ModalBase';
 
 const initialTargetState = {
@@ -69,6 +70,7 @@ const BookreviewComments = ({
   const onClickBookreviewLikeUsers = async () => {
     const resultAction = await dispatch(getBookreviewLikeUsers.initiate({ id: bookreviewID }));
     setLikeUsers(resultAction.data);
+    onToggleModal('likeUserList');
   };
   const onClickReply = (name: string, id: string) => {
     setTargetState({
@@ -175,7 +177,9 @@ const BookreviewComments = ({
         onCancel={() => onToggleModal('replyConfirm')}
         onConfirm={onConfirm}
       />
-      {likeUserList && <LikeUserModal />}
+      {likeUserList && (
+        <LikeUserModal browserWidth={width} users={likeUsers} onClose={() => onToggleModal('likeUserList')} />
+      )}
     </>
   );
 };
