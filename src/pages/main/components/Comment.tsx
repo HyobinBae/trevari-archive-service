@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 
-import { CommentOutlineIcon } from '@trevari/icons';
 import { contents2, title4 } from '@trevari/typo';
 import { Divider } from 'pages/curations/curations.styles';
 import React, { useEffect, useState } from 'react';
@@ -19,6 +18,7 @@ import {
 } from 'pages/bookreviews/services/api';
 import LoveFilled from 'components/svgs/LoveFilled';
 import LoveOutline from 'components/svgs/LoveOutline';
+import CommentOutline from 'components/svgs/CommentOutline';
 
 interface CommentProps {
   comment: BookreviewComment;
@@ -119,8 +119,10 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
           )}
         </div>
         <IconText>좋아요 {likeUserIDs.length}</IconText>
-        <CommentOutlineIcon />
-        <IconText onClick={() => onClickReply(`@${user!.name} `, id)}>답글 쓰기</IconText>
+        <div onClick={() => onClickReply(`@${user!.name} `, id)}>
+          <CommentOutline />
+          <IconText>답글 쓰기</IconText>
+        </div>
       </IconWrapper>
       <Divider />
       {replies?.map(reply => {
@@ -145,8 +147,10 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
                   )}
                 </div>
                 <IconText>좋아요 {likeUserIDs?.length || 0}</IconText>
-                <CommentOutlineIcon />
-                <IconText onClick={() => onClickReply(`@${replyUser!.name} `, id)}>답글 쓰기</IconText>
+                <div onClick={() => onClickReply(`@${replyUser!.name} `, id)}>
+                  <CommentOutline />
+                  <IconText>답글 쓰기</IconText>
+                </div>
               </IconWrapper>
             </ReplyBase>
             <Divider />
@@ -185,6 +189,12 @@ const IconWrapper = styled.div`
   display: flex;
   padding: 0 20px 20px 20px;
   align-items: center;
+  div {
+    height: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
 `;
 const IconText = styled.span`
   ${title4};

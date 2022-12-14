@@ -223,3 +223,24 @@ export const REPORT_BOOKREVIEW_COMMENT = gql`
     }
   }
 `;
+
+export const TOGGLE_LIKE_BOOKREVIEW = gql`
+  mutation toggleLikeOnBookreviewTemp($id: String!, $userID: String!) {
+    toggleLikeOnBookreviewTemp(id: $id, userID: $userID) {
+      bookreview {
+        likeUserIDs
+      }
+    }
+  }
+`;
+
+export const GET_BOOKREIVEW_LIKEUSERS = gql`
+  query bookreviewLikeUsers($id: String!) {
+    bookreviewLikeUsers(id: $id) {
+      id
+      name
+      profileImageUrl
+      role
+    }
+  }
+`;

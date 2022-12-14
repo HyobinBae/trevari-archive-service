@@ -2,12 +2,15 @@ import { bookreviewBackend } from 'api/backend';
 import { Bookreview } from 'types/__generate__/user-backend-api';
 import {
   GET_BOOKREVIEW,
+  GET_BOOKREIVEW_LIKEUSERS,
   DELETE_BOOKREVIEW_COMMENT,
   UPDATE_BOOKREVIEW_COMMENT,
   CREATE_BOOKREVIEW_COMMENT,
   REPORT_BOOKREVIEW_COMMENT,
   TOGGLE_LIKE_BOOKREVIEW_COMMENT,
+  TOGGLE_LIKE_BOOKREVIEW,
 } from './graphql';
+import { LikeUser } from './types';
 
 export const bookreviewApi = bookreviewBackend.injectEndpoints({
   overrideExisting: true,
@@ -21,6 +24,26 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
       }),
       transformResponse: ({ bookreview }: { bookreview: Bookreview }) => bookreview,
       providesTags: ['Bookreview'],
+    }),
+    getBookreviewLikeUsers: build.query<LikeUser[], { id: string }>({
+      query: ({ id }) => ({
+        document: GET_BOOKREIVEW_LIKEUSERS,
+        variables: {
+          id,
+        },
+      }),
+      transformResponse: ({ bookreviewLikeUsers }: { bookreviewLikeUsers: LikeUser[] }) => bookreviewLikeUsers,
+      providesTags: ['Bookreview'],
+    }),
+    toggleLikeOnBookreview: build.mutation({
+      query: ({ id, userID }) => ({
+        document: TOGGLE_LIKE_BOOKREVIEW,
+        variables: {
+          id,
+          userID,
+        },
+      }),
+      invalidatesTags: ['Bookreview'],
     }),
     deleteBookreviewComment: build.mutation({
       query: ({ id }) => ({
@@ -79,6 +102,8 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
 
 export const {
   useGetBookreviewQuery,
+  useGetBookreviewLikeUsersQuery,
+  useToggleLikeOnBookreviewMutation,
   useUpdateBookreviewCommentMutation,
   useCreateBookreviewCommentMutation,
   useDeleteBookreviewCommentMutation,
@@ -89,6 +114,8 @@ export const {
 export const {
   endpoints: {
     getBookreview,
+    getBookreviewLikeUsers,
+    toggleLikeOnBookreview,
     createBookreviewComment,
     updateBookreviewComment,
     deleteBookreviewComment,
