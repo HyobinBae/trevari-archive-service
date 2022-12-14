@@ -69,6 +69,9 @@ const BookreviewComments = ({
   };
   const onClickBookreviewLikeUsers = async () => {
     const resultAction = await dispatch(getBookreviewLikeUsers.initiate({ id: bookreviewID }));
+    if (resultAction.data.length === 0 || !resultAction.data) {
+      return;
+    }
     setLikeUsers(resultAction.data);
     onToggleModal('likeUserList');
   };

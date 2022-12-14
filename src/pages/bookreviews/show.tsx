@@ -33,6 +33,7 @@ const BookReviewShow = () => {
         clubName={bookreview?.club?.name || ''}
         publishedAt={bookreview?.publishedAt}
         isMyBookreview={bookreview?.user.id === user.id}
+        bookreviewID={bookreview?.id}
       />
       <BookreviewContent bookreview={bookreview!} userID={user.id} />
       <BookreviewComments

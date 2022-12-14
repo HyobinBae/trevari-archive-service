@@ -21,7 +21,6 @@ import LoveFilled from 'components/svgs/LoveFilled';
 import LoveOutline from 'components/svgs/LoveOutline';
 import CommentOutline from 'components/svgs/CommentOutline';
 import { LikeUser } from 'pages/bookreviews/services/types';
-import ProfileInLikeUserModal from './ProfileInLikeUserModal';
 import LikeUserModal from './LikeUserModal';
 
 interface CommentProps {
@@ -30,6 +29,13 @@ interface CommentProps {
   onClickComment: () => void;
   loggedUserID: string;
 }
+
+const initialModalState = {
+  deleteReply: false,
+  deleteComment: false,
+  likeUserList: false,
+  selectedCommentID: '',
+};
 const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: CommentProps) => {
   const { user, createdAt, content, replies, id, userID, likeUserIDs } = comment;
   const [selectedComment, setSelectedComment] = useState({
@@ -40,12 +46,7 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
 
   const dispatch = useAppDispatch();
   const { width } = useWindowSize();
-  const [modalState, setModalState] = useState({
-    deleteReply: false,
-    deleteComment: false,
-    likeUserList: false,
-    selectedCommentID: '',
-  });
+  const [modalState, setModalState] = useState(initialModalState);
   const { deleteReply, deleteComment, selectedCommentID, likeUserList } = modalState;
 
   const [isOpenMoreList, setOpenMoreList] = useState(false);
@@ -58,6 +59,9 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
   };
   const onClickBookreviewLikeUsers = async (id: string) => {
     const resultAction = await dispatch(getBookreviewCommentLikeUsers.initiate({ id }));
+    if (resultAction.data.length === 0 || !resultAction.data) {
+      return;
+    }
     setLikeUsers(resultAction.data);
     onToggleModal('likeUserList');
   };
@@ -82,6 +86,7 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
       text: '신고하기',
       onAction: () => {
         dispatch(reportOnBookreviewComment.initiate({ id: selectedComment.commentID, userID: loggedUserID }));
+        onDismiss();
       },
     },
   ];
@@ -107,7 +112,13 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
   const onClickLikeButton = (commentID: string) => {
     dispatch(toggleLikeOnBookreviewComment.initiate({ id: commentID, userID: loggedUserID }));
   };
-  useEffect(() => onDismiss, []);
+  useEffect(() => {
+    return () => {
+      setOpenMoreList(false);
+      setModalState(initialModalState);
+    };
+  }, []);
+
   const bottomSheetLeftMarginPx = width > 500 ? 'calc(50vw - 250px)' : 0;
   const deleteCommentModalText = '댓글을 정말로 삭제하시겠어요?';
   const deleteReplyModalText = '답글을 정말로 삭제하시겠어요?';

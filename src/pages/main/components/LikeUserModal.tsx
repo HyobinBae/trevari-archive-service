@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { heading7 } from '@trevari/typo';
 import CloseIcon from 'components/svgs/CloseIcon';
-import EmptyEmoji from 'components/svgs/EmptyEmoji';
 import { LikeUser } from 'pages/bookreviews/services/types';
 import { Divider } from 'pages/curations/curations.styles';
 import React from 'react';
@@ -21,16 +20,12 @@ const LikeUserModal = ({ users, onClose, browserWidth }: LikeUserModalProps) => 
       </CloseButtonWrapper>
       <LikeUserCount>좋아요 {users.length}</LikeUserCount>
       <Divider />
-      {users.length > 0 ? (
-        users.map(user => (
-          <React.Fragment key={user.id}>
-            <ProfileInLikeUserModal user={user} />
-            <Divider />
-          </React.Fragment>
-        ))
-      ) : (
-        <EmptyEmoji />
-      )}
+      {users.map(user => (
+        <React.Fragment key={user.id}>
+          <ProfileInLikeUserModal user={user} />
+          <Divider />
+        </React.Fragment>
+      ))}
     </ModalContainer>
   );
 };

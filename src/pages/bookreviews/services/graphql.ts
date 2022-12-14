@@ -254,3 +254,9 @@ export const GET_BOOKREVIEW_COMMENT_LIKEUSERS = gql`
     }
   }
 `;
+
+export const DELETE_BOOKREVIEW = gql`
+  mutation deleteBookreview($id: String!) {
+    deleteBookreview(id: $id)
+  }
+`;

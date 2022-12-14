@@ -1,3 +1,4 @@
+import { deleteBookreview } from 'pages/bookreviews/services/api';
 import { createSlice } from '@reduxjs/toolkit';
 import { Bookreview } from 'types/__generate__/user-backend-api';
 import { getBookreview } from './api';
@@ -20,6 +21,9 @@ export const bookreviewStore = createSlice({
   extraReducers: builder => {
     builder.addMatcher(getBookreview.matchFulfilled, (state, { payload }) => {
       state.bookreview = payload;
+    });
+    builder.addMatcher(deleteBookreview.matchFulfilled, (state, { payload }) => {
+      state.bookreview = {} as Bookreview;
     });
   },
 });
