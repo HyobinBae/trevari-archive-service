@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import BetaBadge from '../components/svgs/BetaBadge';
+import styled from '@emotion/styled';
 
 export const useNavigation = () => {
   const location = useLocation();
@@ -34,7 +36,12 @@ export const useNavigation = () => {
     } else if (navigation.path === '/wishList') {
       return '찜 리스트';
     } else if (navigation.path === '/bookreviews') {
-      return '독후감';
+      return (
+        <TitleWrapper>
+          <TitleSpan>독후감</TitleSpan>
+          <BetaBadge />
+        </TitleWrapper>
+      );
     } else {
       return null;
     }
@@ -42,3 +49,12 @@ export const useNavigation = () => {
 
   return { ...navigation, title };
 };
+
+const TitleWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+const TitleSpan = styled.div`
+  margin-right: 4px;
+`;
