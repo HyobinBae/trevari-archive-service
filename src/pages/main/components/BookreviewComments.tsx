@@ -140,7 +140,9 @@ const BookreviewComments = ({
             <LoveOutline width={20} height={20} />
           )}
         </div>
-        <IconText onClick={onClickBookreviewLikeUsers}>좋아요 {likeUserIDs.length}</IconText>
+        <IconText onClick={onClickBookreviewLikeUsers} isClickable={likeUserIDs.length > 0}>
+          좋아요 {likeUserIDs.length}
+        </IconText>
         <div onClick={onClickComment}>
           <CommentOutline />
           <IconText>댓글 {comments.length || 0}</IconText>
@@ -263,10 +265,11 @@ const IconBox = styled.div`
     align-items: center;
   }
 `;
-const IconText = styled.span`
+const IconText = styled.span<{ isClickable: boolean }>`
   color: ${({ theme }) => theme.colors.gray600};
   margin: 0 14px 0 4px;
   ${title4};
+  cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
 `;
 
 export default BookreviewComments;

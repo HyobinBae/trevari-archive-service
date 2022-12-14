@@ -140,10 +140,12 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
             <LoveOutline width={20} height={20} />
           )}
         </div>
-        <IconText onClick={() => onClickBookreviewLikeUsers(id)}>좋아요 {likeUserIDs.length}</IconText>
+        <IconText isClickable={likeUserIDs.length > 0} onClick={() => onClickBookreviewLikeUsers(id)}>
+          좋아요 {likeUserIDs.length}
+        </IconText>
         <div onClick={() => onClickReply(`@${user!.name} `, id)}>
           <CommentOutline />
-          <IconText>답글 쓰기</IconText>
+          <IconText isClickable={true}>답글 쓰기</IconText>
         </div>
       </IconWrapper>
       <Divider />
@@ -168,12 +170,15 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
                     <LoveOutline width={20} height={20} />
                   )}
                 </div>
-                <IconText onClick={() => onClickBookreviewLikeUsers(replyID)}>
+                <IconText
+                  isClickable={likeUserIDs && likeUserIDs.length > 0}
+                  onClick={() => onClickBookreviewLikeUsers(replyID)}
+                >
                   좋아요 {likeUserIDs?.length || 0}
                 </IconText>
                 <div onClick={() => onClickReply(`@${replyUser!.name} `, id)}>
                   <CommentOutline />
-                  <IconText>답글 쓰기</IconText>
+                  <IconText isClickable={true}>답글 쓰기</IconText>
                 </div>
               </IconWrapper>
             </ReplyBase>
@@ -223,12 +228,12 @@ const IconWrapper = styled.div`
     align-items: center;
   }
 `;
-const IconText = styled.span`
+const IconText = styled.span<{ isClickable: boolean }>`
   ${title4};
   color: ${({ theme }) => theme.colors.gray600};
   margin: 0 14px 0 4px;
 
-  cursor: pointer;
+  cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
 `;
 const Content = styled.div`
   ${contents2};
