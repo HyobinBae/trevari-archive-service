@@ -1,4 +1,4 @@
-import { INewCuration } from "pages/main/services/main.types";
+import { INewCuration } from 'pages/main/services/main.types';
 
 /* eslint-disable */
 export type Maybe<T> = T | null;
@@ -389,6 +389,8 @@ export type BookreviewComment = {
   updatedAt?: Maybe<Scalars['String']>;
   user?: Maybe<User>;
   userID: Scalars['String'];
+  likeUserIDs: Array<Scalars['String']>;
+  reportUserIDs: Array<Scalars['String']>;
 };
 
 export type BookreviewsOptions = {
@@ -406,7 +408,7 @@ export type BookreviewsWhereInput = {
 
 export enum CacheControlScope {
   Private = 'PRIVATE',
-  Public = 'PUBLIC'
+  Public = 'PUBLIC',
 }
 
 export type Category = {
@@ -1414,241 +1416,194 @@ export type Mutation = {
   viewContent: Scalars['Boolean'];
 };
 
-
 export type MutationAddToCartArgs = {
   input: AddToCartInput;
 };
-
 
 export type MutationCancelUserArgs = {
   id: Scalars['String'];
 };
 
-
 export type MutationChangeClubArgs = {
   input: ChangeClubInput;
 };
-
 
 export type MutationChangePasswordOnUserArgs = {
   input: ChangePasswordOnUserInput;
 };
 
-
 export type MutationChangeStatusEventApplicationWhenWaitingPaymentArgs = {
   input: UpdateEventApplicationInput;
 };
-
 
 export type MutationConfirmPartnerApplicationArgs = {
   id: Scalars['String'];
 };
 
-
 export type MutationConfirmPhoneNumberArgs = {
   input: ConfirmPhoneNumberInput;
 };
-
 
 export type MutationCreateBookreviewArgs = {
   input: CreateBookreviewInput;
   isForced?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type MutationCreateBookreviewCommentArgs = {
   input: CreateBookreviewCommentInput;
 };
-
 
 export type MutationCreateClubReviewArgs = {
   input: CreateClubReviewInput;
 };
 
-
 export type MutationCreateDeviceArgs = {
   input: CreateDeviceInput;
 };
-
 
 export type MutationCreatePushNotificationArgs = {
   input?: InputMaybe<CreatePushNotificationInput>;
 };
 
-
 export type MutationCreateSpaceRentalArgs = {
   input: CreateSpaceRentalInput;
 };
-
 
 export type MutationCreateUcmTestResultArgs = {
   input: CreateUcmTestResultInput;
 };
 
-
 export type MutationCreateUserArgs = {
   input: CreateUserInput;
 };
-
 
 export type MutationCreateWishClubArgs = {
   input: CreateWishClubInput;
 };
 
-
 export type MutationDeleteBookreviewArgs = {
   id: Scalars['String'];
 };
-
 
 export type MutationDeleteBookreviewCommentArgs = {
   id: Scalars['String'];
 };
 
-
 export type MutationDeleteClubApplicationArgs = {
   id: Scalars['String'];
 };
-
 
 export type MutationDeleteDeviceArgs = {
   id: Scalars['String'];
 };
 
-
 export type MutationDeletePushNotificationArgs = {
   id: Scalars['String'];
 };
-
 
 export type MutationDeleteWishClubArgs = {
   clubID: Scalars['String'];
   userID: Scalars['String'];
 };
 
-
 export type MutationGeneratePreSignedUrlArgs = {
   fileName: Scalars['String'];
 };
-
 
 export type MutationInitiateCheckoutArgs = {
   input: InitiateCheckoutInput;
 };
 
-
 export type MutationIssueCouponsArgs = {
   input: IssueCouponsInput;
 };
-
 
 export type MutationLinkEmailOnUserArgs = {
   input: LinkEmailOnUserInput;
 };
 
-
 export type MutationLinkFacebookOnUserArgs = {
   input: LinkFacebookOnUserInput;
 };
-
 
 export type MutationOutgoingCancelArgs = {
   input: OutgoingCancelInput;
 };
 
-
 export type MutationOutgoingRequestArgs = {
   input: OutgoingRequestInput;
 };
-
 
 export type MutationPageViewArgs = {
   input: PageViewInput;
 };
 
-
 export type MutationPurchaseArgs = {
   input: PurchaseInput;
 };
-
 
 export type MutationRefundEventArgs = {
   input: RefundEventInput;
 };
 
-
 export type MutationSendPushNotificationsArgs = {
   input?: InputMaybe<SendPushNotificationsInput>;
 };
-
 
 export type MutationToggleLikeOnBookreviewTempArgs = {
   id: Scalars['String'];
   userID: Scalars['String'];
 };
 
-
 export type MutationUnlinkFacebookOnUserArgs = {
   id: Scalars['String'];
 };
-
 
 export type MutationUpdateBookreviewArgs = {
   input: UpdateBookreviewInput;
   isForced?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type MutationUpdateBookreviewCommentArgs = {
   input: UpdateBookreviewCommentInput;
 };
-
 
 export type MutationUpdateClubApplicationArgs = {
   input: UpdateClubApplicationInput;
 };
 
-
 export type MutationUpdateClubReviewArgs = {
   input: UpdateClubReviewInput;
 };
-
 
 export type MutationUpdateDeviceArgs = {
   input: UpdateDeviceInput;
 };
 
-
 export type MutationUpdateFailClubApplicationArgs = {
   input: UpdateClubApplicationInput;
 };
-
 
 export type MutationUpdatePartnerApplicationArgs = {
   input: UpdatePartnerApplicationInput;
 };
 
-
 export type MutationUpdatePushNotificationArgs = {
   input?: InputMaybe<UpdatePushNotificationInput>;
 };
 
-
 export type MutationUpdateRecentLoginedAtArgs = {
   id: Scalars['String'];
 };
-
 
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
   isForced?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type MutationUpdateVbankOnClubApplicationArgs = {
   id: Scalars['String'];
 };
-
 
 export type MutationViewContentArgs = {
   input: ViewContentInput;
@@ -1963,8 +1918,8 @@ export type Query = {
   leaders?: Maybe<Array<Maybe<Leader>>>;
   mainManualPosts?: Maybe<Array<Maybe<Post>>>;
   mainPosts?: Maybe<Array<Maybe<Post>>>;
-  curation?:Maybe<INewCuration>;
-  curations?:Maybe<Array<INewCuration>>;
+  curation?: Maybe<INewCuration>;
+  curations?: Maybe<Array<INewCuration>>;
   meeting?: Maybe<Meeting>;
   meetingByID?: Maybe<Meeting>;
   meetings?: Maybe<Array<Maybe<Meeting>>>;
@@ -2009,71 +1964,58 @@ export type Query = {
   wishClubs?: Maybe<Array<Maybe<WishClub>>>;
 };
 
-
 export type QueryBannersArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<BannersWhereInput>;
 };
 
-
 export type QueryBenefitCompaniesArgs = {
   options?: InputMaybe<BenefitCompaniesOptions>;
 };
-
 
 export type QueryBenefitCompanyArgs = {
   id: Scalars['String'];
 };
 
-
 export type QueryBookreviewArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryBookreviewByUserIdAndMeetingIdArgs = {
   meetingID: Scalars['String'];
   userID: Scalars['String'];
 };
 
-
 export type QueryBookreviewCommentsArgs = {
   bookreviewID: Scalars['String'];
 };
 
-
 export type QueryBookreviewsTempArgs = {
   options?: InputMaybe<BookreviewsOptions>;
 };
-
 
 export type QueryCanExtendClubArgs = {
   clubID: Scalars['String'];
   userID: Scalars['String'];
 };
 
-
 export type QueryCategoryArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryCheckAvailablePhoneNumberArgs = {
   countryCode: Scalars['String'];
   phoneNumber: Scalars['String'];
 };
 
-
 export type QueryClubArgs = {
   id: Scalars['String'];
 };
 
-
 export type QueryClubApplicationArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryClubApplicationsArgs = {
   limit: Scalars['Int'];
@@ -2082,11 +2024,9 @@ export type QueryClubApplicationsArgs = {
   where: ClubApplicationsWhereInput;
 };
 
-
 export type QueryClubGroupArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryClubGroupsArgs = {
   limit: Scalars['Int'];
@@ -2094,23 +2034,19 @@ export type QueryClubGroupsArgs = {
   where: ClubGroupsWhereInput;
 };
 
-
 export type QueryClubHistoriesArgs = {
   limit: Scalars['Int'];
   offset: Scalars['Int'];
   where: ClubHistoriesWhereInput;
 };
 
-
 export type QueryClubHistoryArgs = {
   id: Scalars['String'];
 };
 
-
 export type QueryClubPostCommentArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryClubPostCommentsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
@@ -2118,11 +2054,9 @@ export type QueryClubPostCommentsArgs = {
   where?: InputMaybe<ClubPostCommentsWhereInput>;
 };
 
-
 export type QueryClubReviewArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryClubReviewsArgs = {
   limit: Scalars['Int'];
@@ -2131,11 +2065,9 @@ export type QueryClubReviewsArgs = {
   where: ClubReviewsWhereInput;
 };
 
-
 export type QueryClubRoleArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryClubRolesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
@@ -2143,11 +2075,9 @@ export type QueryClubRolesArgs = {
   where?: InputMaybe<ClubRolesWhereInput>;
 };
 
-
 export type QueryClubWithTagDatasArgs = {
   options?: InputMaybe<ClubWithTagDatasInput>;
 };
-
 
 export type QueryClubsArgs = {
   containsFullClub?: InputMaybe<Scalars['Boolean']>;
@@ -2161,13 +2091,11 @@ export type QueryClubsArgs = {
   where?: InputMaybe<ClubsWhereInput>;
 };
 
-
 export type QueryClubsCountArgs = {
   containsFullClub?: InputMaybe<Scalars['Boolean']>;
   mostFullClubConditionPercent?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<ClubsWhereInput>;
 };
-
 
 export type QueryClubsWithTagArgs = {
   containsFullClub?: InputMaybe<Scalars['Boolean']>;
@@ -2178,16 +2106,13 @@ export type QueryClubsWithTagArgs = {
   where?: InputMaybe<ClubsWithTagWhereInput>;
 };
 
-
 export type QueryCouponsArgs = {
   options: CouponsOptions;
 };
 
-
 export type QueryDeviceArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryDevicesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
@@ -2195,11 +2120,9 @@ export type QueryDevicesArgs = {
   where?: InputMaybe<DevicesWhereInput>;
 };
 
-
 export type QueryDisplayOrderArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryDisplayOrdersArgs = {
   limit?: InputMaybe<Scalars['Int']>;
@@ -2207,16 +2130,13 @@ export type QueryDisplayOrdersArgs = {
   where?: InputMaybe<DisplayOrdersWhereInput>;
 };
 
-
 export type QueryEventArgs = {
   id: Scalars['String'];
 };
 
-
 export type QueryEventApplicationArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryEventApplicationsArgs = {
   limit: Scalars['Int'];
@@ -2224,11 +2144,9 @@ export type QueryEventApplicationsArgs = {
   where: EventApplicationsWhereInput;
 };
 
-
 export type QueryEventRoleArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryEventRolesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
@@ -2236,57 +2154,47 @@ export type QueryEventRolesArgs = {
   where?: InputMaybe<EventRolesWhereInput>;
 };
 
-
 export type QueryEventsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<EventsWhereInput>;
 };
 
-
 export type QueryExtraNoticeArgs = {
   id: Scalars['String'];
 };
 
-
 export type QueryFaqArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryFaqsArgs = {
   category?: InputMaybe<Scalars['String']>;
   where?: InputMaybe<FaqsWhereInput>;
 };
 
-
 export type QueryFindEmailArgs = {
   name: Scalars['String'];
   phoneNumber: Scalars['String'];
 };
 
-
 export type QueryGetAppleIdArgs = {
   accessToken?: InputMaybe<Scalars['String']>;
 };
-
 
 export type QueryHasExperienceEventArgs = {
   eventID?: InputMaybe<Scalars['String']>;
   userID: Scalars['String'];
 };
 
-
 export type QueryHasExperiencedSeasonArgs = {
   userID: Scalars['String'];
 };
-
 
 export type QueryHasIssueableCouponArgs = {
   benefitCompanyID: Scalars['String'];
   userID: Scalars['String'];
 };
-
 
 export type QueryHasMembershipArgs = {
   checkDate?: InputMaybe<Scalars['String']>;
@@ -2296,24 +2204,20 @@ export type QueryHasMembershipArgs = {
   userID: Scalars['String'];
 };
 
-
 export type QueryHasMembershipByClubIdArgs = {
   clubID: Scalars['String'];
   userID: Scalars['String'];
 };
-
 
 export type QueryHasPaidClubApplicationArgs = {
   clubGroupID?: InputMaybe<Scalars['String']>;
   userID: Scalars['String'];
 };
 
-
 export type QueryHasTicketArgs = {
   serviceID?: InputMaybe<Scalars['String']>;
   userID: Scalars['String'];
 };
-
 
 export type QueryInactiveUsersArgs = {
   limit?: InputMaybe<Scalars['Int']>;
@@ -2321,58 +2225,48 @@ export type QueryInactiveUsersArgs = {
   where?: InputMaybe<InactiveUsersWhereInput>;
 };
 
-
 export type QueryIsAppliableEventArgs = {
   eventID: Scalars['String'];
   userID: Scalars['String'];
 };
 
-
 export type QueryIsAppliablePartnerArgs = {
   userID: Scalars['String'];
 };
-
 
 export type QueryIsAttendedArgs = {
   meetingID: Scalars['String'];
   userID: Scalars['String'];
 };
 
-
 export type QueryIsKtMembershipArgs = {
   clubID: Scalars['String'];
   userID: Scalars['String'];
 };
-
 
 export type QueryIsLastMeetingOverArgs = {
   seasonID: Scalars['String'];
   userID: Scalars['String'];
 };
 
-
 export type QueryIsNewbieArgs = {
   userID: Scalars['String'];
 };
-
 
 export type QueryIsVaildPinNumberArgs = {
   pinNumber: Scalars['String'];
   price: Scalars['Int'];
 };
 
-
 export type QueryIssuedCouponsArgs = {
   benefitCompanyID: Scalars['String'];
   userID: Scalars['String'];
 };
 
-
 export type QueryLeaderArgs = {
   id?: InputMaybe<Scalars['String']>;
   userID?: InputMaybe<Scalars['String']>;
 };
-
 
 export type QueryLeadersArgs = {
   limit?: InputMaybe<Scalars['Int']>;
@@ -2381,11 +2275,9 @@ export type QueryLeadersArgs = {
   where?: InputMaybe<LeadersWhereInput>;
 };
 
-
 export type QueryMainManualPostsArgs = {
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
-
 
 export type QueryMainPostsArgs = {
   excludeClosedPost?: InputMaybe<Scalars['Boolean']>;
@@ -2393,17 +2285,14 @@ export type QueryMainPostsArgs = {
   offset?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type QueryMeetingArgs = {
   clubID: Scalars['String'];
   order: Scalars['Int'];
 };
 
-
 export type QueryMeetingByIdArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryMeetingsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
@@ -2412,41 +2301,33 @@ export type QueryMeetingsArgs = {
   where?: InputMaybe<MeetingsWhereInput>;
 };
 
-
 export type QueryMemberCountArgs = {
   clubID: Scalars['String'];
 };
-
 
 export type QueryMemberInfoByClubArgs = {
   id: Scalars['String'];
 };
 
-
 export type QueryMemberInfoBySeasonIdArgs = {
   seasonID: Scalars['String'];
 };
-
 
 export type QueryNextSeasonClubArgs = {
   prevClubID: Scalars['String'];
 };
 
-
 export type QueryNoticeArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryOutgoingVoucherArgs = {
   userId: Scalars['String'];
 };
 
-
 export type QueryPartnerApplicationArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryPartnerApplicationsArgs = {
   limit: Scalars['Int'];
@@ -2454,18 +2335,15 @@ export type QueryPartnerApplicationsArgs = {
   where: PartnerApplicationsWhereInput;
 };
 
-
 export type QueryPinNumbersArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<PinNumbersWhereInput>;
 };
 
-
 export type QueryPlaceArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryPointHistoriesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
@@ -2473,11 +2351,9 @@ export type QueryPointHistoriesArgs = {
   where?: InputMaybe<PointHistoriesWhereInput>;
 };
 
-
 export type QueryPolicyArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryPopularPostsArgs = {
   excludeClosedPost?: InputMaybe<Scalars['Boolean']>;
@@ -2485,27 +2361,22 @@ export type QueryPopularPostsArgs = {
   offset?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type QueryPostArgs = {
   id: Scalars['String'];
 };
 
-
 export type QueryPostsArgs = {
   where?: InputMaybe<PostsWhereInput>;
 };
-
 
 export type QueryProductMappingArgs = {
   clubID: Scalars['String'];
   meetingIDs?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
-
 export type QueryPushNotificationArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryPushNotificationsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
@@ -2513,21 +2384,17 @@ export type QueryPushNotificationsArgs = {
   where?: InputMaybe<PushNotificationsWhereInput>;
 };
 
-
 export type QueryRecruitmentArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryRecruitmentsArgs = {
   where?: InputMaybe<RecruitmentWhereInput>;
 };
 
-
 export type QueryRefundArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryRefundsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
@@ -2536,23 +2403,19 @@ export type QueryRefundsArgs = {
   where?: InputMaybe<RefundWhereInput>;
 };
 
-
 export type QueryRoomSchedulesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<RoomSchedulesWhereInput>;
 };
 
-
 export type QuerySeasonArgs = {
   id: Scalars['String'];
 };
 
-
 export type QuerySeasonsArgs = {
   where?: InputMaybe<SeasonsWhereInput>;
 };
-
 
 export type QuerySpaceRentalsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
@@ -2560,11 +2423,9 @@ export type QuerySpaceRentalsArgs = {
   where?: InputMaybe<SpaceRentalWhereInput>;
 };
 
-
 export type QueryTagArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryTagsArgs = {
   limit: Scalars['Int'];
@@ -2572,36 +2433,29 @@ export type QueryTagsArgs = {
   where: TagsWhereInput;
 };
 
-
 export type QueryTempBookApplicationArgs = {
   clubApplicationID: Scalars['String'];
 };
-
 
 export type QueryUserArgs = {
   id: Scalars['String'];
 };
 
-
 export type QueryUserByEmailArgs = {
   email: Scalars['String'];
 };
-
 
 export type QueryUsersByBatchingArgs = {
   ids: Array<InputMaybe<Scalars['String']>>;
 };
 
-
 export type QueryVideoArgs = {
   id: Scalars['String'];
 };
 
-
 export type QueryWalletArgs = {
   userID: Scalars['String'];
 };
-
 
 export type QueryWishClubsArgs = {
   limit?: InputMaybe<Scalars['Int']>;

@@ -52,6 +52,8 @@ export const GET_BOOKREVIEW = gql`
           email
           profileImageUrl
         }
+        likeUserIDs
+        reportUserIDs
         replies {
           id
           bookreviewID
@@ -69,6 +71,7 @@ export const GET_BOOKREVIEW = gql`
           content
           parentID
           createdAt
+          likeUserIDs
         }
       }
     }
@@ -115,6 +118,7 @@ export const UPDATE_BOOKREVIEW_COMMENT = gql`
     updateBookreviewComment(input: $input) {
       bookreviewComment {
         id
+        parentID
         bookreviewID
         content
         createdAt
@@ -122,6 +126,22 @@ export const UPDATE_BOOKREVIEW_COMMENT = gql`
         user {
           id
           name
+          email
+          profileImageUrl
+        }
+        replies {
+          id
+          bookreviewID
+          userID
+          user {
+            id
+            name
+            email
+            profileImageUrl
+          }
+          content
+          parentID
+          createdAt
         }
       }
     }
@@ -135,13 +155,71 @@ export const DELETE_BOOKREVIEW_COMMENT = gql`
 `;
 
 export const TOGGLE_LIKE_BOOKREVIEW_COMMENT = gql`
-  mutation toggleLikeOnBookreviewComment($id: String!, userID: String!) {
-    toggleLikeOnBookreviewComment(id: $id, userID, $userID)
+  mutation toggleLikeOnBookreviewComment($id: String!, $userID: String!) {
+    toggleLikeOnBookreviewComment(id: $id, userID: $userID) {
+      bookreviewComment {
+        id
+        parentID
+        bookreviewID
+        content
+        createdAt
+        userID
+        user {
+          id
+          name
+          email
+          profileImageUrl
+        }
+        replies {
+          id
+          bookreviewID
+          userID
+          user {
+            id
+            name
+            email
+            profileImageUrl
+          }
+          content
+          parentID
+          createdAt
+        }
+      }
+    }
   }
 `;
 
 export const REPORT_BOOKREVIEW_COMMENT = gql`
-  mutation reportOnBookreviewComment($id: String!, userID: String, reason: String!) {
-    reportOnBookreviewComment(id: $id, userID: $userID, reason: $reason)
+  mutation reportOnBookreviewComment($id: String!, $userID: String!) {
+    reportOnBookreviewComment(id: $id, userID: $userID) {
+      bookreviewComment {
+        id
+        parentID
+        bookreviewID
+        content
+        createdAt
+        userID
+        user {
+          id
+          name
+          email
+          profileImageUrl
+        }
+        replies {
+          id
+          bookreviewID
+          userID
+          user {
+            id
+            name
+            email
+            profileImageUrl
+          }
+          content
+          parentID
+          createdAt
+        }
+      }
+    }
   }
 `;

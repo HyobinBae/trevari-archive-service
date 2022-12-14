@@ -12,15 +12,26 @@ import MoreItems from './MoreItems';
 import { useWindowSize } from 'utils/windowResize';
 import BaseModal from './ModalBase';
 import { useAppDispatch } from 'services/store';
-import { DELETE_BOOKREVIEW_COMMENT } from 'pages/bookreviews/services/graphql';
+import {
+  deleteBookreviewComment,
+  reportOnBookreviewComment,
+  toggleLikeOnBookreviewComment,
+} from 'pages/bookreviews/services/api';
+import LoveFilled from 'components/svgs/LoveFilled';
+import LoveOutline from 'components/svgs/LoveOutline';
 
 interface CommentProps {
   comment: BookreviewComment;
   onClickReply: (name: string, id: string) => void;
+  onClickComment: () => void;
   loggedUserID: string;
 }
-const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
-  const { user, createdAt, content, replies, id, userID } = comment;
+const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: CommentProps) => {
+  const { user, createdAt, content, replies, id, userID, likeUserIDs } = comment;
+  const [selectedComment, setSelectedComment] = useState({
+    userID: '',
+    commentID: '',
+  });
   const dispatch = useAppDispatch();
   const { width } = useWindowSize();
   const [modalState, setModalState] = useState({
@@ -29,6 +40,8 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
     selectedCommentID: '',
   });
   const { deleteReply, deleteComment, selectedCommentID } = modalState;
+
+  const [isOpenMoreList, setOpenMoreList] = useState(false);
   const onToggleModal = (name: string, id?: string) => {
     setModalState({
       ...modalState,
@@ -36,9 +49,8 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
       selectedCommentID: id || modalState.selectedCommentID,
     });
   };
-  const [isOpenMoreList, setOpenMoreList] = useState<boolean>(false);
 
-  const isMyComment = loggedUserID === userID;
+  const isMyComment = loggedUserID === selectedComment.userID;
 
   const MORE_ACTIONS_OF_MY_COMMENT = [
     {
@@ -58,54 +70,83 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
     {
       text: '신고하기',
       onAction: () => {
-        if (confirm('신고 하시겠습니까?')) {
-          alert('신고가 접수되었습니다.');
-        }
+        dispatch(reportOnBookreviewComment.initiate({ id: selectedComment.commentID, userID: loggedUserID }));
       },
     },
   ];
 
   const onDismiss = () => {
-    setOpenMoreList(false);
+    setOpenMoreList(state => !state);
   };
   const onConfirmDelete = () => {
     onToggleModal('deleteComment');
-    // dispatch(deleteBookreviewComment.initiate());
-    // selectedCommentID
+    dispatch(deleteBookreviewComment.initiate({ id: selectedComment.commentID }));
+  };
+  const onConfirmDeleteReply = () => {
+    onToggleModal('deleteReply');
+    dispatch(deleteBookreviewComment.initiate({ id: selectedCommentID }));
+  };
+  const onClickMoreButton = (userID: string, commentID: string) => {
+    setSelectedComment({
+      userID,
+      commentID,
+    });
+    onDismiss();
+  };
+  const onClickLikeButton = (commentID: string) => {
+    dispatch(toggleLikeOnBookreviewComment.initiate({ id: commentID, userID: loggedUserID }));
   };
   useEffect(() => onDismiss, []);
   const bottomSheetLeftMarginPx = width > 500 ? 'calc(50vw - 250px)' : 0;
   const deleteCommentModalText = '댓글을 정말로 삭제하시겠어요?';
   const deleteReplyModalText = '답글을 정말로 삭제하시겠어요?';
+  const alreadyLikedComment = likeUserIDs ? likeUserIDs.includes(loggedUserID) : false;
   return (
     <div>
       <ProfileBox>
-        <MoreButtonWrapper onClick={() => setOpenMoreList(state => !state)}>
+        <MoreButtonWrapper onClick={() => onClickMoreButton(userID, id)}>
           <Kebab />
         </MoreButtonWrapper>
         <ProfileInBookreviewPage user={user} publishedAt={createdAt} isBookreviewProfile={false} />
       </ProfileBox>
       <Content>{content}</Content>
       <IconWrapper>
+        <div onClick={() => onClickLikeButton(id)}>
+          {alreadyLikedComment ? (
+            <LoveFilled width={20} height={20} strokeColor="#FF7900" />
+          ) : (
+            <LoveOutline width={20} height={20} />
+          )}
+        </div>
+        <IconText>좋아요 {likeUserIDs.length}</IconText>
         <CommentOutlineIcon />
         <IconText onClick={() => onClickReply(`@${user!.name} `, id)}>답글 쓰기</IconText>
       </IconWrapper>
       <Divider />
       {replies?.map(reply => {
-        const { user: replyUser, createdAt: replyCreatedAt, content: replyContent, id: replyID } = reply;
+        const { user: replyUser, createdAt: replyCreatedAt, content: replyContent, id: replyID, likeUserIDs } = reply;
+        const alreadyLikedReply = likeUserIDs ? likeUserIDs.includes(loggedUserID) : false;
         return (
           <React.Fragment key={replyID}>
             <ReplyBase>
               <ProfileBox>
-                <MoreButtonWrapper onClick={() => setOpenMoreList(state => !state)}>
+                <MoreButtonWrapper onClick={() => onClickMoreButton(replyUser.id, replyID)}>
                   <Kebab />
                 </MoreButtonWrapper>
                 <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} isBookreviewProfile={false} />
               </ProfileBox>
               <Content>{replyContent}</Content>
               <IconWrapper>
+                <div onClick={() => onClickLikeButton(replyID)}>
+                  {alreadyLikedReply ? (
+                    <LoveFilled width={20} height={20} strokeColor="#FF7900" />
+                  ) : (
+                    <LoveOutline width={20} height={20} />
+                  )}
+                </div>
+                <IconText>좋아요 {likeUserIDs?.length || 0}</IconText>
                 <CommentOutlineIcon />
-                <IconText onClick={() => onClickReply(`@${user!.name} `, id)}>답글 쓰기</IconText>
+                <IconText onClick={() => onClickReply(`@${replyUser!.name} `, id)}>답글 쓰기</IconText>
               </IconWrapper>
             </ReplyBase>
             <Divider />
@@ -114,13 +155,13 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
       })}
       <BottomSheet
         open={isOpenMoreList}
-        onDismiss={() => setOpenMoreList(state => !state)}
+        onDismiss={onDismiss}
         style={{
           '--rsbs-ml': bottomSheetLeftMarginPx,
           '--rsbs-max-w': '500px',
         }}
       >
-        <MoreItems actions={!isMyComment ? MORE_ACTIONS_OF_MY_COMMENT : MORE_ACTIONS} />
+        <MoreItems actions={isMyComment ? MORE_ACTIONS_OF_MY_COMMENT : MORE_ACTIONS} />
       </BottomSheet>
       <BaseModal
         open={deleteComment}
@@ -132,7 +173,7 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
         open={deleteReply}
         text={deleteReplyModalText}
         onCancel={() => onToggleModal('deleteReply')}
-        onConfirm={onConfirmDelete}
+        onConfirm={onConfirmDeleteReply}
       />
     </div>
   );
@@ -148,6 +189,8 @@ const IconWrapper = styled.div`
 const IconText = styled.span`
   ${title4};
   color: ${({ theme }) => theme.colors.gray600};
+  margin: 0 14px 0 4px;
+
   cursor: pointer;
 `;
 const Content = styled.div`

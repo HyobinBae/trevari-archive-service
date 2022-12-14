@@ -1,4 +1,4 @@
-import { backend, bookreviewBackend } from 'api/backend';
+import { bookreviewBackend } from 'api/backend';
 import { Bookreview } from 'types/__generate__/user-backend-api';
 import {
   GET_BOOKREVIEW,
@@ -12,14 +12,15 @@ import {
 export const bookreviewApi = bookreviewBackend.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
-    getBookreview: build.query<Array<Bookreview>, { id: string }>({
+    getBookreview: build.query<Bookreview, { id: string }>({
       query: ({ id }) => ({
         document: GET_BOOKREVIEW,
         variables: {
           id,
         },
       }),
-      transformResponse: ({ bookreview }: { bookreview: Array<Bookreview> }) => bookreview,
+      transformResponse: ({ bookreview }: { bookreview: Bookreview }) => bookreview,
+      providesTags: ['Bookreview'],
     }),
     deleteBookreviewComment: build.mutation({
       query: ({ id }) => ({
@@ -28,6 +29,7 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
           id,
         },
       }),
+      invalidatesTags: ['Bookreview'],
     }),
     updateBookreviewComment: build.mutation({
       query: ({ id, content }) => ({
@@ -37,17 +39,21 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
           content,
         },
       }),
+      invalidatesTags: ['Bookreview'],
     }),
     createBookreviewComment: build.mutation({
-      query: ({ id, content, parentID, userID }) => ({
+      query: ({ input: { bookreviewID, content, parentID, userID } }) => ({
         document: CREATE_BOOKREVIEW_COMMENT,
         variables: {
-          id,
-          content,
-          parentID,
-          userID,
+          input: {
+            bookreviewID,
+            content,
+            parentID,
+            userID,
+          },
         },
       }),
+      invalidatesTags: ['Bookreview'],
     }),
     toggleLikeOnBookreviewComment: build.mutation({
       query: ({ id, userID }) => ({
@@ -57,22 +63,36 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
           userID,
         },
       }),
+      invalidatesTags: ['Bookreview'],
     }),
     reportOnBookreviewComment: build.mutation({
-      query: ({ id, userID, reason }) => ({
+      query: ({ id, userID }) => ({
         document: REPORT_BOOKREVIEW_COMMENT,
         variables: {
           id,
           userID,
-          reason,
         },
       }),
     }),
   }),
 });
 
-export const { useGetBookreviewQuery } = bookreviewApi;
+export const {
+  useGetBookreviewQuery,
+  useUpdateBookreviewCommentMutation,
+  useCreateBookreviewCommentMutation,
+  useDeleteBookreviewCommentMutation,
+  useReportOnBookreviewCommentMutation,
+  useToggleLikeOnBookreviewCommentMutation,
+} = bookreviewApi;
 
 export const {
-  endpoints: { getBookreview },
+  endpoints: {
+    getBookreview,
+    createBookreviewComment,
+    updateBookreviewComment,
+    deleteBookreviewComment,
+    reportOnBookreviewComment,
+    toggleLikeOnBookreviewComment,
+  },
 } = bookreviewApi;

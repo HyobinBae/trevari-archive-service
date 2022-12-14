@@ -4,8 +4,10 @@ import { body4, body5, body6, title4 } from '@trevari/typo';
 import LoveFilled from 'components/svgs/LoveFilled';
 import LoveOutline from 'components/svgs/LoveOutline';
 import { useWindowSize } from 'hooks/useWindowSize';
+import { createBookreviewComment } from 'pages/bookreviews/services/api';
 import { Divider } from 'pages/curations/curations.styles';
 import { useRef, useState } from 'react';
+import { useAppDispatch } from 'services/store';
 import { BookreviewComment, User } from 'types/__generate__/user-backend-api';
 import { DEFAULT_PROFILE_IMAGE } from '../const';
 import Comment from './Comment';
@@ -15,26 +17,31 @@ const BookreviewComments = ({
   likeUserIDs,
   comments,
   user,
+  bookreviewID,
 }: {
   likeUserIDs: string[];
   comments: BookreviewComment[];
   user: User;
+  bookreviewID: string;
 }) => {
   const { width } = useWindowSize();
+  const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
   const [selectedCommentID, setSelectedCommentID] = useState('');
   const [modalState, setModalState] = useState({
     replyConfirm: false,
     deleteComment: false,
   });
+  const [commentText, setCommentText] = useState('');
   const { replyConfirm, deleteComment } = modalState;
-  const [inputState, setInputState] = useState({
+  // const {}
+  const [targetState, setTargetState] = useState({
     type: 'comment',
-    value: '',
-    targetCommentID: '',
+    targetParentCommentID: '',
     targetUsername: '',
+    targetReplyID: '',
   });
-  const { type, value, targetCommentID } = inputState;
+  const { type, targetParentCommentID } = targetState;
   const bottomInputContentWidth = width > 500 ? '500px' : '100%';
   const alreadyLikedBookrivew = likeUserIDs.includes(user.id);
   const onToggleModal = (name: string) => {
@@ -44,33 +51,50 @@ const BookreviewComments = ({
     });
   };
   const onClickReply = (name: string, id: string) => {
-    setInputState({
-      ...inputState,
+    setTargetState({
+      ...targetState,
+      type: 'reply',
       targetUsername: name,
-      targetCommentID: id,
+      targetParentCommentID: id,
     });
-    if (value) {
+    if (commentText) {
       onToggleModal('replyConfirm');
       return;
     }
-    onChangeInput('value', name);
+    onChangeInput(name);
     if (inputRef.current) {
       inputRef.current.focus();
     }
   };
-  const onChangeInput = (name: string, value: string) => {
-    setInputState({
-      ...inputState,
-      [name]: value,
-    });
+  const onClickComment = () => {
+    setTargetState({ ...targetState, type: 'reply', targetUsername: '', targetParentCommentID: '' });
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+  const onChangeInput = (value: string) => {
+    setCommentText(value);
   };
   const onConfirm = () => {
-    onChangeInput('value', inputState.targetUsername);
+    onChangeInput(targetState.targetUsername);
     onToggleModal('replyConfirm');
 
     if (inputRef.current) {
       inputRef.current.focus();
     }
+  };
+  const onSubmit = () => {
+    const input = {
+      bookreviewID,
+      content: commentText,
+      userID: user.id,
+    };
+
+    if (targetParentCommentID) {
+      Object.assign(input, { parentID: targetParentCommentID });
+    }
+    dispatch(createBookreviewComment.initiate({ input }));
+    onChangeInput('');
   };
   const replyConfirmModalText = `작성중인 내용이 있습니다.\n그래도 취소하시겠습니까?\n작성한 내용은 모두 사라집니다.`;
   return (
@@ -83,13 +107,19 @@ const BookreviewComments = ({
         )}
         <IconText>좋아요 {likeUserIDs.length}</IconText>
         <CommentOutlineIcon />
-        <IconText>댓글 {comments.length || 0}</IconText>
+        <IconText onClick={onClickComment}>댓글 {comments.length || 0}</IconText>
       </IconBox>
       <Divider />
       <CommentsCountText>총 {comments.length} 개의 댓글</CommentsCountText>
       <CommentContainer>
         {comments.map(comment => (
-          <Comment key={comment.id} comment={comment} onClickReply={onClickReply} loggedUserID={user.id} />
+          <Comment
+            key={comment.id}
+            comment={comment}
+            onClickReply={onClickReply}
+            onClickComment={onClickComment}
+            loggedUserID={user.id}
+          />
         ))}
       </CommentContainer>
       <InputContainer width={bottomInputContentWidth}>
@@ -97,9 +127,10 @@ const BookreviewComments = ({
         <Input
           ref={inputRef}
           placeholder="댓글을 입력하세요."
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInput('value', e.currentTarget.value)}
-          value={inputState.value}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInput(e.currentTarget.value)}
+          value={commentText}
         />
+        <button onClick={onSubmit}>제출</button>
       </InputContainer>
       <BaseModal
         open={replyConfirm}
