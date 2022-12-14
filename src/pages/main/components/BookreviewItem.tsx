@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Club } from '../../../types/__generate__/user-backend-api';
 import styled from '@emotion/styled';
 import { ProfileAvatar } from '@trevari/components';
-import { CommentIcon, CommentOutlineIcon, HeartIcon, KebabIcon, LikeOutlineIcon } from '@trevari/icons';
-import { body8, heading9, title4, title6 } from '@trevari/typo';
+import { CommentIcon, HeartIcon, KebabIcon } from '@trevari/icons';
+import { body8, contents2, heading9, title4, title6 } from '@trevari/typo';
+import { elapsedTime } from '../../../utils/time';
 
 interface Props {
   clubID: string;
@@ -11,7 +12,29 @@ interface Props {
 }
 
 const BookreviewItem = ({ clubID, club }: Props) => {
-  console.log('clubID', clubID);
+  const bookreviewContent = '알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』';
+  const time = '2020-12-14 09:24:59.000000 +00:00';
+
+  const [limit, setLimit] = useState(94);
+
+  const toggleEllipsis = (str: string, limit: number) => {
+    return {
+      string: str.slice(0, limit),
+      isShowMore: str.length > limit
+    }
+  };
+
+  const onClickMore = (str: string) => {
+    setLimit(str.length);
+  };
+
+  // const goToProfile = () => {
+  //   // `/profile?${
+  //   //   comment.user!.email
+  //   //     ? `uid=${Buffer.from(comment.user!.email).toString('base64')}`
+  //   //     : `userName=${comment.user!.name}`
+  // };
+
   return (
     <BookreviewItemWrapper>
       <BookreviewItemDiv>
@@ -25,16 +48,17 @@ const BookreviewItem = ({ clubID, club }: Props) => {
           </NameDiv>
         </ProfileDiv>
         <ProfileDiv>
-          <UpdatedAtDiv>14시간 전</UpdatedAtDiv>
-          <KebabIcon />
+          <UpdatedAtDiv>{elapsedTime(time)}</UpdatedAtDiv>
+          <KebabIcon onClick={() => console.log('신고하기')}/>
         </ProfileDiv>
       </BookreviewItemDiv>
       <ClubNameWrapper>
         {club.name}
       </ClubNameWrapper>
-      <div>
-        {club.description}
-      </div>
+      <BookreviewContent>
+        {toggleEllipsis(bookreviewContent, limit).string}
+        {toggleEllipsis(bookreviewContent, limit).isShowMore && <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>}
+      </BookreviewContent>
       <BookMovieDivWrapper>
         <BookMovieDiv><BookMovieSpan>책 | </BookMovieSpan>알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』</BookMovieDiv>
         <BookMovieDiv><BookMovieSpan>영화 | </BookMovieSpan>에브리씽 에브리웨어 올 앳 원스</BookMovieDiv>
@@ -116,4 +140,21 @@ const BookMovieDivWrapper = styled.div`
 const ProfileAvatarWrapper = styled.div`
   cursor: pointer;
 `;
+const BookreviewContent = styled.div`
+  ${contents2};
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+  margin-bottom: 20px;
+`;
+
+const ShowMoreButton = styled.div`
+  float: right;
+  cursor: pointer;
+  ${title4};
+  color: ${({theme}) => theme.colors.gray500};
+  margin-top: 6px;
+`;
+
+
 export default BookreviewItem;
