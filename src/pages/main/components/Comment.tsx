@@ -306,6 +306,7 @@ const IconText = styled.span<{ isClickable: boolean }>`
 const Content = styled.div`
   ${contents2};
   padding: 0 20px 20px;
+  word-break: break-all;
 `;
 const ProfileBox = styled.div`
   display: flex;

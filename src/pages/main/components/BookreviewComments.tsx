@@ -15,6 +15,7 @@ import { LikeUser } from 'pages/bookreviews/services/types';
 import { Divider } from 'pages/curations/curations.styles';
 import { useRef, useState } from 'react';
 import { useAppDispatch } from 'services/store';
+import { toastAlert } from 'services/ui.store';
 import { BookreviewComment, User } from 'types/__generate__/user-backend-api';
 import Comment from './Comment';
 import LikeUserModal from './LikeUserModal';
@@ -122,6 +123,11 @@ const BookreviewComments = ({
       Object.assign(input, { parentID: targetParentCommentID });
     }
     dispatch(createBookreviewComment.initiate({ input }));
+    toastAlert({
+      open: true,
+      type: 'info',
+      text: '댓글이 등록되었습니다.',
+    });
     onChangeInput('');
     setTargetState(initialTargetState);
   };
@@ -223,18 +229,19 @@ const Input = styled.input`
 
   border-radius: 0.1875rem;
   border: 1px solid ${({ theme }) => theme.colors.gray400};
-  &:not([disabled]):hover {
-    color: ${({ theme }) => theme.colors.gray600};
-    border-color: ${({ theme }) => theme.colors.gray600};
-  }
+  color: ${({ theme }) => theme.colors.gray600};
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray400};
     font: inherit;
     transition: all 150ms;
   }
-  &:focus {
-    // border-color: ${({ theme }) => theme.colors.black};
+  &:hover {
     border-color: black;
+  }
+  &:focus {
+    border-color: black;
+    color: black;
+    outline: none;
   }
 `;
 const ModalText = styled.p`
