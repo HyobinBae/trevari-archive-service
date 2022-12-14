@@ -22,6 +22,8 @@ import LoveOutline from 'components/svgs/LoveOutline';
 import CommentOutline from 'components/svgs/CommentOutline';
 import { LikeUser } from 'pages/bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
+import { toastAlert } from 'services/ui.store';
+import { goToPage } from 'utils';
 
 interface CommentProps {
   comment: BookreviewComment;
@@ -34,6 +36,7 @@ const initialModalState = {
   deleteReply: false,
   deleteComment: false,
   likeUserList: false,
+  reportComment: false,
   selectedCommentID: '',
 };
 const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: CommentProps) => {
@@ -47,7 +50,7 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
   const dispatch = useAppDispatch();
   const { width } = useWindowSize();
   const [modalState, setModalState] = useState(initialModalState);
-  const { deleteReply, deleteComment, selectedCommentID, likeUserList } = modalState;
+  const { deleteReply, deleteComment, selectedCommentID, likeUserList, reportComment } = modalState;
 
   const [isOpenMoreList, setOpenMoreList] = useState(false);
   const onToggleModal = (name: string, id?: string) => {
@@ -85,7 +88,7 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
     {
       text: '신고하기',
       onAction: () => {
-        dispatch(reportOnBookreviewComment.initiate({ id: selectedComment.commentID, userID: loggedUserID }));
+        onToggleModal('reportComment');
         onDismiss();
       },
     },
@@ -94,13 +97,36 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
   const onDismiss = () => {
     setOpenMoreList(state => !state);
   };
-  const onConfirmDelete = () => {
-    onToggleModal('deleteComment');
-    dispatch(deleteBookreviewComment.initiate({ id: selectedComment.commentID }));
+  const onConfirmDelete = async () => {
+    const resultAction = await dispatch(deleteBookreviewComment.initiate({ id: selectedComment.commentID }));
+    if (resultAction.data.deleteBookreviewComment === true) {
+      toastAlert({
+        open: true,
+        type: 'info',
+        text: '댓글이 삭제되었습니다.',
+      });
+      onToggleModal('deleteComment');
+    }
   };
-  const onConfirmDeleteReply = () => {
-    onToggleModal('deleteReply');
-    dispatch(deleteBookreviewComment.initiate({ id: selectedCommentID }));
+  const onConfirmDeleteReply = async () => {
+    const resultAction = await dispatch(deleteBookreviewComment.initiate({ id: selectedComment.commentID }));
+    if (resultAction.data.deleteBookreviewComment === true) {
+      toastAlert({
+        open: true,
+        type: 'info',
+        text: '답글이 삭제되었습니다.',
+      });
+      onToggleModal('deleteReply');
+    }
+  };
+  const onConfirmReport = async () => {
+    await dispatch(reportOnBookreviewComment.initiate({ id: selectedComment.commentID, userID: loggedUserID }));
+    toastAlert({
+      open: true,
+      type: 'info',
+      text: '신고가 접수되었습니다.',
+    });
+    onToggleModal('reportComment');
   };
   const onClickMoreButton = (userID: string, commentID: string) => {
     setSelectedComment({
@@ -122,6 +148,7 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
   const bottomSheetLeftMarginPx = width > 500 ? 'calc(50vw - 250px)' : 0;
   const deleteCommentModalText = '댓글을 정말로 삭제하시겠어요?';
   const deleteReplyModalText = '답글을 정말로 삭제하시겠어요?';
+  const reportModalText = '신고하시겠습니까?';
   const alreadyLikedComment = likeUserIDs ? likeUserIDs.includes(loggedUserID) : false;
   return (
     <div>
@@ -207,6 +234,12 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
         text={deleteReplyModalText}
         onCancel={() => onToggleModal('deleteReply')}
         onConfirm={onConfirmDeleteReply}
+      />
+      <BaseModal
+        open={reportComment}
+        text={reportModalText}
+        onCancel={() => onToggleModal('reportComment')}
+        onConfirm={onConfirmReport}
       />
       {likeUserList && (
         <LikeUserModal users={likeUsers} onClose={() => onToggleModal('likeUserList')} browserWidth={width} />

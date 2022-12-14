@@ -108,6 +108,7 @@ const BookreviewComments = ({
       inputRef.current.focus();
     }
   };
+
   const onSubmit = () => {
     if (!focused || !commentText) return;
 
@@ -145,7 +146,7 @@ const BookreviewComments = ({
         </IconText>
         <div onClick={onClickComment}>
           <CommentOutline />
-          <IconText>댓글 {comments.length || 0}</IconText>
+          <IconText isClickable={true}>댓글 {comments.length || 0}</IconText>
         </div>
       </IconBox>
       <Divider />
