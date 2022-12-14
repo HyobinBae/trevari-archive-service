@@ -77,11 +77,13 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
       invalidatesTags: ['Bookreview'],
     }),
     updateBookreviewComment: build.mutation({
-      query: ({ id, content }) => ({
+      query: ({ input: { id, content } }) => ({
         document: UPDATE_BOOKREVIEW_COMMENT,
         variables: {
-          id,
-          content,
+          input: {
+            id,
+            content,
+          },
         },
       }),
       invalidatesTags: ['Bookreview'],

@@ -16,6 +16,7 @@ import {
   getBookreviewCommentLikeUsers,
   reportOnBookreviewComment,
   toggleLikeOnBookreviewComment,
+  updateBookreviewComment,
 } from 'pages/bookreviews/services/api';
 import LoveFilled from 'components/svgs/LoveFilled';
 import LoveOutline from 'components/svgs/LoveOutline';
@@ -23,6 +24,7 @@ import CommentOutline from 'components/svgs/CommentOutline';
 import { LikeUser } from 'pages/bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
 import { toastAlert } from 'services/ui.store';
+import EditCommentModal from './EditCommentModal';
 
 interface CommentProps {
   comment: BookreviewComment;
@@ -36,6 +38,7 @@ const initialModalState = {
   deleteComment: false,
   likeUserList: false,
   reportComment: false,
+  editComment: false,
   selectedCommentID: '',
 };
 const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: CommentProps) => {
@@ -43,13 +46,14 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
   const [selectedComment, setSelectedComment] = useState({
     userID: '',
     commentID: '',
+    text: '',
   });
   const [likeUsers, setLikeUsers] = useState<LikeUser[]>([]);
 
   const dispatch = useAppDispatch();
   const { width } = useWindowSize();
   const [modalState, setModalState] = useState(initialModalState);
-  const { deleteReply, deleteComment, selectedCommentID, likeUserList, reportComment } = modalState;
+  const { deleteReply, deleteComment, selectedCommentID, likeUserList, reportComment, editComment } = modalState;
 
   const [isOpenMoreList, setOpenMoreList] = useState(false);
   const onToggleModal = (name: string, id?: string) => {
@@ -79,7 +83,10 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
     },
     {
       text: '수정하기',
-      onAction: () => onDismiss(),
+      onAction: () => {
+        onToggleModal('editComment');
+        onDismiss();
+      },
     },
   ];
 
@@ -127,15 +134,35 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
     });
     onToggleModal('reportComment');
   };
-  const onClickMoreButton = (userID: string, commentID: string) => {
+  const onClickMoreButton = (userID: string, commentID: string, text: string) => {
     setSelectedComment({
       userID,
       commentID,
+      text,
     });
     onDismiss();
   };
   const onClickLikeButton = (commentID: string) => {
     dispatch(toggleLikeOnBookreviewComment.initiate({ id: commentID, userID: loggedUserID }));
+  };
+  const onConfirmEditComment = () => {
+    const input = {
+      id: selectedComment.commentID,
+      content: selectedComment.text,
+    };
+    dispatch(updateBookreviewComment.initiate({ input }));
+    toastAlert({
+      open: true,
+      type: 'info',
+      text: '댓글이 수정되었습니다.',
+    });
+    onToggleModal('editComment');
+  };
+  const onChagneCommentText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedComment({
+      ...selectedComment,
+      text: e.currentTarget.value,
+    });
   };
   useEffect(() => {
     return () => {
@@ -152,7 +179,7 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
   return (
     <div>
       <ProfileBox>
-        <MoreButtonWrapper onClick={() => onClickMoreButton(userID, id)}>
+        <MoreButtonWrapper onClick={() => onClickMoreButton(userID, id, content)}>
           <Kebab />
         </MoreButtonWrapper>
         <ProfileInBookreviewPage user={user} publishedAt={createdAt} isBookreviewProfile={false} />
@@ -182,10 +209,10 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
           <React.Fragment key={replyID}>
             <ReplyBase>
               <ProfileBox>
-                <MoreButtonWrapper onClick={() => onClickMoreButton(replyUser.id, replyID)}>
+                <MoreButtonWrapper onClick={() => onClickMoreButton(replyUser.id, replyID, replyContent)}>
                   <Kebab />
                 </MoreButtonWrapper>
-                <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} isBookreviewProfile={false} />
+                <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} />
               </ProfileBox>
               <Content>{replyContent}</Content>
               <IconWrapper>
@@ -242,6 +269,15 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
       />
       {likeUserList && (
         <LikeUserModal users={likeUsers} onClose={() => onToggleModal('likeUserList')} browserWidth={width} />
+      )}
+      {editComment && (
+        <EditCommentModal
+          text={selectedComment.text}
+          onClose={() => onToggleModal('editComment')}
+          onChange={onChagneCommentText}
+          onConfirm={onConfirmEditComment}
+          browserWidth={width}
+        />
       )}
     </div>
   );
