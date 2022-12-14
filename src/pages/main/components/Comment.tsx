@@ -29,7 +29,6 @@ import EditCommentModal from './EditCommentModal';
 interface CommentProps {
   comment: BookreviewComment;
   onClickReply: (name: string, id: string) => void;
-  onClickComment: () => void;
   loggedUserID: string;
 }
 
@@ -41,7 +40,7 @@ const initialModalState = {
   editComment: false,
   selectedCommentID: '',
 };
-const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: CommentProps) => {
+const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
   const { user, createdAt, content, replies, id, userID, likeUserIDs } = comment;
   const [selectedComment, setSelectedComment] = useState({
     userID: '',
@@ -53,7 +52,7 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
   const dispatch = useAppDispatch();
   const { width } = useWindowSize();
   const [modalState, setModalState] = useState(initialModalState);
-  const { deleteReply, deleteComment, selectedCommentID, likeUserList, reportComment, editComment } = modalState;
+  const { deleteReply, deleteComment, likeUserList, reportComment, editComment } = modalState;
 
   const [isOpenMoreList, setOpenMoreList] = useState(false);
   const onToggleModal = (name: string, id?: string) => {
@@ -196,7 +195,7 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
         <IconText isClickable={likeUserIDs.length > 0} onClick={() => onClickBookreviewLikeUsers(id)}>
           좋아요 {likeUserIDs.length}
         </IconText>
-        <div onClick={() => onClickReply(`@${user!.name} `, id)}>
+        <div onClick={() => onClickReply(`@${user?.name} `, id)}>
           <CommentOutline />
           <IconText isClickable={true}>답글 쓰기</IconText>
         </div>
@@ -229,7 +228,7 @@ const Comment = ({ comment, onClickReply, onClickComment, loggedUserID }: Commen
                 >
                   좋아요 {likeUserIDs?.length || 0}
                 </IconText>
-                <div onClick={() => onClickReply(`@${replyUser!.name} `, id)}>
+                <div onClick={() => onClickReply(`@${replyUser?.name} `, id)}>
                   <CommentOutline />
                   <IconText isClickable={true}>답글 쓰기</IconText>
                 </div>

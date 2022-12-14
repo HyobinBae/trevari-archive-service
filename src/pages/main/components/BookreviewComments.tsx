@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { body4, body5, body6, title4 } from '@trevari/typo';
+import { body4, body6, title4 } from '@trevari/typo';
 import CommentOutline from 'components/svgs/CommentOutline';
 import LoveFilled from 'components/svgs/LoveFilled';
 import LoveOutline from 'components/svgs/LoveOutline';
@@ -42,7 +42,6 @@ const BookreviewComments = ({
   const { width } = useWindowSize();
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
-  const [selectedCommentID, setSelectedCommentID] = useState('');
   const [likeUsers, setLikeUsers] = useState<LikeUser[]>([]);
   const [focused, setFocused] = useState(false);
   const onFocus = () => setFocused(true);
@@ -54,9 +53,9 @@ const BookreviewComments = ({
     likeUserList: false,
   });
   const [commentText, setCommentText] = useState('');
-  const { replyConfirm, deleteComment, likeUserList } = modalState;
+  const { replyConfirm, likeUserList } = modalState;
   const [targetState, setTargetState] = useState(initialTargetState);
-  const { type, targetParentCommentID } = targetState;
+  const { targetParentCommentID } = targetState;
   const bottomInputContentWidth = width > 500 ? '500px' : '100%';
   const alreadyLikedBookrivew = likeUserIDs.includes(user.id);
   const onToggleModal = (name: string) => {
@@ -214,12 +213,6 @@ const InputContainer = styled.div<{ width: string }>`
   }
 `;
 
-const ProfileImage = styled.img`
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-`;
-
 const Input = styled.input`
   ${body4}
   width: 100%;
@@ -244,17 +237,7 @@ const Input = styled.input`
     outline: none;
   }
 `;
-const ModalText = styled.p`
-  margin: unset;
-  ${body5};
-`;
 
-const ButtonWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-top: 24px;
-`;
 const CommentsCountText = styled.span`
   ${body6};
   color: ${({ theme }) => theme.colors.gray600};

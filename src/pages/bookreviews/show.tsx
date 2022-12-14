@@ -1,14 +1,9 @@
 import { Loading } from '@trevari/components';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { selectAuthenticated } from 'services/auth/auth.store';
-import { useAppDispatch, useAppSelector } from 'services/store';
+import { useAppSelector } from 'services/store';
 import { selectUser } from 'services/user/user.store';
-import {
-  useGetBookreviewQuery,
-  useCreateBookreviewCommentMutation,
-  useGetBookreviewLikeUsersQuery,
-} from './services/api';
+import { useGetBookreviewQuery } from './services/api';
 import BookreviewContent from 'pages/main/components/BookreviewContent';
 import BookreviewComments from 'pages/main/components/BookreviewComments';
 import Profile from 'pages/main/components/Profile';
@@ -16,11 +11,7 @@ import Profile from 'pages/main/components/Profile';
 const BookReviewShow = () => {
   const { bookreivewID } = useParams();
   const { data: bookreview, isLoading } = useGetBookreviewQuery({ id: bookreivewID || '' });
-  const { data: bookreviewLikeUsers } = useGetBookreviewLikeUsersQuery({ id: bookreivewID || '' });
-  const [createBookreviewComment] = useCreateBookreviewCommentMutation();
-  const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
-  const authenticated = useAppSelector(selectAuthenticated);
   useEffect(() => {
     // if (authenticated)
   }, []);
@@ -35,7 +26,7 @@ const BookReviewShow = () => {
         isMyBookreview={bookreview?.user.id === user.id}
         bookreviewID={bookreview?.id}
       />
-      <BookreviewContent bookreview={bookreview!} userID={user.id} />
+      <BookreviewContent bookreview={bookreview} userID={user.id} />
       <BookreviewComments
         bookreviewID={bookreview?.id}
         likeUserIDs={bookreview?.likeUserIDs}
