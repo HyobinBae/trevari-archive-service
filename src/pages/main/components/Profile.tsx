@@ -51,16 +51,25 @@ const Profile = ({
     },
     {
       text: '링크 복사하기',
-      onAction: () => console.log(3),
+      onAction: () => clip(),
     },
   ];
 
   const MORE_ACTIONS = [
     {
       text: '링크 복사하기',
-      onAction: () => console.log(3),
+      onAction: () => clip(),
     },
   ];
+  const clip = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toastAlert({
+      open: true,
+      type: 'info',
+      text: '링크가 복사되었습니다.',
+    });
+    onDismiss();
+  };
   const onDismiss = () => {
     setOpenMoreList(false);
   };

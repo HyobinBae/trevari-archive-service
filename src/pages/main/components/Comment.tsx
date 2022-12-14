@@ -23,7 +23,6 @@ import CommentOutline from 'components/svgs/CommentOutline';
 import { LikeUser } from 'pages/bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
 import { toastAlert } from 'services/ui.store';
-import { goToPage } from 'utils';
 
 interface CommentProps {
   comment: BookreviewComment;
