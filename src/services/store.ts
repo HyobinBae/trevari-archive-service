@@ -6,7 +6,7 @@ import storage from 'redux-persist/lib/storage';
 import { createLogger } from 'redux-logger';
 
 import { IS_PRODUCTION } from 'config';
-import { backend } from 'api/backend';
+import { backend, bookreviewBackend } from 'api/backend';
 import main from 'pages/main/services/main.store';
 import auth from 'services/auth/auth.store';
 import user from 'services/user/user.store';
@@ -21,11 +21,12 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   [backend.reducerPath]: backend.reducer,
+  [bookreviewBackend.reducerPath]: bookreviewBackend.reducer,
   main,
   auth,
   user,
   ui,
-  navigation
+  navigation,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -38,14 +39,16 @@ if (!IS_PRODUCTION) {
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
+  middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    })
-      .concat(middlewares)
-      .concat(backend.middleware),
+    }),
+    ...middlewares,
+    backend.middleware,
+    bookreviewBackend.middleware,
+  ],
   devTools: !IS_PRODUCTION,
 });
 
