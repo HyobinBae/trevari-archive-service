@@ -105,6 +105,7 @@ const ReactionDiv = styled.div`
   cursor: pointer;
   span {
     cursor: pointer;
+    color: ${({theme}) => theme.colors.gray600};
   }
 `;
 const BookMovieSpan = styled.span`
