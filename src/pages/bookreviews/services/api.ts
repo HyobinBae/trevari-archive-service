@@ -2,6 +2,7 @@ import { bookreviewBackend } from 'api/backend';
 import { Bookreview } from 'types/__generate__/user-backend-api';
 import {
   GET_BOOKREVIEW,
+  GET_BOOKREVIEWS,
   GET_BOOKREIVEW_LIKEUSERS,
   DELETE_BOOKREVIEW_COMMENT,
   UPDATE_BOOKREVIEW_COMMENT,
@@ -17,6 +18,21 @@ import { LikeUser } from './types';
 export const bookreviewApi = bookreviewBackend.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
+    getBookreviews: build.query<Array<Bookreview>, BookreviewsOptions>({
+      query: ({ limit, offset, userID }) => ({
+        document: GET_BOOKREVIEWS,
+        variables: {
+          limit,
+          offset,
+          userID
+        },
+      }),
+      transformResponse: ({ bookreviewsV2
+      }: { bookreviewsV2
+        : Array<Bookreview> }) => bookreviewsV2
+        ,
+      providesTags: ['BookreviewsV2'],
+    }),
     getBookreview: build.query<Bookreview, { id: string }>({
       query: ({ id }) => ({
         document: GET_BOOKREVIEW,
@@ -125,6 +141,7 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
 });
 
 export const {
+  useGetBookreviewsQuery,
   useGetBookreviewQuery,
   useGetBookreviewLikeUsersQuery,
   useToggleLikeOnBookreviewMutation,
@@ -137,6 +154,7 @@ export const {
 
 export const {
   endpoints: {
+    getBookreviews,
     getBookreview,
     getBookreviewLikeUsers,
     toggleLikeOnBookreview,

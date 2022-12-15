@@ -1,9 +1,35 @@
 import { gql } from 'graphql-request';
 
 export const GET_BOOKREVIEWS = gql`
-  query bookreviews($limit: Int!, $offset: Int!, $where: BookreviewsWhereInput!) {
-    bookreviews(limit: $limit, offset: $offset, where: $where) {
-      id
+  query bookreviewsV2($limit: Int!, $offset: Int!, $userID: String!) {
+    bookreviewsV2(limit: $limit, offset: $offset, userID: $userID) {
+        id
+        title
+        content
+        isPublic
+        publishedAt
+        status
+        role
+        userID
+        commentCount
+        likeUserIDs
+        updatedAt
+        user  {
+          name
+          profileImageUrl
+          email   
+        }
+        club  {
+          season
+          name
+        }
+        contents  {
+          imageUrl
+          type
+          title
+          author   
+        }
+        fileUrl
     }
   }
 `;

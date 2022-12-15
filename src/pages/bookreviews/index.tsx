@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
 import { body6, heading11, title4 } from '@trevari/typo';
@@ -8,61 +8,95 @@ import { selectAuthenticated, selectUserId } from 'services/auth/auth.store';
 import { useAppDispatch, useAppSelector } from 'services/store';
 import { useWindowSize } from 'hooks/useWindowSize';
 import Box from 'components/base/Box';
-import NewCurationClubCard from 'pages/main/components/NewCurationClubCard';
-import { CURATION_CARD_ASPECT_RATIO } from 'pages/main/const';
-import { Button, Loading } from '@trevari/components';
+import { ADMIN_IDS, CURATION_CARD_ASPECT_RATIO } from 'pages/main/const';
+import { Button } from '@trevari/components';
 import { WriteIcon, WritingIcon } from '@trevari/icons';
 import { useSelector } from 'react-redux';
-import { selectUserIsMember, selectUserRoles } from '../../services/user/user.store';
+import { selectUser, selectUserIsMember, selectUserRoles } from '../../services/user/user.store';
 import BlurInBookreviews from '../../components/svgs/BlurInBookreviews';
 import { ClubRole } from '../../types/__generate__/user-backend-api';
-import { useGetWishClubsQuery } from '../main/services/main.api';
 import BookreviewItem from '../main/components/BookreviewItem';
+import { getClubRoles } from '../../services/user/user.api';
+import { useParams } from 'react-router-dom';
+import { useGetBookreviewsQuery } from './services/api';
+import { format, parseISO } from 'date-fns';
+import LoadingPage from '../../components/base/LoadingPage';
 
 const Bookreviews = () => {
   const { width } = useWindowSize();
   const dispatch = useAppDispatch();
   const authenticated = useAppSelector(selectAuthenticated);
-  const userId = useAppSelector(selectUserId);
+  const user = useAppSelector(selectUser);
   const isMember = useSelector(selectUserIsMember);
   const roles = useSelector(selectUserRoles);
+  const { data: bookreviews, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: user.id });
+  console.log('bookreviews', bookreviews);
+  const [permission, setPermission] = useState<'loading' | 'denied' | 'accepted'>('loading');
+  useEffect(() => {
+    if (user && bookreviews) {
+      getPermission();
+    }
+  }, [user, bookreviews]);
 
-  const {
-    data: wishClubs,
-    isLoading,
-    refetch,
-  } = useGetWishClubsQuery({
-    where: {
-      userID: userId,
-      isClosed: false,
-      isFullClub: false,
-      isAppliablePeriod: true,
-    },
-  });
-  const isGuest = userId === 'guest';
+  const getPermission = async () => {
+    if (!user || !bookreviews) return;
+    const clubRoleAction = await dispatch(
+      getClubRoles.initiate({ where: { userID: user.id, refundStatuses: [null, '환불 입금 대기', '환불 입금 완료'] } }),
+    );
+    const clubRoles = clubRoleAction.data;
+    const isMyClub = true;//clubRoles.some((clubRole: ClubRole) => clubRole.clubID === bookreview.club.id);
+    const isMyBookreview = true;//bookreview.userID === user.id;
+    const isAdmin = ADMIN_IDS.includes(user.id);
+    const now = parseISO(format(new Date(), 'yyyy-MM-dd'));
+    // const meetingDate = parseISO(format(new Date(bookreview.meeting.startedAt), 'yyyy-MM-dd'));
+    const isTodayOrPastMeeting = true;//isAfter(now, meetingDate);
+
+    // let hasMembershipArgs;
+    // if (isTodayOrPastMeeting) {
+    //   hasMembershipArgs = { userID: user.id, serviceID: BOOK_REVIEW_SERVICE_ID };
+    // } else {
+    //   hasMembershipArgs = {
+    //     checkDate: bookreview.meeting.startedAt,
+    //     userID: user.id,
+    //     serviceID: BOOK_REVIEW_SERVICE_ID,
+    //   };
+    // }
+    // const hasMembershipAction = await dispatch(hasMembership.initiate(hasMembershipArgs));
+    // const hasMembershipFlag = hasMembershipAction.isSuccess && hasMembershipAction.data.hasMembership;
+
+    const hasPermission = false; //bookreview.isPublic || isMyClub || isAdmin || hasMembershipFlag || isMyBookreview;
+    if (!hasPermission) {
+      setPermission('denied');
+    } else {
+      setPermission('accepted');
+    }
+  };
+
+  const isGuest = user.id === 'guest';
 
   useEffect(() => {
     if (isGuest) {
       goToPage(`${endpoints.user_login_page_url}/?redirectionUrl=/bookreviews`);
       return;
     }
-  }, [dispatch, authenticated, userId]);
+  }, [dispatch, authenticated, user.id]);
 
   const cardImgHeight =
     width > 500
       ? `calc(450px * ${CURATION_CARD_ASPECT_RATIO} / 2)`
       : `calc((100vw - 50px) * ${CURATION_CARD_ASPECT_RATIO} / 2)`;
 
-  if (!authenticated || isLoading)
-    return (
-      <LoadingContainer>
-        <Loading flicker variant="gridCardList" />
-      </LoadingContainer>
-    );
+  // if (!authenticated || isLoading)
+  //   return (
+  //     <LoadingContainer>
+  //       <Loading flicker variant="gridCardList" />
+  //     </LoadingContainer>
+  //   );
   const roleLength = roles ? roles.length : 0;
 
   const isShow = roles.filter(( role: ClubRole ) => !role.club.isClosed).length > 0;
 
+  if (isLoading || permission === 'loading') return <LoadingPage />;
   return isMember ? (
     <>
       <Box style={{ paddingTop: '48px', minHeight: '100vh', paddingBottom: '67px' }}>

@@ -1,7 +1,7 @@
 import { deleteBookreview } from 'pages/bookreviews/services/api';
 import { createSlice } from '@reduxjs/toolkit';
 import { Bookreview } from 'types/__generate__/user-backend-api';
-import { getBookreview } from './api';
+import { getBookreview, getBookreviews } from './api';
 
 interface BookreviewState {
   bookreview: Bookreview;
@@ -22,6 +22,9 @@ export const bookreviewStore = createSlice({
     builder.addMatcher(getBookreview.matchFulfilled, (state, { payload }) => {
       state.bookreview = payload;
     });
+    builder.addMatcher(getBookreviews.matchFulfilled, (state, { payload }) => {
+      state.bookreviews = payload;
+    });
     builder.addMatcher(deleteBookreview.matchFulfilled, (state, { payload }) => {
       state.bookreview = {} as Bookreview;
     });
@@ -29,5 +32,6 @@ export const bookreviewStore = createSlice({
 });
 
 export const setBookreivew = state => state.bookreview.bookreview;
+export const setBookreivews = state => state.bookreview.bookreviews;
 
 export default bookreviewStore.reducer;
