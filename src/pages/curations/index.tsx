@@ -104,7 +104,7 @@ const Curations = () => {
   const cardLength = [...newCuration.lists.clubLists, ...newCuration.lists.eventLists, ...newCuration.lists.subscriptionClubLists].length;
   const curationType = getCurationType(newCuration);
   const buttonText = curationType === CurationType.EVENT ? '모든 이벤트 보러가기' : '모든 클럽 보러가기';
-  const visibleButton = curationType !== CurationType.SUBSCRIPTION;
+  const visibleButton = true;
 
   return (
     <Box style={{ paddingTop: '64px', minHeight: '100vh', paddingBottom: '67px' }}>
