@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Club } from '../../../types/__generate__/user-backend-api';
 import styled from '@emotion/styled';
 import { ProfileAvatar } from '@trevari/components';
@@ -12,6 +12,9 @@ import { toastAlert } from '../../../services/ui.store';
 import MoreItems from './MoreItems';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import { useWindowSize } from '../../../utils/windowResize';
+import { deleteBookreview } from '../../bookreviews/services/api';
+import BaseModal from './ModalBase';
+import { useAppDispatch } from '../../../services/store';
 
 interface Props {
   clubID: string;
@@ -25,8 +28,8 @@ const BookreviewItem = ({ clubID, club }: Props) => {
   const commentCount = 11; // 댓글수 + 답글수
   const isLike = false;
   const { width } = useWindowSize();
-  const bottomSheetLeftMarginPx = width > 500 ? 'calc(50vw - 250px)' : 0;
-  const isMyBookreview = true;
+  const dispatch = useAppDispatch();
+  const isMyBookreview = false;
   const [limit, setLimit] = useState(94);
   const [isOpenMoreList, setOpenMoreList] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
@@ -97,6 +100,27 @@ const BookreviewItem = ({ clubID, club }: Props) => {
   const onToggleModal = () => {
     setIsOpenDeleteModal(!isOpenDeleteModal);
   };
+  const onConfirmDelete = async () => {
+    const resultAction = await dispatch(deleteBookreview.initiate({ id: bookreviewID }));
+    if (resultAction.data.deleteBookreview === true) {
+      toastAlert({
+        open: true,
+        type: 'info',
+        text: '독후감이 삭제되었습니다.',
+      });
+      // TODO: home -> 독후감 리스트 페이지
+      setTimeout(() => {
+        goToPage('/');
+        onToggleModal();
+      }, 1000);
+    }
+  };
+  useEffect(() => onDismiss, []);
+
+  const bottomSheetLeftMarginPx = width > 500 ? 'calc(50vw - 250px)' : 0;
+  const deleteModalTitle = '정말 삭제하시겠습니까?';
+  const deleteModalText = `삭제한 독후감은 복구가 어렵습니다.
+  모임일 전에 독후감을 삭제할 경우, 모임 참석이 불가능하다는 점도 꼭 확인해 주세요.`;
 
   return (
     <>
@@ -136,19 +160,23 @@ const BookreviewItem = ({ clubID, club }: Props) => {
           </ReactionDiv>
         </ReactionDivWrapper>
       </BookreviewItemWrapper>
-      <div style={{zIndex: 1000}}>
-        <BottomSheet
-          open={isOpenMoreList}
-          onDismiss={() => setOpenMoreList(state => !state)}
-          style={{
-            '--rsbs-ml': bottomSheetLeftMarginPx,
-            '--rsbs-max-w': '500px',
-            'z-index': 1000,
-          }}
-        >
-          <MoreItems actions={!isMyBookreview ? MORE_ACTIONS_OF_MY_BOOKREVIEW : MORE_ACTIONS} />
-        </BottomSheet>
-      </div>
+      <BottomSheet
+        open={isOpenMoreList}
+        onDismiss={() => setOpenMoreList(state => !state)}
+        style={{
+          '--rsbs-ml': bottomSheetLeftMarginPx,
+          '--rsbs-max-w': '500px',
+        }}
+      >
+        <MoreItems actions={!isMyBookreview ? MORE_ACTIONS_OF_MY_BOOKREVIEW : MORE_ACTIONS} />
+      </BottomSheet>
+      <BaseModal
+        title={deleteModalTitle}
+        open={isOpenDeleteModal}
+        text={deleteModalText}
+        onCancel={onToggleModal}
+        onConfirm={onConfirmDelete}
+      />
       </>
   )
 };
