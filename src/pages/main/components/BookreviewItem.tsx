@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Club } from '../../../types/__generate__/user-backend-api';
 import styled from '@emotion/styled';
 import { ProfileAvatar } from '@trevari/components';
-import { CommentIcon, HeartIcon, KebabIcon } from '@trevari/icons';
+import { CommentIcon, HeartIcon, KebabIcon, LoveFilledIcon } from '@trevari/icons';
 import { body8, contents2, heading9, title4, title6 } from '@trevari/typo';
 import { elapsedTime } from '../../../utils/time';
+import { useTheme } from '@emotion/react';
 
 interface Props {
   clubID: string;
@@ -14,8 +15,14 @@ interface Props {
 const BookreviewItem = ({ clubID, club }: Props) => {
   const bookreviewContent = '알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』';
   const time = '2020-12-14 09:24:59.000000 +00:00';
+  const heartCount = 12;
+  const commentCount = 11; // 댓글수 + 답글수
+  const isLike = false;
 
   const [limit, setLimit] = useState(94);
+  const {
+    colors: { orange900, gray500 },
+  } = useTheme();
 
   const toggleEllipsis = (str: string, limit: number) => {
     return {
@@ -35,6 +42,10 @@ const BookreviewItem = ({ clubID, club }: Props) => {
   //   //     : `userName=${comment.user!.name}`
   // };
 
+  const reportBookreviews = () => {
+    console.log('신고하기');
+  }
+
   return (
     <BookreviewItemWrapper>
       <BookreviewItemDiv>
@@ -49,7 +60,7 @@ const BookreviewItem = ({ clubID, club }: Props) => {
         </ProfileDiv>
         <ProfileDiv>
           <UpdatedAtDiv>{elapsedTime(time)}</UpdatedAtDiv>
-          <KebabIcon onClick={() => console.log('신고하기')}/>
+          <KebabIcon onClick={() => reportBookreviews()}/>
         </ProfileDiv>
       </BookreviewItemDiv>
       <ClubNameWrapper>
@@ -65,10 +76,10 @@ const BookreviewItem = ({ clubID, club }: Props) => {
       </BookMovieDivWrapper>
       <ReactionDivWrapper>
         <ReactionDiv>
-          <HeartIcon onClick={() => console.log('좋아요 반영~')} color={'#ADADAA'} width={20} height={20} style={{marginRight: '6px'}}/> <span onClick={() => console.log('좋아요 리스트페이지로')}>좋아요</span>
+          {isLike ? <><LoveFilledIcon color={orange900} width={20} height={20} style={{marginRight: '6px'}}/> <span onClick={() => console.log('좋아요 리스트페이지로')}>좋아요 {heartCount}</span></> : <><HeartIcon onClick={() => console.log('좋아요 반영~')} color={gray500} width={20} height={20} style={{marginRight: '6px'}}/> <span onClick={() => console.log('좋아요 리스트페이지로')}>좋아요 {heartCount}</span></>}
         </ReactionDiv>
         <ReactionDiv style={{marginLeft: '16px'}} onClick={() => console.log('댓글 클릭~')}>
-          <CommentIcon width={20} height={20} style={{marginRight: '6px'}}/> <span>댓글</span>
+          <CommentIcon width={20} height={20} style={{marginRight: '6px'}}/> <span>댓글 {commentCount}</span>
         </ReactionDiv>
       </ReactionDivWrapper>
     </BookreviewItemWrapper>
