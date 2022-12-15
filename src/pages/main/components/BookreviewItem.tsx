@@ -6,6 +6,12 @@ import { CommentIcon, HeartIcon, KebabIcon, LoveFilledIcon } from '@trevari/icon
 import { body8, contents2, heading9, title4, title6 } from '@trevari/typo';
 import { elapsedTime } from '../../../utils/time';
 import { useTheme } from '@emotion/react';
+import { goToPage } from '../../../utils';
+import { endpoints } from '../../../config';
+import { toastAlert } from '../../../services/ui.store';
+import MoreItems from './MoreItems';
+import { BottomSheet } from 'react-spring-bottom-sheet';
+import { useWindowSize } from '../../../utils/windowResize';
 
 interface Props {
   clubID: string;
@@ -18,8 +24,13 @@ const BookreviewItem = ({ clubID, club }: Props) => {
   const heartCount = 12;
   const commentCount = 11; // 댓글수 + 답글수
   const isLike = false;
-
+  const { width } = useWindowSize();
+  const bottomSheetLeftMarginPx = width > 500 ? 'calc(50vw - 250px)' : 0;
+  const isMyBookreview = true;
   const [limit, setLimit] = useState(94);
+  const [isOpenMoreList, setOpenMoreList] = useState(false);
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+
   const {
     colors: { orange900, gray500 },
   } = useTheme();
@@ -44,45 +55,101 @@ const BookreviewItem = ({ clubID, club }: Props) => {
 
   const reportBookreviews = () => {
     console.log('신고하기');
+    setOpenMoreList(state => !state)
   }
 
+  const MORE_ACTIONS_OF_MY_BOOKREVIEW = [
+    {
+      text: '삭제하기',
+      onAction: () => {
+        onDismiss();
+        onToggleModal();
+      },
+    },
+    {
+      text: '수정하기',
+      onAction: () => goToPage(`${endpoints.user_page_url}/bookreviews/edit?bookreviewID=${bookreviewID}`),
+    },
+    {
+      text: '링크 복사하기',
+      onAction: () => clip(),
+    },
+  ];
+
+  const MORE_ACTIONS = [
+    {
+      text: '링크 복사하기',
+      onAction: () => clip(),
+    },
+  ];
+  const clip = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toastAlert({
+      open: true,
+      type: 'info',
+      text: '링크가 복사되었습니다.',
+    });
+    onDismiss();
+  };
+  const onDismiss = () => {
+    setOpenMoreList(false);
+  };
+  const onToggleModal = () => {
+    setIsOpenDeleteModal(!isOpenDeleteModal);
+  };
+
   return (
-    <BookreviewItemWrapper>
-      <BookreviewItemDiv>
-        <ProfileDiv>
-          <ProfileAvatarWrapper onClick={() => console.log('유저 프로필 페이지로~')}>
-            <ProfileAvatar src={'https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=tmfrl3316&logNo=100087488872&view=img_1'} size={38}/>
-          </ProfileAvatarWrapper>
-          <NameDiv>
-            <UserNameDiv onClick={() => console.log('유저 프로필 페이지로~')}>김바리</UserNameDiv>
-            <ClubNameDiv onClick={() => console.log('클럽 상세 페이지로?')}>club.name</ClubNameDiv>
-          </NameDiv>
-        </ProfileDiv>
-        <ProfileDiv>
-          <UpdatedAtDiv>{elapsedTime(time)}</UpdatedAtDiv>
-          <KebabIcon onClick={() => reportBookreviews()}/>
-        </ProfileDiv>
-      </BookreviewItemDiv>
-      <ClubNameWrapper>
-        {club.name}
-      </ClubNameWrapper>
-      <BookreviewContent>
-        {toggleEllipsis(bookreviewContent, limit).string}
-        {toggleEllipsis(bookreviewContent, limit).isShowMore && <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>}
-      </BookreviewContent>
-      <BookMovieDivWrapper>
-        <BookMovieDiv><BookMovieSpan>책 | </BookMovieSpan>알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』</BookMovieDiv>
-        <BookMovieDiv><BookMovieSpan>영화 | </BookMovieSpan>에브리씽 에브리웨어 올 앳 원스</BookMovieDiv>
-      </BookMovieDivWrapper>
-      <ReactionDivWrapper>
-        <ReactionDiv>
-          {isLike ? <><LoveFilledIcon color={orange900} width={20} height={20} style={{marginRight: '6px'}}/> <span onClick={() => console.log('좋아요 리스트페이지로')}>좋아요 {heartCount}</span></> : <><HeartIcon onClick={() => console.log('좋아요 반영~')} color={gray500} width={20} height={20} style={{marginRight: '6px'}}/> <span onClick={() => console.log('좋아요 리스트페이지로')}>좋아요 {heartCount}</span></>}
-        </ReactionDiv>
-        <ReactionDiv style={{marginLeft: '16px'}} onClick={() => console.log('댓글 클릭~')}>
-          <CommentIcon width={20} height={20} style={{marginRight: '6px'}}/> <span>댓글 {commentCount}</span>
-        </ReactionDiv>
-      </ReactionDivWrapper>
-    </BookreviewItemWrapper>
+    <>
+      <BookreviewItemWrapper>
+        <BookreviewItemDiv>
+          <ProfileDiv>
+            <ProfileAvatarWrapper onClick={() => console.log('유저 프로필 페이지로~')}>
+              <ProfileAvatar src={'https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=tmfrl3316&logNo=100087488872&view=img_1'} size={38}/>
+            </ProfileAvatarWrapper>
+            <NameDiv>
+              <UserNameDiv onClick={() => console.log('유저 프로필 페이지로~')}>김바리</UserNameDiv>
+              <ClubNameDiv onClick={() => console.log('클럽 상세 페이지로?')}>club.name</ClubNameDiv>
+            </NameDiv>
+          </ProfileDiv>
+          <ProfileDiv>
+            <UpdatedAtDiv>{elapsedTime(time)}</UpdatedAtDiv>
+            <KebabIcon onClick={() => reportBookreviews()}/>
+          </ProfileDiv>
+        </BookreviewItemDiv>
+        <ClubNameWrapper>
+          {club.name}
+        </ClubNameWrapper>
+        <BookreviewContent>
+          {toggleEllipsis(bookreviewContent, limit).string}
+          {toggleEllipsis(bookreviewContent, limit).isShowMore && <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>}
+        </BookreviewContent>
+        <BookMovieDivWrapper>
+          <BookMovieDiv><BookMovieSpan>책 | </BookMovieSpan>알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』</BookMovieDiv>
+          <BookMovieDiv><BookMovieSpan>영화 | </BookMovieSpan>에브리씽 에브리웨어 올 앳 원스</BookMovieDiv>
+        </BookMovieDivWrapper>
+        <ReactionDivWrapper>
+          <ReactionDiv>
+            {isLike ? <><LoveFilledIcon color={orange900} width={20} height={20} style={{marginRight: '6px'}}/> <span onClick={() => console.log('좋아요 리스트페이지로')}>좋아요 {heartCount}</span></> : <><HeartIcon onClick={() => console.log('좋아요 반영~')} color={gray500} width={20} height={20} style={{marginRight: '6px'}}/> <span onClick={() => console.log('좋아요 리스트페이지로')}>좋아요 {heartCount}</span></>}
+          </ReactionDiv>
+          <ReactionDiv style={{marginLeft: '16px'}} onClick={() => console.log('댓글 클릭~')}>
+            <CommentIcon width={20} height={20} style={{marginRight: '6px'}}/> <span>댓글 {commentCount}</span>
+          </ReactionDiv>
+        </ReactionDivWrapper>
+      </BookreviewItemWrapper>
+      <div style={{zIndex: 1000}}>
+        <BottomSheet
+          open={isOpenMoreList}
+          onDismiss={() => setOpenMoreList(state => !state)}
+          style={{
+            '--rsbs-ml': bottomSheetLeftMarginPx,
+            '--rsbs-max-w': '500px',
+            'z-index': 1000,
+          }}
+        >
+          <MoreItems actions={!isMyBookreview ? MORE_ACTIONS_OF_MY_BOOKREVIEW : MORE_ACTIONS} />
+        </BottomSheet>
+      </div>
+      </>
   )
 };
 
