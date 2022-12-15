@@ -6,7 +6,7 @@ export const SCHEDULED_CLUB_TAG = {
 };
 export const EVENT_CURATION_ID = 'bd71e461-2b7e-4eee-99b5-fedb2adc1e91';
 export const CURATION_CARD_ASPECT_RATIO = 0.865;
-export const DEFAULT_PROFILE_IMAGE = '/images/default-profile-image.png';
+export const DEFAULT_PROFILE_IMAGE = '/images/default-profile-image.svg';
 export const ADMIN_IDS = [
   '410c0177-c4d7-4564-bb19-c8e03c104a1e', // 오민규
   '9353', // 양주영
