@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Club } from '../../../types/__generate__/user-backend-api';
+import { Bookreview, ClubRole } from '../../../types/__generate__/user-backend-api';
 import styled from '@emotion/styled';
 import { ProfileAvatar } from '@trevari/components';
 import { CommentIcon, HeartIcon, KebabIcon, LoveFilledIcon } from '@trevari/icons';
 import { body8, contents2, heading9, title4, title6 } from '@trevari/typo';
 import { elapsedTime } from '../../../utils/time';
 import { useTheme } from '@emotion/react';
-import { goToPage } from '../../../utils';
+import { goToPage, stripAllTags } from '../../../utils';
 import { endpoints } from '../../../config';
 import { toastAlert } from '../../../services/ui.store';
 import MoreItems from './MoreItems';
@@ -15,22 +15,22 @@ import { useWindowSize } from '../../../utils/windowResize';
 import { deleteBookreview } from '../../bookreviews/services/api';
 import BaseModal from './ModalBase';
 import { useAppDispatch } from '../../../services/store';
+import DefaultProfileAvatar from '../../../components/svgs/DefaultProfileAvatar';
 
 interface Props {
-  clubID: string;
-  club: Club;
+  bookreview: Bookreview
 }
 
-const BookreviewItem = ({ clubID, club }: Props) => {
-  const bookreviewContent = '알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』';
-  const time = '2020-12-14 09:24:59.000000 +00:00';
-  const heartCount = 12;
-  const commentCount = 11; // 댓글수 + 답글수
+const BookreviewItem = ({ bookreview }: Props) => {
+  const bookreviewContent = bookreview.content;
+  const bookreviewPublishedAt = bookreview.publishedAt;// '2020-12-14 09:24:59.000000 +00:00';
+  const heartCount = bookreview.likeUserIDs.length;
+  const commentCount = bookreview.commentCount; // 댓글수 + 답글수
   const isLike = false;
   const { width } = useWindowSize();
   const dispatch = useAppDispatch();
   const isMyBookreview = false;
-  const [limit, setLimit] = useState(94);
+  const [limit, setLimit] = useState(87);
   const [isOpenMoreList, setOpenMoreList] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
@@ -117,6 +117,9 @@ const BookreviewItem = ({ clubID, club }: Props) => {
   };
   useEffect(() => onDismiss, []);
 
+  const bookContent = bookreview.contents.filter(( item: Bookreview ) => item.type === 'book');
+  const movieContent = bookreview.contents.filter(( item: Bookreview ) => item.type === 'movie');
+
   const bottomSheetLeftMarginPx = width > 500 ? 'calc(50vw - 250px)' : 0;
   const deleteModalTitle = '정말 삭제하시겠습니까?';
   const deleteModalText = `삭제한 독후감은 복구가 어렵습니다.
@@ -128,28 +131,32 @@ const BookreviewItem = ({ clubID, club }: Props) => {
         <BookreviewItemDiv>
           <ProfileDiv>
             <ProfileAvatarWrapper onClick={() => console.log('유저 프로필 페이지로~')}>
-              <ProfileAvatar src={'https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=tmfrl3316&logNo=100087488872&view=img_1'} size={38}/>
+              {bookreview.user?.profileImageUrl !== null ? <ProfileAvatar src={bookreview.user?.profileImageUrl} size={38}/> : <DefaultProfileAvatar width={38} height={38}/>}
             </ProfileAvatarWrapper>
             <NameDiv>
-              <UserNameDiv onClick={() => console.log('유저 프로필 페이지로~')}>김바리</UserNameDiv>
-              <ClubNameDiv onClick={() => console.log('클럽 상세 페이지로?')}>club.name</ClubNameDiv>
+              <UserNameDiv onClick={() => console.log('유저 프로필 페이지로~')}>{bookreview.user?.name}</UserNameDiv>
+              <ClubNameDiv onClick={() => console.log('클럽 상세 페이지로?')}>{bookreview.club?.name}</ClubNameDiv>
             </NameDiv>
           </ProfileDiv>
           <ProfileDiv>
-            <UpdatedAtDiv>{elapsedTime(time)}</UpdatedAtDiv>
+            <UpdatedAtDiv>{elapsedTime(bookreviewPublishedAt)}</UpdatedAtDiv>
             <KebabIcon onClick={() => reportBookreviews()}/>
           </ProfileDiv>
         </BookreviewItemDiv>
         <ClubNameWrapper>
-          {club.name}
+          {bookreview.club.name}
         </ClubNameWrapper>
-        <BookreviewContent>
-          {toggleEllipsis(bookreviewContent, limit).string}
-          {toggleEllipsis(bookreviewContent, limit).isShowMore && <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>}
-        </BookreviewContent>
+        {/*<div style={{height: '90px', overflow: 'hidden'}} dangerouslySetInnerHTML={{ __html: toggleEllipsis(bookreview.content, limit).string.replace(/<[^>]*>?/g, '')|| '' }} />*/}
+        {toggleEllipsis(stripAllTags(bookreview.content), limit).string.replace(/<[^>]*>?/g, '')}
+        {/*{toggleEllipsis(bookreviewContent.content, limit).string}*/}
+        {toggleEllipsis(stripAllTags(bookreview.content), limit).isShowMore && <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>}
+        {/*<BookreviewContent>*/}
+        {/*  {toggleEllipsis(bookreview.content, limit).string}*/}
+        {/*  {toggleEllipsis(bookreview.content, limit).isShowMore && <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>}*/}
+        {/*</BookreviewContent>*/}
         <BookMovieDivWrapper>
-          <BookMovieDiv><BookMovieSpan>책 | </BookMovieSpan>알베르토 사보이아, 『아이디어 불패의 법칙(양장본 HardCover)』</BookMovieDiv>
-          <BookMovieDiv><BookMovieSpan>영화 | </BookMovieSpan>에브리씽 에브리웨어 올 앳 원스</BookMovieDiv>
+          {bookContent.length > 0 && <BookMovieDiv><BookMovieSpan>책 | </BookMovieSpan>{bookContent[0].author}, {bookContent[0].title}</BookMovieDiv>}
+          {movieContent.length > 0 && <BookMovieDiv><BookMovieSpan>영화 | </BookMovieSpan>{movieContent[0].title}</BookMovieDiv>}
         </BookMovieDivWrapper>
         <ReactionDivWrapper>
           <ReactionDiv>
@@ -243,6 +250,7 @@ const BookMovieDiv = styled.div`
 `;
 const BookMovieDivWrapper = styled.div`
   margin-bottom: 20px;
+  margin-top: 20px;
 `;
 const ProfileAvatarWrapper = styled.div`
   cursor: pointer;
@@ -256,11 +264,12 @@ const BookreviewContent = styled.div`
 `;
 
 const ShowMoreButton = styled.div`
-  float: right;
   cursor: pointer;
   ${title4};
   color: ${({theme}) => theme.colors.gray500};
-  margin-top: 6px;
+  display: flex;
+  justify-content: end;
+  margin-top: -25px;
 `;
 
 

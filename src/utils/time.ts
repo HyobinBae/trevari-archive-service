@@ -6,7 +6,7 @@ export const elapsedTime = (time: string) => {
 
   const times = [
     { name: '년', milliSeconds: 60 * 60 * 24 * 365 },
-    { name: '', milliSeconds: 60 * 60 * 24 * 30 },
+    { name: '달', milliSeconds: 60 * 60 * 24 * 30 },
     { name: '일', milliSeconds: 60 * 60 * 24 },
     { name: '시간', milliSeconds: 60 * 60 },
     { name: '분', milliSeconds: 60 },

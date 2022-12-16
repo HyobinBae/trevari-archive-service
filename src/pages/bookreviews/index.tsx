@@ -14,7 +14,7 @@ import { WriteIcon, WritingIcon } from '@trevari/icons';
 import { useSelector } from 'react-redux';
 import { selectUser, selectUserIsMember, selectUserRoles } from '../../services/user/user.store';
 import BlurInBookreviews from '../../components/svgs/BlurInBookreviews';
-import { ClubRole } from '../../types/__generate__/user-backend-api';
+import { Bookreview, ClubRole } from '../../types/__generate__/user-backend-api';
 import BookreviewItem from '../main/components/BookreviewItem';
 import { getClubRoles } from '../../services/user/user.api';
 import { useParams } from 'react-router-dom';
@@ -92,16 +92,17 @@ const Bookreviews = () => {
   //       <Loading flicker variant="gridCardList" />
   //     </LoadingContainer>
   //   );
-  const roleLength = roles ? roles.length : 0;
+  //const roleLength = roles ? roles.length : 0;
+  const bookreviewsLength = bookreviews ? bookreviews.length : 0;
 
-  const isShow = roles.filter(( role: ClubRole ) => !role.club.isClosed).length > 0;
-
+  const isClubShow = roles.filter(( role: ClubRole ) => !role.club.isClosed).length > 0;
+  const sortBookreviews = bookreviews?.slice().sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
   if (isLoading || permission === 'loading') return <LoadingPage />;
   return isMember ? (
     <>
       <Box style={{ paddingTop: '48px', minHeight: '100vh', paddingBottom: '67px' }}>
         <UserClubListWrapper>
-          {isShow ? <UserClubList>
+          {isClubShow ? <UserClubList>
             {roles
               .filter(( role: ClubRole ) => !role.club.isClosed)
               .map(( role: ClubRole, index ) => {
@@ -114,11 +115,11 @@ const Bookreviews = () => {
             <div>활동했던 클럽의 독후감을 만나보세요.</div>
           }
         </UserClubListWrapper>
-        <GridCardCount>{`총 ${roleLength}개`}</GridCardCount>
-        {roles && roles?.length > 0 ? (
+        <GridCardCount>{`총 ${bookreviewsLength}개`}</GridCardCount>
+        {sortBookreviews && sortBookreviews?.length > 0 ? (
           <GridBox>
-            {roles?.map((item: ClubRole) => (
-              <BookreviewItem key={item.clubID} club={item.club} clubID={item.clubID}/>
+            {sortBookreviews?.map((item: ClubRole) => (
+              <BookreviewItem key={item.clubID} bookreview={item} />
             ))}
           </GridBox>
         ) : (
