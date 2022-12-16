@@ -23,7 +23,6 @@ interface NewCurationClubCardProps {
 }
 
 const NewCurationSubscriptionClubCard = ({ subscriptionClub, cardWidth, imgHeight }: NewCurationClubCardProps) => {
-  console.log(subscriptionClub)
   const { id, content, liveSchedule } = subscriptionClub;
   const name = subscriptionClub.title;
   const desc = content.description;
