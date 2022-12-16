@@ -51,6 +51,7 @@ export interface ISubscriptionClub {
   closedAt?: Date;
   startedDateAt?: Date;
   endedDateAt?: Date;
+  meta?: IMeta;
   currentOrderDate?: string;
   nextOrderDate?: string;
   liveDate?: string;
@@ -77,4 +78,11 @@ export interface ISubscriptionContent {
   enterLiveLink: string;
   archiveLink: string;
   notice: string;
+  description: string;
+  leaderDescription: string;
+}
+
+export interface IMeta {
+  ogTagImageUrl: string;
+  description: string;
 }

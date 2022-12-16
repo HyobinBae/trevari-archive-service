@@ -3,7 +3,7 @@ import {
   DisplayCard,
   DisplayCardContent,
   DisplayCardHero,
-  DisplayCardMeetingInfo,
+  DisplayCardMeetingInfo, DisplayCardParagraph,
   DisplayCardPlaceInfo,
   DisplayCardTitle,
 } from '@trevari/business-components';
@@ -25,7 +25,8 @@ interface NewCurationClubCardProps {
 const NewCurationSubscriptionClubCard = ({ subscriptionClub, cardWidth, imgHeight }: NewCurationClubCardProps) => {
   const { id, content, liveSchedule } = subscriptionClub;
   const name = subscriptionClub.title;
-  const place = '온라인(Youtube)';
+  const desc = content.description;
+  const place = `온라인(${content.place})`;
   const schedule = formatOnlineClubsSchedule(liveSchedule.weekOfLiveSchedule, liveSchedule.dayOfLiveSchedule, liveSchedule.startTimeOfLiveSchedule);
 
   const { title } = useNavigation();
@@ -50,6 +51,7 @@ const NewCurationSubscriptionClubCard = ({ subscriptionClub, cardWidth, imgHeigh
     >
       <DisplayCardContent>
         <DisplayCardTitle>{name}</DisplayCardTitle>
+        <DisplayCardParagraph style={{ display: 'block' }}>{desc}</DisplayCardParagraph>
         <DisplayCardPlaceInfo>{place}</DisplayCardPlaceInfo>
         <DisplayCardMeetingInfo>{schedule}</DisplayCardMeetingInfo>
       </DisplayCardContent>

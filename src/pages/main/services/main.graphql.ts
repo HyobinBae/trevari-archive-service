@@ -305,6 +305,8 @@ export const GET_NEW_CURATION = gql`
             title
             content {
                 detailPageTitleImageUrl
+                description
+                place
             }
             liveSchedule {
                 weekOfLiveSchedule
@@ -362,6 +364,8 @@ export const GET_NEW_CURATIONS = gql`
           title
           content {
             detailPageTitleImageUrl
+            description
+            place
           }
           liveSchedule {
             weekOfLiveSchedule
