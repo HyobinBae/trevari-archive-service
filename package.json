@@ -29,7 +29,7 @@
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
-    "@trevari/business-components": "0.3.19",
+    "@trevari/business-components": "0.3.20",
     "@trevari/components": "^0.1.7",
     "@trevari/design-token": "^0.0.5",
     "@trevari/icons": "^0.0.12",
