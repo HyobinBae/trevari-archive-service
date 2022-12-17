@@ -1,5 +1,5 @@
 import { bookreviewBackend } from 'api/backend';
-import { Bookreview } from 'types/__generate__/user-backend-api';
+import { Bookreview, BookreviewsOptions } from 'types/__generate__/user-backend-api';
 import {
   GET_BOOKREVIEW,
   GET_BOOKREVIEWS,
@@ -11,14 +11,14 @@ import {
   TOGGLE_LIKE_BOOKREVIEW_COMMENT,
   TOGGLE_LIKE_BOOKREVIEW,
   GET_BOOKREVIEW_COMMENT_LIKEUSERS,
-  DELETE_BOOKREVIEW,
+  DELETE_BOOKREVIEW, GET_BOOKREVIEWS_TEMP,
 } from './graphql';
 import { LikeUser } from './types';
 
 export const bookreviewApi = bookreviewBackend.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
-    getBookreviews: build.query<Array<Bookreview>, BookreviewsOptions>({
+    getBookreviews: build.query<Array<Bookreview>, { limit: number, offset: number, userID: string }>({
       query: ({ limit, offset, userID }) => ({
         document: GET_BOOKREVIEWS,
         variables: {
@@ -32,6 +32,26 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
         : Array<Bookreview> }) => bookreviewsV2
         ,
       providesTags: ['BookreviewsV2'],
+    }),
+    getBookreviewsTemp: build.query<Array<Bookreview>, BookreviewsOptions>({
+      query: (options: {
+        limit?: number;
+        offset?: number;
+        where?: {
+          clubID?: string;
+          order?: number;
+          status?: string;
+          userID?: string;
+        };
+      }) => ({
+        document: GET_BOOKREVIEWS_TEMP,
+        variables: { options },
+      }),
+      transformResponse: ({ bookreviewsTemp
+                          }: { bookreviewsTemp
+          : Array<Bookreview> }) => bookreviewsTemp
+      ,
+      providesTags: ['bookreviewsTemp'],
     }),
     getBookreview: build.query<Bookreview, { id: string }>({
       query: ({ id }) => ({
@@ -142,6 +162,7 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
 
 export const {
   useGetBookreviewsQuery,
+  useGetBookreviewsTempQuery,
   useGetBookreviewQuery,
   useGetBookreviewLikeUsersQuery,
   useToggleLikeOnBookreviewMutation,
@@ -155,6 +176,7 @@ export const {
 export const {
   endpoints: {
     getBookreviews,
+    getBookreviewsTemp,
     getBookreview,
     getBookreviewLikeUsers,
     toggleLikeOnBookreview,

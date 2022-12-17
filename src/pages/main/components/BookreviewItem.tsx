@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Bookreview, ClubRole } from '../../../types/__generate__/user-backend-api';
+import { Bookreview } from '../../../types/__generate__/user-backend-api';
 import styled from '@emotion/styled';
 import { ProfileAvatar } from '@trevari/components';
 import { CommentIcon, HeartIcon, KebabIcon, LoveFilledIcon } from '@trevari/icons';
@@ -12,31 +12,39 @@ import { toastAlert } from '../../../services/ui.store';
 import MoreItems from './MoreItems';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import { useWindowSize } from '../../../utils/windowResize';
-import { deleteBookreview } from '../../bookreviews/services/api';
+import { deleteBookreview, getBookreviewLikeUsers, toggleLikeOnBookreview } from '../../bookreviews/services/api';
 import BaseModal from './ModalBase';
 import { useAppDispatch } from '../../../services/store';
 import DefaultProfileAvatar from '../../../components/svgs/DefaultProfileAvatar';
+import { LikeUser } from '../../bookreviews/services/types';
+import LikeUserModal from './LikeUserModal';
+import { btoa, Buffer } from 'buffer';
 
 interface Props {
   bookreview: Bookreview
+  userID: string
 }
 
-const BookreviewItem = ({ bookreview }: Props) => {
-  const bookreviewContent = bookreview.content;
-  const bookreviewPublishedAt = bookreview.publishedAt;// '2020-12-14 09:24:59.000000 +00:00';
-  const heartCount = bookreview.likeUserIDs.length;
-  const commentCount = bookreview.commentCount; // 댓글수 + 답글수
-  const isLike = false;
+const BookreviewItem = ({ bookreview, userID }: Props) => {
   const { width } = useWindowSize();
   const dispatch = useAppDispatch();
-  const isMyBookreview = false;
-  const [limit, setLimit] = useState(87);
+  const bookreviewContent = bookreview.content;
+  const bookreviewPublishedAt = bookreview.publishedAt;
+  const commentCount = bookreview.commentCount;
+  const isMyBookreview = bookreview.user.id === userID;
+  const [limit, setLimit] = useState(86);
+  const [likeUserIDsCount, setLikeUserIDsCount]  = useState(bookreview.likeUserIDs.length);
   const [isOpenMoreList, setOpenMoreList] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+  const [isLikeUserListModal, setIsLikeUserListModal] = useState(false);
+  const [isAlreadyLikedBookreview, setIsAlreadyLikedBookreview] = useState(bookreview.likeUserIDs.includes(userID));
+  const [likeUsers, setLikeUsers] = useState<LikeUser[]>(bookreview.likeUserIDs);
 
   const {
     colors: { orange900, gray500 },
   } = useTheme();
+
+  useEffect(() => onDismiss, []);
 
   const toggleEllipsis = (str: string, limit: number) => {
     return {
@@ -49,15 +57,18 @@ const BookreviewItem = ({ bookreview }: Props) => {
     setLimit(str.length);
   };
 
-  // const goToProfile = () => {
-  //   // `/profile?${
-  //   //   comment.user!.email
-  //   //     ? `uid=${Buffer.from(comment.user!.email).toString('base64')}`
-  //   //     : `userName=${comment.user!.name}`
-  // };
+  const goToProfile = () => {
+    const buff = Buffer.from(bookreview.user!.email, 'utf-8');
+    const base64 = buff.toString('base64');
+    goToPage(
+    `${endpoints.user_page_url}/profile?${
+      bookreview.user!.email
+        ? `uid=${base64}`
+        : `userName=${bookreview.user!.name}`
+    }`);
+  };
 
-  const reportBookreviews = () => {
-    console.log('신고하기');
+  const onClickMoreList = () => {
     setOpenMoreList(state => !state)
   }
 
@@ -71,7 +82,7 @@ const BookreviewItem = ({ bookreview }: Props) => {
     },
     {
       text: '수정하기',
-      onAction: () => goToPage(`${endpoints.user_page_url}/bookreviews/edit?bookreviewID=${bookreviewID}`),
+      onAction: () => goToPage(`${endpoints.user_page_url}/bookreviews/edit?bookreviewID=${bookreview.id}`),
     },
     {
       text: '링크 복사하기',
@@ -85,8 +96,9 @@ const BookreviewItem = ({ bookreview }: Props) => {
       onAction: () => clip(),
     },
   ];
+
   const clip = () => {
-    navigator.clipboard.writeText(window.location.href);
+    navigator.clipboard.writeText(`${window.location.href}/show/${bookreview.id}`);
     toastAlert({
       open: true,
       type: 'info',
@@ -94,28 +106,48 @@ const BookreviewItem = ({ bookreview }: Props) => {
     });
     onDismiss();
   };
+
   const onDismiss = () => {
     setOpenMoreList(false);
   };
+
   const onToggleModal = () => {
     setIsOpenDeleteModal(!isOpenDeleteModal);
   };
+
   const onConfirmDelete = async () => {
-    const resultAction = await dispatch(deleteBookreview.initiate({ id: bookreviewID }));
+    const resultAction = await dispatch(deleteBookreview.initiate({ id: bookreview.id }));
     if (resultAction.data.deleteBookreview === true) {
       toastAlert({
         open: true,
         type: 'info',
         text: '독후감이 삭제되었습니다.',
       });
-      // TODO: home -> 독후감 리스트 페이지
       setTimeout(() => {
-        goToPage('/');
         onToggleModal();
       }, 1000);
     }
   };
-  useEffect(() => onDismiss, []);
+
+
+  const onClickLikeBookreview = async () => {
+    const resultAction = await dispatch(toggleLikeOnBookreview.initiate({ id: bookreview.id, userID }));
+    if (resultAction.data.toggleLikeOnBookreviewTemp.bookreview.likeUserIDs.includes(userID)) {
+      setIsAlreadyLikedBookreview(true);
+    } else {
+      setIsAlreadyLikedBookreview(false);
+    }
+    setLikeUserIDsCount(resultAction.data.toggleLikeOnBookreviewTemp.bookreview.likeUserIDs.length);
+  };
+
+  const onClickBookreviewLikeUsers = async () => {
+    const resultAction = await dispatch(getBookreviewLikeUsers.initiate({ id: bookreview.id }));
+    if (resultAction.data.length === 0 || !resultAction.data) {
+      return;
+    }
+    setLikeUsers(resultAction.data);
+    setIsLikeUserListModal(!isLikeUserListModal)
+  };
 
   const bookContent = bookreview.contents.filter(( item: Bookreview ) => item.type === 'book');
   const movieContent = bookreview.contents.filter(( item: Bookreview ) => item.type === 'movie');
@@ -130,7 +162,7 @@ const BookreviewItem = ({ bookreview }: Props) => {
       <BookreviewItemWrapper>
         <BookreviewItemDiv>
           <ProfileDiv>
-            <ProfileAvatarWrapper onClick={() => console.log('유저 프로필 페이지로~')}>
+            <ProfileAvatarWrapper onClick={() => goToProfile()}>
               {bookreview.user?.profileImageUrl !== null ? <ProfileAvatar src={bookreview.user?.profileImageUrl} size={38}/> : <DefaultProfileAvatar width={38} height={38}/>}
             </ProfileAvatarWrapper>
             <NameDiv>
@@ -140,30 +172,35 @@ const BookreviewItem = ({ bookreview }: Props) => {
           </ProfileDiv>
           <ProfileDiv>
             <UpdatedAtDiv>{elapsedTime(bookreviewPublishedAt)}</UpdatedAtDiv>
-            <KebabIcon onClick={() => reportBookreviews()}/>
+            <KebabIcon style={{cursor: 'pointer'}} onClick={() => onClickMoreList()}/>
           </ProfileDiv>
         </BookreviewItemDiv>
-        <ClubNameWrapper>
-          {bookreview.club.name}
+        <ClubNameWrapper onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
+          {bookreview.title}
         </ClubNameWrapper>
-        {/*<div style={{height: '90px', overflow: 'hidden'}} dangerouslySetInnerHTML={{ __html: toggleEllipsis(bookreview.content, limit).string.replace(/<[^>]*>?/g, '')|| '' }} />*/}
-        {toggleEllipsis(stripAllTags(bookreview.content), limit).string.replace(/<[^>]*>?/g, '')}
-        {/*{toggleEllipsis(bookreviewContent.content, limit).string}*/}
-        {toggleEllipsis(stripAllTags(bookreview.content), limit).isShowMore && <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>}
-        {/*<BookreviewContent>*/}
-        {/*  {toggleEllipsis(bookreview.content, limit).string}*/}
-        {/*  {toggleEllipsis(bookreview.content, limit).isShowMore && <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>}*/}
-        {/*</BookreviewContent>*/}
+        <BookreviewContent onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
+          {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string}
+        </BookreviewContent>
+        {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).isShowMore && <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>}
         <BookMovieDivWrapper>
           {bookContent.length > 0 && <BookMovieDiv><BookMovieSpan>책 | </BookMovieSpan>{bookContent[0].author}, {bookContent[0].title}</BookMovieDiv>}
-          {movieContent.length > 0 && <BookMovieDiv><BookMovieSpan>영화 | </BookMovieSpan>{movieContent[0].title}</BookMovieDiv>}
+          {movieContent.length > 0 && <BookMovieDiv><BookMovieSpan>영화 | </BookMovieSpan>{bookContent[0].author && bookContent[0].author + ", "} {movieContent[0].title}</BookMovieDiv>}
         </BookMovieDivWrapper>
         <ReactionDivWrapper>
           <ReactionDiv>
-            {isLike ? <><LoveFilledIcon color={orange900} width={20} height={20} style={{marginRight: '6px'}}/> <span onClick={() => console.log('좋아요 리스트페이지로')}>좋아요 {heartCount}</span></> : <><HeartIcon onClick={() => console.log('좋아요 반영~')} color={gray500} width={20} height={20} style={{marginRight: '6px'}}/> <span onClick={() => console.log('좋아요 리스트페이지로')}>좋아요 {heartCount}</span></>}
+            {isAlreadyLikedBookreview ?
+              <>
+                <LoveFilledIcon color={orange900} width={20} height={20} style={{marginRight: '6px', marginTop: '-2px'}} onClick={() => onClickLikeBookreview()}/>
+                <span onClick={() => likeUserIDsCount > 0 ? onClickBookreviewLikeUsers() : null}>좋아요 {likeUserIDsCount > 0 ? likeUserIDsCount : null}</span>
+              </> :
+              <>
+                <HeartIcon onClick={() => onClickLikeBookreview()} color={gray500} width={20} height={20} style={{marginRight: '6px'}}/>
+                <span onClick={() => likeUserIDsCount > 0 ? onClickBookreviewLikeUsers() : null}>좋아요 {likeUserIDsCount > 0 ? likeUserIDsCount : null}</span>
+              </>
+            }
           </ReactionDiv>
-          <ReactionDiv style={{marginLeft: '16px'}} onClick={() => console.log('댓글 클릭~')}>
-            <CommentIcon width={20} height={20} style={{marginRight: '6px'}}/> <span>댓글 {commentCount}</span>
+          <ReactionDiv style={{marginLeft: '16px'}} onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
+            <CommentIcon width={20} height={20} style={{marginRight: '6px'}}/> <span>댓글 {commentCount > 0 ? commentCount : null}</span>
           </ReactionDiv>
         </ReactionDivWrapper>
       </BookreviewItemWrapper>
@@ -175,7 +212,7 @@ const BookreviewItem = ({ bookreview }: Props) => {
           '--rsbs-max-w': '500px',
         }}
       >
-        <MoreItems actions={!isMyBookreview ? MORE_ACTIONS_OF_MY_BOOKREVIEW : MORE_ACTIONS} />
+        <MoreItems actions={isMyBookreview ? MORE_ACTIONS_OF_MY_BOOKREVIEW : MORE_ACTIONS} />
       </BottomSheet>
       <BaseModal
         title={deleteModalTitle}
@@ -184,6 +221,9 @@ const BookreviewItem = ({ bookreview }: Props) => {
         onCancel={onToggleModal}
         onConfirm={onConfirmDelete}
       />
+      {isLikeUserListModal && (
+        <LikeUserModal browserWidth={width} users={likeUsers} onClose={() => setIsLikeUserListModal(false)} />
+      )}
       </>
   )
 };
@@ -243,9 +283,14 @@ const ClubNameWrapper = styled.div`
   ${heading9};
   margin-top: 24px;
   margin-bottom: 20px;
+  cursor: pointer;
 `;
 const BookMovieDiv = styled.div`
   ${body8};
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   color: ${({theme}) => theme.colors.gray600};
 `;
 const BookMovieDivWrapper = styled.div`
@@ -261,6 +306,7 @@ const BookreviewContent = styled.div`
   overflow: hidden;
   word-break: break-all;
   margin-bottom: 20px;
+  cursor: pointer;
 `;
 
 const ShowMoreButton = styled.div`
@@ -269,7 +315,7 @@ const ShowMoreButton = styled.div`
   color: ${({theme}) => theme.colors.gray500};
   display: flex;
   justify-content: end;
-  margin-top: -25px;
+  margin-top: -51px;
 `;
 
 

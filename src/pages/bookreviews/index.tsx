@@ -6,120 +6,113 @@ import { endpoints } from 'config';
 import { goToPage } from 'utils';
 import { selectAuthenticated, selectUserId } from 'services/auth/auth.store';
 import { useAppDispatch, useAppSelector } from 'services/store';
-import { useWindowSize } from 'hooks/useWindowSize';
 import Box from 'components/base/Box';
-import { ADMIN_IDS, CURATION_CARD_ASPECT_RATIO } from 'pages/main/const';
 import { Button } from '@trevari/components';
 import { WriteIcon, WritingIcon } from '@trevari/icons';
 import { useSelector } from 'react-redux';
-import { selectUser, selectUserIsMember, selectUserRoles } from '../../services/user/user.store';
+import { selectUserIsMember, selectUserRoles } from '../../services/user/user.store';
 import BlurInBookreviews from '../../components/svgs/BlurInBookreviews';
 import { Bookreview, ClubRole } from '../../types/__generate__/user-backend-api';
 import BookreviewItem from '../main/components/BookreviewItem';
-import { getClubRoles } from '../../services/user/user.api';
-import { useParams } from 'react-router-dom';
-import { useGetBookreviewsQuery } from './services/api';
-import { format, parseISO } from 'date-fns';
+import { useGetBookreviewsQuery, useGetBookreviewsTempQuery } from './services/api';
 import LoadingPage from '../../components/base/LoadingPage';
 
 const Bookreviews = () => {
-  const { width } = useWindowSize();
   const dispatch = useAppDispatch();
   const authenticated = useAppSelector(selectAuthenticated);
-  const user = useAppSelector(selectUser);
+  const userId = useAppSelector(selectUserId);
   const isMember = useSelector(selectUserIsMember);
   const roles = useSelector(selectUserRoles);
-  const { data: bookreviews, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: user.id });
-  console.log('bookreviews', bookreviews);
-  const [permission, setPermission] = useState<'loading' | 'denied' | 'accepted'>('loading');
+  const [filteredClubRoles,setFilteredClubRoles] = useState<ClubRole[]>(roles);
+  const [totalBookreviews,setTotalBookreviews] = useState<Bookreview[]>([]);
+  const [totalBookreviewsLength,setTotalBookreviewsLength] = useState<number>(0);
+  const { data: bookreviews, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: userId });
+  const { data: bookreviewsTemp } = useGetBookreviewsTempQuery({
+    limit: 1000,
+    offset: 0,
+    where: {
+      status: '게시',
+      userID: userId
+    },
+  });
+
   useEffect(() => {
-    if (user && bookreviews) {
-      getPermission();
+    const filteredClubRoles = roles.filter(( role: ClubRole ) => new Date(role.club.endedAt) >= new Date()).slice().sort((a, b) => new Date(a.club.meetings[0].startedAt) - new Date(b.club.meetings[0].startedAt));
+    setFilteredClubRoles(filteredClubRoles);
+  }, []);
+
+  useEffect(() => {
+    if (bookreviews) {
+      let mergedBookreviews = [];
+      let sortedBookreviews = [];
+      if (bookreviewsTemp) {
+        mergedBookreviews = bookreviews?.concat(bookreviewsTemp);
+        sortedBookreviews = mergedBookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+        setTotalBookreviews(sortedBookreviews);
+        setTotalBookreviewsLength(sortedBookreviews.length);
+      } else {
+        mergedBookreviews = bookreviews;
+        sortedBookreviews = mergedBookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+        setTotalBookreviews(sortedBookreviews);
+        setTotalBookreviewsLength(sortedBookreviews.length);
+      }
     }
-  }, [user, bookreviews]);
+  }, [isLoading]);
 
-  const getPermission = async () => {
-    if (!user || !bookreviews) return;
-    const clubRoleAction = await dispatch(
-      getClubRoles.initiate({ where: { userID: user.id, refundStatuses: [null, '환불 입금 대기', '환불 입금 완료'] } }),
-    );
-    const clubRoles = clubRoleAction.data;
-    const isMyClub = true;//clubRoles.some((clubRole: ClubRole) => clubRole.clubID === bookreview.club.id);
-    const isMyBookreview = true;//bookreview.userID === user.id;
-    const isAdmin = ADMIN_IDS.includes(user.id);
-    const now = parseISO(format(new Date(), 'yyyy-MM-dd'));
-    // const meetingDate = parseISO(format(new Date(bookreview.meeting.startedAt), 'yyyy-MM-dd'));
-    const isTodayOrPastMeeting = true;//isAfter(now, meetingDate);
-
-    // let hasMembershipArgs;
-    // if (isTodayOrPastMeeting) {
-    //   hasMembershipArgs = { userID: user.id, serviceID: BOOK_REVIEW_SERVICE_ID };
-    // } else {
-    //   hasMembershipArgs = {
-    //     checkDate: bookreview.meeting.startedAt,
-    //     userID: user.id,
-    //     serviceID: BOOK_REVIEW_SERVICE_ID,
-    //   };
-    // }
-    // const hasMembershipAction = await dispatch(hasMembership.initiate(hasMembershipArgs));
-    // const hasMembershipFlag = hasMembershipAction.isSuccess && hasMembershipAction.data.hasMembership;
-
-    const hasPermission = false; //bookreview.isPublic || isMyClub || isAdmin || hasMembershipFlag || isMyBookreview;
-    if (!hasPermission) {
-      setPermission('denied');
-    } else {
-      setPermission('accepted');
-    }
-  };
-
-  const isGuest = user.id === 'guest';
+  const isGuest = userId === 'guest';
 
   useEffect(() => {
     if (isGuest) {
       goToPage(`${endpoints.user_login_page_url}/?redirectionUrl=/bookreviews`);
       return;
     }
-  }, [dispatch, authenticated, user.id]);
+  }, [dispatch, authenticated, userId]);
 
-  const cardImgHeight =
-    width > 500
-      ? `calc(450px * ${CURATION_CARD_ASPECT_RATIO} / 2)`
-      : `calc((100vw - 50px) * ${CURATION_CARD_ASPECT_RATIO} / 2)`;
+  let moreClubRolesLength = null;
+  let clubName = '';
+  let renderClubRoles = filteredClubRoles;
+  if (filteredClubRoles.length > 3) {
+    renderClubRoles = filteredClubRoles.slice(0, 3);
+    moreClubRolesLength = filteredClubRoles.length - 3;
+  }
+  if (isLoading) return <LoadingPage />;
 
-  // if (!authenticated || isLoading)
-  //   return (
-  //     <LoadingContainer>
-  //       <Loading flicker variant="gridCardList" />
-  //     </LoadingContainer>
-  //   );
-  //const roleLength = roles ? roles.length : 0;
-  const bookreviewsLength = bookreviews ? bookreviews.length : 0;
 
-  const isClubShow = roles.filter(( role: ClubRole ) => !role.club.isClosed).length > 0;
-  const sortBookreviews = bookreviews?.slice().sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-  if (isLoading || permission === 'loading') return <LoadingPage />;
   return isMember ? (
     <>
       <Box style={{ paddingTop: '48px', minHeight: '100vh', paddingBottom: '67px' }}>
         <UserClubListWrapper>
-          {isClubShow ? <UserClubList>
-            {roles
-              .filter(( role: ClubRole ) => !role.club.isClosed)
-              .map(( role: ClubRole, index ) => {
-                return (
-                  <span key={role.club.id}>{index === roles.length -1 ? role.club.name : `${role.club.name} / `} </span>
-                )
-              })}
-            멤버들의 독후감을 만나보세요.
-          </UserClubList> :
+          {filteredClubRoles.length > 0 ?
+            <UserClubList>
+              {renderClubRoles
+                .map(( role: ClubRole, index ) => {
+                  if (filteredClubRoles.length > 3) {
+                    if (index === renderClubRoles.length -1) {
+                      clubName = `${role.club.name} 외 ${moreClubRolesLength}개 클럽 `;
+                    } else {
+                      clubName = `${role.club.name} / `;
+                    }
+                  } else {
+                    if (index === renderClubRoles.length -1) {
+                      clubName = `${role.club.name} `;
+                    } else {
+                      clubName = `${role.club.name} / `;
+                    }
+                  }
+                  return (
+                    <span key={role.club.id}>{clubName}</span>
+                  )
+                })}
+              멤버들의 독후감을 만나보세요.
+            </UserClubList> :
             <div>활동했던 클럽의 독후감을 만나보세요.</div>
           }
         </UserClubListWrapper>
-        <GridCardCount>{`총 ${bookreviewsLength}개`}</GridCardCount>
-        {sortBookreviews && sortBookreviews?.length > 0 ? (
+        <GridCardCount>{`총 ${totalBookreviewsLength}개`}</GridCardCount>
+        {totalBookreviews && totalBookreviews?.length > 0 ? (
           <GridBox>
-            {sortBookreviews?.map((item: ClubRole) => (
-              <BookreviewItem key={item.clubID} bookreview={item} />
+            {totalBookreviews?.map((item: ClubRole) => (
+              <BookreviewItem key={item.clubID} bookreview={item} userID={userId}/>
             ))}
           </GridBox>
         ) : (
