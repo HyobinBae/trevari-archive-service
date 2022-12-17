@@ -23,9 +23,10 @@ import { btoa, Buffer } from 'buffer';
 interface Props {
   bookreview: Bookreview
   userID: string
+  reloadBookreviews: () => void
 }
 
-const BookreviewItem = ({ bookreview, userID }: Props) => {
+const BookreviewItem = ({ bookreview, userID, reloadBookreviews }: Props) => {
   const { width } = useWindowSize();
   const dispatch = useAppDispatch();
   const bookreviewContent = bookreview.content;
@@ -116,17 +117,20 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   };
 
   const onConfirmDelete = async () => {
-    const resultAction = await dispatch(deleteBookreview.initiate({ id: bookreview.id }));
-    if (resultAction.data.deleteBookreview === true) {
+    // const resultAction = await dispatch(deleteBookreview.initiate({ id: bookreview.id }));
+    // if (resultAction.data.deleteBookreview === true) {
       toastAlert({
         open: true,
         type: 'info',
         text: '독후감이 삭제되었습니다.',
       });
-      setTimeout(() => {
-        onToggleModal();
-      }, 1000);
-    }
+      // 리스트리로드
+      reloadBookreviews();
+      onToggleModal();
+      // setTimeout(() => {
+      //   onToggleModal();
+      // }, 1000);
+    // }
   };
 
 

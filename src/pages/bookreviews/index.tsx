@@ -14,8 +14,9 @@ import { selectUserIsMember, selectUserRoles } from '../../services/user/user.st
 import BlurInBookreviews from '../../components/svgs/BlurInBookreviews';
 import { Bookreview, ClubRole } from '../../types/__generate__/user-backend-api';
 import BookreviewItem from '../main/components/BookreviewItem';
-import { useGetBookreviewsQuery, useGetBookreviewsTempQuery } from './services/api';
+import { getBookreviews, getBookreviewsTemp, useGetBookreviewsQuery, useGetBookreviewsTempQuery } from './services/api';
 import LoadingPage from '../../components/base/LoadingPage';
+import { uiStore } from '../../services/ui.store';
 
 const Bookreviews = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,7 @@ const Bookreviews = () => {
   const [totalBookreviewsLength,setTotalBookreviewsLength] = useState<number>(0);
   const { data: bookreviews, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: userId });
   const { data: bookreviewsTemp } = useGetBookreviewsTempQuery({
-    limit: 1000,
+    limit: 100,
     offset: 0,
     where: {
       status: '게시',
@@ -42,6 +43,10 @@ const Bookreviews = () => {
   }, []);
 
   useEffect(() => {
+    reloadBookreviews();
+  }, [isLoading]);
+
+  const reloadBookreviews = async () => {
     if (bookreviews) {
       let mergedBookreviews = [];
       let sortedBookreviews = [];
@@ -57,7 +62,27 @@ const Bookreviews = () => {
         setTotalBookreviewsLength(sortedBookreviews.length);
       }
     }
-  }, [isLoading]);
+  }
+
+  useEffect(() => {
+    if (authenticated) {
+      dispatch(
+        getBookreviews.initiate({
+          limit: 10, offset: 0, userID: userId
+        }),
+      );
+      dispatch(
+        getBookreviewsTemp.initiate({
+          limit: 100,
+          offset: 0,
+          where: {
+            status: '게시',
+            userID: userId
+          },
+        }),
+      );
+    }
+  }, [dispatch, uiStore]);
 
   const isGuest = userId === 'guest';
 
@@ -112,7 +137,7 @@ const Bookreviews = () => {
         {totalBookreviews && totalBookreviews?.length > 0 ? (
           <GridBox>
             {totalBookreviews?.map((item: ClubRole) => (
-              <BookreviewItem key={item.clubID} bookreview={item} userID={userId}/>
+              <BookreviewItem key={item.clubID} bookreview={item} userID={userId} reloadBookreviews={reloadBookreviews} />
             ))}
           </GridBox>
         ) : (
