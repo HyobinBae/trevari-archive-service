@@ -46,7 +46,7 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
         variables: { options },
       }),
       transformResponse: ({ bookreviewsTemp }: { bookreviewsTemp: Array<Bookreview> }) => bookreviewsTemp,
-      providesTags: ['bookreviewsTemp'],
+      providesTags: ['BookreviewsTemp'],
     }),
     getBookreview: build.query<Bookreview, { id: string }>({
       query: ({ id }) => ({
@@ -86,7 +86,7 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
           id,
         },
       }),
-      invalidatesTags: ['Bookreview'],
+      invalidatesTags: ['Bookreview', 'BookreviewsTemp'],
     }),
     toggleLikeOnBookreview: build.mutation({
       query: ({ id, userID }) => ({

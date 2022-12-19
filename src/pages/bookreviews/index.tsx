@@ -12,11 +12,10 @@ import { WriteIcon, WritingIcon } from '@trevari/icons';
 import { useSelector } from 'react-redux';
 import { selectUserIsMember, selectUserRoles } from '../../services/user/user.store';
 import BlurInBookreviews from '../../components/svgs/BlurInBookreviews';
-import { Bookreview, ClubRole } from '../../types/__generate__/user-backend-api';
+import { ClubRole } from '../../types/__generate__/user-backend-api';
 import BookreviewItem from '../main/components/BookreviewItem';
-import { getBookreviews, getBookreviewsTemp, useGetBookreviewsQuery, useGetBookreviewsTempQuery } from './services/api';
+import { useGetBookreviewsQuery, useGetBookreviewsTempQuery } from './services/api';
 import LoadingPage from '../../components/base/LoadingPage';
-import { uiStore } from '../../services/ui.store';
 
 const Bookreviews = () => {
   const dispatch = useAppDispatch();
@@ -46,22 +45,6 @@ const Bookreviews = () => {
     setFilteredClubRoles(filteredClubRoles);
   }, [roles]);
 
-  const sortBookreviews = () => {
-    if (bookreviews) {
-      let mergedBookreviews = [];
-      let sortedBookreviews = [];
-      if (bookreviewsTemp) {
-        mergedBookreviews = bookreviews?.concat(bookreviewsTemp);
-        sortedBookreviews = mergedBookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-      } else {
-        mergedBookreviews = bookreviews;
-        sortedBookreviews = mergedBookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-      }
-      return sortedBookreviews;
-    }
-    return [];
-  };
-
   const isGuest = userId === 'guest';
 
   useEffect(() => {
@@ -80,7 +63,9 @@ const Bookreviews = () => {
   }
   if (isLoadingBookreviews || isLoadingBookreviewsTemp) return <LoadingPage />;
 
-  const totalBookreviews = sortBookreviews();
+  const totalBookreviews = [...bookreviews, ...bookreviewsTemp].sort(
+    (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt),
+  );
   const totalBookreviewsLength = totalBookreviews.length;
   return isMember ? (
     <>
