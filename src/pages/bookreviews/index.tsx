@@ -63,10 +63,11 @@ const Bookreviews = () => {
   useEffect(() => {
     const loadMore = () => {
       if (totalBookreviewsOffset + 10 >= count) {
+        setIsLoadingMoreBookreviews(false);
         return;
       }
       setIsLoadingMoreBookreviews(true);
-      if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      if((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
         dispatch(
           getBookreviews.initiate({
             limit: totalBookreviewsOffset + 10 >= count ? count : totalBookreviews.length + 10, offset: 0, userID: userId
@@ -87,7 +88,7 @@ const Bookreviews = () => {
     window.localStorage.setItem('notShowTooltip', 'true');
     setShowTooltip(false);
   };
-  
+
   let moreClubRolesLength = null;
   let clubName = '';
   let renderClubRoles = filteredClubRoles;
