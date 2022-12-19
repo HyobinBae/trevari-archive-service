@@ -28,24 +28,9 @@ const Bookreviews = () => {
   const roles = useSelector(selectUserRoles);
   const bookreviews = useSelector(selectBookreivews);
   const [filteredClubRoles, setFilteredClubRoles] = useState<ClubRole[]>(roles);
-
-// <<<<<<< HEAD
-//   const [totalBookreviews, setTotalBookreviews] = useState<Bookreview[]>([]);
-//   const [totalBookreviewsLength, setTotalBookreviewsLength] = useState<number>(0);
   const [totalBookreviewsOffset, setTotalBookreviewsOffset] = useState<number>(0);
   const [isLoadingMoreBookreviews, setIsLoadingMoreBookreviews] = useState<boolean>(false);
-//   const { data, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: typeof userId !== 'undefined' ? userId : '' });
-//
-//   useEffect(() => {
-//     window.scrollTo(0, 0);
-//   }, []);
-// =======
   const { count, bookreviews: totalBookreviews, loading } = bookreviews;
-  // const [totalBookreviews, setTotalBookreviews] = useState<Bookreview[]>([]);
-  // const [totalBookreviewsLength, setTotalBookreviewsLength] = useState<number>(0);
-  // const [totalBookreviewsOffset, setTotalBookreviewsOffset] = useState<number>(0);
-  // const [isLoadingMoreBookreviews, setIsLoadingMoreBookreviews] = useState<boolean>(false);
-  // const { data: bookreviews, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: userId });
 
   useEffect(() => {
     const isGuest = userId === 'guest';
@@ -57,7 +42,6 @@ const Bookreviews = () => {
       dispatch(getBookreviews.initiate({ limit: 10, offset: 0, userID: userId }));
     }
   }, [dispatch, authenticated, userId]);
-// >>>>>>> 628f04cda7e034e2686e9058f37dd603c6c2f38a
 
   useEffect(() => {
     const filteredClubRoles = roles
@@ -68,21 +52,18 @@ const Bookreviews = () => {
   }, [roles]);
 
   useEffect(() => {
-    const loadMore = async () => {
+    const loadMore = () => {
 
       if (totalBookreviewsOffset + 10 >= count) {
         return;
       }
       setIsLoadingMoreBookreviews(true);
       if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-        const bookreviewsAction = await dispatch(
+        dispatch(
           getBookreviews.initiate({
             limit: totalBookreviewsOffset + 10 >= count ? count : totalBookreviews.length + 10, offset: 0, userID: userId
           })
         );
-        const sortedBookreviews = bookreviewsAction.data.bookreviews;//.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-        // totalBookreviews = totalBookreviews.concat(sortedBookreviews);
-        // setTotalBookreviews(totalBookreviews.concat(sortedBookreviews));
         setTotalBookreviewsOffset(totalBookreviewsOffset + 10 >= count ? count : totalBookreviewsOffset + 10);
         setIsLoadingMoreBookreviews(false);
       }
@@ -92,44 +73,6 @@ const Bookreviews = () => {
       window.removeEventListener('scroll', loadMore);
     };
   }, [totalBookreviews]);
-// =======
-//   // useEffect(() => {
-//   //   sortBookreviews();
-//   // }, [isLoading]);
-// >>>>>>> 628f04cda7e034e2686e9058f37dd603c6c2f38a
-
-  // const sortBookreviews = async () => {
-  //   if (bookreviews.length > 0) {
-  //     const sortedBookreviews = bookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-  //     setTotalBookreviews(sortedBookreviews);
-  //     setTotalBookreviewsLength(sortedBookreviews.length);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const loadMore = async () => {
-  //     setIsLoadingMoreBookreviews(true);
-  //     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-  //       const bookreviewsAction = await dispatch(
-  //         getBookreviews.initiate({
-  //           limit: 10,
-  //           offset: totalBookreviewsOffset + 10,
-  //           userID: userId,
-  //         }),
-  //       );
-  //       const sortedBookreviews = bookreviewsAction.data
-  //         .slice()
-  //         .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-  //       setTotalBookreviews(totalBookreviews.concat(sortedBookreviews));
-  //       setTotalBookreviewsOffset(bookreviewsAction.data.length + totalBookreviewsLength);
-  //       setIsLoadingMoreBookreviews(false);
-  //     }
-  //   };
-  //   window.addEventListener('scroll', loadMore);
-  //   return () => {
-  //     window.removeEventListener('scroll', loadMore);
-  //   };
-  // }, [totalBookreviews]);
 
   let moreClubRolesLength = null;
   let clubName = '';
@@ -141,11 +84,6 @@ const Bookreviews = () => {
 
   if (loading) return <LoadingPage />;
 
-  // const totalBookreviews = [...bookreviews, ...bookreviewsTemp].sort(
-  //   (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt),
-  // );
-
-  const totalBookreviewsLength = totalBookreviews.length;
   return isMember ? (
     <>
       <Box style={{ paddingTop: '48px', minHeight: '100vh', paddingBottom: '67px' }}>
