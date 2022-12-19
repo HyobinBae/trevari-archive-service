@@ -17,6 +17,7 @@ import BookreviewItem from '../main/components/BookreviewItem';
 import { getBookreviews, useGetBookreviewsQuery } from './services/api';
 import LoadingPage from '../../components/base/LoadingPage';
 import Loading from '../../components/svgs/Loading';
+import CloseIcon from 'components/svgs/CloseIcon';
 
 const Bookreviews = () => {
   const dispatch = useAppDispatch();
@@ -50,18 +51,22 @@ const Bookreviews = () => {
       setTotalBookreviews(sortedBookreviews);
       setTotalBookreviewsLength(sortedBookreviews.length);
     }
-  }
+  };
 
   useEffect(() => {
     const loadMore = async () => {
       setIsLoadingMoreBookreviews(true);
-      if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
         const bookreviewsAction = await dispatch(
           getBookreviews.initiate({
-            limit: 10, offset: totalBookreviewsOffset + 10, userID: userId
-          })
+            limit: 10,
+            offset: totalBookreviewsOffset + 10,
+            userID: userId,
+          }),
         );
-        const sortedBookreviews = bookreviewsAction.data.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+        const sortedBookreviews = bookreviewsAction.data
+          .slice()
+          .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
         setTotalBookreviews(totalBookreviews.concat(sortedBookreviews));
         setTotalBookreviewsOffset(bookreviewsAction.data.length + totalBookreviewsLength);
         setIsLoadingMoreBookreviews(false);
@@ -89,12 +94,12 @@ const Bookreviews = () => {
     renderClubRoles = filteredClubRoles.slice(0, 3);
     moreClubRolesLength = filteredClubRoles.length - 3;
   }
-
   if (isLoading) return <LoadingPage />;
 
   // const totalBookreviews = [...bookreviews, ...bookreviewsTemp].sort(
   //   (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt),
   // );
+
   // const totalBookreviewsLength = totalBookreviews.length;
   return isMember ? (
     <>
@@ -125,10 +130,10 @@ const Bookreviews = () => {
           )}
         </UserClubListWrapper>
         <GridCardCount>{`총 ${totalBookreviewsLength}개`}</GridCardCount>
-        {!isLoading && totalBookreviews && totalBookreviews?.length > 0 ? (
+        {totalBookreviews && totalBookreviews?.length > 0 ? (
           <GridBox>
             {totalBookreviews?.map((item: ClubRole) => (
-              <BookreviewItem key={item.clubID} bookreview={item} userID={userId} reloadBookreviews={sortBookreviews} />
+              <BookreviewItem key={item.clubID} bookreview={item} userID={userId} />
             ))}
             {isLoadingMoreBookreviews && <Loading />}
           </GridBox>
@@ -143,10 +148,15 @@ const Bookreviews = () => {
           </EmojiWrapper>
         )}
       </Box>
-      <Tooltip>독후감 작성</Tooltip>
-      <WritingIconWrapper onClick={() => goToPage(`${endpoints.user_page_url}/mypage`)}>
-        <WritingIcon width={28} height={28} />
-      </WritingIconWrapper>
+      <TooltipWrapper>
+        <Tooltip>
+          <span>독후감 작성은 여기서 할 수 있어요!</span>
+          <CloseIcon fill="#ffffff" />
+        </Tooltip>
+        <WritingIconWrapper onClick={() => goToPage(`${endpoints.user_page_url}/mypage`)}>
+          <WritingIcon width={28} height={28} />
+        </WritingIconWrapper>
+      </TooltipWrapper>
     </>
   ) : (
     <BlurWrapper>
@@ -195,20 +205,11 @@ const EmptyDescription = styled.div`
   text-align: center;
 `;
 
-const WritingIconWrapper = styled.div`
-  width: 58px;
-  height: 58px;
+const TooltipWrapper = styled.div`
   bottom: 93.5px;
   filter: drop-shadow(0px 4px 4px rgba(255, 121, 0, 0.2));
   position: sticky;
-  background: ${({ theme }) => theme.colors.orange900};
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
   float: right;
-  margin-right: 26px;
 `;
 const BlurInBookreviewsWrapper = styled.div`
   display: flex;
@@ -251,5 +252,31 @@ export const LoadingContainer = styled.div`
 
 const Tooltip = styled.div`
   position: fixed;
+  bottom: 80px;
+  float: right;
+  width: 239px;
+  margin-right: 130px;
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding: 12px;
+  ${body6};
+`;
+const WritingIconWrapper = styled.div`
+  width: 58px;
+  height: 58px;
+  bottom: 93.5px;
+  filter: drop-shadow(0px 4px 4px rgba(255, 121, 0, 0.2));
+  position: sticky;
+  background: ${({ theme }) => theme.colors.orange900};
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: right;
+  margin-right: 26px;
+  cursor: pointer;
 `;
 export default Bookreviews;
