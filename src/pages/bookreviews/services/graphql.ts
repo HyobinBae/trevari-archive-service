@@ -22,6 +22,8 @@ export const GET_BOOKREVIEWS_TEMP = gql`
 export const GET_BOOKREVIEWS = gql`
   query bookreviewsV2($limit: Int!, $offset: Int!, $userID: String!) {
     bookreviewsV2(limit: $limit, offset: $offset, userID: $userID) {
+      count
+      bookreviews {
         id
         title
         content
@@ -47,9 +49,10 @@ export const GET_BOOKREVIEWS = gql`
           imageUrl
           type
           title
-          author   
+          author
         }
         fileUrl
+      }
     }
   }
 `;

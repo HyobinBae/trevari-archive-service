@@ -28,7 +28,7 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
           userID,
         },
       }),
-      transformResponse: ({ bookreviewsV2 }: { bookreviewsV2: Array<Bookreview> }) => bookreviewsV2,
+      transformResponse: ({ bookreviewsV2 }: { bookreviewsV2: Array<Bookreview>, count: number  }) => bookreviewsV2,
       providesTags: ['BookreviewsV2'],
     }),
     getBookreviewsTemp: build.query<Array<Bookreview>, BookreviewsOptions>({

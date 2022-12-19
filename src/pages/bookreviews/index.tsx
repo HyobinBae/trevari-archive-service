@@ -30,7 +30,11 @@ const Bookreviews = () => {
   const [totalBookreviewsLength, setTotalBookreviewsLength] = useState<number>(0);
   const [totalBookreviewsOffset, setTotalBookreviewsOffset] = useState<number>(0);
   const [isLoadingMoreBookreviews, setIsLoadingMoreBookreviews] = useState<boolean>(false);
-  const { data: bookreviews, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: userId });
+  const { data, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: typeof userId !== 'undefined' ? userId : '' });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const filteredClubRoles = roles
@@ -45,8 +49,8 @@ const Bookreviews = () => {
   }, [isLoading]);
 
   const sortBookreviews = async () => {
-    if (bookreviews.length > 0) {
-      const sortedBookreviews = bookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+    if (data?.bookreviews?.length > 0) {
+      const sortedBookreviews = data?.bookreviews?.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
       setTotalBookreviews(sortedBookreviews);
       setTotalBookreviewsLength(sortedBookreviews.length);
     }
@@ -54,16 +58,19 @@ const Bookreviews = () => {
 
   useEffect(() => {
     const loadMore = async () => {
+      if (totalBookreviewsOffset + 10 >= data.count) {
+        return;
+      }
       setIsLoadingMoreBookreviews(true);
       if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
         const bookreviewsAction = await dispatch(
           getBookreviews.initiate({
-            limit: 10, offset: totalBookreviewsOffset + 10, userID: userId
+            limit: 10, offset: totalBookreviewsOffset + 10 >= data.count ? data.count : totalBookreviewsOffset + 10, userID: userId
           })
         );
-        const sortedBookreviews = bookreviewsAction.data.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+        const sortedBookreviews = bookreviewsAction.data.bookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
         setTotalBookreviews(totalBookreviews.concat(sortedBookreviews));
-        setTotalBookreviewsOffset(bookreviewsAction.data.length + totalBookreviewsLength);
+        setTotalBookreviewsOffset(totalBookreviewsOffset + 10 >= data.count ? data.count : bookreviewsAction.data.bookreviews.length + totalBookreviewsOffset);
         setIsLoadingMoreBookreviews(false);
       }
     };
@@ -90,7 +97,7 @@ const Bookreviews = () => {
     moreClubRolesLength = filteredClubRoles.length - 3;
   }
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading ) return <LoadingPage />;
 
   // const totalBookreviews = [...bookreviews, ...bookreviewsTemp].sort(
   //   (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt),
@@ -124,7 +131,7 @@ const Bookreviews = () => {
             <div>활동했던 클럽의 독후감을 만나보세요.</div>
           )}
         </UserClubListWrapper>
-        <GridCardCount>{`총 ${totalBookreviewsLength}개`}</GridCardCount>
+        <GridCardCount>{`총 ${data?.count}개`}</GridCardCount>
         {!isLoading && totalBookreviews && totalBookreviews?.length > 0 ? (
           <GridBox>
             {totalBookreviews?.map((item: ClubRole) => (
