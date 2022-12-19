@@ -19,6 +19,7 @@ import LoadingPage from '../../components/base/LoadingPage';
 import Loading from '../../components/svgs/Loading';
 import CloseIcon from 'components/svgs/CloseIcon';
 import { selectBookreivews } from './services/bookreview.store';
+import { debounce } from 'lodash';
 
 const Bookreviews = () => {
   const dispatch = useAppDispatch();
@@ -77,11 +78,15 @@ const Bookreviews = () => {
         setIsLoadingMoreBookreviews(false);
       }
     };
-    window.addEventListener('scroll', loadMore);
-    return () => {
-      window.removeEventListener('scroll', loadMore);
-    };
-  }, [totalBookreviews]);
+
+    const handleScroll = debounce(() => {
+      setIsLoadingMoreBookreviews(prevState => !prevState);
+      loadMore();
+      console.log(isLoadingMoreBookreviews);
+    }, 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [totalBookreviews, isLoadingMoreBookreviews]);
 
 
   const doseNotShowTooltip = () => {
