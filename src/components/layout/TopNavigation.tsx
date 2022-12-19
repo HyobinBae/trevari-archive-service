@@ -111,7 +111,7 @@ export default TopNavigation;
 const Base = styled.div`
   position: absolute;
   top: 0;
-  z-index: 10;
+  z-index: 2;
   width: 100%;
 `;
 
