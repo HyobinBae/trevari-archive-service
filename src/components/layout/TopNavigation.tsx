@@ -11,7 +11,7 @@ import { useNavigation } from 'hooks/useNavigation';
 import { ButtonWrapper, Title } from 'components/layout/style';
 import Arrow from 'components/svgs/Arrow';
 import BetaBadge from 'components/svgs/BetaBadge';
-import { heading1 } from '@trevari/typo';
+import { heading7 } from '@trevari/typo';
 
 interface IProps {
   closeMenuWhenScrolled: boolean;
@@ -72,7 +72,7 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
     ) : title === '독후감' ? (
       <BarInstance to={path}>
         <TitleWrapper>
-          <Title>독후감</Title>
+          <TitleSpan>독후감</TitleSpan>
           <BetaBadge />
         </TitleWrapper>
       </BarInstance>
@@ -149,4 +149,5 @@ const TitleWrapper = styled.div`
 `;
 const TitleSpan = styled.div`
   margin-right: 4px;
+  ${heading7};
 `;
