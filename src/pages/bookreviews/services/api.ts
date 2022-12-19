@@ -31,23 +31,6 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
       transformResponse: ({ bookreviewsV2 }: { bookreviewsV2: Array<Bookreview>, count: number  }) => bookreviewsV2,
       providesTags: ['BookreviewsV2'],
     }),
-    getBookreviewsTemp: build.query<Array<Bookreview>, BookreviewsOptions>({
-      query: (options: {
-        limit?: number;
-        offset?: number;
-        where?: {
-          clubID?: string;
-          order?: number;
-          status?: string;
-          userID?: string;
-        };
-      }) => ({
-        document: GET_BOOKREVIEWS_TEMP,
-        variables: { options },
-      }),
-      transformResponse: ({ bookreviewsTemp }: { bookreviewsTemp: Array<Bookreview> }) => bookreviewsTemp,
-      providesTags: ['BookreviewsTemp'],
-    }),
     getBookreview: build.query<Bookreview, { id: string }>({
       query: ({ id }) => ({
         document: GET_BOOKREVIEW,
@@ -156,7 +139,6 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
 
 export const {
   useGetBookreviewsQuery,
-  useGetBookreviewsTempQuery,
   useGetBookreviewQuery,
   useGetBookreviewLikeUsersQuery,
   useToggleLikeOnBookreviewMutation,
@@ -170,7 +152,6 @@ export const {
 export const {
   endpoints: {
     getBookreviews,
-    getBookreviewsTemp,
     getBookreview,
     getBookreviewLikeUsers,
     toggleLikeOnBookreview,
