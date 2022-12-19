@@ -4,6 +4,7 @@ import { User } from 'types/__generate__/user-backend-api';
 import { body8, title6 } from '@trevari/typo';
 import { DEFAULT_PROFILE_IMAGE } from '../const';
 import { formatRelativeTime } from 'utils/format';
+import { elapsedTime } from 'utils/time';
 
 interface ProfileInBookreviewPageProps {
   user: User;
@@ -23,7 +24,7 @@ const ProfileInBookreviewPage = ({ user, clubName, publishedAt }: ProfileInBookr
         <span>{name}</span>
         <span>{clubName}</span>
       </Box>
-      <PublishedTime>{formatRelativeTime(publishedAt)}</PublishedTime>
+      <PublishedTime>{elapsedTime(publishedAt)}</PublishedTime>
     </Base>
   );
 };

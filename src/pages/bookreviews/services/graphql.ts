@@ -94,6 +94,9 @@ export const GET_BOOKREVIEW = gql`
       }
       contents {
         imageUrl
+        type
+        title
+        author
       }
       meeting {
         id

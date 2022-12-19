@@ -1,21 +1,33 @@
 import styled from '@emotion/styled';
-import { CommentOutlineIcon, HeartIcon } from '@trevari/icons';
-import { heading9, title4 } from '@trevari/typo';
-import LoveFilled from 'components/svgs/LoveFilled';
-import LoveOutline from 'components/svgs/LoveOutline';
-import { Bookreview } from 'types/__generate__/user-backend-api';
+import { body8, heading9, title6 } from '@trevari/typo';
+import { Bookreview, Content } from 'types/__generate__/user-backend-api';
 
 interface BookreviewContentProps {
   bookreview: Bookreview;
-  userID: string;
 }
-const BookreviewContent = ({ bookreview, userID }: BookreviewContentProps) => {
-  const { contents, content, title, commentCount, likeUserIDs } = bookreview;
-  const alreadyLikedBookrivew = !likeUserIDs.includes(userID);
+const BookreviewContent = ({ bookreview }: BookreviewContentProps) => {
+  const { contents, content, title } = bookreview;
+  const bookContent = contents.filter((item: Content) => item.type === 'book');
+  const movieContent = contents.filter((item: Content) => item.type === 'movie');
+
   return (
     <Base>
       <Title>{title}</Title>
       <div dangerouslySetInnerHTML={{ __html: content || '' }} />
+      <BookMovieDivWrapper>
+        {bookContent.length > 0 && (
+          <BookMovieDiv>
+            <BookMovieSpan>책 | </BookMovieSpan>
+            {bookContent[0].author}, {bookContent[0].title}
+          </BookMovieDiv>
+        )}
+        {movieContent.length > 0 && (
+          <BookMovieDiv>
+            <BookMovieSpan>영화 | </BookMovieSpan>
+            {bookContent[0].author && bookContent[0].author + ', '} {movieContent[0].title}
+          </BookMovieDiv>
+        )}
+      </BookMovieDivWrapper>
     </Base>
   );
 };
@@ -30,12 +42,21 @@ const Title = styled.h3`
   ${heading9};
   margin: 4px 0 20px;
 `;
-const IconBox = styled.div`
-  display: flex;
-`;
-const IconText = styled.span`
+
+const BookMovieDiv = styled.div`
+  ${body8};
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   color: ${({ theme }) => theme.colors.gray600};
-  margin: 0 14px 0 4px;
-  ${title4};
+`;
+const BookMovieDivWrapper = styled.div`
+  margin-bottom: 20px;
+  margin-top: 20px;
+`;
+const BookMovieSpan = styled.span`
+  ${title6};
+  color: ${({ theme }) => theme.colors.gray600};
 `;
 export default BookreviewContent;

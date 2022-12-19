@@ -74,7 +74,7 @@ const BookReviewShow = () => {
         isMyBookreview={bookreview?.user.id === user.id}
         bookreviewID={bookreview?.id}
       />
-      <BookreviewContent bookreview={bookreview} userID={user.id} />
+      <BookreviewContent bookreview={bookreview} />
       <BookreviewComments
         bookreviewID={bookreview?.id}
         likeUserIDs={bookreview?.likeUserIDs}

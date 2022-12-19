@@ -175,6 +175,9 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
   const deleteReplyModalText = '답글을 정말로 삭제하시겠어요?';
   const reportModalText = '신고하시겠습니까?';
   const alreadyLikedComment = likeUserIDs ? likeUserIDs.includes(loggedUserID) : false;
+  const isMentionedComment = content.startsWith('@');
+  const mentionedName = isMentionedComment ? content.split(' ')[0] : '';
+  const mentionedComment = isMentionedComment ? content.split(' ').slice(1).join(' ') : content;
   return (
     <div>
       <ProfileBox>
@@ -183,7 +186,11 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
         </MoreButtonWrapper>
         <ProfileInBookreviewPage user={user} publishedAt={createdAt} isBookreviewProfile={false} />
       </ProfileBox>
-      <Content>{content}</Content>
+      <Content>
+        <MentionedUserName>{mentionedName}</MentionedUserName>
+        {mentionedName && <span> </span>}
+        <span>{mentionedComment}</span>
+      </Content>
       <IconWrapper>
         <div onClick={() => onClickLikeButton(id)}>
           {alreadyLikedComment ? (
@@ -204,6 +211,9 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
       {replies?.map(reply => {
         const { user: replyUser, createdAt: replyCreatedAt, content: replyContent, id: replyID, likeUserIDs } = reply;
         const alreadyLikedReply = likeUserIDs ? likeUserIDs.includes(loggedUserID) : false;
+        const isMentionedComment = replyContent.startsWith('@');
+        const mentionedName = isMentionedComment ? replyContent.split(' ')[0] : '';
+        const mentionedComment = isMentionedComment ? replyContent.split(' ').slice(1).join(' ') : replyContent;
         return (
           <React.Fragment key={replyID}>
             <ReplyBase>
@@ -213,7 +223,11 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
                 </MoreButtonWrapper>
                 <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} />
               </ProfileBox>
-              <Content>{replyContent}</Content>
+              <Content>
+                <MentionedUserName>{mentionedName}</MentionedUserName>
+                {mentionedName && <span> </span>}
+                <span>{mentionedComment}</span>
+              </Content>
               <IconWrapper>
                 <div onClick={() => onClickLikeButton(replyID)}>
                   {alreadyLikedReply ? (
@@ -318,5 +332,8 @@ const MoreButtonWrapper = styled.div`
   width: 24px;
   height: 24px;
   cursor: pointer;
+`;
+const MentionedUserName = styled.span`
+  color: ${({ theme }) => theme.colors.blue900};
 `;
 export default Comment;
