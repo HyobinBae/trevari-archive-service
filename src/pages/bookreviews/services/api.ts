@@ -11,26 +11,24 @@ import {
   TOGGLE_LIKE_BOOKREVIEW_COMMENT,
   TOGGLE_LIKE_BOOKREVIEW,
   GET_BOOKREVIEW_COMMENT_LIKEUSERS,
-  DELETE_BOOKREVIEW, GET_BOOKREVIEWS_TEMP,
+  DELETE_BOOKREVIEW,
+  GET_BOOKREVIEWS_TEMP,
 } from './graphql';
 import { LikeUser } from './types';
 
 export const bookreviewApi = bookreviewBackend.injectEndpoints({
   overrideExisting: true,
   endpoints: build => ({
-    getBookreviews: build.query<Array<Bookreview>, { limit: number, offset: number, userID: string }>({
+    getBookreviews: build.query<Array<Bookreview>, { limit: number; offset: number; userID: string }>({
       query: ({ limit, offset, userID }) => ({
         document: GET_BOOKREVIEWS,
         variables: {
           limit,
           offset,
-          userID
+          userID,
         },
       }),
-      transformResponse: ({ bookreviewsV2
-      }: { bookreviewsV2
-        : Array<Bookreview> }) => bookreviewsV2
-        ,
+      transformResponse: ({ bookreviewsV2 }: { bookreviewsV2: Array<Bookreview> }) => bookreviewsV2,
       providesTags: ['BookreviewsV2'],
     }),
     getBookreviewsTemp: build.query<Array<Bookreview>, BookreviewsOptions>({
@@ -47,10 +45,7 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
         document: GET_BOOKREVIEWS_TEMP,
         variables: { options },
       }),
-      transformResponse: ({ bookreviewsTemp
-                          }: { bookreviewsTemp
-          : Array<Bookreview> }) => bookreviewsTemp
-      ,
+      transformResponse: ({ bookreviewsTemp }: { bookreviewsTemp: Array<Bookreview> }) => bookreviewsTemp,
       providesTags: ['bookreviewsTemp'],
     }),
     getBookreview: build.query<Bookreview, { id: string }>({
@@ -110,7 +105,7 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
           id,
         },
       }),
-      invalidatesTags: ['Bookreview'],
+      invalidatesTags: ['BookreviewsV2'],
     }),
     updateBookreviewComment: build.mutation({
       query: ({ input: { id, content } }) => ({
