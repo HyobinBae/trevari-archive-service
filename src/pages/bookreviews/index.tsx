@@ -27,6 +27,7 @@ const Bookreviews = () => {
   const isMember = useSelector(selectUserIsMember);
   const roles = useSelector(selectUserRoles);
   const bookreviews = useSelector(selectBookreivews);
+  const [showTooltip, setShowTooltip] = useState(true);
   const [filteredClubRoles, setFilteredClubRoles] = useState<ClubRole[]>(roles);
   const [totalBookreviewsOffset, setTotalBookreviewsOffset] = useState<number>(0);
   const [isLoadingMoreBookreviews, setIsLoadingMoreBookreviews] = useState<boolean>(false);
@@ -52,8 +53,15 @@ const Bookreviews = () => {
   }, [roles]);
 
   useEffect(() => {
-    const loadMore = () => {
+    const notShowTooltip = window.localStorage.getItem('notShowTooltip');
+    if (notShowTooltip === 'true') {
+      setShowTooltip(false);
+    }
+  }, []);
 
+
+  useEffect(() => {
+    const loadMore = () => {
       if (totalBookreviewsOffset + 10 >= count) {
         return;
       }
@@ -74,6 +82,12 @@ const Bookreviews = () => {
     };
   }, [totalBookreviews]);
 
+
+  const doseNotShowTooltip = () => {
+    window.localStorage.setItem('notShowTooltip', 'true');
+    setShowTooltip(false);
+  };
+  
   let moreClubRolesLength = null;
   let clubName = '';
   let renderClubRoles = filteredClubRoles;
@@ -132,10 +146,14 @@ const Bookreviews = () => {
         )}
       </Box>
       <TooltipWrapper>
-        <Tooltip>
-          <span>독후감 작성은 여기서 할 수 있어요!</span>
-          <CloseIcon fill="#ffffff" />
-        </Tooltip>
+        {showTooltip && (
+          <Tooltip>
+            <span>독후감 작성은 여기서 할 수 있어요!</span>
+            <ButtonWrapper onClick={doseNotShowTooltip}>
+              <CloseIcon fill="#ffffff" width={16} height={16} />
+            </ButtonWrapper>
+          </Tooltip>
+        )}
         <WritingIconWrapper onClick={() => goToPage(`${endpoints.user_page_url}/mypage`)}>
           <WritingIcon width={28} height={28} />
         </WritingIconWrapper>
@@ -189,10 +207,9 @@ const EmptyDescription = styled.div`
 `;
 
 const TooltipWrapper = styled.div`
-  bottom: 93.5px;
-  filter: drop-shadow(0px 4px 4px rgba(255, 121, 0, 0.2));
-  position: sticky;
-  float: right;
+  display: flex;
+  width: 100%;
+  flex-flow: row-reverse;
 `;
 const BlurInBookreviewsWrapper = styled.div`
   display: flex;
@@ -235,24 +252,34 @@ export const LoadingContainer = styled.div`
 
 const Tooltip = styled.div`
   position: fixed;
-  bottom: 80px;
-  float: right;
+  bottom: 170px;
   width: 239px;
-  margin-right: 130px;
   background: black;
   color: white;
   display: flex;
   align-items: center;
   border-radius: 5px;
-  padding: 12px;
+  padding: 12px 10px 12px 12px;
   ${body6};
+  gap: 4px;
+  margin-right: 20px;
+  &::after {
+    border-top: 10px solid black;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 0px solid transparent;
+    content: '';
+    position: absolute;
+    top: 40px;
+    right: 20px;
+  }
 `;
 const WritingIconWrapper = styled.div`
   width: 58px;
   height: 58px;
   bottom: 93.5px;
   filter: drop-shadow(0px 4px 4px rgba(255, 121, 0, 0.2));
-  position: sticky;
+  position: fixed;
   background: ${({ theme }) => theme.colors.orange900};
   border-radius: 50%;
   display: flex;
@@ -261,5 +288,10 @@ const WritingIconWrapper = styled.div`
   float: right;
   margin-right: 26px;
   cursor: pointer;
+`;
+
+const ButtonWrapper = styled.div`
+  cursor: pointer;
+  height: 16px;
 `;
 export default Bookreviews;
