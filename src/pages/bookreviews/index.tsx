@@ -12,11 +12,13 @@ import { WriteIcon, WritingIcon } from '@trevari/icons';
 import { useSelector } from 'react-redux';
 import { selectUserIsMember, selectUserRoles } from '../../services/user/user.store';
 import BlurInBookreviews from '../../components/svgs/BlurInBookreviews';
-import { Bookreview, ClubRole } from '../../types/__generate__/user-backend-api';
+import { ClubRole } from '../../types/__generate__/user-backend-api';
 import BookreviewItem from '../main/components/BookreviewItem';
-import { getBookreviews, useGetBookreviewsQuery } from './services/api';
+import { getBookreviews } from './services/api';
 import LoadingPage from '../../components/base/LoadingPage';
 import Loading from '../../components/svgs/Loading';
+import CloseIcon from 'components/svgs/CloseIcon';
+import { selectBookreivews } from './services/bookreview.store';
 
 const Bookreviews = () => {
   const dispatch = useAppDispatch();
@@ -24,17 +26,38 @@ const Bookreviews = () => {
   const userId = useAppSelector(selectUserId);
   const isMember = useSelector(selectUserIsMember);
   const roles = useSelector(selectUserRoles);
+  const bookreviews = useSelector(selectBookreivews);
   const [filteredClubRoles, setFilteredClubRoles] = useState<ClubRole[]>(roles);
 
-  const [totalBookreviews, setTotalBookreviews] = useState<Bookreview[]>([]);
-  const [totalBookreviewsLength, setTotalBookreviewsLength] = useState<number>(0);
+// <<<<<<< HEAD
+//   const [totalBookreviews, setTotalBookreviews] = useState<Bookreview[]>([]);
+//   const [totalBookreviewsLength, setTotalBookreviewsLength] = useState<number>(0);
   const [totalBookreviewsOffset, setTotalBookreviewsOffset] = useState<number>(0);
   const [isLoadingMoreBookreviews, setIsLoadingMoreBookreviews] = useState<boolean>(false);
-  const { data, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: typeof userId !== 'undefined' ? userId : '' });
+//   const { data, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: typeof userId !== 'undefined' ? userId : '' });
+//
+//   useEffect(() => {
+//     window.scrollTo(0, 0);
+//   }, []);
+// =======
+  const { count, bookreviews: totalBookreviews, loading } = bookreviews;
+  // const [totalBookreviews, setTotalBookreviews] = useState<Bookreview[]>([]);
+  // const [totalBookreviewsLength, setTotalBookreviewsLength] = useState<number>(0);
+  // const [totalBookreviewsOffset, setTotalBookreviewsOffset] = useState<number>(0);
+  // const [isLoadingMoreBookreviews, setIsLoadingMoreBookreviews] = useState<boolean>(false);
+  // const { data: bookreviews, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: userId });
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    const isGuest = userId === 'guest';
+    if (isGuest) {
+      goToPage(`${endpoints.user_login_page_url}/?redirectionUrl=/bookreviews`);
+      return;
+    }
+    if (userId) {
+      dispatch(getBookreviews.initiate({ limit: 10, offset: 0, userID: userId }));
+    }
+  }, [dispatch, authenticated, userId]);
+// >>>>>>> 628f04cda7e034e2686e9058f37dd603c6c2f38a
 
   useEffect(() => {
     const filteredClubRoles = roles
@@ -45,32 +68,22 @@ const Bookreviews = () => {
   }, [roles]);
 
   useEffect(() => {
-    sortBookreviews();
-  }, [isLoading]);
-
-  const sortBookreviews = async () => {
-    if (data?.bookreviews?.length > 0) {
-      const sortedBookreviews = data?.bookreviews?.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-      setTotalBookreviews(sortedBookreviews);
-      setTotalBookreviewsLength(sortedBookreviews.length);
-    }
-  }
-
-  useEffect(() => {
     const loadMore = async () => {
-      if (totalBookreviewsOffset + 10 >= data.count) {
+
+      if (totalBookreviewsOffset + 10 >= count) {
         return;
       }
       setIsLoadingMoreBookreviews(true);
       if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
         const bookreviewsAction = await dispatch(
           getBookreviews.initiate({
-            limit: 10, offset: totalBookreviewsOffset + 10 >= data.count ? data.count : totalBookreviewsOffset + 10, userID: userId
+            limit: totalBookreviewsOffset + 10 >= count ? count : totalBookreviews.length + 10, offset: 0, userID: userId
           })
         );
-        const sortedBookreviews = bookreviewsAction.data.bookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-        setTotalBookreviews(totalBookreviews.concat(sortedBookreviews));
-        setTotalBookreviewsOffset(totalBookreviewsOffset + 10 >= data.count ? data.count : bookreviewsAction.data.bookreviews.length + totalBookreviewsOffset);
+        const sortedBookreviews = bookreviewsAction.data.bookreviews;//.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+        // totalBookreviews = totalBookreviews.concat(sortedBookreviews);
+        // setTotalBookreviews(totalBookreviews.concat(sortedBookreviews));
+        setTotalBookreviewsOffset(totalBookreviewsOffset + 10 >= count ? count : totalBookreviewsOffset + 10);
         setIsLoadingMoreBookreviews(false);
       }
     };
@@ -79,15 +92,44 @@ const Bookreviews = () => {
       window.removeEventListener('scroll', loadMore);
     };
   }, [totalBookreviews]);
+// =======
+//   // useEffect(() => {
+//   //   sortBookreviews();
+//   // }, [isLoading]);
+// >>>>>>> 628f04cda7e034e2686e9058f37dd603c6c2f38a
 
-  const isGuest = userId === 'guest';
+  // const sortBookreviews = async () => {
+  //   if (bookreviews.length > 0) {
+  //     const sortedBookreviews = bookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  //     setTotalBookreviews(sortedBookreviews);
+  //     setTotalBookreviewsLength(sortedBookreviews.length);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (isGuest) {
-      goToPage(`${endpoints.user_login_page_url}/?redirectionUrl=/bookreviews`);
-      return;
-    }
-  }, [dispatch, authenticated, userId]);
+  // useEffect(() => {
+  //   const loadMore = async () => {
+  //     setIsLoadingMoreBookreviews(true);
+  //     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+  //       const bookreviewsAction = await dispatch(
+  //         getBookreviews.initiate({
+  //           limit: 10,
+  //           offset: totalBookreviewsOffset + 10,
+  //           userID: userId,
+  //         }),
+  //       );
+  //       const sortedBookreviews = bookreviewsAction.data
+  //         .slice()
+  //         .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  //       setTotalBookreviews(totalBookreviews.concat(sortedBookreviews));
+  //       setTotalBookreviewsOffset(bookreviewsAction.data.length + totalBookreviewsLength);
+  //       setIsLoadingMoreBookreviews(false);
+  //     }
+  //   };
+  //   window.addEventListener('scroll', loadMore);
+  //   return () => {
+  //     window.removeEventListener('scroll', loadMore);
+  //   };
+  // }, [totalBookreviews]);
 
   let moreClubRolesLength = null;
   let clubName = '';
@@ -97,12 +139,13 @@ const Bookreviews = () => {
     moreClubRolesLength = filteredClubRoles.length - 3;
   }
 
-  if (isLoading ) return <LoadingPage />;
+  if (loading) return <LoadingPage />;
 
   // const totalBookreviews = [...bookreviews, ...bookreviewsTemp].sort(
   //   (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt),
   // );
-  // const totalBookreviewsLength = totalBookreviews.length;
+
+  const totalBookreviewsLength = totalBookreviews.length;
   return isMember ? (
     <>
       <Box style={{ paddingTop: '48px', minHeight: '100vh', paddingBottom: '67px' }}>
@@ -131,13 +174,13 @@ const Bookreviews = () => {
             <div>활동했던 클럽의 독후감을 만나보세요.</div>
           )}
         </UserClubListWrapper>
-        <GridCardCount>{`총 ${data?.count}개`}</GridCardCount>
-        {!isLoading && totalBookreviews && totalBookreviews?.length > 0 ? (
+        <GridCardCount>{`총 ${count}개`}</GridCardCount>
+        {!loading && totalBookreviews && totalBookreviews?.length > 0 ? (
           <GridBox>
             {totalBookreviews?.map((item: ClubRole) => (
-              <BookreviewItem key={item.clubID} bookreview={item} userID={userId} reloadBookreviews={sortBookreviews} />
+              <BookreviewItem key={item.clubID} bookreview={item} userID={userId} />
             ))}
-            {isLoadingMoreBookreviews && <Loading />}
+             {isLoadingMoreBookreviews && <Loading />}
           </GridBox>
         ) : (
           <EmojiWrapper>
@@ -150,10 +193,15 @@ const Bookreviews = () => {
           </EmojiWrapper>
         )}
       </Box>
-      <Tooltip>독후감 작성</Tooltip>
-      <WritingIconWrapper onClick={() => goToPage(`${endpoints.user_page_url}/mypage`)}>
-        <WritingIcon width={28} height={28} />
-      </WritingIconWrapper>
+      <TooltipWrapper>
+        <Tooltip>
+          <span>독후감 작성은 여기서 할 수 있어요!</span>
+          <CloseIcon fill="#ffffff" />
+        </Tooltip>
+        <WritingIconWrapper onClick={() => goToPage(`${endpoints.user_page_url}/mypage`)}>
+          <WritingIcon width={28} height={28} />
+        </WritingIconWrapper>
+      </TooltipWrapper>
     </>
   ) : (
     <BlurWrapper>
@@ -202,20 +250,11 @@ const EmptyDescription = styled.div`
   text-align: center;
 `;
 
-const WritingIconWrapper = styled.div`
-  width: 58px;
-  height: 58px;
+const TooltipWrapper = styled.div`
   bottom: 93.5px;
   filter: drop-shadow(0px 4px 4px rgba(255, 121, 0, 0.2));
   position: sticky;
-  background: ${({ theme }) => theme.colors.orange900};
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
   float: right;
-  margin-right: 26px;
 `;
 const BlurInBookreviewsWrapper = styled.div`
   display: flex;
@@ -258,5 +297,31 @@ export const LoadingContainer = styled.div`
 
 const Tooltip = styled.div`
   position: fixed;
+  bottom: 80px;
+  float: right;
+  width: 239px;
+  margin-right: 130px;
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding: 12px;
+  ${body6};
+`;
+const WritingIconWrapper = styled.div`
+  width: 58px;
+  height: 58px;
+  bottom: 93.5px;
+  filter: drop-shadow(0px 4px 4px rgba(255, 121, 0, 0.2));
+  position: sticky;
+  background: ${({ theme }) => theme.colors.orange900};
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: right;
+  margin-right: 26px;
+  cursor: pointer;
 `;
 export default Bookreviews;

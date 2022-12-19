@@ -14,7 +14,7 @@ import {
   DELETE_BOOKREVIEW,
   GET_BOOKREVIEWS_TEMP,
 } from './graphql';
-import { LikeUser } from './types';
+import { IBookreviews, LikeUser } from './types';
 
 export const bookreviewApi = bookreviewBackend.injectEndpoints({
   overrideExisting: true,
@@ -86,7 +86,6 @@ export const bookreviewApi = bookreviewBackend.injectEndpoints({
           id,
         },
       }),
-      invalidatesTags: ['Bookreview', 'BookreviewsTemp'],
     }),
     toggleLikeOnBookreview: build.mutation({
       query: ({ id, userID }) => ({
