@@ -14,9 +14,9 @@ import { selectUserIsMember, selectUserRoles } from '../../services/user/user.st
 import BlurInBookreviews from '../../components/svgs/BlurInBookreviews';
 import { Bookreview, ClubRole } from '../../types/__generate__/user-backend-api';
 import BookreviewItem from '../main/components/BookreviewItem';
-import { getBookreviews, getBookreviewsTemp, useGetBookreviewsQuery, useGetBookreviewsTempQuery } from './services/api';
+import { getBookreviews, useGetBookreviewsQuery } from './services/api';
 import LoadingPage from '../../components/base/LoadingPage';
-import { uiStore } from '../../services/ui.store';
+import Loading from '../../components/svgs/Loading';
 
 const Bookreviews = () => {
   const dispatch = useAppDispatch();
@@ -24,18 +24,12 @@ const Bookreviews = () => {
   const userId = useAppSelector(selectUserId);
   const isMember = useSelector(selectUserIsMember);
   const roles = useSelector(selectUserRoles);
-  const [filteredClubRoles,setFilteredClubRoles] = useState<ClubRole[]>(roles);
-  const [totalBookreviews,setTotalBookreviews] = useState<Bookreview[]>([]);
-  const [totalBookreviewsLength,setTotalBookreviewsLength] = useState<number>(0);
+  const [filteredClubRoles, setFilteredClubRoles] = useState<ClubRole[]>(roles);
+  const [totalBookreviews, setTotalBookreviews] = useState<Bookreview[]>([]);
+  const [totalBookreviewsLength, setTotalBookreviewsLength] = useState<number>(0);
+  const [totalBookreviewsOffset, setTotalBookreviewsOffset] = useState<number>(0);
+  const [isLoadingMoreBookreviews, setIsLoadingMoreBookreviews] = useState<boolean>(false);
   const { data: bookreviews, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: userId });
-  const { data: bookreviewsTemp } = useGetBookreviewsTempQuery({
-    limit: 100,
-    offset: 0,
-    where: {
-      status: '게시',
-      userID: userId
-    },
-  });
 
   useEffect(() => {
     const filteredClubRoles = roles.filter(( role: ClubRole ) => new Date(role.club.endedAt) >= new Date()).slice().sort((a, b) => new Date(a.club.meetings[0].startedAt) - new Date(b.club.meetings[0].startedAt));
@@ -48,41 +42,32 @@ const Bookreviews = () => {
 
   const reloadBookreviews = async () => {
     if (bookreviews) {
-      let mergedBookreviews = [];
-      let sortedBookreviews = [];
-      if (bookreviewsTemp) {
-        mergedBookreviews = bookreviews?.concat(bookreviewsTemp);
-        sortedBookreviews = mergedBookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-        setTotalBookreviews(sortedBookreviews);
-        setTotalBookreviewsLength(sortedBookreviews.length);
-      } else {
-        mergedBookreviews = bookreviews;
-        sortedBookreviews = mergedBookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-        setTotalBookreviews(sortedBookreviews);
-        setTotalBookreviewsLength(sortedBookreviews.length);
-      }
+      const sortedBookreviews = bookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+      setTotalBookreviews(sortedBookreviews);
+      setTotalBookreviewsLength(sortedBookreviews.length);
     }
   }
 
   useEffect(() => {
-    if (authenticated) {
-      dispatch(
-        getBookreviews.initiate({
-          limit: 10, offset: 0, userID: userId
-        }),
-      );
-      dispatch(
-        getBookreviewsTemp.initiate({
-          limit: 100,
-          offset: 0,
-          where: {
-            status: '게시',
-            userID: userId
-          },
-        }),
-      );
-    }
-  }, [dispatch, uiStore]);
+    const loadMore = async () => {
+      setIsLoadingMoreBookreviews(true);
+      if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        const bookreviewsAction = await dispatch(
+          getBookreviews.initiate({
+            limit: 10, offset: totalBookreviewsOffset + 10, userID: userId
+          })
+        );
+        const sortedBookreviews = bookreviewsAction.data.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+        setTotalBookreviews(totalBookreviews.concat(sortedBookreviews));
+        setTotalBookreviewsOffset(bookreviewsAction.data.length + totalBookreviewsLength);
+        setIsLoadingMoreBookreviews(false);
+      }
+    };
+    window.addEventListener('scroll', loadMore);
+    return () => {
+      window.removeEventListener('scroll', loadMore);
+    };
+  }, [totalBookreviews]);
 
   const isGuest = userId === 'guest';
 
@@ -100,8 +85,8 @@ const Bookreviews = () => {
     renderClubRoles = filteredClubRoles.slice(0, 3);
     moreClubRolesLength = filteredClubRoles.length - 3;
   }
-  if (isLoading) return <LoadingPage />;
 
+  if (isLoading) return <LoadingPage />;
 
   return isMember ? (
     <>
@@ -139,6 +124,7 @@ const Bookreviews = () => {
             {totalBookreviews?.map((item: ClubRole) => (
               <BookreviewItem key={item.clubID} bookreview={item} userID={userId} reloadBookreviews={reloadBookreviews} />
             ))}
+            {isLoadingMoreBookreviews && <Loading />}
           </GridBox>
         ) : (
           <EmojiWrapper>

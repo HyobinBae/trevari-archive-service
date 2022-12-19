@@ -170,8 +170,8 @@ const BookreviewItem = ({ bookreview, userID, reloadBookreviews }: Props) => {
               {bookreview.user?.profileImageUrl !== null ? <ProfileAvatar src={bookreview.user?.profileImageUrl} size={38}/> : <DefaultProfileAvatar width={38} height={38}/>}
             </ProfileAvatarWrapper>
             <NameDiv>
-              <UserNameDiv onClick={() => console.log('유저 프로필 페이지로~')}>{bookreview.user?.name}</UserNameDiv>
-              <ClubNameDiv onClick={() => console.log('클럽 상세 페이지로?')}>{bookreview.club?.name}</ClubNameDiv>
+              <UserNameDiv onClick={() => goToProfile()}>{bookreview.user?.name}</UserNameDiv>
+              <ClubNameDiv>{bookreview.club?.name}</ClubNameDiv>
             </NameDiv>
           </ProfileDiv>
           <ProfileDiv>
