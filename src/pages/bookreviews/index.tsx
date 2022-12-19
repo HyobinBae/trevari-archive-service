@@ -24,65 +24,43 @@ const Bookreviews = () => {
   const userId = useAppSelector(selectUserId);
   const isMember = useSelector(selectUserIsMember);
   const roles = useSelector(selectUserRoles);
-  const [filteredClubRoles,setFilteredClubRoles] = useState<ClubRole[]>(roles);
-  const [totalBookreviews,setTotalBookreviews] = useState<Bookreview[]>([]);
-  const [totalBookreviewsLength,setTotalBookreviewsLength] = useState<number>(0);
-  const { data: bookreviews, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: userId });
-  const { data: bookreviewsTemp } = useGetBookreviewsTempQuery({
+  const [filteredClubRoles, setFilteredClubRoles] = useState<ClubRole[]>(roles);
+  const { data: bookreviews, isLoading: isLoadingBookreviews } = useGetBookreviewsQuery({
+    limit: 10,
+    offset: 0,
+    userID: userId,
+  });
+  const { data: bookreviewsTemp, isLoading: isLoadingBookreviewsTemp } = useGetBookreviewsTempQuery({
     limit: 100,
     offset: 0,
     where: {
       status: '게시',
-      userID: userId
+      userID: userId,
     },
   });
-
   useEffect(() => {
-    const filteredClubRoles = roles.filter(( role: ClubRole ) => new Date(role.club.endedAt) >= new Date()).slice().sort((a, b) => new Date(a.club.meetings[0].startedAt) - new Date(b.club.meetings[0].startedAt));
+    const filteredClubRoles = roles
+      .filter((role: ClubRole) => new Date(role.club.endedAt) >= new Date())
+      .slice()
+      .sort((a, b) => new Date(a.club.meetings[0].startedAt) - new Date(b.club.meetings[0].startedAt));
     setFilteredClubRoles(filteredClubRoles);
-  }, []);
+  }, [roles]);
 
-  useEffect(() => {
-    reloadBookreviews();
-  }, [isLoading]);
-
-  const reloadBookreviews = async () => {
+  const sortBookreviews = () => {
     if (bookreviews) {
       let mergedBookreviews = [];
       let sortedBookreviews = [];
       if (bookreviewsTemp) {
         mergedBookreviews = bookreviews?.concat(bookreviewsTemp);
         sortedBookreviews = mergedBookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-        setTotalBookreviews(sortedBookreviews);
-        setTotalBookreviewsLength(sortedBookreviews.length);
       } else {
         mergedBookreviews = bookreviews;
         sortedBookreviews = mergedBookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-        setTotalBookreviews(sortedBookreviews);
-        setTotalBookreviewsLength(sortedBookreviews.length);
       }
+      return sortedBookreviews;
     }
-  }
-
-  useEffect(() => {
-    if (authenticated) {
-      dispatch(
-        getBookreviews.initiate({
-          limit: 10, offset: 0, userID: userId
-        }),
-      );
-      dispatch(
-        getBookreviewsTemp.initiate({
-          limit: 100,
-          offset: 0,
-          where: {
-            status: '게시',
-            userID: userId
-          },
-        }),
-      );
-    }
-  }, [dispatch, uiStore]);
+    return [];
+  };
 
   const isGuest = userId === 'guest';
 
@@ -100,70 +78,69 @@ const Bookreviews = () => {
     renderClubRoles = filteredClubRoles.slice(0, 3);
     moreClubRolesLength = filteredClubRoles.length - 3;
   }
-  if (isLoading) return <LoadingPage />;
+  if (isLoadingBookreviews || isLoadingBookreviewsTemp) return <LoadingPage />;
 
-
+  const totalBookreviews = sortBookreviews();
+  const totalBookreviewsLength = totalBookreviews.length;
   return isMember ? (
     <>
       <Box style={{ paddingTop: '48px', minHeight: '100vh', paddingBottom: '67px' }}>
         <UserClubListWrapper>
-          {filteredClubRoles.length > 0 ?
+          {filteredClubRoles.length > 0 ? (
             <UserClubList>
-              {renderClubRoles
-                .map(( role: ClubRole, index ) => {
-                  if (filteredClubRoles.length > 3) {
-                    if (index === renderClubRoles.length -1) {
-                      clubName = `${role.club.name} 외 ${moreClubRolesLength}개 클럽 `;
-                    } else {
-                      clubName = `${role.club.name} / `;
-                    }
+              {renderClubRoles.map((role: ClubRole, index) => {
+                if (filteredClubRoles.length > 3) {
+                  if (index === renderClubRoles.length - 1) {
+                    clubName = `${role.club.name} 외 ${moreClubRolesLength}개 클럽 `;
                   } else {
-                    if (index === renderClubRoles.length -1) {
-                      clubName = `${role.club.name} `;
-                    } else {
-                      clubName = `${role.club.name} / `;
-                    }
+                    clubName = `${role.club.name} / `;
                   }
-                  return (
-                    <span key={role.club.id}>{clubName}</span>
-                  )
-                })}
+                } else {
+                  if (index === renderClubRoles.length - 1) {
+                    clubName = `${role.club.name} `;
+                  } else {
+                    clubName = `${role.club.name} / `;
+                  }
+                }
+                return <span key={role.club.id}>{clubName}</span>;
+              })}
               멤버들의 독후감을 만나보세요.
-            </UserClubList> :
+            </UserClubList>
+          ) : (
             <div>활동했던 클럽의 독후감을 만나보세요.</div>
-          }
+          )}
         </UserClubListWrapper>
         <GridCardCount>{`총 ${totalBookreviewsLength}개`}</GridCardCount>
         {totalBookreviews && totalBookreviews?.length > 0 ? (
           <GridBox>
             {totalBookreviews?.map((item: ClubRole) => (
-              <BookreviewItem key={item.clubID} bookreview={item} userID={userId} reloadBookreviews={reloadBookreviews} />
+              <BookreviewItem key={item.clubID} bookreview={item} userID={userId} />
             ))}
           </GridBox>
         ) : (
           <EmojiWrapper>
             <WriteIcon width={90} height={90} />
             <EmptyDescription>
-              아직 등록된 독후감이 없어요.<br/>
+              아직 등록된 독후감이 없어요.
+              <br />
               가장 먼저 독후감을 작성해보세요.
             </EmptyDescription>
           </EmojiWrapper>
         )}
       </Box>
+      <Tooltip>독후감 작성</Tooltip>
       <WritingIconWrapper onClick={() => goToPage(`${endpoints.user_page_url}/mypage`)}>
-        <WritingIcon width={28} height={28}/>
+        <WritingIcon width={28} height={28} />
       </WritingIconWrapper>
     </>
   ) : (
     <BlurWrapper>
       <div>
-        <BlurInBookreviews width={'100%'} height={'100%'}/>
+        <BlurInBookreviews width={'100%'} height={'100%'} />
       </div>
       <BlurInBookreviewsWrapper>
         <WriteIcon width={90} height={90} />
-        <EmptyDescription>
-          멤버들만 이용할 수 있는 독후감 피드입니다.
-        </EmptyDescription>
+        <EmptyDescription>멤버들만 이용할 수 있는 독후감 피드입니다.</EmptyDescription>
         <Button
           style={{ maxHeight: '36px', minHeight: '36px', fontSize: '0.875rem' }}
           onClick={() => goToPage(`${endpoints.user_page_url}/apply`)}
@@ -247,7 +224,7 @@ const UserClubListWrapper = styled.div`
 const UserClubList = styled.div`
   span {
     color: ${({ theme }) => theme.colors.orange900};
-  };
+  }
 `;
 const BlurWrapper = styled.div`
   padding-top: 48px;
@@ -255,5 +232,9 @@ const BlurWrapper = styled.div`
 
 export const LoadingContainer = styled.div`
   padding: 110px 20px;
+`;
+
+const Tooltip = styled.div`
+  position: fixed;
 `;
 export default Bookreviews;

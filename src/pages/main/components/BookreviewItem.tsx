@@ -21,12 +21,11 @@ import LikeUserModal from './LikeUserModal';
 import { btoa, Buffer } from 'buffer';
 
 interface Props {
-  bookreview: Bookreview
-  userID: string
-  reloadBookreviews: () => void
+  bookreview: Bookreview;
+  userID: string;
 }
 
-const BookreviewItem = ({ bookreview, userID, reloadBookreviews }: Props) => {
+const BookreviewItem = ({ bookreview, userID }: Props) => {
   const { width } = useWindowSize();
   const dispatch = useAppDispatch();
   const bookreviewContent = bookreview.content;
@@ -34,7 +33,7 @@ const BookreviewItem = ({ bookreview, userID, reloadBookreviews }: Props) => {
   const commentCount = bookreview.commentCount;
   const isMyBookreview = bookreview.user.id === userID;
   const [limit, setLimit] = useState(86);
-  const [likeUserIDsCount, setLikeUserIDsCount]  = useState(bookreview.likeUserIDs.length);
+  const [likeUserIDsCount, setLikeUserIDsCount] = useState(bookreview.likeUserIDs.length);
   const [isOpenMoreList, setOpenMoreList] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const [isLikeUserListModal, setIsLikeUserListModal] = useState(false);
@@ -50,8 +49,8 @@ const BookreviewItem = ({ bookreview, userID, reloadBookreviews }: Props) => {
   const toggleEllipsis = (str: string, limit: number) => {
     return {
       string: str.slice(0, limit),
-      isShowMore: str.length > limit
-    }
+      isShowMore: str.length > limit,
+    };
   };
 
   const onClickMore = (str: string) => {
@@ -62,16 +61,15 @@ const BookreviewItem = ({ bookreview, userID, reloadBookreviews }: Props) => {
     const buff = Buffer.from(bookreview.user!.email, 'utf-8');
     const base64 = buff.toString('base64');
     goToPage(
-    `${endpoints.user_page_url}/profile?${
-      bookreview.user!.email
-        ? `uid=${base64}`
-        : `userName=${bookreview.user!.name}`
-    }`);
+      `${endpoints.user_page_url}/profile?${
+        bookreview.user!.email ? `uid=${base64}` : `userName=${bookreview.user!.name}`
+      }`,
+    );
   };
 
   const onClickMoreList = () => {
-    setOpenMoreList(state => !state)
-  }
+    setOpenMoreList(state => !state);
+  };
 
   const MORE_ACTIONS_OF_MY_BOOKREVIEW = [
     {
@@ -117,22 +115,20 @@ const BookreviewItem = ({ bookreview, userID, reloadBookreviews }: Props) => {
   };
 
   const onConfirmDelete = async () => {
-    // const resultAction = await dispatch(deleteBookreview.initiate({ id: bookreview.id }));
-    // if (resultAction.data.deleteBookreview === true) {
+    const resultAction = await dispatch(deleteBookreview.initiate({ id: bookreview.id }));
+    if (resultAction.data.deleteBookreview === true) {
       toastAlert({
         open: true,
         type: 'info',
         text: '독후감이 삭제되었습니다.',
       });
-      // 리스트리로드
-      reloadBookreviews();
       onToggleModal();
       // setTimeout(() => {
       //   onToggleModal();
       // }, 1000);
-    // }
+      // }
+    }
   };
-
 
   const onClickLikeBookreview = async () => {
     const resultAction = await dispatch(toggleLikeOnBookreview.initiate({ id: bookreview.id, userID }));
@@ -150,11 +146,11 @@ const BookreviewItem = ({ bookreview, userID, reloadBookreviews }: Props) => {
       return;
     }
     setLikeUsers(resultAction.data);
-    setIsLikeUserListModal(!isLikeUserListModal)
+    setIsLikeUserListModal(!isLikeUserListModal);
   };
 
-  const bookContent = bookreview.contents.filter(( item: Bookreview ) => item.type === 'book');
-  const movieContent = bookreview.contents.filter(( item: Bookreview ) => item.type === 'movie');
+  const bookContent = bookreview.contents.filter((item: Bookreview) => item.type === 'book');
+  const movieContent = bookreview.contents.filter((item: Bookreview) => item.type === 'movie');
 
   const bottomSheetLeftMarginPx = width > 500 ? 'calc(50vw - 250px)' : 0;
   const deleteModalTitle = '정말 삭제하시겠습니까?';
@@ -167,7 +163,11 @@ const BookreviewItem = ({ bookreview, userID, reloadBookreviews }: Props) => {
         <BookreviewItemDiv>
           <ProfileDiv>
             <ProfileAvatarWrapper onClick={() => goToProfile()}>
-              {bookreview.user?.profileImageUrl !== null ? <ProfileAvatar src={bookreview.user?.profileImageUrl} size={38}/> : <DefaultProfileAvatar width={38} height={38}/>}
+              {bookreview.user?.profileImageUrl !== null ? (
+                <ProfileAvatar src={bookreview.user?.profileImageUrl} size={38} />
+              ) : (
+                <DefaultProfileAvatar width={38} height={38} />
+              )}
             </ProfileAvatarWrapper>
             <NameDiv>
               <UserNameDiv onClick={() => console.log('유저 프로필 페이지로~')}>{bookreview.user?.name}</UserNameDiv>
@@ -176,7 +176,7 @@ const BookreviewItem = ({ bookreview, userID, reloadBookreviews }: Props) => {
           </ProfileDiv>
           <ProfileDiv>
             <UpdatedAtDiv>{elapsedTime(bookreviewPublishedAt)}</UpdatedAtDiv>
-            <KebabIcon style={{cursor: 'pointer'}} onClick={() => onClickMoreList()}/>
+            <KebabIcon style={{ cursor: 'pointer' }} onClick={() => onClickMoreList()} />
           </ProfileDiv>
         </BookreviewItemDiv>
         <ClubNameWrapper onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
@@ -185,26 +185,56 @@ const BookreviewItem = ({ bookreview, userID, reloadBookreviews }: Props) => {
         <BookreviewContent onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
           {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string}
         </BookreviewContent>
-        {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).isShowMore && <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>}
+        {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).isShowMore && (
+          <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>
+        )}
         <BookMovieDivWrapper>
-          {bookContent.length > 0 && <BookMovieDiv><BookMovieSpan>책 | </BookMovieSpan>{bookContent[0].author}, {bookContent[0].title}</BookMovieDiv>}
-          {movieContent.length > 0 && <BookMovieDiv><BookMovieSpan>영화 | </BookMovieSpan>{bookContent[0].author && bookContent[0].author + ", "} {movieContent[0].title}</BookMovieDiv>}
+          {bookContent.length > 0 && (
+            <BookMovieDiv>
+              <BookMovieSpan>책 | </BookMovieSpan>
+              {bookContent[0].author}, {bookContent[0].title}
+            </BookMovieDiv>
+          )}
+          {movieContent.length > 0 && (
+            <BookMovieDiv>
+              <BookMovieSpan>영화 | </BookMovieSpan>
+              {bookContent[0].author && bookContent[0].author + ', '} {movieContent[0].title}
+            </BookMovieDiv>
+          )}
         </BookMovieDivWrapper>
         <ReactionDivWrapper>
           <ReactionDiv>
-            {isAlreadyLikedBookreview ?
+            {isAlreadyLikedBookreview ? (
               <>
-                <LoveFilledIcon color={orange900} width={20} height={20} style={{marginRight: '6px', marginTop: '-2px'}} onClick={() => onClickLikeBookreview()}/>
-                <span onClick={() => likeUserIDsCount > 0 ? onClickBookreviewLikeUsers() : null}>좋아요 {likeUserIDsCount > 0 ? likeUserIDsCount : null}</span>
-              </> :
-              <>
-                <HeartIcon onClick={() => onClickLikeBookreview()} color={gray500} width={20} height={20} style={{marginRight: '6px'}}/>
-                <span onClick={() => likeUserIDsCount > 0 ? onClickBookreviewLikeUsers() : null}>좋아요 {likeUserIDsCount > 0 ? likeUserIDsCount : null}</span>
+                <LoveFilledIcon
+                  color={orange900}
+                  width={20}
+                  height={20}
+                  style={{ marginRight: '6px', marginTop: '-2px' }}
+                  onClick={() => onClickLikeBookreview()}
+                />
+                <span onClick={() => (likeUserIDsCount > 0 ? onClickBookreviewLikeUsers() : null)}>
+                  좋아요 {likeUserIDsCount > 0 ? likeUserIDsCount : null}
+                </span>
               </>
-            }
+            ) : (
+              <>
+                <HeartIcon
+                  onClick={() => onClickLikeBookreview()}
+                  color={gray500}
+                  width={20}
+                  height={20}
+                  style={{ marginRight: '6px' }}
+                />
+                <span onClick={() => (likeUserIDsCount > 0 ? onClickBookreviewLikeUsers() : null)}>
+                  좋아요 {likeUserIDsCount > 0 ? likeUserIDsCount : null}
+                </span>
+              </>
+            )}
           </ReactionDiv>
-          <ReactionDiv style={{marginLeft: '16px'}} onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
-            <CommentIcon width={20} height={20} style={{marginRight: '6px'}}/> <span>댓글 {commentCount > 0 ? commentCount : null}</span>
+          <ReactionDiv style={{ marginLeft: '16px' }} onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
+            <CommentIcon width={20} height={20} style={{ marginRight: '6px' }} />{' '}
+            <span>댓글 {commentCount > 0 ? commentCount : null}</span>
           </ReactionDiv>
         </ReactionDivWrapper>
       </BookreviewItemWrapper>
@@ -228,21 +258,21 @@ const BookreviewItem = ({ bookreview, userID, reloadBookreviews }: Props) => {
       {isLikeUserListModal && (
         <LikeUserModal browserWidth={width} users={likeUsers} onClose={() => setIsLikeUserListModal(false)} />
       )}
-      </>
-  )
+    </>
+  );
 };
 
 const BookreviewItemWrapper = styled.div`
   padding: 20px;
   width: 100%;
-  border-bottom: 1px solid ${({theme}) => theme.colors.gray300};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray300};
 `;
 
 const ReactionDivWrapper = styled.div`
   display: flex;
   flex-direction: row;
   ${title4};
-  color: ${({theme}) =>  theme.colors.gray600};
+  color: ${({ theme }) => theme.colors.gray600};
 `;
 const ReactionDiv = styled.div`
   display: flex;
@@ -251,12 +281,12 @@ const ReactionDiv = styled.div`
   cursor: pointer;
   span {
     cursor: pointer;
-    color: ${({theme}) => theme.colors.gray600};
+    color: ${({ theme }) => theme.colors.gray600};
   }
 `;
 const BookMovieSpan = styled.span`
   ${title6};
-  color: ${({theme}) => theme.colors.gray600};
+  color: ${({ theme }) => theme.colors.gray600};
 `;
 const BookreviewItemDiv = styled.div`
   flex-direction: row;
@@ -273,7 +303,7 @@ const UserNameDiv = styled.div`
 `;
 const ClubNameDiv = styled.div`
   ${title6};
-  color: ${({theme}) => theme.colors.orange900};
+  color: ${({ theme }) => theme.colors.orange900};
   cursor: pointer;
 `;
 const UpdatedAtDiv = styled.div`
@@ -295,7 +325,7 @@ const BookMovieDiv = styled.div`
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  color: ${({theme}) => theme.colors.gray600};
+  color: ${({ theme }) => theme.colors.gray600};
 `;
 const BookMovieDivWrapper = styled.div`
   margin-bottom: 20px;
@@ -316,11 +346,10 @@ const BookreviewContent = styled.div`
 const ShowMoreButton = styled.div`
   cursor: pointer;
   ${title4};
-  color: ${({theme}) => theme.colors.gray500};
+  color: ${({ theme }) => theme.colors.gray500};
   display: flex;
   justify-content: end;
   margin-top: -51px;
 `;
-
 
 export default BookreviewItem;
