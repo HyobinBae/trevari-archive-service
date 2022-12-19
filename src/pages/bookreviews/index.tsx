@@ -45,7 +45,7 @@ const Bookreviews = () => {
   }, [isLoading]);
 
   const sortBookreviews = async () => {
-    if (bookreviews) {
+    if (bookreviews.length > 0) {
       const sortedBookreviews = bookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
       setTotalBookreviews(sortedBookreviews);
       setTotalBookreviewsLength(sortedBookreviews.length);
@@ -125,7 +125,7 @@ const Bookreviews = () => {
           )}
         </UserClubListWrapper>
         <GridCardCount>{`총 ${totalBookreviewsLength}개`}</GridCardCount>
-        {totalBookreviews && totalBookreviews?.length > 0 ? (
+        {!isLoading && totalBookreviews && totalBookreviews?.length > 0 ? (
           <GridBox>
             {totalBookreviews?.map((item: ClubRole) => (
               <BookreviewItem key={item.clubID} bookreview={item} userID={userId} reloadBookreviews={sortBookreviews} />
