@@ -1,20 +1,19 @@
 import { bookreviewBackend } from 'api/backend';
-import { Bookreview, BookreviewsOptions } from 'types/__generate__/user-backend-api';
+import { Bookreview } from 'types/__generate__/user-backend-api';
 import {
-  GET_BOOKREVIEW,
-  GET_BOOKREVIEWS,
-  GET_BOOKREIVEW_LIKEUSERS,
-  DELETE_BOOKREVIEW_COMMENT,
-  UPDATE_BOOKREVIEW_COMMENT,
   CREATE_BOOKREVIEW_COMMENT,
-  REPORT_BOOKREVIEW_COMMENT,
-  TOGGLE_LIKE_BOOKREVIEW_COMMENT,
-  TOGGLE_LIKE_BOOKREVIEW,
-  GET_BOOKREVIEW_COMMENT_LIKEUSERS,
   DELETE_BOOKREVIEW,
-  GET_BOOKREVIEWS_TEMP,
+  DELETE_BOOKREVIEW_COMMENT,
+  GET_BOOKREIVEW_LIKEUSERS,
+  GET_BOOKREVIEW,
+  GET_BOOKREVIEW_COMMENT_LIKEUSERS,
+  GET_BOOKREVIEWS,
+  REPORT_BOOKREVIEW_COMMENT,
+  TOGGLE_LIKE_BOOKREVIEW,
+  TOGGLE_LIKE_BOOKREVIEW_COMMENT,
+  UPDATE_BOOKREVIEW_COMMENT,
 } from './graphql';
-import { IBookreviews, LikeUser } from './types';
+import { LikeUser } from './types';
 
 export const bookreviewApi = bookreviewBackend.injectEndpoints({
   overrideExisting: true,
