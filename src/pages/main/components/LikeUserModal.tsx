@@ -32,6 +32,7 @@ const LikeUserModal = ({ users, onClose, browserWidth }: LikeUserModalProps) => 
 
 const ModalContainer = styled.div<{ modalPositionLeftPx: number }>`
   position: fixed;
+  overflow-y: scroll;
   top: 0;
   bottom: 0;
   left: ${({ modalPositionLeftPx }) => (modalPositionLeftPx ? `${modalPositionLeftPx}px` : 0)};
