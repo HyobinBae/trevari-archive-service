@@ -62,27 +62,28 @@ const Bookreviews = () => {
 
 
   useEffect(() => {
-    const loadMore = () => {
-      if (totalBookreviewsOffset + 10 >= count) {
+    const loadMoreBookreviews = () => {
+      const moMoreLoad = totalBookreviewsOffset + 10 >= count;
+      const scrollToEnd = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100;
+      if (moMoreLoad) {
         setIsLoadingMoreBookreviews(false);
         return;
       }
       setIsLoadingMoreBookreviews(true);
-      if((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+      if(scrollToEnd) {
         dispatch(
           getBookreviews.initiate({
-            limit: totalBookreviewsOffset + 10 >= count ? count : totalBookreviews.length + 10, offset: 0, userID: userId
+            limit: moMoreLoad ? count : totalBookreviews.length + 10, offset: 0, userID: userId
           })
         );
-        setTotalBookreviewsOffset(totalBookreviewsOffset + 10 >= count ? count : totalBookreviewsOffset + 10);
+        setTotalBookreviewsOffset(moMoreLoad ? count : totalBookreviewsOffset + 10);
         setIsLoadingMoreBookreviews(false);
       }
     };
 
     const handleScroll = debounce(() => {
       setIsLoadingMoreBookreviews(prevState => !prevState);
-      loadMore();
-      console.log(isLoadingMoreBookreviews);
+      loadMoreBookreviews();
     }, 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
