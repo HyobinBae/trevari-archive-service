@@ -297,6 +297,7 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
 };
 const ReplyBase = styled.div`
   padding-left: 48px;
+  background: ${({ theme }) => theme.colors.gray50};
 `;
 const IconWrapper = styled.div`
   display: flex;
