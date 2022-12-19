@@ -18,6 +18,7 @@ import { getBookreviews, useGetBookreviewsQuery } from './services/api';
 import LoadingPage from '../../components/base/LoadingPage';
 import Loading from '../../components/svgs/Loading';
 import CloseIcon from 'components/svgs/CloseIcon';
+import { selectBookreivews } from './services/bookreview.store';
 
 const Bookreviews = () => {
   const dispatch = useAppDispatch();
@@ -25,13 +26,26 @@ const Bookreviews = () => {
   const userId = useAppSelector(selectUserId);
   const isMember = useSelector(selectUserIsMember);
   const roles = useSelector(selectUserRoles);
+  const bookreviews = useSelector(selectBookreivews);
   const [filteredClubRoles, setFilteredClubRoles] = useState<ClubRole[]>(roles);
 
-  const [totalBookreviews, setTotalBookreviews] = useState<Bookreview[]>([]);
-  const [totalBookreviewsLength, setTotalBookreviewsLength] = useState<number>(0);
-  const [totalBookreviewsOffset, setTotalBookreviewsOffset] = useState<number>(0);
-  const [isLoadingMoreBookreviews, setIsLoadingMoreBookreviews] = useState<boolean>(false);
-  const { data: bookreviews, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: userId });
+  const { count, bookreviews: totalBookreviews, loading } = bookreviews;
+  // const [totalBookreviews, setTotalBookreviews] = useState<Bookreview[]>([]);
+  // const [totalBookreviewsLength, setTotalBookreviewsLength] = useState<number>(0);
+  // const [totalBookreviewsOffset, setTotalBookreviewsOffset] = useState<number>(0);
+  // const [isLoadingMoreBookreviews, setIsLoadingMoreBookreviews] = useState<boolean>(false);
+  // const { data: bookreviews, isLoading } = useGetBookreviewsQuery({ limit: 10, offset: 0, userID: userId });
+
+  useEffect(() => {
+    const isGuest = userId === 'guest';
+    if (isGuest) {
+      goToPage(`${endpoints.user_login_page_url}/?redirectionUrl=/bookreviews`);
+      return;
+    }
+    if (userId) {
+      dispatch(getBookreviews.initiate({ limit: 10, offset: 0, userID: userId }));
+    }
+  }, [dispatch, authenticated, userId]);
 
   useEffect(() => {
     const filteredClubRoles = roles
@@ -41,51 +55,42 @@ const Bookreviews = () => {
     setFilteredClubRoles(filteredClubRoles);
   }, [roles]);
 
-  useEffect(() => {
-    sortBookreviews();
-  }, [isLoading]);
+  // useEffect(() => {
+  //   sortBookreviews();
+  // }, [isLoading]);
 
-  const sortBookreviews = async () => {
-    if (bookreviews.length > 0) {
-      const sortedBookreviews = bookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-      setTotalBookreviews(sortedBookreviews);
-      setTotalBookreviewsLength(sortedBookreviews.length);
-    }
-  };
+  // const sortBookreviews = async () => {
+  //   if (bookreviews.length > 0) {
+  //     const sortedBookreviews = bookreviews.slice().sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  //     setTotalBookreviews(sortedBookreviews);
+  //     setTotalBookreviewsLength(sortedBookreviews.length);
+  //   }
+  // };
 
-  useEffect(() => {
-    const loadMore = async () => {
-      setIsLoadingMoreBookreviews(true);
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        const bookreviewsAction = await dispatch(
-          getBookreviews.initiate({
-            limit: 10,
-            offset: totalBookreviewsOffset + 10,
-            userID: userId,
-          }),
-        );
-        const sortedBookreviews = bookreviewsAction.data
-          .slice()
-          .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-        setTotalBookreviews(totalBookreviews.concat(sortedBookreviews));
-        setTotalBookreviewsOffset(bookreviewsAction.data.length + totalBookreviewsLength);
-        setIsLoadingMoreBookreviews(false);
-      }
-    };
-    window.addEventListener('scroll', loadMore);
-    return () => {
-      window.removeEventListener('scroll', loadMore);
-    };
-  }, [totalBookreviews]);
-
-  const isGuest = userId === 'guest';
-
-  useEffect(() => {
-    if (isGuest) {
-      goToPage(`${endpoints.user_login_page_url}/?redirectionUrl=/bookreviews`);
-      return;
-    }
-  }, [dispatch, authenticated, userId]);
+  // useEffect(() => {
+  //   const loadMore = async () => {
+  //     setIsLoadingMoreBookreviews(true);
+  //     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+  //       const bookreviewsAction = await dispatch(
+  //         getBookreviews.initiate({
+  //           limit: 10,
+  //           offset: totalBookreviewsOffset + 10,
+  //           userID: userId,
+  //         }),
+  //       );
+  //       const sortedBookreviews = bookreviewsAction.data
+  //         .slice()
+  //         .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  //       setTotalBookreviews(totalBookreviews.concat(sortedBookreviews));
+  //       setTotalBookreviewsOffset(bookreviewsAction.data.length + totalBookreviewsLength);
+  //       setIsLoadingMoreBookreviews(false);
+  //     }
+  //   };
+  //   window.addEventListener('scroll', loadMore);
+  //   return () => {
+  //     window.removeEventListener('scroll', loadMore);
+  //   };
+  // }, [totalBookreviews]);
 
   let moreClubRolesLength = null;
   let clubName = '';
@@ -94,13 +99,13 @@ const Bookreviews = () => {
     renderClubRoles = filteredClubRoles.slice(0, 3);
     moreClubRolesLength = filteredClubRoles.length - 3;
   }
-  if (isLoading) return <LoadingPage />;
+  if (loading) return <LoadingPage />;
 
   // const totalBookreviews = [...bookreviews, ...bookreviewsTemp].sort(
   //   (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt),
   // );
 
-  // const totalBookreviewsLength = totalBookreviews.length;
+  const totalBookreviewsLength = totalBookreviews.length;
   return isMember ? (
     <>
       <Box style={{ paddingTop: '48px', minHeight: '100vh', paddingBottom: '67px' }}>
@@ -135,7 +140,7 @@ const Bookreviews = () => {
             {totalBookreviews?.map((item: ClubRole) => (
               <BookreviewItem key={item.clubID} bookreview={item} userID={userId} />
             ))}
-            {isLoadingMoreBookreviews && <Loading />}
+            {/* {isLoadingMoreBookreviews && <Loading />} */}
           </GridBox>
         ) : (
           <EmojiWrapper>

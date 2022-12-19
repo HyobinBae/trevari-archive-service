@@ -11,6 +11,7 @@ import main from 'pages/main/services/main.store';
 import auth from 'services/auth/auth.store';
 import user from 'services/user/user.store';
 import ui from 'services/ui.store';
+import bookreview from 'pages/bookreviews/services/bookreview.store';
 import navigation from 'services/navigation/navigation.store';
 
 const persistConfig = {
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   user,
   ui,
   navigation,
+  bookreview,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

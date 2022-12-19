@@ -1,27 +1,10 @@
 import { gql } from 'graphql-request';
 
 export const GET_BOOKREVIEWS_TEMP = gql`
-    query bookreviewsTemp($options: BookreviewsOptions) {
-      bookreviewsTemp(options: $options) {
-          id, title, content, isPublic, publishedAt, status,
-          role, userID, commentCount, likeUserIDs, updatedAt,
-          user {
-            name, profileImageUrl, email, id
-          },
-          club {
-            season,
-            name
-          }
-          contents {
-            imageUrl
-          }
-          fileUrl
-      }
-    }`;
-
-export const GET_BOOKREVIEWS = gql`
-  query bookreviewsV2($limit: Int!, $offset: Int!, $userID: String!) {
-    bookreviewsV2(limit: $limit, offset: $offset, userID: $userID) {
+  query bookreviewsTemp($options: BookreviewsOptions) {
+    bookreviewsTemp(options: $options) {
+      count
+      bookreviews {
         id
         title
         content
@@ -33,23 +16,56 @@ export const GET_BOOKREVIEWS = gql`
         commentCount
         likeUserIDs
         updatedAt
-        user  {
+        user {
           name
           profileImageUrl
           email
           id
         }
-        club  {
+        club {
           season
           name
         }
-        contents  {
+        contents {
           imageUrl
-          type
-          title
-          author   
         }
         fileUrl
+      }
+    }
+  }
+`;
+
+export const GET_BOOKREVIEWS = gql`
+  query bookreviewsV2($limit: Int!, $offset: Int!, $userID: String!) {
+    bookreviewsV2(limit: $limit, offset: $offset, userID: $userID) {
+      count
+      bookreviews {
+        id
+        title
+        content
+        isPublic
+        publishedAt
+        status
+        role
+        userID
+        commentCount
+        likeUserIDs
+        updatedAt
+        user {
+          name
+          profileImageUrl
+          email
+          id
+        }
+        club {
+          season
+          name
+        }
+        contents {
+          imageUrl
+        }
+        fileUrl
+      }
     }
   }
 `;
