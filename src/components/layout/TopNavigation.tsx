@@ -10,6 +10,8 @@ import AlarmButton from 'pages/main/components/AlarmButton';
 import { useNavigation } from 'hooks/useNavigation';
 import { ButtonWrapper, Title } from 'components/layout/style';
 import Arrow from 'components/svgs/Arrow';
+import BetaBadge from 'components/svgs/BetaBadge';
+import { heading1 } from '@trevari/typo';
 
 interface IProps {
   closeMenuWhenScrolled: boolean;
@@ -66,6 +68,13 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
     ) : title === '홈' ? (
       <BarInstance to={'/'}>
         <Logo width={78} height={14} fill={'#000'} />
+      </BarInstance>
+    ) : title === '독후감' ? (
+      <BarInstance to={path}>
+        <TitleWrapper>
+          <Title>독후감</Title>
+          <BetaBadge />
+        </TitleWrapper>
       </BarInstance>
     ) : (
       <BarInstance to={path}>
@@ -132,4 +141,12 @@ const BarInstance = styled(Link)`
   display: flex;
   align-items: center;
   color: black;
+`;
+const TitleWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+const TitleSpan = styled.div`
+  margin-right: 4px;
 `;
