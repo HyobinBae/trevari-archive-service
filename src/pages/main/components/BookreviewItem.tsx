@@ -18,7 +18,7 @@ import { useAppDispatch } from '../../../services/store';
 import DefaultProfileAvatar from '../../../components/svgs/DefaultProfileAvatar';
 import { LikeUser } from '../../bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
-import { btoa, Buffer } from 'buffer';
+import { Buffer } from 'buffer';
 
 interface Props {
   bookreview: Bookreview;
@@ -58,11 +58,11 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   };
 
   const goToProfile = () => {
-    const buff = Buffer.from(bookreview.user!.email, 'utf-8');
+    const buff = Buffer.from(bookreview.user.email, 'utf-8');
     const base64 = buff.toString('base64');
     goToPage(
       `${endpoints.user_page_url}/profile?${
-        bookreview.user!.email ? `uid=${base64}` : `userName=${bookreview.user!.name}`
+        bookreview.user.email ? `uid=${base64}` : `userName=${bookreview.user.name}`
       }`,
     );
   };

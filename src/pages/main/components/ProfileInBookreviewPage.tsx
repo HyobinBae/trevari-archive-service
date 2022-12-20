@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { User } from 'types/__generate__/user-backend-api';
 import { body8, title6 } from '@trevari/typo';
 import { DEFAULT_PROFILE_IMAGE } from '../const';
-import { formatRelativeTime } from 'utils/format';
 import { elapsedTime } from 'utils/time';
 
 interface ProfileInBookreviewPageProps {

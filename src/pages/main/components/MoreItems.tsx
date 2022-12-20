@@ -3,9 +3,12 @@ import styled from '@emotion/styled';
 import { ListItem, resetButtonCss } from '@trevari/components';
 
 interface IProps {
-  actions: any[];
+  actions: Action[];
 }
-
+interface Action {
+  text: string;
+  onAction: () => void;
+}
 const MoreItems = ({ actions }: IProps) => {
   return (
     <>
