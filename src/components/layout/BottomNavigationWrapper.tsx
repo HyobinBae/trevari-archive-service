@@ -68,6 +68,7 @@ const BottomNavigationWrapper = ({ initialActiveTab, changeNavigationInfo }: IPr
       changeNavigationInfo(pathname);
     }
   }, []);
+
   useEffect(() => {
     const navigationInfoInLocalStorage = getNavigationInfoInLocalStorage();
     setIsActive(navigationInfoInLocalStorage);
