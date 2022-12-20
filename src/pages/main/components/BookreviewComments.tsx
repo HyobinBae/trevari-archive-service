@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { TextArea } from '@trevari/components';
 import { body4, body6, title4 } from '@trevari/typo';
 import CommentOutline from 'components/svgs/CommentOutline';
 import LoveFilled from 'components/svgs/LoveFilled';
@@ -41,7 +42,7 @@ const BookreviewComments = ({
 }) => {
   const { width } = useWindowSize();
   const dispatch = useAppDispatch();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const [likeUsers, setLikeUsers] = useState<LikeUser[]>([]);
   const [focused, setFocused] = useState(false);
   const onFocus = () => setFocused(true);
@@ -99,6 +100,10 @@ const BookreviewComments = ({
   };
   const onChangeInput = (value: string) => {
     setCommentText(value);
+    if (inputRef.current) {
+      inputRef.current.scrollTop = inputRef.current.scrollHeight;
+      inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
+    }
   };
   const onConfirm = () => {
     onChangeInput(targetState.targetUsername);
@@ -130,11 +135,16 @@ const BookreviewComments = ({
     onChangeInput('');
     setTargetState(initialTargetState);
   };
-  const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      onSubmit();
+  const onKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key !== 'Enter') {
+      return;
     }
+    if (e.shiftKey) {
+      return;
+    }
+    onSubmit();
   };
+
   const replyConfirmModalText = `작성중인 내용이 있습니다.\n그래도 취소하시겠습니까?\n작성한 내용은 모두 사라집니다.`;
   return (
     <>
@@ -168,15 +178,16 @@ const BookreviewComments = ({
         ))}
       </CommentContainer>
       <InputContainer width={bottomInputContentWidth}>
-        <Input
+        <CustomTextArea
           ref={inputRef}
           placeholder="댓글을 입력하세요."
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInput(e.currentTarget.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChangeInput(e.currentTarget.value)}
           value={commentText}
           onFocus={onFocus}
           onBlur={onBlur}
           id="input"
           onKeyUp={onKeyUp}
+          rows={1}
         />
         <label htmlFor="input" onMouseDown={onSubmit}>
           {focused ? <UploadActive /> : <UploadDefault />}
@@ -202,42 +213,35 @@ const InputContainer = styled.div<{ width: string }>`
   position: fixed;
   display: flex;
   bottom: 0;
-  padding: 16px 20px;
+  padding: 0 20px 0;
   gap: 12px;
   background-color: white;
   align-items: center;
   border-top: 1px solid ${({ theme }) => theme.colors.gray300};
   width: ${({ width }) => (width ? width : '100%')};
+
   label {
     cursor: pointer;
+    height: 32px;
   }
 `;
 
-const Input = styled.input`
+const CustomTextArea = styled.textarea`
   ${body4}
-  width: 100%;
-  display: inline-flex;
-  padding: 0.75rem 1rem;
-  min-height: 3.125rem;
-
-  border-radius: 0.1875rem;
-  border: 1px solid ${({ theme }) => theme.colors.gray400};
-  color: ${({ theme }) => theme.colors.gray600};
-  ::placeholder {
-    color: ${({ theme }) => theme.colors.gray400};
-    font: inherit;
-    transition: all 150ms;
-  }
-  &:hover {
-    border-color: black;
-  }
-  &:focus {
-    border-color: black;
-    color: black;
-    outline: none;
+  min-height: 32px;
+  max-height: 101px;
+  resize: none;
+  border: none;
+  flex: 1;
+  outline: none;
+  display: block;
+  margin: 20px 0;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
   }
 `;
-
 const CommentsCountText = styled.span`
   ${body6};
   color: ${({ theme }) => theme.colors.gray600};
