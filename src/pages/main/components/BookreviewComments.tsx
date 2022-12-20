@@ -46,7 +46,6 @@ const BookreviewComments = ({
   const [focused, setFocused] = useState(false);
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
-
   const [modalState, setModalState] = useState({
     replyConfirm: false,
     deleteComment: false,
