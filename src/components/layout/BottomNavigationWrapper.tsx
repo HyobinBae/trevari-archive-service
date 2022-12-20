@@ -39,7 +39,7 @@ const bottomNavs = [
   },
   {
     icon: <BookNavigationIcon width={24} height={24} color={'#6E6E6C'} />,
-    activeIcon: <BookFilledIcon width={24} height={24}/>,
+    activeIcon: <BookFilledIcon width={24} height={24} />,
     label: '독후감',
     to: '/bookreviews',
   },
@@ -68,7 +68,6 @@ const BottomNavigationWrapper = ({ initialActiveTab, changeNavigationInfo }: IPr
       changeNavigationInfo(pathname);
     }
   }, []);
-
   useEffect(() => {
     const navigationInfoInLocalStorage = getNavigationInfoInLocalStorage();
     setIsActive(navigationInfoInLocalStorage);
