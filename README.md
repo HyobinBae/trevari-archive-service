@@ -5,6 +5,14 @@
 
 
 
+
+## Prebuild
+
+
+```shell
+npm login --scope=@OWNER --registry=https://npm.pkg.github.com
+```
+
 ## Development
 
 - run
