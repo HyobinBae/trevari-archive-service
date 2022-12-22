@@ -13,7 +13,7 @@ import {
 } from 'pages/bookreviews/services/api';
 import { LikeUser } from 'pages/bookreviews/services/types';
 import { Divider } from 'pages/curations/curations.styles';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useAppDispatch } from 'services/store';
 import { toastAlert } from 'services/ui.store';
 import {BookreviewComment, User} from 'types/__generate__/user-backend-api';
@@ -21,6 +21,8 @@ import Comment from './Comment';
 import LikeUserModal from './LikeUserModal';
 import BaseModal from './ModalBase';
 import {isNil, isEmpty} from "lodash";
+import {HeartIcon} from "@trevari/icons";
+import {useTheme} from "@emotion/react/dist/emotion-react.cjs";
 
 const initialTargetState = {
   type: 'comment',
@@ -158,6 +160,11 @@ const BookreviewComments = ({
     }
     onSubmit();
   };
+
+  const {
+    colors: { gray500 },
+  } = useTheme();
+
   const filteredComments = filterComments(comments)
   const replyConfirmModalText = `작성중인 내용이 있습니다.\n그래도 취소하시겠습니까?\n작성한 내용은 모두 사라집니다.`;
   return (
@@ -167,7 +174,14 @@ const BookreviewComments = ({
           {alreadyLikedBookrivew ? (
             <LoveFilled width={20} height={20} strokeColor="#FF7900" />
           ) : (
-            <LoveOutline width={20} height={20} />
+            <>
+              <HeartIcon
+                  color={gray500}
+                  width={20}
+                  height={20}
+                  style={{ marginRight: '6px' }}
+              />
+            </>
           )}
         </div>
         <IconText onClick={onClickBookreviewLikeUsers} isClickable={likeUserIDs.length > 0}>
