@@ -210,7 +210,8 @@ const EmojiWrapper = styled.div`
 `;
 const EmptyDescription = styled.div`
   ${heading11};
-  margin-top: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   text-align: center;
 `;
 
