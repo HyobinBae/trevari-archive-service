@@ -16,7 +16,7 @@ import { Divider } from 'pages/curations/curations.styles';
 import { useRef, useState } from 'react';
 import { useAppDispatch } from 'services/store';
 import { toastAlert } from 'services/ui.store';
-import {BookreviewComment, User} from 'types/__generate__/user-backend-api';
+import {BookreviewComment, Maybe, User} from 'types/__generate__/user-backend-api';
 import Comment from './Comment';
 import LikeUserModal from './LikeUserModal';
 import BaseModal from './ModalBase';
@@ -61,7 +61,6 @@ const BookreviewComments = ({
       createdAt: comment.createdAt,
       id: comment.id,
       parentID: comment.parentID,
-      // @ts-ignore
       replies: replaceReplies(comment.replies),
       updatedAt: comment.updatedAt,
       deletedAt: comment.deletedAt,
@@ -72,8 +71,7 @@ const BookreviewComments = ({
     } as BookreviewComment;
   }
 
-  // @ts-ignore
-  const replaceReplies = (comments: BookreviewComment[] | undefined): BookreviewComment[] => {
+  const replaceReplies = (comments: Maybe<Array<Maybe<BookreviewComment>>> | undefined): BookreviewComment[] | undefined => {
     const res: BookreviewComment[] = []
     if(!comments) {
       return res
@@ -81,6 +79,10 @@ const BookreviewComments = ({
 
     for (let i = 0; i < comments.length; i++) {
       const comment = comments[i]
+      if(!comment) {
+          continue
+      }
+
       res.push(replaceComment(comment))
     }
   }
