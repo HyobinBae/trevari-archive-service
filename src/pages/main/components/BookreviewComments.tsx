@@ -16,7 +16,7 @@ import { Divider } from 'pages/curations/curations.styles';
 import { useRef, useState } from 'react';
 import { useAppDispatch } from 'services/store';
 import { toastAlert } from 'services/ui.store';
-import {BookreviewComment, Maybe, Scalars, User} from 'types/__generate__/user-backend-api';
+import {BookreviewComment, User} from 'types/__generate__/user-backend-api';
 import Comment from './Comment';
 import LikeUserModal from './LikeUserModal';
 import BaseModal from './ModalBase';
@@ -42,6 +42,37 @@ const BookreviewComments = ({
   user: User;
   bookreviewID: string;
 }) => {
+  const replaceComments = (comments: BookreviewComment[]): BookreviewComment[] => {
+    const res: BookreviewComment[] = []
+    for(const comment of comments) {
+      // 첫번째 댓글인데 삭제됐고, 답글이 없는 경우
+      if( !isNil(comment.deletedAt) && isNil(comment.parentID) && isEmpty(comment.replies) ) {
+        continue
+      }
+      res.push(replaceComment(comment))
+    }
+    return res
+  }
+
+  function replaceComment(comment: BookreviewComment) {
+    return {
+      bookreviewID: comment.bookreviewID,
+      content: isNil(comment.deletedAt) ? "삭제된 댓글입니다." : comment.content,
+      createdAt: comment.createdAt,
+      id: comment.id,
+      parentID: comment.parentID,
+      // @ts-ignore
+      replies: replaceReplies(comment.replies),
+      updatedAt: comment.updatedAt,
+      deletedAt: comment.deletedAt,
+      user: comment.user,
+      userID: comment.userID,
+      likeUserIDs: comment.likeUserIDs,
+      reportUserIDs: comment.reportUserIDs
+    } as BookreviewComment;
+  }
+
+  // @ts-ignore
   const replaceReplies = (comments: BookreviewComment[] | undefined): BookreviewComment[] => {
     const res: BookreviewComment[] = []
     if(!comments) {
@@ -50,49 +81,8 @@ const BookreviewComments = ({
 
     for (let i = 0; i < comments.length; i++) {
       const comment = comments[i]
-      res.push({
-        bookreviewID: comment.bookreviewID,
-        content: isNil(comment.deletedAt) ? "삭제된 댓글입니다." : comment.content,
-        createdAt: comment.createdAt,
-        id: comment.id,
-        parentID: comment.parentID,
-        replies: comment.replies,
-        updatedAt: comment.updatedAt,
-        deletedAt: comment.deletedAt,
-        user: comment.user,
-        userID: comment.userID,
-        likeUserIDs: comment.likeUserIDs,
-        reportUserIDs: comment.reportUserIDs
-      } as BookreviewComment)
+      res.push(replaceComment(comment))
     }
-  }
-
-  const replaceComments = (comments: BookreviewComment[]): BookreviewComment[] => {
-    const res: BookreviewComment[] = []
-
-    for(const comment of comments) {
-      // 첫번째 댓글인데 삭제됐고, 답글이 없는 경우
-      if( !isNil(comment.deletedAt) && isNil(comment.parentID) && isEmpty(comment.replies) ) {
-        continue
-      }
-
-      res.push({
-        bookreviewID: comment.bookreviewID,
-        content: isNil(comment.deletedAt) ? "삭제된 댓글입니다." : comment.content,
-        createdAt: comment.createdAt,
-        id: comment.id,
-        parentID: comment.parentID,
-        replies: replaceReplies(comment.replies),
-        updatedAt: comment.updatedAt,
-        deletedAt: comment.deletedAt,
-        user: comment.user,
-        userID: comment.userID,
-        likeUserIDs: comment.likeUserIDs,
-        reportUserIDs: comment.reportUserIDs
-      } as BookreviewComment)
-    }
-
-    return res
   }
 
   const { width } = useWindowSize();
