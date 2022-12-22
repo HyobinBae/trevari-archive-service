@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { body4, title4 } from '@trevari/typo';
 import CommentOutline from 'components/svgs/CommentOutline';
 import LoveFilled from 'components/svgs/LoveFilled';
-import LoveOutline from 'components/svgs/LoveOutline';
 import UploadActive from 'components/svgs/UploadActive';
 import UploadDefault from 'components/svgs/UploadDefault';
 import { useWindowSize } from 'hooks/useWindowSize';
@@ -22,7 +21,7 @@ import LikeUserModal from './LikeUserModal';
 import BaseModal from './ModalBase';
 import {isNil, isEmpty} from "lodash";
 import {HeartIcon} from "@trevari/icons";
-import {useTheme} from "@emotion/react/dist/emotion-react.cjs";
+import { useTheme } from '@emotion/react';
 
 const initialTargetState = {
   type: 'comment',
