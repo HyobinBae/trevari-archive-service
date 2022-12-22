@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'services/store';
 import { selectUser } from 'services/user/user.store';
 import { hasMembership } from 'services/user/user.api';
-import { useGetBookreviewQuery } from './services/api';
+import {useGetBookreviewQuery} from './services/api';
 import BookreviewContent from 'pages/main/components/BookreviewContent';
 import BookreviewComments from 'pages/main/components/BookreviewComments';
 import Profile from 'pages/main/components/Profile';
@@ -15,12 +15,18 @@ import { endpoints } from 'config';
 import LoadingPage from 'components/base/LoadingPage';
 import { ClubRole } from 'types/__generate__/user-backend-api';
 
+
+
 const BookReviewShow = () => {
   const { bookreivewID } = useParams();
   const { data: bookreview, isLoading } = useGetBookreviewQuery({ id: bookreivewID || '' });
+``
+  // const [bookreview, setBookReview] = useState(data)
+
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const [permission, setPermission] = useState<'loading' | 'denied' | 'accepted'>('loading');
+
   useEffect(() => {
     if (user && bookreview) {
       getPermission();
@@ -65,6 +71,13 @@ const BookReviewShow = () => {
     goToPage(`${endpoints.user_page_url}/apply/wait`);
     return <LoadingPage />;
   }
+
+  const onRefresh = () => {
+    // const res = dispatch(getBookreview.initiate({id: bookreivewID}));
+    // setBookReview(res)
+
+  }
+
   return (
     <div>
       <Profile
@@ -79,6 +92,7 @@ const BookReviewShow = () => {
         bookreviewID={bookreview?.id}
         likeUserIDs={bookreview?.likeUserIDs}
         comments={bookreview?.comments}
+        onRefresh={onRefresh}
         user={user}
       />
     </div>

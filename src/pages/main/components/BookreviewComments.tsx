@@ -36,11 +36,13 @@ const BookreviewComments = ({
   comments,
   user,
   bookreviewID,
+  onRefresh,
 }: {
   likeUserIDs: string[];
   comments: BookreviewComment[];
   user: User;
   bookreviewID: string;
+  onRefresh: (() => void);
 }) => {
   const filterComments = (comments: BookreviewComment[]): BookreviewComment[] => {
     const res: BookreviewComment[] = []
@@ -113,6 +115,10 @@ const BookreviewComments = ({
     if (inputRef.current) {
       inputRef.current.focus();
     }
+  };
+  const onCommentDeleted = () => {
+
+    onRefresh()
   };
   const onChangeInput = (value: string) => {
     onFocus(value);
@@ -189,7 +195,7 @@ const BookreviewComments = ({
             key={comment.id}
             comment={comment}
             onClickReply={onClickReply}
-            onClickComment={onClickComment}
+            onCommentDeleted={onCommentDeleted}
             loggedUserID={user.id}
           />
         ))}

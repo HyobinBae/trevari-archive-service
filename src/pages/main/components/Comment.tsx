@@ -30,6 +30,7 @@ import {isNil} from "lodash";
 interface CommentProps {
   comment: BookreviewComment;
   onClickReply: (name: string, id: string) => void;
+  onCommentDeleted: () => void;
   loggedUserID: string;
 }
 
@@ -41,7 +42,7 @@ const initialModalState = {
   editComment: false,
   selectedCommentID: '',
 };
-const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
+const Comment = ({ comment, onClickReply, loggedUserID, onCommentDeleted }: CommentProps) => {
   const { user, createdAt, content, replies, id, userID, likeUserIDs, deletedAt } = comment;
 
   const [selectedComment, setSelectedComment] = useState({
@@ -113,6 +114,7 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
         text: '댓글이 삭제되었습니다.',
       });
       onToggleModal('deleteComment');
+      onCommentDeleted()
     }
   };
   const onConfirmDeleteReply = async () => {
@@ -124,6 +126,7 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
         text: '답글이 삭제되었습니다.',
       });
       onToggleModal('deleteReply');
+      onCommentDeleted()
     }
   };
   const onConfirmReport = async () => {
