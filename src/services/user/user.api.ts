@@ -1,6 +1,6 @@
 import { backend } from 'api/backend';
-import { ClubRole, QueryClubRolesArgs, User } from 'types/__generate__/user-backend-api';
-import { GET_CLUB_ROLES, GET_USER, UPDATE_USER } from 'services/user/user.graphql';
+import { ClubRole, QueryClubRolesArgs, QueryHasMembershipArgs, User } from 'types/__generate__/user-backend-api';
+import { GET_CLUB_ROLES, GET_USER, HAS_MEMBERSHIP, UPDATE_USER } from 'services/user/user.graphql';
 
 export const userApi = backend.injectEndpoints({
   overrideExisting: true,
@@ -50,11 +50,36 @@ export const userApi = backend.injectEndpoints({
       }),
       transformResponse: ({ clubRoles }: { clubRoles: ClubRole[] }) => clubRoles,
     }),
+    hasMembership: build.query<boolean, QueryHasMembershipArgs>({
+      query: ({
+        userID,
+        seasons,
+        checkDate,
+        roles,
+        serviceID,
+      }: {
+        userID: string;
+        seasons?: string[];
+        checkDate?: string;
+        roles?: string[];
+        serviceID?: string;
+      }) => ({
+        document: HAS_MEMBERSHIP,
+        variables: {
+          userID,
+          seasons,
+          checkDate,
+          roles,
+          serviceID,
+        },
+      }),
+      transformResponse: ({ hasMembership }: { hasMembership: boolean }) => hasMembership,
+    }),
   }),
 });
 
 export const { useGetUserQuery, useUpdateUserMutation } = userApi;
 
 export const {
-  endpoints: { getUser, updateUser, getClubRoles },
+  endpoints: { getUser, updateUser, getClubRoles, hasMembership },
 } = userApi;

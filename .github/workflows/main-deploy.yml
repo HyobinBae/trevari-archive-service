@@ -40,6 +40,8 @@ jobs:
 
       - name: make .npmrc
         run: |
+          echo -e unsafe-perm=true >> .npmrc
+          echo -e @trevari:registry=https://npm.pkg.github.com/ >> .npmrc
           echo -e //npm.pkg.github.com/:_authToken=${{ secrets.GIT_PASSWORD }} >> .npmrc
           cat .npmrc
 

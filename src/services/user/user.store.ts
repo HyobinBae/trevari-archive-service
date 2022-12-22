@@ -8,6 +8,7 @@ interface UserState {
   roles: ClubRole[];
   currentRole: string;
   hasPartnerMembership: boolean;
+  isMember: boolean;
 }
 
 const initialState: UserState = {
@@ -54,6 +55,7 @@ const initialState: UserState = {
   roles: [],
   currentRole: '',
   hasPartnerMembership: false,
+  isMember: false,
 };
 
 export const userStore = createSlice({
@@ -72,10 +74,15 @@ export const userStore = createSlice({
     builder.addMatcher(getClubRoles.matchFulfilled, (state, { payload }) => {
       const partnerClubRoles = payload && payload.length > 0 ? payload.filter(cr => cr.role === 'Partner') : [];
       const hasPartnerMembership = partnerClubRoles.length > 0;
+      const memberClubRoles = payload && payload.length > 0 ? payload.filter(cr => cr.role === 'Member') : [];
+      const isMember = memberClubRoles.length > 0;
       state.roles = payload;
       state.hasPartnerMembership = hasPartnerMembership;
       if (hasPartnerMembership) {
         state.currentRole = 'Partner';
+      }
+      if (isMember) {
+        state.isMember = true;
       }
     });
   },
@@ -83,6 +90,8 @@ export const userStore = createSlice({
 
 export const selectUser = (state: RootState) => state.user.user;
 export const selectHasPartnerMembership = (state: RootState) => state.user.hasPartnerMembership;
+export const selectUserIsMember = (state: RootState) => state.user.isMember;
+export const selectUserRoles = (state: RootState) => state.user.roles;
 export const { setUser, logout } = userStore.actions;
 
 export default userStore.reducer;
