@@ -205,8 +205,8 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
       }
 
       <Content>
-        <MentionedUserName>{mentionedName}</MentionedUserName>
-        {mentionedName && <span> </span>}
+        { !deletedItem && ( <MentionedUserName>{mentionedName}</MentionedUserName> ) }
+        { !deletedItem && ( mentionedName && <span> </span> ) }
         <span>{mentionedComment}</span>
       </Content>
       {
