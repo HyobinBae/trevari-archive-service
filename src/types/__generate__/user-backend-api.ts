@@ -387,6 +387,7 @@ export type BookreviewComment = {
   parentID?: Maybe<Scalars['String']>;
   replies?: Maybe<Array<Maybe<BookreviewComment>>>;
   updatedAt?: Maybe<Scalars['String']>;
+  deletedAt: Maybe<Scalars["String"]> | undefined;
   user?: Maybe<User>;
   userID: Scalars['String'];
   likeUserIDs: Array<Scalars['String']>;
