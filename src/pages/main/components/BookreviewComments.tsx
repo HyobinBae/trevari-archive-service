@@ -41,6 +41,7 @@ const BookreviewComments = ({
   comments: BookreviewComment[];
   user: User;
   bookreviewID: string;
+
 }) => {
   const filterComments = (comments: BookreviewComment[]): BookreviewComment[] => {
     const res: BookreviewComment[] = []
@@ -157,7 +158,12 @@ const BookreviewComments = ({
     }
     onSubmit();
   };
-  const filteredComments = filterComments(comments)
+  const [filteredComments, setComments] = useState(filterComments(comments))
+
+  const onRemove = (id: string) => {
+    setComments(filteredComments.filter(comment => comment.id !== id));
+  }
+
   const replyConfirmModalText = `작성중인 내용이 있습니다.\n그래도 취소하시겠습니까?\n작성한 내용은 모두 사라집니다.`;
   return (
     <>
@@ -186,6 +192,7 @@ const BookreviewComments = ({
             comment={comment}
             onClickReply={onClickReply}
             onClickComment={onClickComment}
+            onCommentDeleted={onRemove}
             loggedUserID={user.id}
           />
         ))}

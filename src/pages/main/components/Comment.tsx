@@ -30,6 +30,7 @@ import {isNil} from "lodash";
 interface CommentProps {
   comment: BookreviewComment;
   onClickReply: (name: string, id: string) => void;
+  onCommentDeleted: (id: string) => void;
   loggedUserID: string;
 }
 
@@ -43,8 +44,7 @@ const initialModalState = {
   editComment: false,
   selectedCommentID: '',
 };
-const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
-  useState<BookreviewComment>(comment)
+const Comment = ({ comment, onClickReply, loggedUserID, onCommentDeleted }: CommentProps) => {
   const { user, createdAt, content, replies, id, userID, likeUserIDs, deletedAt } = comment;
 
   const [selectedComment, setSelectedComment] = useState({
@@ -128,6 +128,7 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
       });
       onToggleModal('deleteReply');
     }
+    onCommentDeleted(selectedComment.commentID)
   };
   const onConfirmReport = async () => {
     await dispatch(reportOnBookreviewComment.initiate({ id: selectedComment.commentID, userID: loggedUserID }));

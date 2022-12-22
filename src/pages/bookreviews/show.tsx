@@ -15,6 +15,8 @@ import { endpoints } from 'config';
 import LoadingPage from 'components/base/LoadingPage';
 import { ClubRole } from 'types/__generate__/user-backend-api';
 
+
+
 const BookReviewShow = () => {
   const { bookreivewID } = useParams();
   const { data: bookreview, isLoading } = useGetBookreviewQuery({ id: bookreivewID || '' });
@@ -65,6 +67,13 @@ const BookReviewShow = () => {
     goToPage(`${endpoints.user_page_url}/apply/wait`);
     return <LoadingPage />;
   }
+
+
+  // setTargetState({ ...targetState, type: 'reply', targetUsername: '', targetParentCommentID: '' });
+  // if (inputRef.current) {
+  //   inputRef.current.focus();
+  // }
+  // dispatch(createBookreviewComment.initiate({ input }));
   return (
     <div>
       <Profile
