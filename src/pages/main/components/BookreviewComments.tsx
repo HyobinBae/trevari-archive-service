@@ -173,13 +173,7 @@ const BookreviewComments = ({
           {alreadyLikedBookrivew ? (
             <LoveFilled width={20} height={20} strokeColor="#FF7900" />
           ) : (
-            <>
-              <HeartIcon
-                  color={gray500}
-                  width={20}
-                  height={20}
-              />
-            </>
+            <HeartIcon color={gray500} width={20} height={20} />
           )}
         </div>
         <IconText onClick={onClickBookreviewLikeUsers} isClickable={likeUserIDs.length > 0}>
