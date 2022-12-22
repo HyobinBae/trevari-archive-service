@@ -190,7 +190,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
           </BookreviewContent>
         )}
         {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).isShowMore && (
-          <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>
+          <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더 보기</ShowMoreButton>
         )}
         <BookMovieDivWrapper>
           {bookContent.length > 0 && (
