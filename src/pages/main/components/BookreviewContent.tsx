@@ -14,7 +14,6 @@ const BookreviewContent = ({ bookreview }: BookreviewContentProps) => {
   return (
     <Base>
       <Title>{title}</Title>
-      {/*<div dangerouslySetInnerHTML={{ __html: content || '' }} />*/}
       <Content>
         {stripAllTags(content).replace(/<[^>]*>?/g, '')}
       </Content>
