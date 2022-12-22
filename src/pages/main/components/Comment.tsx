@@ -41,7 +41,8 @@ const initialModalState = {
   selectedCommentID: '',
 };
 const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
-  const { user, createdAt, content, replies, id, userID, likeUserIDs } = comment;
+  const { user, createdAt, content, replies, id, userID, likeUserIDs, deletedAt } = comment;
+
   const [selectedComment, setSelectedComment] = useState({
     userID: '',
     commentID: '',
