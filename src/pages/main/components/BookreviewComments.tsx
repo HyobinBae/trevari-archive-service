@@ -16,7 +16,7 @@ import { Divider } from 'pages/curations/curations.styles';
 import { useRef, useState } from 'react';
 import { useAppDispatch } from 'services/store';
 import { toastAlert } from 'services/ui.store';
-import {BookreviewComment, Maybe, Scalars, User} from 'types/__generate__/user-backend-api';
+import {BookreviewComment, User} from 'types/__generate__/user-backend-api';
 import Comment from './Comment';
 import LikeUserModal from './LikeUserModal';
 import BaseModal from './ModalBase';
