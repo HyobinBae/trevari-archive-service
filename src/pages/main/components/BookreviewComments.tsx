@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { body4, body6, title4 } from '@trevari/typo';
+import { body4, title4 } from '@trevari/typo';
 import CommentOutline from 'components/svgs/CommentOutline';
 import LoveFilled from 'components/svgs/LoveFilled';
 import LoveOutline from 'components/svgs/LoveOutline';
