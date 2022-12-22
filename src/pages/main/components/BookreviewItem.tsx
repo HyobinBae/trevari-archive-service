@@ -32,7 +32,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   const bookreviewPublishedAt = bookreview.publishedAt;
   const commentCount = bookreview.commentCount;
   const isMyBookreview = bookreview.user.id === userID;
-  const [limit, setLimit] = useState(86);
+  const [limit, setLimit] = useState(90);
   const [likeUserIDsCount, setLikeUserIDsCount] = useState(bookreview.likeUserIDs.length);
   const [isLoadMore, setIsLoadMore] = useState(true);
   const [isOpenMoreList, setOpenMoreList] = useState(false);
@@ -353,6 +353,7 @@ const ShowMoreButton = styled.div`
   display: flex;
   justify-content: end;
   margin-top: -51px;
+  padding-top: 6px;
 `;
 
 export default BookreviewItem;
