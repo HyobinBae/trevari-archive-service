@@ -57,7 +57,7 @@ const BookreviewComments = ({
   function replaceComment(comment: BookreviewComment) {
     return {
       bookreviewID: comment.bookreviewID,
-      content: isNil(comment.deletedAt) ? "삭제된 댓글입니다." : comment.content,
+      content: isNil(comment.deletedAt) ? comment.content : "삭제된 댓글입니다.",
       createdAt: comment.createdAt,
       id: comment.id,
       parentID: comment.parentID,
