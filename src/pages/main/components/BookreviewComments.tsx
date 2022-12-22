@@ -83,7 +83,19 @@ const BookreviewComments = ({
           continue
       }
 
-      res.push(replaceComment(comment))
+      res.push({
+        bookreviewID: comment.bookreviewID,
+        content: isNil(comment.deletedAt) ? comment.content : "삭제된 댓글입니다.",
+        createdAt: comment.createdAt,
+        id: comment.id,
+        parentID: comment.parentID,
+        updatedAt: comment.updatedAt,
+        deletedAt: comment.deletedAt,
+        user: comment.user,
+        userID: comment.userID,
+        likeUserIDs: comment.likeUserIDs,
+        reportUserIDs: comment.reportUserIDs
+      } as BookreviewComment)
     }
   }
 
