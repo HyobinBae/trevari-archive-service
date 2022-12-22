@@ -180,10 +180,10 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
         </ClubNameWrapper>
         <BookreviewContent>
           {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string}
+          {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).isShowMore && (
+            <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더 보기</ShowMoreButton>
+          )}
         </BookreviewContent>
-        {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).isShowMore && (
-          <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더 보기</ShowMoreButton>
-        )}
         <BookMovieDivWrapper>
           {bookContent.length > 0 && (
             <BookMovieDiv>
@@ -339,14 +339,15 @@ const BookreviewContent = styled.div`
   line-height: 30px;
 `;
 
-const ShowMoreButton = styled.div`
+const ShowMoreButton = styled.span`
   cursor: pointer;
   ${title4};
   color: ${({ theme }) => theme.colors.gray500};
-  display: flex;
+  display: inline-block;
   justify-content: end;
   margin-top: -51px;
   padding-top: 6px;
+  padding-left: 5px;
 `;
 
 export default BookreviewItem;
