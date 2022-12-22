@@ -20,7 +20,7 @@ import { BookreviewComment, User } from 'types/__generate__/user-backend-api';
 import Comment from './Comment';
 import LikeUserModal from './LikeUserModal';
 import BaseModal from './ModalBase';
-import {isNil} from "lodash";
+import {isNil, isEmpty} from "lodash";
 
 const initialTargetState = {
   type: 'comment',
@@ -47,7 +47,7 @@ const BookreviewComments = ({
 
     for(const comment of comments) {
       // 첫번째 댓글인데 삭제됐고, 답글이 없는 경우
-      if( !isNil(comment.deletedAt) && isNil(comment.parentID) && isNil(comment.replies) ) {
+      if( !isNil(comment.deletedAt) && isNil(comment.parentID) && isEmpty(comment.replies) ) {
         continue
       }
 
