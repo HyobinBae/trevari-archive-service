@@ -237,19 +237,27 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
             <ReplyBase>
               {
                   !deletedItem && (
-              <ProfileBox>
-                <MoreButtonWrapper onClick={() => onClickMoreButton(replyUser.id, replyID, replyContent)}>
-                  <Kebab />
-                </MoreButtonWrapper>
-                <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} />
-              </ProfileBox>
+                    <ProfileBox>
+                      <MoreButtonWrapper onClick={() => onClickMoreButton(replyUser.id, replyID, replyContent)}>
+                        <Kebab />
+                      </MoreButtonWrapper>
+                      <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} />
+                    </ProfileBox>
                   )
               }
+
+              {
+                  deletedItem && (
+                      <Empty20_0_0/>
+                  )
+              }
+
               <Content>
                 <MentionedUserName>{mentionedName}</MentionedUserName>
                 {mentionedName && <span> </span>}
                 <span>{mentionedComment}</span>
               </Content>
+
               {
                   !deletedItem && (
                     <IconWrapper>
@@ -343,11 +351,17 @@ const IconText = styled.span<{ isClickable: boolean }>`
 
   cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
 `;
+
 const Content = styled.div`
   ${contents2};
   padding: 0 20px 20px;
   word-break: break-all;
 `;
+
+const Empty20_0_0 = styled.div`
+  padding: 20px 0px 0px;
+`;
+
 const ProfileBox = styled.div`
   display: flex;
   align-items: center;
