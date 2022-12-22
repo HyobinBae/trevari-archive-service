@@ -119,7 +119,7 @@ const Profile = ({
           '--rsbs-max-w': '500px',
         }}
       >
-        <MoreItems actions={!isMyBookreview ? MORE_ACTIONS_OF_MY_BOOKREVIEW : MORE_ACTIONS} />
+        <MoreItems actions={isMyBookreview ? MORE_ACTIONS_OF_MY_BOOKREVIEW : MORE_ACTIONS} />
       </BottomSheet>
       <BaseModal
         title={deleteModalTitle}
