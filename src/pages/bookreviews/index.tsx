@@ -48,6 +48,7 @@ const Bookreviews = () => {
   useEffect(() => {
     const filteredClubRoles = roles
       .filter((role: ClubRole) => new Date(role.club.endedAt) >= new Date())
+      .filter((role: ClubRole) => role.refundStatus === null)
       .slice()
       .sort((a, b) => new Date(a.club.meetings[0].startedAt) - new Date(b.club.meetings[0].startedAt));
     setFilteredClubRoles(filteredClubRoles);
