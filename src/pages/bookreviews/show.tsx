@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'services/store';
 import { selectUser } from 'services/user/user.store';
 import { hasMembership } from 'services/user/user.api';
-import {getBookreview, getBookreviewLikeUsers, useGetBookreviewQuery} from './services/api';
+import {getBookreview, useGetBookreviewQuery} from './services/api';
 import BookreviewContent from 'pages/main/components/BookreviewContent';
 import BookreviewComments from 'pages/main/components/BookreviewComments';
 import Profile from 'pages/main/components/Profile';

@@ -114,7 +114,7 @@ const Comment = ({ comment, onClickReply, loggedUserID, onCommentDeleted }: Comm
         text: '댓글이 삭제되었습니다.',
       });
       onToggleModal('deleteComment');
-      onCommentDeleted(selectedComment.commentID)
+      onCommentDeleted()
     }
   };
   const onConfirmDeleteReply = async () => {
@@ -126,7 +126,7 @@ const Comment = ({ comment, onClickReply, loggedUserID, onCommentDeleted }: Comm
         text: '답글이 삭제되었습니다.',
       });
       onToggleModal('deleteReply');
-      onCommentDeleted(selectedComment.commentID)
+      onCommentDeleted()
     }
   };
   const onConfirmReport = async () => {
