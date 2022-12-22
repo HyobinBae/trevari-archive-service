@@ -36,13 +36,11 @@ const BookreviewComments = ({
   comments,
   user,
   bookreviewID,
-  onRefresh,
 }: {
   likeUserIDs: string[];
   comments: BookreviewComment[];
   user: User;
   bookreviewID: string;
-  onRefresh: (() => void);
 }) => {
   const filterComments = (comments: BookreviewComment[]): BookreviewComment[] => {
     const res: BookreviewComment[] = []
@@ -113,10 +111,7 @@ const BookreviewComments = ({
       inputRef.current.focus();
     }
   };
-  const onCommentDeleted = () => {
 
-    onRefresh()
-  };
   const onChangeInput = (value: string) => {
     setCommentText(value);
     if (inputRef.current) {
@@ -184,14 +179,12 @@ const BookreviewComments = ({
         </div>
       </IconBox>
       <Divider />
-      <CommentsCountText>총 {filteredComments.length} 개의 댓글</CommentsCountText>
       <CommentContainer>
         {filteredComments.map(comment => (
           <Comment
             key={comment.id}
             comment={comment}
             onClickReply={onClickReply}
-            onCommentDeleted={onCommentDeleted}
             loggedUserID={user.id}
           />
         ))}
