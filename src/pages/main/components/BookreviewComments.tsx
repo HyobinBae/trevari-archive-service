@@ -100,7 +100,10 @@ const BookreviewComments = ({
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [likeUsers, setLikeUsers] = useState<LikeUser[]>([]);
   const [focused, setFocused] = useState(false);
-  const onFocus = () => setFocused(true);
+  const onFocus = (value: string) => {
+    const isFocus = value.trim() ? true : false;
+    setFocused(isFocus);
+  };
   const onBlur = () => setFocused(false);
   const [modalState, setModalState] = useState({
     replyConfirm: false,
@@ -153,6 +156,7 @@ const BookreviewComments = ({
     }
   };
   const onChangeInput = (value: string) => {
+    onFocus(value);
     setCommentText(value);
     if (inputRef.current) {
       inputRef.current.scrollTop = inputRef.current.scrollHeight;
@@ -237,7 +241,7 @@ const BookreviewComments = ({
           placeholder="댓글을 입력하세요."
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChangeInput(e.currentTarget.value)}
           value={commentText}
-          onFocus={onFocus}
+          onFocus={(e: React.ChangeEvent<HTMLTextAreaElement>) => onFocus(e.currentTarget.value)}
           onBlur={onBlur}
           id="input"
           onKeyUp={onKeyUp}
