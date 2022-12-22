@@ -186,33 +186,41 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
 
   return (
     <div>
-      <ProfileBox>
-        <MoreButtonWrapper onClick={() => onClickMoreButton(userID, id, content)}>
-          <Kebab />
-        </MoreButtonWrapper>
-        <ProfileInBookreviewPage user={user} publishedAt={createdAt} isBookreviewProfile={false} />
-      </ProfileBox>
+      {
+        !deletedItem && (
+          <ProfileBox>
+            <MoreButtonWrapper onClick={() => onClickMoreButton(userID, id, content)}>
+              <Kebab />
+            </MoreButtonWrapper>
+            <ProfileInBookreviewPage user={user} publishedAt={createdAt} isBookreviewProfile={false} />
+          </ProfileBox>
+        )
+      }
       <Content>
         <MentionedUserName>{mentionedName}</MentionedUserName>
         {mentionedName && <span> </span>}
         <span>{mentionedComment}</span>
       </Content>
-      <IconWrapper>
-        <div onClick={() => onClickLikeButton(id)}>
-          {alreadyLikedComment ? (
-            <LoveFilled width={20} height={20} strokeColor="#FF7900" />
-          ) : (
-            <LoveOutline width={20} height={20} />
-          )}
-        </div>
-        <IconText isClickable={likeUserIDs.length > 0} onClick={() => onClickBookreviewLikeUsers(id)}>
-          좋아요 {likeUserIDs.length}
-        </IconText>
-        <div onClick={() => onClickReply(`@${user?.name} `, id)}>
-          <CommentOutline />
-          <IconText isClickable={true}>답글 쓰기</IconText>
-        </div>
-      </IconWrapper>
+      {
+          !deletedItem && (
+              <IconWrapper>
+                <div onClick={() => onClickLikeButton(id)}>
+                  {alreadyLikedComment ? (
+                      <LoveFilled width={20} height={20} strokeColor="#FF7900"/>
+                  ) : (
+                      <LoveOutline width={20} height={20}/>
+                  )}
+                </div>
+                <IconText isClickable={likeUserIDs.length > 0} onClick={() => onClickBookreviewLikeUsers(id)}>
+                  좋아요 {likeUserIDs.length}
+                </IconText>
+                <div onClick={() => onClickReply(`@${user?.name} `, id)}>
+                  <CommentOutline/>
+                  <IconText isClickable={true}>답글 쓰기</IconText>
+                </div>
+              </IconWrapper>
+          )
+      }
       <Divider />
       {replies?.map(reply => {
         const { user: replyUser, createdAt: replyCreatedAt, content: replyContent, id: replyID, likeUserIDs, deletedAt } = reply;
@@ -227,36 +235,44 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
         return (
           <React.Fragment key={replyID}>
             <ReplyBase>
+              {
+                  !deletedItem && (
               <ProfileBox>
                 <MoreButtonWrapper onClick={() => onClickMoreButton(replyUser.id, replyID, replyContent)}>
                   <Kebab />
                 </MoreButtonWrapper>
                 <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} />
               </ProfileBox>
+                  )
+              }
               <Content>
                 <MentionedUserName>{mentionedName}</MentionedUserName>
                 {mentionedName && <span> </span>}
                 <span>{mentionedComment}</span>
               </Content>
-              <IconWrapper>
-                <div onClick={() => onClickLikeButton(replyID)}>
-                  {alreadyLikedReply ? (
-                    <LoveFilled width={20} height={20} strokeColor="#FF7900" />
-                  ) : (
-                    <LoveOutline width={20} height={20} />
-                  )}
-                </div>
-                <IconText
-                  isClickable={likeUserIDs && likeUserIDs.length > 0}
-                  onClick={() => onClickBookreviewLikeUsers(replyID)}
-                >
-                  좋아요 {likeUserIDs?.length || 0}
-                </IconText>
-                <div onClick={() => onClickReply(`@${replyUser?.name} `, id)}>
-                  <CommentOutline />
-                  <IconText isClickable={true}>답글 쓰기</IconText>
-                </div>
-              </IconWrapper>
+              {
+                  !deletedItem && (
+                    <IconWrapper>
+                      <div onClick={() => onClickLikeButton(replyID)}>
+                        {alreadyLikedReply ? (
+                          <LoveFilled width={20} height={20} strokeColor="#FF7900" />
+                        ) : (
+                          <LoveOutline width={20} height={20} />
+                        )}
+                      </div>
+                      <IconText
+                        isClickable={likeUserIDs && likeUserIDs.length > 0}
+                        onClick={() => onClickBookreviewLikeUsers(replyID)}
+                      >
+                        좋아요 {likeUserIDs?.length || 0}
+                      </IconText>
+                      <div onClick={() => onClickReply(`@${replyUser?.name} `, id)}>
+                        <CommentOutline />
+                        <IconText isClickable={true}>답글 쓰기</IconText>
+                      </div>
+                    </IconWrapper>
+                  )
+              }
             </ReplyBase>
             <Divider />
           </React.Fragment>
