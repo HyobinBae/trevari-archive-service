@@ -113,6 +113,7 @@ export const GET_BOOKREVIEW = gql`
         id
         content
         createdAt
+        deletedAt
         userID
         user {
           id
@@ -139,6 +140,7 @@ export const GET_BOOKREVIEW = gql`
           content
           parentID
           createdAt
+          deletedAt
           likeUserIDs
         }
       }
