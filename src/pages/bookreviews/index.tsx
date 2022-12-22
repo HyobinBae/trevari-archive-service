@@ -174,7 +174,7 @@ const Bookreviews = () => {
       </div>
       <BlurInBookreviewsWrapper>
         <WriteIcon width={90} height={90} />
-        <EmptyDescription>멤버들만 이용할 수 있는 독후감 피드입니다.</EmptyDescription>
+        <EmptyDescription>멤버만 이용할 수 있습니다.</EmptyDescription>
         <Button
           style={{ maxHeight: '36px', minHeight: '36px', fontSize: '0.875rem' }}
           onClick={() => goToPage(`${endpoints.user_page_url}/apply`)}
