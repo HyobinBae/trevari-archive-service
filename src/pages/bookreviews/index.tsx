@@ -17,7 +17,6 @@ import BookreviewItem from '../main/components/BookreviewItem';
 import { getBookreviews } from './services/api';
 import LoadingPage from '../../components/base/LoadingPage';
 import Loading from '../../components/svgs/Loading';
-import CloseIcon from 'components/svgs/CloseIcon';
 import { selectBookreivews } from './services/bookreview.store';
 import { debounce } from 'lodash';
 
@@ -28,7 +27,7 @@ const Bookreviews = () => {
   const isMember = useSelector(selectUserIsMember);
   const roles = useSelector(selectUserRoles);
   const bookreviews = useSelector(selectBookreivews);
-  const [showTooltip, setShowTooltip] = useState(true);
+  // const [showTooltip, setShowTooltip] = useState(true);
   const [filteredClubRoles, setFilteredClubRoles] = useState<ClubRole[]>(roles);
   const [totalBookreviewsOffset, setTotalBookreviewsOffset] = useState<number>(0);
   const [isLoadingMoreBookreviews, setIsLoadingMoreBookreviews] = useState<boolean>(false);
@@ -54,12 +53,12 @@ const Bookreviews = () => {
     setFilteredClubRoles(filteredClubRoles);
   }, [roles]);
 
-  useEffect(() => {
-    const notShowTooltip = window.localStorage.getItem('notShowTooltip');
-    if (notShowTooltip === 'true') {
-      setShowTooltip(false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const notShowTooltip = window.localStorage.getItem('notShowTooltip');
+  //   if (notShowTooltip === 'true') {
+  //     setShowTooltip(false);
+  //   }
+  // }, []);
 
 
   useEffect(() => {
@@ -91,10 +90,10 @@ const Bookreviews = () => {
   }, [totalBookreviews, isLoadingMoreBookreviews]);
 
 
-  const doseNotShowTooltip = () => {
-    window.localStorage.setItem('notShowTooltip', 'true');
-    setShowTooltip(false);
-  };
+  // const doseNotShowTooltip = () => {
+  //   window.localStorage.setItem('notShowTooltip', 'true');
+  //   setShowTooltip(false);
+  // };
 
   let moreClubRolesLength = null;
   let clubName = '';
@@ -153,19 +152,19 @@ const Bookreviews = () => {
           </EmojiWrapper>
         )}
       </Box>
-      <TooltipWrapper>
-        {showTooltip && (
-          <Tooltip>
-            <span>독후감 작성은 여기서 할 수 있어요!</span>
-            <ButtonWrapper onClick={doseNotShowTooltip}>
-              <CloseIcon fill="#ffffff" width={16} height={16} />
-            </ButtonWrapper>
-          </Tooltip>
-        )}
-        <WritingIconWrapper onClick={() => goToPage(`${endpoints.user_page_url}/mypage`)}>
-          <WritingIcon width={28} height={28} />
-        </WritingIconWrapper>
-      </TooltipWrapper>
+      {/*<TooltipWrapper>*/}
+      {/*  {showTooltip && (*/}
+      {/*    <Tooltip>*/}
+      {/*      <span>독후감 작성은 여기서 할 수 있어요!</span>*/}
+      {/*      <ButtonWrapper onClick={doseNotShowTooltip}>*/}
+      {/*        <CloseIcon fill="#ffffff" width={16} height={16} />*/}
+      {/*      </ButtonWrapper>*/}
+      {/*    </Tooltip>*/}
+      {/*  )}*/}
+      {/*  <WritingIconWrapper onClick={() => goToPage(`${endpoints.user_page_url}/mypage`)}>*/}
+      {/*    <WritingIcon width={28} height={28} />*/}
+      {/*  </WritingIconWrapper>*/}
+      {/*</TooltipWrapper>*/}
     </>
   ) : (
     <BlurWrapper>
