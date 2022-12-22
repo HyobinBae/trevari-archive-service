@@ -172,7 +172,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
           </ProfileDiv>
           <ProfileDiv>
             <UpdatedAtDiv>{elapsedTime(bookreviewPublishedAt)}</UpdatedAtDiv>
-            <KebabIcon style={{ cursor: 'pointer' }} onClick={() => onClickMoreList()} />
+            <KebabIcon style={{ cursor: 'pointer', width: 24, height: 24 }} onClick={() => onClickMoreList()} />
           </ProfileDiv>
         </BookreviewItemDiv>
         <ClubNameWrapper onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>

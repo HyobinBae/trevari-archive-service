@@ -20,8 +20,6 @@ import { ClubRole } from 'types/__generate__/user-backend-api';
 const BookReviewShow = () => {
   const { bookreivewID } = useParams();
   const { data: bookreview, isLoading } = useGetBookreviewQuery({ id: bookreivewID || '' });
-``
-  // const [bookreview, setBookReview] = useState(data)
 
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
@@ -71,13 +69,6 @@ const BookReviewShow = () => {
     goToPage(`${endpoints.user_page_url}/apply/wait`);
     return <LoadingPage />;
   }
-
-  const onRefresh = () => {
-    // const res = dispatch(getBookreview.initiate({id: bookreivewID}));
-    // setBookReview(res)
-
-  }
-
   return (
     <div>
       <Profile
@@ -92,7 +83,6 @@ const BookReviewShow = () => {
         bookreviewID={bookreview?.id}
         likeUserIDs={bookreview?.likeUserIDs}
         comments={bookreview?.comments}
-        onRefresh={onRefresh}
         user={user}
       />
     </div>

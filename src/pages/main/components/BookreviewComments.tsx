@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { body4, body6, title4 } from '@trevari/typo';
+import { body4, title4 } from '@trevari/typo';
 import CommentOutline from 'components/svgs/CommentOutline';
 import LoveFilled from 'components/svgs/LoveFilled';
 import LoveOutline from 'components/svgs/LoveOutline';
@@ -36,13 +36,11 @@ const BookreviewComments = ({
   comments,
   user,
   bookreviewID,
-  onRefresh,
 }: {
   likeUserIDs: string[];
   comments: BookreviewComment[];
   user: User;
   bookreviewID: string;
-  onRefresh: (() => void);
 }) => {
   const filterComments = (comments: BookreviewComment[]): BookreviewComment[] => {
     const res: BookreviewComment[] = []
@@ -116,10 +114,7 @@ const BookreviewComments = ({
       inputRef.current.focus();
     }
   };
-  const onCommentDeleted = () => {
 
-    onRefresh()
-  };
   const onChangeInput = (value: string) => {
     onFocus(value);
     setCommentText(value);
@@ -188,14 +183,12 @@ const BookreviewComments = ({
         </div>
       </IconBox>
       <Divider />
-      <CommentsCountText>총 {filteredComments.length} 개의 댓글</CommentsCountText>
       <CommentContainer>
         {filteredComments.map(comment => (
           <Comment
             key={comment.id}
             comment={comment}
             onClickReply={onClickReply}
-            onCommentDeleted={onCommentDeleted}
             loggedUserID={user.id}
           />
         ))}
@@ -264,12 +257,6 @@ const CustomTextArea = styled.textarea`
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
   }
-`;
-const CommentsCountText = styled.span`
-  ${body6};
-  color: ${({ theme }) => theme.colors.gray600};
-  display: block;
-  padding: 40px 0 0 20px;
 `;
 
 const IconBox = styled.div`
