@@ -36,12 +36,13 @@ const BookreviewComments = ({
   comments,
   user,
   bookreviewID,
+  onRefresh,
 }: {
   likeUserIDs: string[];
   comments: BookreviewComment[];
   user: User;
   bookreviewID: string;
-
+  onRefresh: (() => void);
 }) => {
   const filterComments = (comments: BookreviewComment[]): BookreviewComment[] => {
     const res: BookreviewComment[] = []
@@ -112,6 +113,9 @@ const BookreviewComments = ({
       inputRef.current.focus();
     }
   };
+  const onCommentDeleted = (id: string) => {
+    onRefresh()
+  };
   const onChangeInput = (value: string) => {
     setCommentText(value);
     if (inputRef.current) {
@@ -158,12 +162,7 @@ const BookreviewComments = ({
     }
     onSubmit();
   };
-  const [filteredComments, setComments] = useState(filterComments(comments))
-
-  const onRemove = (id: string) => {
-    setComments(filteredComments.filter(comment => comment.id !== id));
-  }
-
+  const filteredComments = filterComments(comments)
   const replyConfirmModalText = `작성중인 내용이 있습니다.\n그래도 취소하시겠습니까?\n작성한 내용은 모두 사라집니다.`;
   return (
     <>
@@ -192,7 +191,7 @@ const BookreviewComments = ({
             comment={comment}
             onClickReply={onClickReply}
             onClickComment={onClickComment}
-            onCommentDeleted={onRemove}
+            onCommentDeleted={onCommentDeleted}
             loggedUserID={user.id}
           />
         ))}

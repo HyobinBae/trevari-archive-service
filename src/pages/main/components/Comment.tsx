@@ -34,8 +34,6 @@ interface CommentProps {
   loggedUserID: string;
 }
 
-
-
 const initialModalState = {
   deleteReply: false,
   deleteComment: false,
@@ -128,7 +126,7 @@ const Comment = ({ comment, onClickReply, loggedUserID, onCommentDeleted }: Comm
         text: '답글이 삭제되었습니다.',
       });
       onToggleModal('deleteReply');
-      selectedComment.text = '삭제된 댓글입니다.'
+      onCommentDeleted(selectedComment.commentID)
     }
   };
   const onConfirmReport = async () => {

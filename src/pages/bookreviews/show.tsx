@@ -23,23 +23,26 @@ const BookReviewShow = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const [permission, setPermission] = useState<'loading' | 'denied' | 'accepted'>('loading');
+
+  const [bookReviewState, setBookReviewState] = useState(bookreview)
+
   useEffect(() => {
-    if (user && bookreview) {
+    if (user && bookReviewState) {
       getPermission();
     }
-  }, [user, bookreview]);
+  }, [user, bookReviewState]);
 
   const getPermission = async () => {
-    if (!user || !bookreview) return;
+    if (!user || !bookReviewState) return;
     const clubRoleAction = await dispatch(
       getClubRoles.initiate({ where: { userID: user.id, refundStatuses: [null, '환불 입금 대기', '환불 입금 완료'] } }),
     );
     const clubRoles = clubRoleAction.data;
-    const isMyClub = clubRoles.some((clubRole: ClubRole) => clubRole.clubID === bookreview.club.id);
-    const isMyBookreview = bookreview.userID === user.id;
+    const isMyClub = clubRoles.some((clubRole: ClubRole) => clubRole.clubID === bookReviewState.club.id);
+    const isMyBookreview = bookReviewState.userID === user.id;
     const isAdmin = ADMIN_IDS.includes(user.id);
     const now = parseISO(format(new Date(), 'yyyy-MM-dd'));
-    const meetingDate = parseISO(format(new Date(bookreview.meeting.startedAt), 'yyyy-MM-dd'));
+    const meetingDate = parseISO(format(new Date(bookReviewState.meeting.startedAt), 'yyyy-MM-dd'));
     const isTodayOrPastMeeting = isAfter(now, meetingDate);
 
     let hasMembershipArgs;
@@ -47,7 +50,7 @@ const BookReviewShow = () => {
       hasMembershipArgs = { userID: user.id, serviceID: BOOK_REVIEW_SERVICE_ID };
     } else {
       hasMembershipArgs = {
-        checkDate: bookreview.meeting.startedAt,
+        checkDate: bookReviewState.meeting.startedAt,
         userID: user.id,
         serviceID: BOOK_REVIEW_SERVICE_ID,
       };
@@ -55,7 +58,7 @@ const BookReviewShow = () => {
     const hasMembershipAction = await dispatch(hasMembership.initiate(hasMembershipArgs));
     const hasMembershipFlag = hasMembershipAction.isSuccess && hasMembershipAction.data.hasMembership;
 
-    const hasPermission = bookreview.isPublic || isMyClub || isAdmin || hasMembershipFlag || isMyBookreview;
+    const hasPermission = bookReviewState.isPublic || isMyClub || isAdmin || hasMembershipFlag || isMyBookreview;
     if (!hasPermission) {
       setPermission('denied');
     } else {
@@ -68,26 +71,26 @@ const BookReviewShow = () => {
     return <LoadingPage />;
   }
 
+  const onRefresh = () => {
+    const { data: bookreview, isLoading } = useGetBookreviewQuery({ id: bookreivewID || '' });
+    setBookReviewState(bookreview)
+  }
 
-  // setTargetState({ ...targetState, type: 'reply', targetUsername: '', targetParentCommentID: '' });
-  // if (inputRef.current) {
-  //   inputRef.current.focus();
-  // }
-  // dispatch(createBookreviewComment.initiate({ input }));
   return (
     <div>
       <Profile
-        user={bookreview?.user}
-        clubName={bookreview?.club?.name || ''}
-        publishedAt={bookreview?.publishedAt}
-        isMyBookreview={bookreview?.user.id === user.id}
-        bookreviewID={bookreview?.id}
+        user={bookReviewState?.user}
+        clubName={bookReviewState?.club?.name || ''}
+        publishedAt={bookReviewState?.publishedAt}
+        isMyBookreview={bookReviewState?.user.id === user.id}
+        bookreviewID={bookReviewState?.id}
       />
-      <BookreviewContent bookreview={bookreview} />
+      <BookreviewContent bookreview={bookReviewState} />
       <BookreviewComments
-        bookreviewID={bookreview?.id}
-        likeUserIDs={bookreview?.likeUserIDs}
-        comments={bookreview?.comments}
+        bookreviewID={bookReviewState?.id}
+        likeUserIDs={bookReviewState?.likeUserIDs}
+        comments={bookReviewState?.comments}
+        onRefresh={onRefresh}
         user={user}
       />
     </div>
