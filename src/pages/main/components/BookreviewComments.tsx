@@ -51,10 +51,6 @@ const BookreviewComments = ({
         continue
       }
 
-      if( !isNil(comment.deletedAt) ) {
-        comment.content = '삭제된 댓글입니다.'
-      }
-
       res.push(comment)
     }
 
