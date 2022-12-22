@@ -19,30 +19,31 @@ import { ClubRole } from 'types/__generate__/user-backend-api';
 
 const BookReviewShow = () => {
   const { bookreivewID } = useParams();
-  const { data: bookreview, isLoading } = useGetBookreviewQuery({ id: bookreivewID || '' });
+  const { data, isLoading } = useGetBookreviewQuery({ id: bookreivewID || '' });
+
+  const [bookreview, setBookReview] = useState(data)
+
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const [permission, setPermission] = useState<'loading' | 'denied' | 'accepted'>('loading');
 
-  const [bookReviewState, setBookReviewState] = useState(bookreview)
-
   useEffect(() => {
-    if (user && bookReviewState) {
+    if (user && bookreview) {
       getPermission();
     }
-  }, [user, bookReviewState]);
+  }, [user, bookreview]);
 
   const getPermission = async () => {
-    if (!user || !bookReviewState) return;
+    if (!user || !bookreview) return;
     const clubRoleAction = await dispatch(
       getClubRoles.initiate({ where: { userID: user.id, refundStatuses: [null, '환불 입금 대기', '환불 입금 완료'] } }),
     );
     const clubRoles = clubRoleAction.data;
-    const isMyClub = clubRoles.some((clubRole: ClubRole) => clubRole.clubID === bookReviewState.club.id);
-    const isMyBookreview = bookReviewState.userID === user.id;
+    const isMyClub = clubRoles.some((clubRole: ClubRole) => clubRole.clubID === bookreview.club.id);
+    const isMyBookreview = bookreview.userID === user.id;
     const isAdmin = ADMIN_IDS.includes(user.id);
     const now = parseISO(format(new Date(), 'yyyy-MM-dd'));
-    const meetingDate = parseISO(format(new Date(bookReviewState.meeting.startedAt), 'yyyy-MM-dd'));
+    const meetingDate = parseISO(format(new Date(bookreview.meeting.startedAt), 'yyyy-MM-dd'));
     const isTodayOrPastMeeting = isAfter(now, meetingDate);
 
     let hasMembershipArgs;
@@ -50,7 +51,7 @@ const BookReviewShow = () => {
       hasMembershipArgs = { userID: user.id, serviceID: BOOK_REVIEW_SERVICE_ID };
     } else {
       hasMembershipArgs = {
-        checkDate: bookReviewState.meeting.startedAt,
+        checkDate: bookreview.meeting.startedAt,
         userID: user.id,
         serviceID: BOOK_REVIEW_SERVICE_ID,
       };
@@ -58,7 +59,7 @@ const BookReviewShow = () => {
     const hasMembershipAction = await dispatch(hasMembership.initiate(hasMembershipArgs));
     const hasMembershipFlag = hasMembershipAction.isSuccess && hasMembershipAction.data.hasMembership;
 
-    const hasPermission = bookReviewState.isPublic || isMyClub || isAdmin || hasMembershipFlag || isMyBookreview;
+    const hasPermission = bookreview.isPublic || isMyClub || isAdmin || hasMembershipFlag || isMyBookreview;
     if (!hasPermission) {
       setPermission('denied');
     } else {
@@ -71,25 +72,25 @@ const BookReviewShow = () => {
     return <LoadingPage />;
   }
 
-  const onRefresh = async () => {
-    const res = await dispatch(getBookreview.initiate({ id: bookreivewID }));
-    setBookReviewState(res)
+  const onRefresh = () => {
+    const res = dispatch(getBookreview.initiate({id: bookreivewID}));
+    setBookReview(res)
   }
 
   return (
     <div>
       <Profile
-        user={bookReviewState?.user}
-        clubName={bookReviewState?.club?.name || ''}
-        publishedAt={bookReviewState?.publishedAt}
-        isMyBookreview={bookReviewState?.user.id === user.id}
-        bookreviewID={bookReviewState?.id}
+        user={bookreview?.user}
+        clubName={bookreview?.club?.name || ''}
+        publishedAt={bookreview?.publishedAt}
+        isMyBookreview={bookreview?.user.id === user.id}
+        bookreviewID={bookreview?.id}
       />
-      <BookreviewContent bookreview={bookReviewState} />
+      <BookreviewContent bookreview={bookreview} />
       <BookreviewComments
-        bookreviewID={bookReviewState?.id}
-        likeUserIDs={bookReviewState?.likeUserIDs}
-        comments={bookReviewState?.comments}
+        bookreviewID={bookreview?.id}
+        likeUserIDs={bookreview?.likeUserIDs}
+        comments={bookreview?.comments}
         onRefresh={onRefresh}
         user={user}
       />
