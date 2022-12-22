@@ -25,6 +25,7 @@ import { LikeUser } from 'pages/bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
 import { toastAlert } from 'services/ui.store';
 import EditCommentModal from './EditCommentModal';
+import {isNil} from "lodash";
 
 interface CommentProps {
   comment: BookreviewComment;
@@ -41,7 +42,7 @@ const initialModalState = {
   selectedCommentID: '',
 };
 const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
-  const { user, createdAt, content, replies, id, userID, likeUserIDs } = comment;
+  const { user, createdAt, content, replies, id, userID, likeUserIDs, deletedAt } = comment;
 
   const [selectedComment, setSelectedComment] = useState({
     userID: '',
@@ -178,7 +179,11 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
   const alreadyLikedComment = likeUserIDs ? likeUserIDs.includes(loggedUserID) : false;
   const isMentionedComment = content.startsWith('@');
   const mentionedName = isMentionedComment ? content.split(' ')[0] : '';
-  const mentionedComment = isMentionedComment ? content.split(' ').slice(1).join(' ') : content;
+  let mentionedComment = isMentionedComment ? content.split(' ').slice(1).join(' ') : content;
+  const deletedItem = !isNil(deletedAt)
+  mentionedComment = deletedItem ? "삭제된 댓글입니다." : mentionedComment
+
+
   return (
     <div>
       <ProfileBox>
@@ -210,11 +215,15 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
       </IconWrapper>
       <Divider />
       {replies?.map(reply => {
-        const { user: replyUser, createdAt: replyCreatedAt, content: replyContent, id: replyID, likeUserIDs } = reply;
+        const { user: replyUser, createdAt: replyCreatedAt, content: replyContent, id: replyID, likeUserIDs, deletedAt } = reply;
         const alreadyLikedReply = likeUserIDs ? likeUserIDs.includes(loggedUserID) : false;
         const isMentionedComment = replyContent.startsWith('@');
         const mentionedName = isMentionedComment ? replyContent.split(' ')[0] : '';
-        const mentionedComment = isMentionedComment ? replyContent.split(' ').slice(1).join(' ') : replyContent;
+        let mentionedComment = isMentionedComment ? replyContent.split(' ').slice(1).join(' ') : replyContent;
+        const deletedItem = !isNil(deletedAt)
+        mentionedComment = deletedItem ? "삭제된 댓글입니다." : mentionedComment
+
+
         return (
           <React.Fragment key={replyID}>
             <ReplyBase>
