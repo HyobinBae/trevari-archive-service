@@ -7,7 +7,7 @@ import UploadActive from 'components/svgs/UploadActive';
 import UploadDefault from 'components/svgs/UploadDefault';
 import { useWindowSize } from 'hooks/useWindowSize';
 import {
-  createBookreviewComment, getBookreview,
+  createBookreviewComment,
   getBookreviewLikeUsers,
   toggleLikeOnBookreview,
 } from 'pages/bookreviews/services/api';
