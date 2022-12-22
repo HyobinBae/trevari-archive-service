@@ -33,6 +33,8 @@ interface CommentProps {
   loggedUserID: string;
 }
 
+
+
 const initialModalState = {
   deleteReply: false,
   deleteComment: false,
@@ -42,6 +44,7 @@ const initialModalState = {
   selectedCommentID: '',
 };
 const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
+  useState<BookreviewComment>(comment)
   const { user, createdAt, content, replies, id, userID, likeUserIDs, deletedAt } = comment;
 
   const [selectedComment, setSelectedComment] = useState({
