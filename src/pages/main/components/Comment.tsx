@@ -196,6 +196,12 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
           </ProfileBox>
         )
       }
+      {
+          deletedItem && (
+              <Empty20_0_0/>
+          )
+      }
+
       <Content>
         <MentionedUserName>{mentionedName}</MentionedUserName>
         {mentionedName && <span> </span>}
