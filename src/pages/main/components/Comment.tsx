@@ -116,6 +116,7 @@ const Comment = ({ comment, onClickReply, loggedUserID, onCommentDeleted }: Comm
         text: '댓글이 삭제되었습니다.',
       });
       onToggleModal('deleteComment');
+      onCommentDeleted(selectedComment.commentID)
     }
   };
   const onConfirmDeleteReply = async () => {
@@ -127,8 +128,8 @@ const Comment = ({ comment, onClickReply, loggedUserID, onCommentDeleted }: Comm
         text: '답글이 삭제되었습니다.',
       });
       onToggleModal('deleteReply');
+      onCommentDeleted(selectedComment.commentID)
     }
-    onCommentDeleted(selectedComment.commentID)
   };
   const onConfirmReport = async () => {
     await dispatch(reportOnBookreviewComment.initiate({ id: selectedComment.commentID, userID: loggedUserID }));
