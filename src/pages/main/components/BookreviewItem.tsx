@@ -32,9 +32,8 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   const bookreviewPublishedAt = bookreview.publishedAt;
   const commentCount = bookreview.commentCount;
   const isMyBookreview = bookreview.user.id === userID;
-  const [limit, setLimit] = useState(90);
+  const [limit, setLimit] = useState(86);
   const [likeUserIDsCount, setLikeUserIDsCount] = useState(bookreview.likeUserIDs.length);
-  const [isLoadMore, setIsLoadMore] = useState(true);
   const [isOpenMoreList, setOpenMoreList] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const [isLikeUserListModal, setIsLikeUserListModal] = useState(false);
@@ -56,7 +55,6 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
 
   const onClickMore = (str: string) => {
     setLimit(str.length);
-    setIsLoadMore(state => !state);
   };
 
   const goToProfile = () => {
@@ -180,15 +178,9 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
         <ClubNameWrapper onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
           {bookreview.title}
         </ClubNameWrapper>
-        {isLoadMore ? (
-          <BookreviewContent style={{ cursor: 'pointer' }} onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
-            {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string}
-          </BookreviewContent>
-        ) : (
-          <BookreviewContent>
-            {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string}
-          </BookreviewContent>
-        )}
+        <BookreviewContent>
+          {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string}
+        </BookreviewContent>
         {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).isShowMore && (
           <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더 보기</ShowMoreButton>
         )}
