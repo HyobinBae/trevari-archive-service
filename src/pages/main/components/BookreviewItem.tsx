@@ -336,6 +336,7 @@ const BookreviewContent = styled.div`
   overflow: hidden;
   word-break: break-all;
   margin-bottom: 20px;
+  line-height: 30px;
 `;
 
 const ShowMoreButton = styled.div`
