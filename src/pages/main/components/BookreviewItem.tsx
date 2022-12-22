@@ -34,6 +34,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   const isMyBookreview = bookreview.user.id === userID;
   const [limit, setLimit] = useState(86);
   const [likeUserIDsCount, setLikeUserIDsCount] = useState(bookreview.likeUserIDs.length);
+  const [isLoadMore, setIsLoadMore] = useState(true);
   const [isOpenMoreList, setOpenMoreList] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const [isLikeUserListModal, setIsLikeUserListModal] = useState(false);
@@ -55,6 +56,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
 
   const onClickMore = (str: string) => {
     setLimit(str.length);
+    setIsLoadMore(state => !state);
   };
 
   const goToProfile = () => {
@@ -123,10 +125,6 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
         text: '독후감이 삭제되었습니다.',
       });
       onToggleModal();
-      // setTimeout(() => {
-      //   onToggleModal();
-      // }, 1000);
-      // }
     }
   };
 
@@ -182,9 +180,15 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
         <ClubNameWrapper onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
           {bookreview.title}
         </ClubNameWrapper>
-        <BookreviewContent onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
-          {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string}
-        </BookreviewContent>
+        {isLoadMore ? (
+          <BookreviewContent style={{ cursor: 'pointer' }} onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
+            {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string}
+          </BookreviewContent>
+        ) : (
+          <BookreviewContent>
+            {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string}
+          </BookreviewContent>
+        )}
         {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).isShowMore && (
           <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>
         )}
@@ -340,7 +344,6 @@ const BookreviewContent = styled.div`
   overflow: hidden;
   word-break: break-all;
   margin-bottom: 20px;
-  cursor: pointer;
 `;
 
 const ShowMoreButton = styled.div`
