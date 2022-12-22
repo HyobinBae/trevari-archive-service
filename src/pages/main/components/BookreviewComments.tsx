@@ -7,7 +7,7 @@ import UploadActive from 'components/svgs/UploadActive';
 import UploadDefault from 'components/svgs/UploadDefault';
 import { useWindowSize } from 'hooks/useWindowSize';
 import {
-  createBookreviewComment,
+  createBookreviewComment, getBookreview,
   getBookreviewLikeUsers,
   toggleLikeOnBookreview,
 } from 'pages/bookreviews/services/api';
@@ -114,6 +114,7 @@ const BookreviewComments = ({
     }
   };
   const onCommentDeleted = () => {
+    dispatch(getBookreview.initiate({ id: bookreviewID }));
     onRefresh()
   };
   const onChangeInput = (value: string) => {
