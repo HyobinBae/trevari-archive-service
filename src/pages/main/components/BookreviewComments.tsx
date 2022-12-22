@@ -113,7 +113,7 @@ const BookreviewComments = ({
       inputRef.current.focus();
     }
   };
-  const onCommentDeleted = (id: string) => {
+  const onCommentDeleted = (_: string) => {
     onRefresh()
   };
   const onChangeInput = (value: string) => {

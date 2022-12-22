@@ -72,7 +72,7 @@ const BookReviewShow = () => {
   }
 
   const onRefresh = () => {
-    const { data: bookreview, isLoading } = useGetBookreviewQuery({ id: bookreivewID || '' });
+    const { data: bookreview } = useGetBookreviewQuery({ id: bookreivewID || '' });
     setBookReviewState(bookreview)
   }
 
