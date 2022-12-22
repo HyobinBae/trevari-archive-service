@@ -49,54 +49,9 @@ const BookreviewComments = ({
       if( !isNil(comment.deletedAt) && isNil(comment.parentID) && isEmpty(comment.replies) ) {
         continue
       }
-      res.push(replaceComment(comment))
+      res.push(comment)
     }
     return res
-  }
-
-  function replaceComment(comment: BookreviewComment) {
-    return {
-      bookreviewID: comment.bookreviewID,
-      content: isNil(comment.deletedAt) ? comment.content : "삭제된 댓글입니다.",
-      createdAt: comment.createdAt,
-      id: comment.id,
-      parentID: comment.parentID,
-      replies: replaceReplies(comment.replies),
-      updatedAt: comment.updatedAt,
-      deletedAt: comment.deletedAt,
-      user: comment.user,
-      userID: comment.userID,
-      likeUserIDs: comment.likeUserIDs,
-      reportUserIDs: comment.reportUserIDs
-    } as BookreviewComment;
-  }
-
-  const replaceReplies = (comments: Maybe<Array<Maybe<BookreviewComment>>> | undefined): BookreviewComment[] | undefined => {
-    const res: BookreviewComment[] = []
-    if(!comments) {
-      return res
-    }
-
-    for (let i = 0; i < comments.length; i++) {
-      const comment = comments[i]
-      if(!comment) {
-          continue
-      }
-
-      res.push({
-        bookreviewID: comment.bookreviewID,
-        content: isNil(comment.deletedAt) ? comment.content : "삭제된 댓글입니다.",
-        createdAt: comment.createdAt,
-        id: comment.id,
-        parentID: comment.parentID,
-        updatedAt: comment.updatedAt,
-        deletedAt: comment.deletedAt,
-        user: comment.user,
-        userID: comment.userID,
-        likeUserIDs: comment.likeUserIDs,
-        reportUserIDs: comment.reportUserIDs
-      } as BookreviewComment)
-    }
   }
 
   const { width } = useWindowSize();
