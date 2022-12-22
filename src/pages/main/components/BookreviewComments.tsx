@@ -20,6 +20,7 @@ import { BookreviewComment, User } from 'types/__generate__/user-backend-api';
 import Comment from './Comment';
 import LikeUserModal from './LikeUserModal';
 import BaseModal from './ModalBase';
+import {isNil} from "lodash";
 
 const initialTargetState = {
   type: 'comment',
@@ -27,6 +28,8 @@ const initialTargetState = {
   targetUsername: '',
   targetReplyID: '',
 };
+
+
 
 const BookreviewComments = ({
   likeUserIDs,
@@ -39,6 +42,25 @@ const BookreviewComments = ({
   user: User;
   bookreviewID: string;
 }) => {
+  const replaceComments = (comments: BookreviewComment[]): BookreviewComment[] => {
+    const res: BookreviewComment[] = []
+
+    for(const comment of comments) {
+      // 첫번째 댓글인데 삭제됐고, 답글이 없는 경우
+      if( !isNil(comment.deletedAt) && isNil(comment.parentID) && isNil(comment.replies) ) {
+        continue
+      }
+
+      if( !isNil(comment.deletedAt) ) {
+        comment.content = '삭제된 댓글입니다.'
+      }
+
+      res.push(comment)
+    }
+
+    return res
+  }
+
   const { width } = useWindowSize();
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -142,7 +164,7 @@ const BookreviewComments = ({
     }
     onSubmit();
   };
-
+  const replacedComments = replaceComments(comments)
   const replyConfirmModalText = `작성중인 내용이 있습니다.\n그래도 취소하시겠습니까?\n작성한 내용은 모두 사라집니다.`;
   return (
     <>
@@ -159,13 +181,13 @@ const BookreviewComments = ({
         </IconText>
         <div onClick={onClickComment}>
           <CommentOutline />
-          <IconText isClickable={true}>댓글 {comments.length || 0}</IconText>
+          <IconText isClickable={true}>댓글 {replacedComments.length || 0}</IconText>
         </div>
       </IconBox>
       <Divider />
-      <CommentsCountText>총 {comments.length} 개의 댓글</CommentsCountText>
+      <CommentsCountText>총 {replacedComments.length} 개의 댓글</CommentsCountText>
       <CommentContainer>
-        {comments.map(comment => (
+        {replacedComments.map(comment => (
           <Comment
             key={comment.id}
             comment={comment}
