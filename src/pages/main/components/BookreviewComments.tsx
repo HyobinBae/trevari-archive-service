@@ -114,7 +114,7 @@ const BookreviewComments = ({
     }
   };
   const onCommentDeleted = () => {
-    dispatch(getBookreview.initiate({ id: bookreviewID }));
+
     onRefresh()
   };
   const onChangeInput = (value: string) => {
@@ -191,7 +191,6 @@ const BookreviewComments = ({
             key={comment.id}
             comment={comment}
             onClickReply={onClickReply}
-            onClickComment={onClickComment}
             onCommentDeleted={onCommentDeleted}
             loggedUserID={user.id}
           />
