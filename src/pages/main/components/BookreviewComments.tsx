@@ -178,7 +178,6 @@ const BookreviewComments = ({
                   color={gray500}
                   width={20}
                   height={20}
-                  style={{ marginRight: '6px' }}
               />
             </>
           )}
