@@ -8,7 +8,7 @@ import { selectAuthenticated, selectUserId } from 'services/auth/auth.store';
 import { useAppDispatch, useAppSelector } from 'services/store';
 import Box from 'components/base/Box';
 import { Button } from '@trevari/components';
-import { WriteIcon, WritingIcon } from '@trevari/icons';
+import { WriteIcon } from '@trevari/icons';
 import { useSelector } from 'react-redux';
 import { selectUserIsMember, selectUserRoles } from '../../services/user/user.store';
 import BlurInBookreviews from '../../components/svgs/BlurInBookreviews';
@@ -17,7 +17,6 @@ import BookreviewItem from '../main/components/BookreviewItem';
 import { getBookreviews } from './services/api';
 import LoadingPage from '../../components/base/LoadingPage';
 import Loading from '../../components/svgs/Loading';
-import CloseIcon from 'components/svgs/CloseIcon';
 import { selectBookreivews } from './services/bookreview.store';
 import { debounce } from 'lodash';
 
@@ -28,7 +27,6 @@ const Bookreviews = () => {
   const isMember = useSelector(selectUserIsMember);
   const roles = useSelector(selectUserRoles);
   const bookreviews = useSelector(selectBookreivews);
-  const [showTooltip, setShowTooltip] = useState(true);
   const [filteredClubRoles, setFilteredClubRoles] = useState<ClubRole[]>(roles);
   const [totalBookreviewsOffset, setTotalBookreviewsOffset] = useState<number>(0);
   const [isLoadingMoreBookreviews, setIsLoadingMoreBookreviews] = useState<boolean>(false);
@@ -53,14 +51,6 @@ const Bookreviews = () => {
       .sort((a, b) => new Date(a.club.meetings[0].startedAt) - new Date(b.club.meetings[0].startedAt));
     setFilteredClubRoles(filteredClubRoles);
   }, [roles]);
-
-  useEffect(() => {
-    const notShowTooltip = window.localStorage.getItem('notShowTooltip');
-    if (notShowTooltip === 'true') {
-      setShowTooltip(false);
-    }
-  }, []);
-
 
   useEffect(() => {
     const loadMoreBookreviews = () => {
@@ -89,12 +79,6 @@ const Bookreviews = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [totalBookreviews, isLoadingMoreBookreviews]);
-
-
-  const doseNotShowTooltip = () => {
-    window.localStorage.setItem('notShowTooltip', 'true');
-    setShowTooltip(false);
-  };
 
   let moreClubRolesLength = null;
   let clubName = '';
@@ -153,19 +137,6 @@ const Bookreviews = () => {
           </EmojiWrapper>
         )}
       </Box>
-      <TooltipWrapper>
-        {showTooltip && (
-          <Tooltip>
-            <span>독후감 작성은 여기서 할 수 있어요!</span>
-            <ButtonWrapper onClick={doseNotShowTooltip}>
-              <CloseIcon fill="#ffffff" width={16} height={16} />
-            </ButtonWrapper>
-          </Tooltip>
-        )}
-        <WritingIconWrapper onClick={() => goToPage(`${endpoints.user_page_url}/mypage`)}>
-          <WritingIcon width={28} height={28} />
-        </WritingIconWrapper>
-      </TooltipWrapper>
     </>
   ) : (
     <BlurWrapper>
@@ -215,11 +186,6 @@ const EmptyDescription = styled.div`
   text-align: center;
 `;
 
-const TooltipWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  flex-flow: row-reverse;
-`;
 const BlurInBookreviewsWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -255,52 +221,4 @@ const BlurWrapper = styled.div`
   padding-top: 48px;
 `;
 
-export const LoadingContainer = styled.div`
-  padding: 110px 20px;
-`;
-
-const Tooltip = styled.div`
-  position: fixed;
-  bottom: 170px;
-  width: 239px;
-  background: black;
-  color: white;
-  display: flex;
-  align-items: center;
-  border-radius: 5px;
-  padding: 12px 10px 12px 12px;
-  ${body6};
-  gap: 4px;
-  margin-right: 20px;
-  &::after {
-    border-top: 10px solid black;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 0px solid transparent;
-    content: '';
-    position: absolute;
-    top: 40px;
-    right: 20px;
-  }
-`;
-const WritingIconWrapper = styled.div`
-  width: 58px;
-  height: 58px;
-  bottom: 93.5px;
-  filter: drop-shadow(0px 4px 4px rgba(255, 121, 0, 0.2));
-  position: fixed;
-  background: ${({ theme }) => theme.colors.orange900};
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  float: right;
-  margin-right: 26px;
-  cursor: pointer;
-`;
-
-const ButtonWrapper = styled.div`
-  cursor: pointer;
-  height: 16px;
-`;
 export default Bookreviews;
