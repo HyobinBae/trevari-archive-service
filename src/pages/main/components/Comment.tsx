@@ -30,7 +30,7 @@ import {isNil} from "lodash";
 interface CommentProps {
   comment: BookreviewComment;
   onClickReply: (name: string, id: string) => void;
-  onCommentDeleted: (id: string) => void;
+  onCommentDeleted: () => void;
   loggedUserID: string;
 }
 

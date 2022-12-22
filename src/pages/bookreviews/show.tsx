@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'services/store';
 import { selectUser } from 'services/user/user.store';
 import { hasMembership } from 'services/user/user.api';
-import { useGetBookreviewQuery } from './services/api';
+import {getBookreview, getBookreviewLikeUsers, useGetBookreviewQuery} from './services/api';
 import BookreviewContent from 'pages/main/components/BookreviewContent';
 import BookreviewComments from 'pages/main/components/BookreviewComments';
 import Profile from 'pages/main/components/Profile';
@@ -71,9 +71,9 @@ const BookReviewShow = () => {
     return <LoadingPage />;
   }
 
-  const onRefresh = () => {
-    const { data: bookreview } = useGetBookreviewQuery({ id: bookreivewID || '' });
-    setBookReviewState(bookreview)
+  const onRefresh = async () => {
+    const res = await dispatch(getBookreview.initiate({ id: bookreivewID }));
+    setBookReviewState(res)
   }
 
   return (
