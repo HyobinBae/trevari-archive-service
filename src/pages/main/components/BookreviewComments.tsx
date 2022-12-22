@@ -254,12 +254,6 @@ const CustomTextArea = styled.textarea`
     display: none; /* Chrome, Safari, Opera*/
   }
 `;
-const CommentsCountText = styled.span`
-  ${body6};
-  color: ${({ theme }) => theme.colors.gray600};
-  display: block;
-  padding: 40px 0 0 20px;
-`;
 
 const IconBox = styled.div`
   display: flex;
