@@ -16,7 +16,7 @@ import { Divider } from 'pages/curations/curations.styles';
 import { useRef, useState } from 'react';
 import { useAppDispatch } from 'services/store';
 import { toastAlert } from 'services/ui.store';
-import { BookreviewComment, User } from 'types/__generate__/user-backend-api';
+import {BookreviewComment, Maybe, Scalars, User} from 'types/__generate__/user-backend-api';
 import Comment from './Comment';
 import LikeUserModal from './LikeUserModal';
 import BaseModal from './ModalBase';
@@ -42,6 +42,31 @@ const BookreviewComments = ({
   user: User;
   bookreviewID: string;
 }) => {
+  const replaceReplies = (comments: BookreviewComment[] | undefined): BookreviewComment[] => {
+    const res: BookreviewComment[] = []
+    if(!comments) {
+      return res
+    }
+
+    for (let i = 0; i < comments.length; i++) {
+      const comment = comments[i]
+      res.push({
+        bookreviewID: comment.bookreviewID,
+        content: isNil(comment.deletedAt) ? "삭제된 댓글입니다." : comment.content,
+        createdAt: comment.createdAt,
+        id: comment.id,
+        parentID: comment.parentID,
+        replies: comment.replies,
+        updatedAt: comment.updatedAt,
+        deletedAt: comment.deletedAt,
+        user: comment.user,
+        userID: comment.userID,
+        likeUserIDs: comment.likeUserIDs,
+        reportUserIDs: comment.reportUserIDs
+      } as BookreviewComment)
+    }
+  }
+
   const replaceComments = (comments: BookreviewComment[]): BookreviewComment[] => {
     const res: BookreviewComment[] = []
 
@@ -51,7 +76,20 @@ const BookreviewComments = ({
         continue
       }
 
-      res.push(comment)
+      res.push({
+        bookreviewID: comment.bookreviewID,
+        content: isNil(comment.deletedAt) ? "삭제된 댓글입니다." : comment.content,
+        createdAt: comment.createdAt,
+        id: comment.id,
+        parentID: comment.parentID,
+        replies: replaceReplies(comment.replies),
+        updatedAt: comment.updatedAt,
+        deletedAt: comment.deletedAt,
+        user: comment.user,
+        userID: comment.userID,
+        likeUserIDs: comment.likeUserIDs,
+        reportUserIDs: comment.reportUserIDs
+      } as BookreviewComment)
     }
 
     return res
