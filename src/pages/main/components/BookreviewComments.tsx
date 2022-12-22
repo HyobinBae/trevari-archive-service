@@ -79,6 +79,7 @@ const BookreviewComments = ({
       [name]: !modalState[name],
     });
   };
+
   const onClickLikeBookreview = () => {
     dispatch(toggleLikeOnBookreview.initiate({ id: bookreviewID, userID: user.id }));
   };

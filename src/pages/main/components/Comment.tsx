@@ -19,7 +19,6 @@ import {
   updateBookreviewComment,
 } from 'pages/bookreviews/services/api';
 import LoveFilled from 'components/svgs/LoveFilled';
-import LoveOutline from 'components/svgs/LoveOutline';
 import CommentOutline from 'components/svgs/CommentOutline';
 import { LikeUser } from 'pages/bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
@@ -246,15 +245,14 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
             <ReplyBase>
               {
                   deletedItem ? (
-                    <Empty20_0_0/>
+                      <Empty20_0_0/>
                   ) : (
-                    <ProfileBox>
-                      <MoreButtonWrapper onClick={() => onClickMoreButton(replyUser.id, replyID, replyContent)}>
-                        <Kebab />
-                      </MoreButtonWrapper>
-                      <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} />
-                    </ProfileBox>
-                  )
+                      <ProfileBox>
+                        <MoreButtonWrapper onClick={() => onClickMoreButton(replyUser.id, replyID, replyContent)}>
+                          <Kebab />
+                        </MoreButtonWrapper>
+                        <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} />
+                      </ProfileBox>)
               }
 
               <Content>
@@ -270,7 +268,7 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
                         {alreadyLikedReply ? (
                           <LoveFilled width={20} height={20} strokeColor="#FF7900" />
                         ) : (
-                          <LoveOutline width={20} height={20} />
+                            <HeartIcon color={gray500} width={20} height={20} />
                         )}
                       </div>
                       <IconText

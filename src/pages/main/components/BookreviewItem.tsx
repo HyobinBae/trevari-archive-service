@@ -123,10 +123,6 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
         text: '독후감이 삭제되었습니다.',
       });
       onToggleModal();
-      // setTimeout(() => {
-      //   onToggleModal();
-      // }, 1000);
-      // }
     }
   };
 
