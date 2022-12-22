@@ -19,13 +19,14 @@ import {
   updateBookreviewComment,
 } from 'pages/bookreviews/services/api';
 import LoveFilled from 'components/svgs/LoveFilled';
-import LoveOutline from 'components/svgs/LoveOutline';
 import CommentOutline from 'components/svgs/CommentOutline';
 import { LikeUser } from 'pages/bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
 import { toastAlert } from 'services/ui.store';
 import EditCommentModal from './EditCommentModal';
 import {isNil} from "lodash";
+import {HeartIcon} from "@trevari/icons";
+import { useTheme } from '@emotion/react';
 
 interface CommentProps {
   comment: BookreviewComment;
@@ -43,6 +44,10 @@ const initialModalState = {
 };
 const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
   const { user, createdAt, content, replies, id, userID, likeUserIDs, deletedAt } = comment;
+
+  const {
+    colors: { gray500 },
+  } = useTheme();
 
   const [selectedComment, setSelectedComment] = useState({
     userID: '',
@@ -187,26 +192,24 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
   return (
     <div>
       {
-        !deletedItem && (
-          <ProfileBox>
-            <MoreButtonWrapper onClick={() => onClickMoreButton(userID, id, content)}>
-              <Kebab />
-            </MoreButtonWrapper>
-            <ProfileInBookreviewPage user={user} publishedAt={createdAt} isBookreviewProfile={false} />
-          </ProfileBox>
+        deletedItem ? (
+                <Empty20_0_0/>
+        ) : (
+            <ProfileBox>
+              <MoreButtonWrapper onClick={() => onClickMoreButton(userID, id, content)}>
+                <Kebab />
+              </MoreButtonWrapper>
+              <ProfileInBookreviewPage user={user} publishedAt={createdAt} isBookreviewProfile={false} />
+            </ProfileBox>
         )
-      }
-      {
-          deletedItem && (
-              <Empty20_0_0/>
-          )
       }
 
       <Content>
-        <MentionedUserName>{mentionedName}</MentionedUserName>
-        {mentionedName && <span> </span>}
+        { !deletedItem && ( <MentionedUserName>{mentionedName}</MentionedUserName> ) }
+        { !deletedItem && ( mentionedName && <span> </span> ) }
         <span>{mentionedComment}</span>
       </Content>
+
       {
           !deletedItem && (
               <IconWrapper>
@@ -214,7 +217,7 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
                   {alreadyLikedComment ? (
                       <LoveFilled width={20} height={20} strokeColor="#FF7900"/>
                   ) : (
-                      <LoveOutline width={20} height={20}/>
+                      <HeartIcon color={gray500} width={20} height={20} />
                   )}
                 </div>
                 <IconText isClickable={likeUserIDs.length > 0} onClick={() => onClickBookreviewLikeUsers(id)}>
@@ -242,25 +245,20 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
           <React.Fragment key={replyID}>
             <ReplyBase>
               {
-                  !deletedItem && (
-                    <ProfileBox>
-                      <MoreButtonWrapper onClick={() => onClickMoreButton(replyUser.id, replyID, replyContent)}>
-                        <Kebab />
-                      </MoreButtonWrapper>
-                      <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} />
-                    </ProfileBox>
-                  )
-              }
-
-              {
-                  deletedItem && (
+                  deletedItem ? (
                       <Empty20_0_0/>
-                  )
+                  ) : (
+                      <ProfileBox>
+                        <MoreButtonWrapper onClick={() => onClickMoreButton(replyUser.id, replyID, replyContent)}>
+                          <Kebab />
+                        </MoreButtonWrapper>
+                        <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} />
+                      </ProfileBox>)
               }
 
               <Content>
-                <MentionedUserName>{mentionedName}</MentionedUserName>
-                {mentionedName && <span> </span>}
+                { !deletedItem && ( <MentionedUserName>{mentionedName}</MentionedUserName> ) }
+                { !deletedItem && ( mentionedName && <span> </span> ) }
                 <span>{mentionedComment}</span>
               </Content>
 
@@ -271,7 +269,7 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
                         {alreadyLikedReply ? (
                           <LoveFilled width={20} height={20} strokeColor="#FF7900" />
                         ) : (
-                          <LoveOutline width={20} height={20} />
+                            <HeartIcon color={gray500} width={20} height={20} />
                         )}
                       </div>
                       <IconText
