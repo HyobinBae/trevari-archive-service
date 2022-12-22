@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
-import { Button, TextArea } from '@trevari/components';
-import { heading7 } from '@trevari/typo';
+import {Button, TextArea} from '@trevari/components';
+import {heading7} from '@trevari/typo';
 import CloseIcon from 'components/svgs/CloseIcon';
-import React from 'react';
+import React, {useState} from 'react';
+import BaseModal from "./ModalBase";
 
 interface EditCommentModalProps {
   text: string;
@@ -11,11 +12,29 @@ interface EditCommentModalProps {
   onConfirm: () => void;
   browserWidth?: number;
 }
+
+const initialModalState = {
+  cancelComment: false,
+};
+
 const EditCommentModal = ({ text, onClose, onChange, onConfirm, browserWidth }: EditCommentModalProps) => {
   const modalPositionLeftPx = browserWidth && browserWidth > 500 ? (browserWidth - 500) / 2 : 0;
+
+  const [modalState, setModalState] = useState(initialModalState);
+  const { cancelComment } = modalState;
+
+  const onToggleModal = (name: string) => {
+    setModalState({
+      ...modalState,
+      [name]: !modalState[name],
+    });
+  };
+
+  const editCancelModalText = `수정 중인 내용이 있습니다.\n그래도 취소하시겠습니까?\n수정한 내용은 사라집니다.`;
+
   return (
     <ModalContainer modalPositionLeftPx={modalPositionLeftPx}>
-      <CloseButtonWrapper onClick={onClose}>
+      <CloseButtonWrapper onClick={() => onToggleModal('deleteComment')}>
         <CloseIcon />
       </CloseButtonWrapper>
       <EditCommentTitle>댓글 수정하기</EditCommentTitle>
@@ -23,6 +42,12 @@ const EditCommentModal = ({ text, onClose, onChange, onConfirm, browserWidth }: 
         <TextArea onChange={onChange} value={text}></TextArea>
         <FloatingButton onClick={onConfirm}>등록</FloatingButton>
       </TextAreaContainer>
+      <BaseModal
+        open={cancelComment}
+        text={editCancelModalText}
+        onCancel={() => onToggleModal('deleteComment')}
+        onConfirm={onClose}
+      />
     </ModalContainer>
   );
 };
