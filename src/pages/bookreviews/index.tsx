@@ -11,7 +11,6 @@ import { Button } from '@trevari/components';
 import { WriteIcon } from '@trevari/icons';
 import { useSelector } from 'react-redux';
 import { selectUserRoles } from '../../services/user/user.store';
-import BlurInBookreviews from '../../components/svgs/BlurInBookreviews';
 import { ClubRole } from '../../types/__generate__/user-backend-api';
 import BookreviewItem from '../main/components/BookreviewItem';
 import { getBookreviews } from './services/api';
@@ -164,8 +163,9 @@ const Bookreviews = () => {
   ) : (
     <BlurWrapper>
       <div>
-        <BlurInBookreviews width={'100%'} height={'100%'} />
+        <BlurImage src='https://image.trevari.co.kr/blur.png' width='100%' height='100%' alt='트레바리'/>
       </div>
+
       <BlurInBookreviewsWrapper>
         <WriteIcon width={90} height={90} />
         <EmptyDescription>멤버만 이용할 수 있습니다.</EmptyDescription>
@@ -181,6 +181,13 @@ const Bookreviews = () => {
     </BlurWrapper>
   );
 };
+
+const BlurImage = styled.img`
+  background-size: cover;
+  background-position: center;
+  width: 528;
+  height: 1108;
+`;
 
 const GridCardCount = styled.span`
   ${body6};
