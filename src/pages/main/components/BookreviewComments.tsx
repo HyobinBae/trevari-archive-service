@@ -111,7 +111,18 @@ const BookreviewComments = ({
     }
   };
   const onClickComment = () => {
-    setTargetState({ ...targetState, type: 'reply', targetUsername: '', targetParentCommentID: '' });
+    if (commentText || targetState.targetParentCommentID) {
+      onToggleModal('replyConfirm');
+      return;
+    }
+
+    setTargetState({ 
+      ...targetState, 
+      type: 'reply', 
+      targetUsername: '', 
+      targetParentCommentID: '' });
+
+    onChangeInput('');
     if (inputRef.current) {
       inputRef.current.focus();
     }
