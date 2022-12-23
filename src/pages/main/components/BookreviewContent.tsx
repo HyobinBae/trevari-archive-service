@@ -8,7 +8,7 @@ interface BookreviewContentProps {
 }
 const BookreviewContent = ({ bookreview }: BookreviewContentProps) => {
   const { contents, content, title } = bookreview;
-  const customContents = bookreview.contents && bookreview.contents.length > 0 ? bookreview.contents.map((c: Content, index) => {
+  const customContents = contents && contents.length > 0 ? contents.map((c: Content, index) => {
     if(index < 2) {
       return {
         id: c.id,
