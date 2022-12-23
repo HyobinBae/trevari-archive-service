@@ -178,7 +178,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
             <KebabIcon style={{ cursor: 'pointer', width: 24, height: 24 }} onClick={() => onClickMoreList()} />
           </ProfileDiv>
         </BookreviewItemDiv>
-        <ClubNameWrapper onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
+        <ClubNameWrapper>
           {bookreview.title}
         </ClubNameWrapper>
         <BookreviewContent onClick={() => onClickMore(bookreviewContent)} >
@@ -345,6 +345,9 @@ const BookreviewContent = styled.div`
   word-break: break-all;
   margin-bottom: 20px;
   line-height: 30px;
+  p {
+    margin: unset;
+  }
 `;
 
 const ShowMoreButton = styled.span`
