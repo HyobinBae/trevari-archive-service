@@ -11,7 +11,7 @@ import { Button } from '@trevari/components';
 import { WriteIcon } from '@trevari/icons';
 import { useSelector } from 'react-redux';
 import { selectUserIsMember, selectUserRoles } from '../../services/user/user.store';
-import BlurInBookreviews from '../../components/svgs/BlurInBookreviews';
+
 import { ClubRole } from '../../types/__generate__/user-backend-api';
 import BookreviewItem from '../main/components/BookreviewItem';
 import { getBookreviews } from './services/api';
