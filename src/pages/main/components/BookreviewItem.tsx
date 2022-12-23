@@ -321,7 +321,6 @@ const ClubNameWrapper = styled.div`
   ${heading9};
   margin-top: 24px;
   margin-bottom: 20px;
-  cursor: pointer;
 `;
 const BookMovieDiv = styled.div`
   ${body8};
