@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
+  BookFilledIcon,
+  BookNavigationIcon,
   HomeFilledIcon,
   HomeOutlinedIcon,
   LoveFilledIcon,
@@ -36,6 +38,12 @@ const bottomNavs = [
     to: '/wishList',
   },
   {
+    icon: <BookNavigationIcon width={24} height={24} color={'#6E6E6C'} />,
+    activeIcon: <BookFilledIcon width={24} height={24} />,
+    label: '독후감',
+    to: '/bookreviews',
+  },
+  {
     icon: <MyOutlinedIcon width={24} height={24} />,
     activeIcon: <MyFilledIcon width={24} height={24} />,
     label: '마이페이지',
@@ -48,11 +56,11 @@ interface IProps {
   changeNavigationInfo: (to: string) => void;
 }
 
-const BottomNavigationWrapper = ({initialActiveTab,
-                                 changeNavigationInfo}: IProps) => {
+const BottomNavigationWrapper = ({ initialActiveTab, changeNavigationInfo }: IProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [isActive, setIsActive] = useState('');
+  const hideBottomNavigation = pathname.includes('/bookreviews/show');
 
   useEffect(() => {
     const myReferrer = document.referrer;
@@ -66,7 +74,6 @@ const BottomNavigationWrapper = ({initialActiveTab,
     setIsActive(navigationInfoInLocalStorage);
   }, [initialActiveTab]);
 
-
   const handleRedirect = (to: string, name: string) => {
     changeNavigationInfo(to);
     const gaCategory = pathname === '/' ? '메인 페이지' : pathname === '/menu' ? '메뉴 페이지' : '';
@@ -78,22 +85,28 @@ const BottomNavigationWrapper = ({initialActiveTab,
   };
 
   return (
-    <BottomNavigation>
-      {bottomNavs.map(bottomItem => {
-        const { icon, activeIcon, label, to } = bottomItem;
-        const isActiveItem = isActive === to;
-        return (
-          <BottomNavigationItem
-            key={label}
-            icon={icon}
-            activeIcon={activeIcon}
-            label={label}
-            onClick={() => handleRedirect(to, label)}
-            isActive={isActiveItem}
-          />
-        );
-      })}
-    </BottomNavigation>
+    <>
+      {hideBottomNavigation ? (
+        <div></div>
+      ) : (
+        <BottomNavigation>
+          {bottomNavs.map(bottomItem => {
+            const { icon, activeIcon, label, to } = bottomItem;
+            const isActiveItem = isActive === to;
+            return (
+              <BottomNavigationItem
+                key={label}
+                icon={icon}
+                activeIcon={activeIcon}
+                label={label}
+                onClick={() => handleRedirect(to, label)}
+                isActive={isActiveItem}
+              />
+            );
+          })}
+        </BottomNavigation>
+      )}
+    </>
   );
 };
 

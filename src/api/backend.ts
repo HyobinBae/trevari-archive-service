@@ -33,3 +33,32 @@ export const backend = createApi({
   reducerPath: 'backend',
   endpoints: () => ({}),
 });
+
+export const bookreviewClient = new GraphQLClient(endpoints.bookreview_api_graphql_endpoint);
+
+export const bookreviewBackend = createApi({
+  baseQuery: graphqlRequestBaseQuery({
+    client: bookreviewClient,
+    prepareHeaders: async (headers, { getState }) => {
+      const token = (getState() as RootState).auth.token;
+      if (token) {
+        headers.set('Accept', 'application/json');
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
+    customErrors: ({ name, stack, response, message }) => {
+      if (response.status === 200 && response.errors && response.errors.length > 0) {
+        throw Error(response.errors[0].message);
+      }
+      return {
+        name,
+        message,
+        errorCode: response.status,
+        stack,
+      };
+    },
+  }),
+  reducerPath: 'bookreviewBackend',
+  endpoints: () => ({}),
+});

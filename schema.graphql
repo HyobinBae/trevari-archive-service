@@ -806,6 +806,7 @@ type BookreviewComment {
   parentID: String
   createdAt: String
   updatedAt: String
+  deletedAt: String
   user: User
   replies: [BookreviewComment]
 }

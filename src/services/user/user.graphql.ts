@@ -131,3 +131,9 @@ export const GET_CLUB_ROLES = gql`
     }
   }
 `;
+
+export const HAS_MEMBERSHIP = gql`
+  query hasMembership($userID: String!, $seasons: [String], $checkDate: String, $roles: [String], $serviceID: String) {
+    hasMembership(userID: $userID, seasons: $seasons, checkDate: $checkDate, roles: $roles, serviceID: $serviceID)
+  }
+`;

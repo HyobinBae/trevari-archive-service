@@ -14,6 +14,8 @@ import { getClubRoles, getUser } from 'services/user/user.api';
 import { GUEST_TOKEN } from 'config';
 import { logout } from 'services/user/user.store';
 import WishList from 'pages/wishList';
+import Bookreviews from '../pages/bookreviews';
+import BookReviewShow from 'pages/bookreviews/show';
 
 type Loader<T> = (props: T) => Promise<DefaultComponent<T>>;
 
@@ -69,6 +71,8 @@ export default () => {
         <Route path="/external" element={<External />} />
         <Route path="/curations/:curationId" element={<Curations />} />
         <Route path="/wishList" element={<WishList />} />
+        <Route path="/bookreviews" element={<Bookreviews />} />
+        <Route path="/bookreviews/show/:bookreivewID" element={<BookReviewShow />} />
         <Route path="*" element={<LoadingP />} />
       </Routes>
     </Layout>
