@@ -136,7 +136,7 @@ const Comment = ({ comment, onClickReply, loggedUserID, goToProfile }: CommentPr
     await dispatch(reportOnBookreviewComment.initiate({ id: selectedComment.commentID, userID: loggedUserID }));
     toastAlert({
       open: true,
-      type: 'info',
+      type: 'done',
       text: '신고가 접수되었습니다.',
     });
     onToggleModal('reportComment');

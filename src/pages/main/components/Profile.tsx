@@ -82,7 +82,7 @@ const Profile = ({
     if (resultAction.data.deleteBookreview === true) {
       toastAlert({
         open: true,
-        type: 'info',
+        type: 'done',
         text: '독후감이 삭제되었습니다.',
       });
       // TODO: home -> 독후감 리스트 페이지
