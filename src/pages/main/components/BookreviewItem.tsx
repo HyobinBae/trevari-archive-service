@@ -170,7 +170,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
             </ProfileAvatarWrapper>
             <NameDiv>
               <UserNameDiv onClick={() => goToProfile(bookreview.user)}>{bookreview.user?.name}</UserNameDiv>
-              <ClubNameDiv>{bookreview.club?.name}</ClubNameDiv>
+              <ClubNameDiv>{bookreview.club?.name}{bookreview.role && bookreview.role === '놀러가기' ? '(놀러가기)' : ''}</ClubNameDiv>
             </NameDiv>
           </ProfileDiv>
           <ProfileDiv>

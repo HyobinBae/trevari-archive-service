@@ -84,7 +84,7 @@ const BookReviewShow = () => {
     <div>
       <Profile
         user={bookreview?.user}
-        clubName={bookreview?.club?.name || ''}
+        clubName={bookreview?.club?.name + (bookreview?.role && bookreview?.role === '놀러가기' ? '(놀러가기)' : '') || ''}
         publishedAt={bookreview?.publishedAt}
         isMyBookreview={bookreview?.user.id === user.id}
         bookreviewID={bookreview?.id}
