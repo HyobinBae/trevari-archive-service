@@ -30,7 +30,7 @@ import { useTheme } from '@emotion/react';
 
 interface CommentProps {
   comment: BookreviewComment;
-  onClickReply: (name: string, id: string) => void;
+  onClickReply: (id: string, name: string, userID?: string) => void;
   loggedUserID: string;
 }
 
@@ -223,7 +223,7 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
                 <IconText isClickable={likeUserIDs.length > 0} onClick={() => onClickBookreviewLikeUsers(id)}>
                   좋아요 {likeUserIDs.length}
                 </IconText>
-                <div onClick={() => onClickReply(`@${user?.name} `, id)}>
+                <div onClick={() => onClickReply(id, `@${user?.name} `, user?.id)}>
                   <CommentOutline/>
                   <IconText isClickable={true}>답글 쓰기</IconText>
                 </div>
@@ -278,7 +278,7 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
                       >
                         좋아요 {likeUserIDs?.length || 0}
                       </IconText>
-                      <div onClick={() => onClickReply(`@${replyUser?.name} `, id)}>
+                      <div onClick={() => onClickReply(id, `@${replyUser?.name} `, replyUser?.id)}>
                         <CommentOutline />
                         <IconText isClickable={true}>답글 쓰기</IconText>
                       </div>

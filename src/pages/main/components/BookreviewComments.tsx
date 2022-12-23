@@ -25,12 +25,13 @@ import { useTheme } from '@emotion/react';
 
 const initialTargetState = {
   type: 'comment',
+  prevTargetParentCommentID: '',
   targetParentCommentID: '',
+  prevTargetUserID: '',
+  targetUserID: '',
   targetUsername: '',
   targetReplyID: '',
 };
-
-
 
 const BookreviewComments = ({
   likeUserIDs,
@@ -94,36 +95,49 @@ const BookreviewComments = ({
     setLikeUsers(resultAction.data);
     onToggleModal('likeUserList');
   };
-  const onClickReply = (name: string, id: string) => {
+  const replyInputChange = (text: string) => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+    onChangeInput(text);
+  }
+  const onClickReply = (id: string, name: string, userID?: string) => {
+    const prevTargetID = targetState.targetParentCommentID;
+    const prevUserID = targetState.targetUserID;
     setTargetState({
       ...targetState,
       type: 'reply',
-      targetUsername: name,
+      prevTargetParentCommentID: prevTargetID,
       targetParentCommentID: id,
+      prevTargetUserID: prevUserID,
+      targetUserID: userID || '',
+      targetUsername: name,
     });
-    if (commentText) {
+    if (commentText && (prevTargetID !== id || prevUserID !== userID)) {
       onToggleModal('replyConfirm');
-      return;
-    }
-    onChangeInput(name);
-    if (inputRef.current) {
+    } else if (!commentText) {
+      console.log('여기 아님?');
+      replyInputChange(name);
+    } else if (inputRef.current) {
       inputRef.current.focus();
     }
   };
   const onClickComment = () => {
-    if (commentText || targetState.targetParentCommentID) {
-      onToggleModal('replyConfirm');
-      return;
-    }
-
+    const prevTargetID = targetState.targetParentCommentID;
+    const prevUserID = targetState.targetUserID;
     setTargetState({ 
       ...targetState, 
       type: 'reply', 
+      prevTargetParentCommentID: prevTargetID,
+      targetParentCommentID: '',
+      prevTargetUserID: prevUserID,
+      targetUserID: '',
       targetUsername: '', 
-      targetParentCommentID: '' });
+    });
 
-    onChangeInput('');
-    if (inputRef.current) {
+    if (commentText && prevTargetID) {
+      onToggleModal('replyConfirm');
+    } else if (inputRef.current) {
       inputRef.current.focus();
     }
   };
@@ -137,13 +151,15 @@ const BookreviewComments = ({
     }
   };
   const onConfirm = () => {
-    onChangeInput(targetState.targetUsername);
     onToggleModal('replyConfirm');
-
-    if (inputRef.current) {
-      inputRef.current.focus();
+    if (isNotSameCommentOrTargetUser()) {
+      replyInputChange(targetState.targetUsername);
     }
   };
+  const isNotSameCommentOrTargetUser = () => {
+    return targetState.prevTargetParentCommentID !== targetState.targetParentCommentID
+      || targetState.prevTargetUserID !== targetState.targetUserID;
+  }
 
   const onSubmit = () => {
     if (!focused || !commentText) return;
