@@ -148,9 +148,6 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
     setIsLikeUserListModal(!isLikeUserListModal);
   };
 
-  const bookContent = bookreview.contents.filter((item: Bookreview) => item.type === 'book');
-  const movieContent = bookreview.contents.filter((item: Bookreview) => item.type === 'movie');
-
   const bottomSheetLeftMarginPx = width > 500 ? 'calc(50vw - 250px)' : 0;
   const deleteModalTitle = '정말 삭제하시겠습니까?';
   const deleteModalText = `삭제한 독후감은 복구가 어렵습니다.
@@ -193,17 +190,15 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
           )}
         </BookreviewContent>
         <BookMovieDivWrapper>
-          {bookContent.length > 0 && (
-            <BookMovieDiv>
-              <BookMovieSpan>책 | </BookMovieSpan>
-              {bookContent[0].author}, {bookContent[0].title}
-            </BookMovieDiv>
-          )}
-          {movieContent.length > 0 && (
-            <BookMovieDiv>
-              <BookMovieSpan>영화 | </BookMovieSpan>
-              {bookContent[0].author && bookContent[0].author + ', '} {movieContent[0].title}
-            </BookMovieDiv>
+          {bookreview.contents && bookreview.contents.length > 0 && (
+            <>
+            {bookreview.contents.map(item => (
+              <BookMovieDiv key={item.id}>
+                <BookMovieSpan>{item.type === 'book' ? '책' : '기타'} | </BookMovieSpan>
+                {item.author ? item.author + ', ' + item.title : item.title}
+              </BookMovieDiv>
+            ))}
+            </>
           )}
         </BookMovieDivWrapper>
         <ReactionDivWrapper>
