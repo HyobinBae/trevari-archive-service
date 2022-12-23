@@ -163,7 +163,7 @@ const Bookreviews = () => {
   ) : (
     <BlurWrapper>
       <div>
-        <BlurImage src='https://image.trevari.co.kr/blur.png' alt='트레바리'/>
+        <BlurImage src='https://image.trevari.co.kr/blur.png' width='500' height='1080' alt='트레바리'/>
       </div>
 
       <BlurInBookreviewsWrapper>
@@ -185,8 +185,8 @@ const Bookreviews = () => {
 const BlurImage = styled.img`
   background-size: cover;
   background-position: center;
-  width: 500;
-  height: 1080;
+  width: 528;
+  height: 1108;
 `;
 
 const GridCardCount = styled.span`
