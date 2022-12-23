@@ -186,7 +186,7 @@ const BlurImage = styled.img`
   background-size: cover;
   background-position: center;
   width: 500;
-  height: 1000;
+  height: 1080;
 `;
 
 const GridCardCount = styled.span`
