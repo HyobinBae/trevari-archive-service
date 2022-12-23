@@ -19,6 +19,7 @@ import LoadingPage from '../../components/base/LoadingPage';
 import Loading from '../../components/svgs/Loading';
 import { selectBookreivews } from './services/bookreview.store';
 import { debounce } from 'lodash';
+import {DEFAULT_BLUR_IMAGE} from "../main/const";
 
 const Bookreviews = () => {
   const dispatch = useAppDispatch();
@@ -141,7 +142,7 @@ const Bookreviews = () => {
   ) : (
     <BlurWrapper>
       <div>
-        <BlurInBookreviews width={'100%'} height={'100%'} />
+        <img src={DEFAULT_BLUR_IMAGE} width='375' height='674' alt='트레바리'/>
       </div>
       <BlurInBookreviewsWrapper>
         <WriteIcon width={90} height={90} />
