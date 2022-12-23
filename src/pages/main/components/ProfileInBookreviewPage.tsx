@@ -41,10 +41,12 @@ const ProfileImage = styled.img`
   width: 32px;
   height: 32px;
   border-radius: 50%;
+  cursor: pointer;
 `;
 const Box = styled.div`
   margin-left: 10px;
   flex: 1;
+  cursor: pointer;
   span {
     display: block;
     ${title6}

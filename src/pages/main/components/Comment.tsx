@@ -4,7 +4,7 @@ import { BottomSheet } from 'react-spring-bottom-sheet';
 import { contents2, title4 } from '@trevari/typo';
 import { Divider } from 'pages/curations/curations.styles';
 import React, { useEffect, useState } from 'react';
-import { BookreviewComment } from 'types/__generate__/user-backend-api';
+import {BookreviewComment, User} from 'types/__generate__/user-backend-api';
 import ProfileInBookreviewPage from './ProfileInBookreviewPage';
 import Kebab from 'components/svgs/Kebab';
 import MoreItems from './MoreItems';
@@ -32,6 +32,7 @@ interface CommentProps {
   comment: BookreviewComment;
   onClickReply: (name: string, id: string) => void;
   loggedUserID: string;
+  goToProfile: ((user: User) => void);
 }
 
 const initialModalState = {
@@ -42,7 +43,7 @@ const initialModalState = {
   editComment: false,
   selectedCommentID: '',
 };
-const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
+const Comment = ({ comment, onClickReply, loggedUserID, goToProfile }: CommentProps) => {
   const { user, createdAt, content, replies, id, userID, likeUserIDs, deletedAt } = comment;
 
   const {
@@ -199,7 +200,9 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
               <MoreButtonWrapper onClick={() => onClickMoreButton(userID, id, content)}>
                 <Kebab />
               </MoreButtonWrapper>
-              <ProfileInBookreviewPage user={user} publishedAt={createdAt} isBookreviewProfile={false} />
+              <ProfileInBookreviewPage
+                  onClicked={() => {goToProfile(user)}}
+                  user={user} publishedAt={createdAt} isBookreviewProfile={false} />
             </ProfileBox>
         )
       }
@@ -252,7 +255,9 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
                         <MoreButtonWrapper onClick={() => onClickMoreButton(replyUser.id, replyID, replyContent)}>
                           <Kebab />
                         </MoreButtonWrapper>
-                        <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} />
+                        <ProfileInBookreviewPage
+                            onClicked={() => {goToProfile(user)}}
+                            user={replyUser} publishedAt={replyCreatedAt} />
                       </ProfileBox>)
               }
 

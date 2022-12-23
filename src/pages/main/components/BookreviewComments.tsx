@@ -37,11 +37,13 @@ const BookreviewComments = ({
   comments,
   user,
   bookreviewID,
+    goToProfile,
 }: {
   likeUserIDs: string[];
   comments: BookreviewComment[];
   user: User;
   bookreviewID: string;
+  goToProfile: ((user: User) => void);
 }) => {
   const filterComments = (comments: BookreviewComment[]): BookreviewComment[] => {
     const res: BookreviewComment[] = []
@@ -196,6 +198,7 @@ const BookreviewComments = ({
             key={comment.id}
             comment={comment}
             onClickReply={onClickReply}
+            goToProfile={goToProfile}
             loggedUserID={user.id}
           />
         ))}
