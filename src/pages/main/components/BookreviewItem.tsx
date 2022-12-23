@@ -155,23 +155,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   const deleteModalTitle = '정말 삭제하시겠습니까?';
   const deleteModalText = `삭제한 독후감은 복구가 어렵습니다.
   모임일 전에 독후감을 삭제할 경우, 모임 참석이 불가능하다는 점도 꼭 확인해 주세요.`;
-  const findUser = (id: string) => {
-    try {
-      if(bookreview.user.id === id) {
-        return bookreview.user;
-      }
-      else {
-        for (const comment of bookreview.comments) {
-          if(comment.user.id === id) {
-            return comment.user
-          }
-        }
-      }
-    }
-    catch (e) {
-      return undefined
-    }
-  }
+
   return (
     <>
       <BookreviewItemWrapper>
