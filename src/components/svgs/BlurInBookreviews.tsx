@@ -11,9 +11,9 @@ const BlurInBookreviews = ({ width = 375, height = 674, fill = 'white' }: IProps
       <svg
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
-          width="375"
-          height="674"
-          fill="none"
+          width={width}
+          height={height}
+          fill={fill}
           viewBox="0 0 375 674"
       >
         <g filter="url(#filter0_f_579_18251)">

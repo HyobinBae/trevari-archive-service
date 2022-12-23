@@ -75,14 +75,11 @@ export const userStore = createSlice({
       const partnerClubRoles = payload && payload.length > 0 ? payload.filter(cr => cr.role === 'Partner') : [];
       const hasPartnerMembership = partnerClubRoles.length > 0;
       const memberClubRoles = payload && payload.length > 0 ? payload.filter(cr => cr.role === 'Member') : [];
-      const isMember = memberClubRoles.length > 0;
+      state.isMember = memberClubRoles.length > 0;
       state.roles = payload;
       state.hasPartnerMembership = hasPartnerMembership;
       if (hasPartnerMembership) {
         state.currentRole = 'Partner';
-      }
-      if (isMember) {
-        state.isMember = true;
       }
     });
   },
