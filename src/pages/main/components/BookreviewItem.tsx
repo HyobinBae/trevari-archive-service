@@ -32,6 +32,8 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   const bookreviewPublishedAt = bookreview.publishedAt;
   const commentCount = bookreview.commentCount;
   const isMyBookreview = bookreview.user.id === userID;
+
+  const [isDetail, setDetail] = useState(false)
   const [limit, setLimit] = useState(86);
   const [likeUserIDsCount, setLikeUserIDsCount] = useState(bookreview.likeUserIDs.length);
   const [isOpenMoreList, setOpenMoreList] = useState(false);
@@ -55,6 +57,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
 
   const onClickMore = (str: string) => {
     setLimit(str.length);
+    setDetail(true)
   };
 
   const goToProfile = () => {
@@ -179,8 +182,12 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
           {bookreview.title}
         </ClubNameWrapper>
         <BookreviewContent onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)} >
-          <p dangerouslySetInnerHTML={{__html:bookreview.content}}></p>
-          {/*{toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string}*/}
+          { isDetail ? (
+              <p dangerouslySetInnerHTML={{__html:bookreview.content}}></p>
+          ) : (
+              toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string
+            )
+          }
         </BookreviewContent>
         {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).isShowMore && (
           <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>
