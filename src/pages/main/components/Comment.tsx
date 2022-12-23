@@ -188,7 +188,19 @@ const Comment = ({ comment, onClickReply, loggedUserID, goToProfile }: CommentPr
   let mentionedComment = isMentionedComment ? content.split(' ').slice(1).join(' ') : content;
   const deletedItem = !isNil(deletedAt)
   mentionedComment = deletedItem ? "삭제된 댓글입니다." : mentionedComment
-
+  const findUser = (id: string) => {
+    try {
+      if(user.id === id) {
+        return user;
+      }
+      else {
+        return replies?.find(user => user.id === id)
+      }
+    }
+    catch (e) {
+      return undefined
+    }
+  }
 
   return (
     <div>
@@ -324,7 +336,9 @@ const Comment = ({ comment, onClickReply, loggedUserID, goToProfile }: CommentPr
         onConfirm={onConfirmReport}
       />
       {likeUserList && (
-        <LikeUserModal users={likeUsers} onClose={() => onToggleModal('likeUserList')} browserWidth={width} />
+        <LikeUserModal
+            onClickUser={(likeUser) => goToProfile(likeUser as User)}
+            users={likeUsers} onClose={() => onToggleModal('likeUserList')} browserWidth={width} />
       )}
       {editComment && (
         <EditCommentModal

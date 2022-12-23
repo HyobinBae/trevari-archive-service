@@ -226,7 +226,9 @@ const BookreviewComments = ({
         onConfirm={onConfirm}
       />
       {likeUserList && (
-        <LikeUserModal browserWidth={width} users={likeUsers} onClose={() => onToggleModal('likeUserList')} />
+        <LikeUserModal
+            onClickUser={(likeUser) => goToProfile(likeUser as User)}
+            browserWidth={width} users={likeUsers} onClose={() => onToggleModal('likeUserList')} />
       )}
     </>
   );

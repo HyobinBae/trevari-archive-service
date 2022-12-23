@@ -10,8 +10,9 @@ interface LikeUserModalProps {
   users: LikeUser[];
   onClose: () => void;
   browserWidth?: number;
+  onClickUser: ((user: LikeUser) => void);
 }
-const LikeUserModal = ({ users, onClose, browserWidth }: LikeUserModalProps) => {
+const LikeUserModal = ({ users, onClose, browserWidth, onClickUser }: LikeUserModalProps) => {
   const modalPositionLeftPx = browserWidth && browserWidth > 500 ? (browserWidth - 500) / 2 : 0;
   return (
     <ModalContainer modalPositionLeftPx={modalPositionLeftPx}>
@@ -22,7 +23,7 @@ const LikeUserModal = ({ users, onClose, browserWidth }: LikeUserModalProps) => 
       <Divider />
       {users.map(user => (
         <React.Fragment key={user.id}>
-          <ProfileInLikeUserModal user={user} />
+          <ProfileInLikeUserModal user={user} onClickUser={onClickUser}/>
           <Divider />
         </React.Fragment>
       ))}
