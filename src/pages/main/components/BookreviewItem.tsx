@@ -178,8 +178,9 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
         <ClubNameWrapper onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
           {bookreview.title}
         </ClubNameWrapper>
-        <BookreviewContent onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
-          {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string}
+        <BookreviewContent onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)} >
+          <p dangerouslySetInnerHTML={{__html:bookreview.content}}></p>
+          {/*{toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string}*/}
         </BookreviewContent>
         {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).isShowMore && (
           <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더보기</ShowMoreButton>
