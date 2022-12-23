@@ -19,6 +19,7 @@ import LoadingPage from '../../components/base/LoadingPage';
 import Loading from '../../components/svgs/Loading';
 import { selectBookreivews } from './services/bookreview.store';
 import { debounce } from 'lodash';
+import BlurInBookreviews from 'components/svgs/BlurInBookreviews';
 
 
 const Bookreviews = () => {
@@ -142,8 +143,10 @@ const Bookreviews = () => {
   ) : (
     <BlurWrapper>
       <div>
-        <BlurImage src='/images/blur.svg' width='375' height='674' alt='트레바리'/>
+        <BlurInBookreviews width={'100%'} height={'100%'} />
+        {/*<BlurImage src='/images/blur.svg' width='375' height='674' alt='트레바리'/>*/}
       </div>
+
       <BlurInBookreviewsWrapper>
         <WriteIcon width={90} height={90} />
         <EmptyDescription>멤버만 이용할 수 있습니다.</EmptyDescription>
