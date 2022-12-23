@@ -151,7 +151,7 @@ const BookreviewComments = ({
     dispatch(createBookreviewComment.initiate({ input }));
     toastAlert({
       open: true,
-      type: 'info',
+      type: 'done',
       text: '댓글이 등록되었습니다.',
     });
     onChangeInput('');

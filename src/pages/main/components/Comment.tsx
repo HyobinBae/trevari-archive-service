@@ -115,7 +115,7 @@ const Comment = ({ comment, onClickReply, loggedUserID, goToProfile }: CommentPr
     if (resultAction.data.deleteBookreviewComment === true) {
       toastAlert({
         open: true,
-        type: 'info',
+        type: 'done',
         text: '댓글이 삭제되었습니다.',
       });
       onToggleModal('deleteComment');
@@ -126,7 +126,7 @@ const Comment = ({ comment, onClickReply, loggedUserID, goToProfile }: CommentPr
     if (resultAction.data.deleteBookreviewComment === true) {
       toastAlert({
         open: true,
-        type: 'info',
+        type: 'done',
         text: '답글이 삭제되었습니다.',
       });
       onToggleModal('deleteReply');
@@ -160,7 +160,7 @@ const Comment = ({ comment, onClickReply, loggedUserID, goToProfile }: CommentPr
     dispatch(updateBookreviewComment.initiate({ input }));
     toastAlert({
       open: true,
-      type: 'info',
+      type: 'done',
       text: '댓글이 수정되었습니다.',
     });
     onToggleModal('editComment');

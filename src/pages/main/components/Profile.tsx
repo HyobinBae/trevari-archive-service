@@ -66,7 +66,7 @@ const Profile = ({
     navigator.clipboard.writeText(window.location.href);
     toastAlert({
       open: true,
-      type: 'info',
+      type: 'done',
       text: '링크가 복사되었습니다.',
     });
     onDismiss();
