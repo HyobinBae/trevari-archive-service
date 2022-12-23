@@ -161,7 +161,6 @@ const Bookreviews = () => {
 const BlurImage = styled.img`
   width: 375px;
   height: 674px;
-  border-radius: 50%;
 `;
 
 const GridCardCount = styled.span`
