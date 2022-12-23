@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { title6 } from '@trevari/typo';
+import {body6} from '@trevari/typo';
 import { DEFAULT_PROFILE_IMAGE } from '../const';
 import { LikeUser } from 'pages/bookreviews/services/types';
 import CenterDot from 'components/svgs/CenterDot';
@@ -42,7 +42,7 @@ const Box = styled.div`
   align-items: center;
   gap: 5px;
   span {
-    ${title6}
+    ${body6}
     color: ${({ theme }) => theme.colors.gray800}
   }
 `;

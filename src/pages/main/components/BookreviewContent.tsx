@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import { body8, heading9, title6 } from '@trevari/typo';
-import { Bookreview, Content } from 'types/__generate__/user-backend-api';
+import {body8, contents2, heading9, title6} from '@trevari/typo';
+import { Bookreview } from 'types/__generate__/user-backend-api';
+import {stripAllTags} from "../../../utils";
 
 interface BookreviewContentProps {
   bookreview: Bookreview;
@@ -13,7 +14,9 @@ const BookreviewContent = ({ bookreview }: BookreviewContentProps) => {
   return (
     <Base>
       <Title>{title}</Title>
-      <div dangerouslySetInnerHTML={{ __html: content || '' }} />
+      <Content>
+        {stripAllTags(content).replace(/<[^>]*>?/g, '')}
+      </Content>
       <BookMovieDivWrapper>
         {bookContent.length > 0 && (
           <BookMovieDiv>
@@ -41,6 +44,15 @@ const Base = styled.div`
 const Title = styled.h3`
   ${heading9};
   margin: 4px 0 20px;
+`;
+
+const Content = styled.div`
+  ${contents2};
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+  margin-bottom: 20px;
+  line-height: 30px;
 `;
 
 const BookMovieDiv = styled.div`

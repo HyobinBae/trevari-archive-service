@@ -34,7 +34,7 @@ const EditCommentModal = ({ text, onClose, onChange, onConfirm, browserWidth }: 
 
   return (
     <ModalContainer modalPositionLeftPx={modalPositionLeftPx}>
-      <CloseButtonWrapper onClick={() => onToggleModal('deleteComment')}>
+      <CloseButtonWrapper onClick={() => onToggleModal('cancelComment')}>
         <CloseIcon />
       </CloseButtonWrapper>
       <EditCommentTitle>댓글 수정하기</EditCommentTitle>
@@ -45,7 +45,7 @@ const EditCommentModal = ({ text, onClose, onChange, onConfirm, browserWidth }: 
       <BaseModal
         open={cancelComment}
         text={editCancelModalText}
-        onCancel={() => onToggleModal('deleteComment')}
+        onCancel={() => onToggleModal('cancelComment')}
         onConfirm={onClose}
       />
     </ModalContainer>

@@ -130,7 +130,7 @@ const Bookreviews = () => {
           <EmojiWrapper>
             <WriteIcon width={90} height={90} />
             <EmptyDescription>
-              아직 등록된 독후감이 없어요.
+              아직 등록된 독후감이 없습니다.
               <br />
               가장 먼저 독후감을 작성해보세요.
             </EmptyDescription>
@@ -181,7 +181,8 @@ const EmojiWrapper = styled.div`
 `;
 const EmptyDescription = styled.div`
   ${heading11};
-  margin-top: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   text-align: center;
 `;
 
