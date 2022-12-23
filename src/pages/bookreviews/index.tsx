@@ -11,7 +11,6 @@ import { Button } from '@trevari/components';
 import { WriteIcon } from '@trevari/icons';
 import { useSelector } from 'react-redux';
 import { selectUserRoles } from '../../services/user/user.store';
-import BlurInBookreviews from '../../components/svgs/BlurInBookreviews';
 import { ClubRole } from '../../types/__generate__/user-backend-api';
 import BookreviewItem from '../main/components/BookreviewItem';
 import { getBookreviews } from './services/api';
@@ -164,8 +163,8 @@ const Bookreviews = () => {
   ) : (
     <BlurWrapper>
       <div>
-        <BlurInBookreviews width={'100%'} height={'100%'} />
-        {/*<BlurImage src='/images/blur.svg' width='375' height='674' alt='트레바리'/>*/}
+        {/*<BlurInBookreviews width={'100%'} height={'100%'} />*/}
+        <img src='/images/blur.svg'  width={'100%'} height={'100%'} alt='트레바리'/>
       </div>
 
       <BlurInBookreviewsWrapper>
