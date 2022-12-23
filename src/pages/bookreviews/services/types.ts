@@ -4,6 +4,7 @@ export interface LikeUser {
   id: string;
   profileImageUrl: string;
   name: string;
+  email: string;
   role: string;
 }
 export interface IBookreviews {

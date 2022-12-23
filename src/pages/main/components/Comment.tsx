@@ -4,7 +4,7 @@ import { BottomSheet } from 'react-spring-bottom-sheet';
 import { contents2, title4 } from '@trevari/typo';
 import { Divider } from 'pages/curations/curations.styles';
 import React, { useEffect, useState } from 'react';
-import { BookreviewComment } from 'types/__generate__/user-backend-api';
+import {BookreviewComment, User} from 'types/__generate__/user-backend-api';
 import ProfileInBookreviewPage from './ProfileInBookreviewPage';
 import Kebab from 'components/svgs/Kebab';
 import MoreItems from './MoreItems';
@@ -32,6 +32,7 @@ interface CommentProps {
   comment: BookreviewComment;
   onClickReply: (id: string, name: string, userID?: string) => void;
   loggedUserID: string;
+  goToProfile: ((user: User) => void);
 }
 
 const initialModalState = {
@@ -42,7 +43,7 @@ const initialModalState = {
   editComment: false,
   selectedCommentID: '',
 };
-const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
+const Comment = ({ comment, onClickReply, loggedUserID, goToProfile }: CommentProps) => {
   const { user, createdAt, content, replies, id, userID, likeUserIDs, deletedAt } = comment;
 
   const {
@@ -114,7 +115,7 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
     if (resultAction.data.deleteBookreviewComment === true) {
       toastAlert({
         open: true,
-        type: 'info',
+        type: 'done',
         text: '댓글이 삭제되었습니다.',
       });
       onToggleModal('deleteComment');
@@ -125,7 +126,7 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
     if (resultAction.data.deleteBookreviewComment === true) {
       toastAlert({
         open: true,
-        type: 'info',
+        type: 'done',
         text: '답글이 삭제되었습니다.',
       });
       onToggleModal('deleteReply');
@@ -159,7 +160,7 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
     dispatch(updateBookreviewComment.initiate({ input }));
     toastAlert({
       open: true,
-      type: 'info',
+      type: 'done',
       text: '댓글이 수정되었습니다.',
     });
     onToggleModal('editComment');
@@ -188,7 +189,6 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
   const deletedItem = !isNil(deletedAt)
   mentionedComment = deletedItem ? "삭제된 댓글입니다." : mentionedComment
 
-
   return (
     <div>
       {
@@ -199,7 +199,9 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
               <MoreButtonWrapper onClick={() => onClickMoreButton(userID, id, content)}>
                 <Kebab />
               </MoreButtonWrapper>
-              <ProfileInBookreviewPage user={user} publishedAt={createdAt} isBookreviewProfile={false} />
+              <ProfileInBookreviewPage
+                  onClicked={() => {goToProfile(user)}}
+                  user={user} publishedAt={createdAt} isBookreviewProfile={false} />
             </ProfileBox>
         )
       }
@@ -252,7 +254,9 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
                         <MoreButtonWrapper onClick={() => onClickMoreButton(replyUser.id, replyID, replyContent)}>
                           <Kebab />
                         </MoreButtonWrapper>
-                        <ProfileInBookreviewPage user={replyUser} publishedAt={replyCreatedAt} />
+                        <ProfileInBookreviewPage
+                            onClicked={() => {goToProfile(replyUser)}}
+                            user={replyUser} publishedAt={replyCreatedAt} />
                       </ProfileBox>)
               }
 
@@ -319,7 +323,9 @@ const Comment = ({ comment, onClickReply, loggedUserID }: CommentProps) => {
         onConfirm={onConfirmReport}
       />
       {likeUserList && (
-        <LikeUserModal users={likeUsers} onClose={() => onToggleModal('likeUserList')} browserWidth={width} />
+        <LikeUserModal
+            onClickUser={(likeUser) => goToProfile(likeUser as User)}
+            users={likeUsers} onClose={() => onToggleModal('likeUserList')} browserWidth={width} />
       )}
       {editComment && (
         <EditCommentModal

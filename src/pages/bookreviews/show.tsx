@@ -13,7 +13,8 @@ import { format, isAfter, parseISO } from 'date-fns';
 import { goToPage } from 'utils';
 import { endpoints } from 'config';
 import LoadingPage from 'components/base/LoadingPage';
-import { ClubRole } from 'types/__generate__/user-backend-api';
+import {ClubRole, User} from 'types/__generate__/user-backend-api';
+import {Buffer} from "buffer";
 
 
 
@@ -24,6 +25,16 @@ const BookReviewShow = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const [permission, setPermission] = useState<'loading' | 'denied' | 'accepted'>('loading');
+
+  const goToProfile = (user: User) => {
+    const buff = Buffer.from(user.email, 'utf-8');
+    const base64 = buff.toString('base64');
+    goToPage(
+        `${endpoints.user_page_url}/profile?${
+            user.email ? `uid=${base64}` : `userName=${user.name}`
+        }`,
+    );
+  };
 
   useEffect(() => {
     if (user && bookreview) {
@@ -77,6 +88,7 @@ const BookReviewShow = () => {
         publishedAt={bookreview?.publishedAt}
         isMyBookreview={bookreview?.user.id === user.id}
         bookreviewID={bookreview?.id}
+        goToProfile={goToProfile}
       />
       <BookreviewContent bookreview={bookreview} />
       <BookreviewComments
@@ -84,6 +96,7 @@ const BookReviewShow = () => {
         likeUserIDs={bookreview?.likeUserIDs}
         comments={bookreview?.comments}
         user={user}
+        goToProfile={goToProfile}
       />
     </div>
   );

@@ -22,6 +22,7 @@ interface ProfileProps {
   isBookreviewProfile?: boolean;
   isMyBookreview: boolean;
   bookreviewID: string;
+  goToProfile: ((user: User) => void);
 }
 
 const Profile = ({
@@ -30,7 +31,7 @@ const Profile = ({
   publishedAt,
   isBookreviewProfile = true,
   isMyBookreview,
-  bookreviewID,
+  bookreviewID, goToProfile
 }: ProfileProps) => {
   const { width } = useWindowSize();
   const dispatch = useAppDispatch();
@@ -65,7 +66,7 @@ const Profile = ({
     navigator.clipboard.writeText(window.location.href);
     toastAlert({
       open: true,
-      type: 'info',
+      type: 'done',
       text: '링크가 복사되었습니다.',
     });
     onDismiss();
@@ -105,10 +106,11 @@ const Profile = ({
           <Kebab />
         </MoreButtonWrapper>
         <ProfileInBookreviewPage
-          user={user}
-          clubName={clubName}
-          publishedAt={publishedAt}
-          isBookreviewProfile={isBookreviewProfile}
+            onClicked={() => goToProfile(user)}
+            user={user}
+            clubName={clubName}
+            publishedAt={publishedAt}
+            isBookreviewProfile={isBookreviewProfile}
         />
       </ProfileBox>
       <BottomSheet

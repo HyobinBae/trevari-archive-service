@@ -7,20 +7,19 @@ import CenterDot from 'components/svgs/CenterDot';
 
 interface ProfileInLikeUserModalProps {
   user: LikeUser;
+  onClickUser: ((user: LikeUser) => void);
 }
-const ProfileInLikeUserModal = ({ user }: ProfileInLikeUserModalProps) => {
-  const { name, profileImageUrl, role } = user;
-
+const ProfileInLikeUserModal = ({ user, onClickUser }: ProfileInLikeUserModalProps) => {
   const onImageError = e => {
     e.src = DEFAULT_PROFILE_IMAGE;
   };
   return (
-    <Base>
-      <ProfileImage src={profileImageUrl || DEFAULT_PROFILE_IMAGE} onError={onImageError}></ProfileImage>
+    <Base onClick={ () => onClickUser(user)}>
+      <ProfileImage src={user.profileImageUrl || DEFAULT_PROFILE_IMAGE} onError={onImageError}></ProfileImage>
       <Box>
-        <span>{name}</span>
+        <span>{user.name}</span>
         <CenterDot />
-        <span>{role}</span>
+        <span>{user.role}</span>
       </Box>
     </Base>
   );
@@ -30,6 +29,7 @@ const Base = styled.div`
   padding: 15px 20px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 const ProfileImage = styled.img`
   width: 40px;

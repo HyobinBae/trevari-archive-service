@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { Bookreview } from '../../../types/__generate__/user-backend-api';
+import React, {useEffect, useState} from 'react';
+import {Bookreview, User} from '../../../types/__generate__/user-backend-api';
 import styled from '@emotion/styled';
-import { ProfileAvatar } from '@trevari/components';
-import { CommentIcon, HeartIcon, KebabIcon, LoveFilledIcon } from '@trevari/icons';
-import { body8, contents2, heading9, title4, title6 } from '@trevari/typo';
-import { elapsedTime } from '../../../utils/time';
-import { useTheme } from '@emotion/react';
-import { goToPage, stripAllTags } from '../../../utils';
-import { endpoints } from '../../../config';
-import { toastAlert } from '../../../services/ui.store';
+import {ProfileAvatar} from '@trevari/components';
+import {CommentIcon, HeartIcon, KebabIcon, LoveFilledIcon} from '@trevari/icons';
+import {body8, contents2, heading9, title4, title6} from '@trevari/typo';
+import {elapsedTime} from '../../../utils/time';
+import {useTheme} from '@emotion/react';
+import {goToPage, stripAllTags} from '../../../utils';
+import {endpoints} from '../../../config';
+import {toastAlert} from '../../../services/ui.store';
 import MoreItems from './MoreItems';
-import { BottomSheet } from 'react-spring-bottom-sheet';
-import { useWindowSize } from '../../../utils/windowResize';
-import { deleteBookreview, getBookreviewLikeUsers, toggleLikeOnBookreview } from '../../bookreviews/services/api';
+import {BottomSheet} from 'react-spring-bottom-sheet';
+import {useWindowSize} from '../../../utils/windowResize';
+import {deleteBookreview, getBookreviewLikeUsers, toggleLikeOnBookreview} from '../../bookreviews/services/api';
 import BaseModal from './ModalBase';
-import { useAppDispatch } from '../../../services/store';
+import {useAppDispatch} from '../../../services/store';
 import DefaultProfileAvatar from '../../../components/svgs/DefaultProfileAvatar';
-import { LikeUser } from '../../bookreviews/services/types';
+import {LikeUser} from '../../bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
-import { Buffer } from 'buffer';
+import {Buffer} from 'buffer';
 
 interface Props {
   bookreview: Bookreview;
@@ -60,13 +60,13 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
     setDetail(true)
   };
 
-  const goToProfile = () => {
-    const buff = Buffer.from(bookreview.user.email, 'utf-8');
+  const goToProfile = (user:User) => {
+    const buff = Buffer.from(user.email, 'utf-8');
     const base64 = buff.toString('base64');
     goToPage(
-      `${endpoints.user_page_url}/profile?${
-        bookreview.user.email ? `uid=${base64}` : `userName=${bookreview.user.name}`
-      }`,
+        `${endpoints.user_page_url}/profile?${
+            user.email ? `uid=${base64}` : `userName=${user.name}`
+        }`,
     );
   };
 
@@ -103,7 +103,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
     navigator.clipboard.writeText(`${window.location.href}/show/${bookreview.id}`);
     toastAlert({
       open: true,
-      type: 'info',
+      type: 'done',
       text: '링크가 복사되었습니다.',
     });
     onDismiss();
@@ -161,7 +161,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
       <BookreviewItemWrapper>
         <BookreviewItemDiv>
           <ProfileDiv>
-            <ProfileAvatarWrapper onClick={() => goToProfile()}>
+            <ProfileAvatarWrapper onClick={() => goToProfile(bookreview.user)}>
               {bookreview.user?.profileImageUrl !== null ? (
                 <ProfileAvatar src={bookreview.user?.profileImageUrl} size={38} />
               ) : (
@@ -169,7 +169,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
               )}
             </ProfileAvatarWrapper>
             <NameDiv>
-              <UserNameDiv onClick={() => goToProfile()}>{bookreview.user?.name}</UserNameDiv>
+              <UserNameDiv onClick={() => goToProfile(bookreview.user)}>{bookreview.user?.name}</UserNameDiv>
               <ClubNameDiv>{bookreview.club?.name}</ClubNameDiv>
             </NameDiv>
           </ProfileDiv>
@@ -260,7 +260,9 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
         onConfirm={onConfirmDelete}
       />
       {isLikeUserListModal && (
-        <LikeUserModal browserWidth={width} users={likeUsers} onClose={() => setIsLikeUserListModal(false)} />
+        <LikeUserModal
+            onClickUser={(likeUser) => goToProfile(likeUser as User)}
+            browserWidth={width} users={likeUsers} onClose={() => setIsLikeUserListModal(false)} />
       )}
     </>
   );

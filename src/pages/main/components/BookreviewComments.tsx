@@ -38,11 +38,13 @@ const BookreviewComments = ({
   comments,
   user,
   bookreviewID,
+    goToProfile,
 }: {
   likeUserIDs: string[];
   comments: BookreviewComment[];
   user: User;
   bookreviewID: string;
+  goToProfile: ((user: User) => void);
 }) => {
   const filterComments = (comments: BookreviewComment[]): BookreviewComment[] => {
     const res: BookreviewComment[] = []
@@ -176,7 +178,7 @@ const BookreviewComments = ({
     dispatch(createBookreviewComment.initiate({ input }));
     toastAlert({
       open: true,
-      type: 'info',
+      type: 'done',
       text: '댓글이 등록되었습니다.',
     });
     onChangeInput('');
@@ -223,6 +225,7 @@ const BookreviewComments = ({
             key={comment.id}
             comment={comment}
             onClickReply={onClickReply}
+            goToProfile={goToProfile}
             loggedUserID={user.id}
           />
         ))}
@@ -250,7 +253,9 @@ const BookreviewComments = ({
         onConfirm={onConfirm}
       />
       {likeUserList && (
-        <LikeUserModal browserWidth={width} users={likeUsers} onClose={() => onToggleModal('likeUserList')} />
+        <LikeUserModal
+            onClickUser={(likeUser) => goToProfile(likeUser as User)}
+            browserWidth={width} users={likeUsers} onClose={() => onToggleModal('likeUserList')} />
       )}
     </>
   );
