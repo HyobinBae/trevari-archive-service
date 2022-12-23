@@ -164,7 +164,7 @@ const Bookreviews = () => {
     <BlurWrapper>
       <div>
         {/*<BlurInBookreviews width={'100%'} height={'100%'} />*/}
-        <img src='/images/blur.svg'  width={'100%'} height={'100%'} alt='트레바리'/>
+        <img src='/images/blur.svg' width={'100%'} height='1176' alt='트레바리'/>
       </div>
 
       <BlurInBookreviewsWrapper>
