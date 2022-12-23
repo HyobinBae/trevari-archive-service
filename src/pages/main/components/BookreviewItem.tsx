@@ -186,8 +186,11 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
               <p dangerouslySetInnerHTML={{__html:bookreview.content}}></p>
           ) : (
               toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string
-            )
+          )
           }
+          {toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).isShowMore && (
+            <ShowMoreButton onClick={() => onClickMore(bookreviewContent)}>...더 보기</ShowMoreButton>
+          )}
         </BookreviewContent>
         <BookMovieDivWrapper>
           {bookContent.length > 0 && (
