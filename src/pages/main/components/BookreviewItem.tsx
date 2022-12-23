@@ -183,7 +183,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
         </ClubNameWrapper>
         <BookreviewContent onClick={() => onClickMore(bookreviewContent)} >
           { isDetail ? (
-              <p dangerouslySetInnerHTML={{__html:bookreview.content}}></p>
+              <div dangerouslySetInnerHTML={{__html:bookreview.content}}></div>
           ) : (
               toggleEllipsis(stripAllTags(bookreview.content).replace(/<[^>]*>?/g, ''), limit).string
           )

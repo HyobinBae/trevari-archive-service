@@ -15,7 +15,7 @@ const BookreviewContent = ({ bookreview }: BookreviewContentProps) => {
     <Base>
       <Title>{title}</Title>
       <Content>
-          <p dangerouslySetInnerHTML={{__html:content}}></p>
+          <div dangerouslySetInnerHTML={{__html:content}}></div>
       </Content>
       <BookMovieDivWrapper>
         {bookContent.length > 0 && (
