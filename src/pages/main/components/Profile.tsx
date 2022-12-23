@@ -22,6 +22,7 @@ interface ProfileProps {
   isBookreviewProfile?: boolean;
   isMyBookreview: boolean;
   bookreviewID: string;
+  goToProfile: ((email: string) => void);
 }
 
 const Profile = ({
@@ -30,7 +31,7 @@ const Profile = ({
   publishedAt,
   isBookreviewProfile = true,
   isMyBookreview,
-  bookreviewID,
+  bookreviewID, goToProfile
 }: ProfileProps) => {
   const { width } = useWindowSize();
   const dispatch = useAppDispatch();
@@ -105,10 +106,11 @@ const Profile = ({
           <Kebab />
         </MoreButtonWrapper>
         <ProfileInBookreviewPage
-          user={user}
-          clubName={clubName}
-          publishedAt={publishedAt}
-          isBookreviewProfile={isBookreviewProfile}
+            onClicked={() => goToProfile(user.email ? user.email : '')}
+            user={user}
+            clubName={clubName}
+            publishedAt={publishedAt}
+            isBookreviewProfile={isBookreviewProfile}
         />
       </ProfileBox>
       <BottomSheet

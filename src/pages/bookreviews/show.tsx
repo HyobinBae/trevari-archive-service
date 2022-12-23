@@ -14,6 +14,7 @@ import { goToPage } from 'utils';
 import { endpoints } from 'config';
 import LoadingPage from 'components/base/LoadingPage';
 import { ClubRole } from 'types/__generate__/user-backend-api';
+import {Buffer} from "buffer";
 
 
 
@@ -24,6 +25,14 @@ const BookReviewShow = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const [permission, setPermission] = useState<'loading' | 'denied' | 'accepted'>('loading');
+
+  const goToProfile = (email: string) => {
+    const buff = Buffer.from(email, 'utf-8');
+    const base64 = buff.toString('base64');
+    goToPage(
+        `${endpoints.user_page_url}/profile?uid=${base64}`,
+    );
+  };
 
   useEffect(() => {
     if (user && bookreview) {
@@ -77,6 +86,7 @@ const BookReviewShow = () => {
         publishedAt={bookreview?.publishedAt}
         isMyBookreview={bookreview?.user.id === user.id}
         bookreviewID={bookreview?.id}
+        goToProfile={goToProfile}
       />
       <BookreviewContent bookreview={bookreview} />
       <BookreviewComments

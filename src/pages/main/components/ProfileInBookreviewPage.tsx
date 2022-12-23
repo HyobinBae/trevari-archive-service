@@ -9,8 +9,9 @@ interface ProfileInBookreviewPageProps {
   user: User;
   clubName?: string;
   publishedAt: string;
+  onClicked: (() => void)
 }
-const ProfileInBookreviewPage = ({ user, clubName, publishedAt }: ProfileInBookreviewPageProps) => {
+const ProfileInBookreviewPage = ({ user, clubName, publishedAt, onClicked }: ProfileInBookreviewPageProps) => {
   const { name, profileImageUrl } = user;
 
   const onImageError = e => {
@@ -18,8 +19,10 @@ const ProfileInBookreviewPage = ({ user, clubName, publishedAt }: ProfileInBookr
   };
   return (
     <Base>
-      <ProfileImage src={profileImageUrl || DEFAULT_PROFILE_IMAGE} onError={onImageError}></ProfileImage>
-      <Box>
+      <ProfileImage
+          onClick={() => {onClicked()}}
+          src={profileImageUrl || DEFAULT_PROFILE_IMAGE} onError={onImageError}></ProfileImage>
+      <Box onClick={() => {onClicked()}}>
         <span>{name}</span>
         <span>{clubName}</span>
       </Box>
