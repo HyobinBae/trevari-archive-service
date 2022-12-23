@@ -23,7 +23,7 @@ const LikeUserModal = ({ users, onClose, browserWidth, onClickUser }: LikeUserMo
       <Divider />
       {users.map(user => (
         <React.Fragment key={user.id}>
-          <ProfileInLikeUserModal user={user} onClickUser={onClickUser}/>
+          <ProfileInLikeUserModal user={user} onClickUser={() => onClickUser(user)}/>
           <Divider />
         </React.Fragment>
       ))}
