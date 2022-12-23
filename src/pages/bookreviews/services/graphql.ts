@@ -309,6 +309,7 @@ export const GET_BOOKREIVEW_LIKEUSERS = gql`
     bookreviewLikeUsers(id: $id) {
       id
       name
+      email
       profileImageUrl
       role
     }
