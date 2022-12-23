@@ -8,6 +8,17 @@ interface BookreviewContentProps {
 }
 const BookreviewContent = ({ bookreview }: BookreviewContentProps) => {
   const { contents, content, title } = bookreview;
+  const customContents = contents && contents.length > 0 ? contents.map((c: Content, index) => {
+    if(index < 2) {
+      return {
+        id: c.id,
+        customType: c.type === 'book' ? '책' : '기타',
+        author: c.author,
+        title: c.type === 'book' ? '『' + c.title + '』' : '「' + c.title + '」',
+      }
+    }
+  })
+  .filter(c => c) : [];
 
   return (
     <Base>
@@ -16,12 +27,13 @@ const BookreviewContent = ({ bookreview }: BookreviewContentProps) => {
           <div dangerouslySetInnerHTML={{__html:content}}></div>
       </Content>
       <BookMovieDivWrapper>
-        {contents && contents.length > 0 && (
+        {customContents.length > 0 && (
           <>
-          {contents.map((item: Content) => (
+          {customContents.map((item) => (
             <BookMovieDiv key={item.id}>
-              <BookMovieSpan>{item.type === 'book' ? '책' : '기타'} | </BookMovieSpan>
-              {item.author ? item.author + ', ' + item.title : item.title}
+              <BookMovieSpan>{item.customType} | </BookMovieSpan>
+              {
+                item.author ? item.author + ', ' + item.title : item.title}
             </BookMovieDiv>
           ))}
           </>
