@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import {body8, contents2, heading9, title6} from '@trevari/typo';
 import { Bookreview } from 'types/__generate__/user-backend-api';
-import {stripAllTags} from "../../../utils";
+import React from "react";
 
 interface BookreviewContentProps {
   bookreview: Bookreview;
@@ -15,7 +15,7 @@ const BookreviewContent = ({ bookreview }: BookreviewContentProps) => {
     <Base>
       <Title>{title}</Title>
       <Content>
-        {stripAllTags(content).replace(/<[^>]*>?/g, '')}
+          <p dangerouslySetInnerHTML={{__html:content}}></p>
       </Content>
       <BookMovieDivWrapper>
         {bookContent.length > 0 && (
