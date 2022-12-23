@@ -256,7 +256,7 @@ const Comment = ({ comment, onClickReply, loggedUserID, goToProfile }: CommentPr
                           <Kebab />
                         </MoreButtonWrapper>
                         <ProfileInBookreviewPage
-                            onClicked={() => {goToProfile(user)}}
+                            onClicked={() => {goToProfile(replyUser)}}
                             user={replyUser} publishedAt={replyCreatedAt} />
                       </ProfileBox>)
               }

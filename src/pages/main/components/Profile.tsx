@@ -22,7 +22,7 @@ interface ProfileProps {
   isBookreviewProfile?: boolean;
   isMyBookreview: boolean;
   bookreviewID: string;
-  goToProfile: ((email: string) => void);
+  goToProfile: ((user: User) => void);
 }
 
 const Profile = ({
@@ -106,7 +106,7 @@ const Profile = ({
           <Kebab />
         </MoreButtonWrapper>
         <ProfileInBookreviewPage
-            onClicked={() => goToProfile(user.email ? user.email : '')}
+            onClicked={() => goToProfile(user)}
             user={user}
             clubName={clubName}
             publishedAt={publishedAt}
