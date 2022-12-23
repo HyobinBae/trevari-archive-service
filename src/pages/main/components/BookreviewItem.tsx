@@ -345,6 +345,9 @@ const BookreviewContent = styled.div`
   word-break: break-all;
   margin-bottom: 20px;
   line-height: 30px;
+  p {
+    margin: unset;
+  }
 `;
 
 const ShowMoreButton = styled.span`
