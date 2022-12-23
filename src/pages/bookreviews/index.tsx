@@ -10,7 +10,7 @@ import Box from 'components/base/Box';
 import { Button } from '@trevari/components';
 import { WriteIcon } from '@trevari/icons';
 import { useSelector } from 'react-redux';
-import { selectUserIsMember, selectUserRoles } from '../../services/user/user.store';
+import { selectUserRoles } from '../../services/user/user.store';
 import BlurInBookreviews from '../../components/svgs/BlurInBookreviews';
 import { ClubRole } from '../../types/__generate__/user-backend-api';
 import BookreviewItem from '../main/components/BookreviewItem';
@@ -19,17 +19,19 @@ import LoadingPage from '../../components/base/LoadingPage';
 import Loading from '../../components/svgs/Loading';
 import { selectBookreivews } from './services/bookreview.store';
 import { debounce } from 'lodash';
+import { hasMembership } from 'services/user/user.api';
+import { ADMIN_IDS, BOOK_REVIEW_SERVICE_ID } from 'pages/main/const';
 
 const Bookreviews = () => {
   const dispatch = useAppDispatch();
   const authenticated = useAppSelector(selectAuthenticated);
   const userId = useAppSelector(selectUserId);
-  const isMember = useSelector(selectUserIsMember);
   const roles = useSelector(selectUserRoles);
   const bookreviews = useSelector(selectBookreivews);
   const [filteredClubRoles, setFilteredClubRoles] = useState<ClubRole[]>(roles);
   const [totalBookreviewsOffset, setTotalBookreviewsOffset] = useState<number>(0);
   const [isLoadingMoreBookreviews, setIsLoadingMoreBookreviews] = useState<boolean>(false);
+  const [permission, setPermission] = useState<'loading' | 'denied' | 'accepted'>('loading');
   const { count, bookreviews: totalBookreviews, loading } = bookreviews;
 
   useEffect(() => {
@@ -40,6 +42,7 @@ const Bookreviews = () => {
     }
     if (userId) {
       dispatch(getBookreviews.initiate({ limit: 10, offset: 0, userID: userId }));
+      getPermission();
     }
   }, [dispatch, authenticated, userId]);
 
@@ -80,7 +83,27 @@ const Bookreviews = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [totalBookreviews, isLoadingMoreBookreviews]);
 
-  let moreClubRolesLength = null;
+  const getPermission = async () => {
+    if (!userId) return;
+    const isAdmin = ADMIN_IDS.includes(userId);
+    if(isAdmin) {
+      setPermission('accepted');
+      return;
+    }
+
+    const hasMembershipArgs = { userID: userId, serviceID: BOOK_REVIEW_SERVICE_ID };
+    const hasMembershipAction = await dispatch(hasMembership.initiate(hasMembershipArgs));
+    const hasMembershipFlag = hasMembershipAction.isSuccess && hasMembershipAction.data;
+
+    if (hasMembershipFlag) {
+      setPermission('accepted');
+      return;
+    }
+
+    setPermission('denied');
+  };
+
+  let moreClubRolesLength = 0;
   let clubName = '';
   let renderClubRoles = filteredClubRoles;
   if (filteredClubRoles.length > 3) {
@@ -90,7 +113,7 @@ const Bookreviews = () => {
 
   if (loading) return <LoadingPage />;
 
-  return isMember ? (
+  return permission && permission === 'accepted' ? (
     <>
       <Box style={{ paddingTop: '48px', minHeight: '100vh', paddingBottom: '67px' }}>
         <UserClubListWrapper>
