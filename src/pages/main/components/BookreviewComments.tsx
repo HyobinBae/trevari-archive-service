@@ -118,7 +118,6 @@ const BookreviewComments = ({
     if (commentText && (prevTargetID !== id || prevUserID !== userID)) {
       onToggleModal('replyConfirm');
     } else if (!commentText) {
-      console.log('여기 아님?');
       replyInputChange(name);
     } else if (inputRef.current) {
       inputRef.current.focus();
@@ -149,6 +148,7 @@ const BookreviewComments = ({
     setCommentText(value);
     if (inputRef.current) {
       inputRef.current.scrollTop = inputRef.current.scrollHeight;
+      console.log(inputRef.current.value);
       inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
     }
   };

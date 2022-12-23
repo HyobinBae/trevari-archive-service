@@ -153,6 +153,18 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   const deleteModalText = `삭제한 독후감은 복구가 어렵습니다.
   모임일 전에 독후감을 삭제할 경우, 모임 참석이 불가능하다는 점도 꼭 확인해 주세요.`;
 
+  const customContents = bookreview.contents && bookreview.contents.length > 0 ? bookreview.contents.map((c: Content, index) => {
+    if(index < 2) {
+      return {
+        id: c.id,
+        customType: c.type === 'book' ? '책' : '기타',
+        author: c.author,
+        title: c.type === 'book' ? '『' + c.title + '』' : '「' + c.title + '」',
+      }
+    }
+  })
+  .filter(c => c) : [];
+
   return (
     <>
       <BookreviewItemWrapper>
@@ -190,16 +202,17 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
           )}
         </BookreviewContent>
         <BookMovieDivWrapper>
-          {bookreview.contents && bookreview.contents.length > 0 && (
+          {customContents.length > 0 && (
             <>
-            {bookreview.contents.map(item => (
+            {customContents.map((item) => (
               <BookMovieDiv key={item.id}>
-                <BookMovieSpan>{item.type === 'book' ? '책' : '기타'} | </BookMovieSpan>
-                {item.author ? item.author + ', ' + item.title : item.title}
+                <BookMovieSpan>{item.customType} | </BookMovieSpan>
+                {
+                  item.author ? item.author + ', ' + item.title : item.title}
               </BookMovieDiv>
             ))}
             </>
-          )}
+          )}        
         </BookMovieDivWrapper>
         <ReactionDivWrapper>
           <ReactionDiv>
