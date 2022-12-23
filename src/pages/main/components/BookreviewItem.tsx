@@ -181,7 +181,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
         <ClubNameWrapper onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)}>
           {bookreview.title}
         </ClubNameWrapper>
-        <BookreviewContent onClick={() => goToPage(`/bookreviews/show/${bookreview.id}`)} >
+        <BookreviewContent onClick={() => onClickMore(bookreviewContent)} >
           { isDetail ? (
               <p dangerouslySetInnerHTML={{__html:bookreview.content}}></p>
           ) : (
