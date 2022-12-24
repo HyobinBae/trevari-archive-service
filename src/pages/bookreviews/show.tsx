@@ -60,7 +60,6 @@ const BookReviewShow = () => {
       hasMembershipArgs = { userID: user.id, serviceID: BOOK_REVIEW_SERVICE_ID };
     } else {
       hasMembershipArgs = {
-        checkDate: bookreview.meeting.startedAt,
         userID: user.id,
         serviceID: BOOK_REVIEW_SERVICE_ID,
       };
