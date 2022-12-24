@@ -33,6 +33,8 @@ const Bookreviews = () => {
   const [permission, setPermission] = useState<'loading' | 'denied' | 'accepted'>('loading');
   const { count, bookreviews: totalBookreviews, loading } = bookreviews;
 
+  const limit = 20
+
   useEffect(() => {
     const isGuest = userId === 'guest';
     if (isGuest) {
@@ -40,7 +42,7 @@ const Bookreviews = () => {
       return;
     }
     if (userId) {
-      dispatch(getBookreviews.initiate({ limit: 10, offset: 0, userID: userId }));
+      dispatch(getBookreviews.initiate({ limit, offset: 0, userID: userId }));
       getPermission();
     }
   }, [dispatch, authenticated, userId]);
@@ -66,7 +68,10 @@ const Bookreviews = () => {
 
       setIsLoadingMoreBookreviews(true);
       if(scrollToEnd) {
-        dispatch(getBookreviews.initiate({limit: noMoreLoad ? count : totalBookreviews.length + 10, offset: 0, userID: userId}));
+        const offset = totalBookreviews.length;
+
+        dispatch(getBookreviews.initiate({limit, offset, userID: userId}));
+
         setTotalBookreviewsOffset(totalBookreviews.length);
         setIsLoadingMoreBookreviews(false);
       }

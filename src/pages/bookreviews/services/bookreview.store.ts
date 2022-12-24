@@ -52,7 +52,6 @@ export const bookreview = createSlice({
   },
 });
 
-export const selectBookreivew = (state: RootState) => state.bookreview.bookreview;
 export const selectBookreivews = (state: RootState) => state.bookreview.bookreviews;
 
 export default bookreview.reducer;
