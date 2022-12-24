@@ -34,7 +34,7 @@ export const bookreview = createSlice({
     builder.addMatcher(getBookreviews.matchFulfilled, (state, { payload }) => {
       state.bookreviews = {
         count: payload.count,
-        bookreviews: state.bookreviews.bookreviews.concat(payload.bookreviewsV2),
+        bookreviews: state.bookreviews.bookreviews.concat(payload.bookreviews),
         loading: false,
       };
     });
