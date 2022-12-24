@@ -148,7 +148,6 @@ const BookreviewComments = ({
     setCommentText(value);
     if (inputRef.current) {
       inputRef.current.scrollTop = inputRef.current.scrollHeight;
-      console.log(inputRef.current.value);
       inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
     }
   };
