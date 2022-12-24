@@ -17,7 +17,6 @@ import {ClubRole, User} from 'types/__generate__/user-backend-api';
 import {Buffer} from "buffer";
 
 
-
 const BookReviewShow = () => {
   const { bookreivewID } = useParams();
   const { data: bookreview, isLoading } = useGetBookreviewQuery({ id: bookreivewID || '' });
@@ -29,28 +28,28 @@ const BookReviewShow = () => {
   const goToProfile = (user: User) => {
     const buff = Buffer.from(user.email, 'utf-8');
     const base64 = buff.toString('base64');
-    goToPage(
-        `${endpoints.user_page_url}/profile?${
-            user.email ? `uid=${base64}` : `userName=${user.name}`
-        }`,
-    );
+    goToPage(`${endpoints.user_page_url}/profile?${user.email ? `uid=${base64}` : `userName=${user.name}`}`);
   };
 
   useEffect(() => {
     if (user && bookreview) {
-      getPermission();
+      checkPermissions();
     }
   }, [user, bookreview]);
 
-  const getPermission = async () => {
-    if (!user || !bookreview) return;
+  const isMyClubAsync = async () => {
     const clubRoleAction = await dispatch(
-      getClubRoles.initiate({ where: { userID: user.id, refundStatuses: [null, '환불 입금 대기', '환불 입금 완료'] } }),
+        getClubRoles.initiate({ where: { userID: user.id, refundStatuses: [null, '환불 입금 대기', '환불 입금 완료'] } }),
     );
     const clubRoles = clubRoleAction.data;
-    const isMyClub = clubRoles.some((clubRole: ClubRole) => clubRole.clubID === bookreview.club.id);
-    const isMyBookreview = bookreview.userID === user.id;
-    const isAdmin = ADMIN_IDS.includes(user.id);
+    return clubRoles.some((clubRole: ClubRole) => clubRole.clubID === bookreview.club.id);
+  }
+
+  const isAdmin = () => {
+    return ADMIN_IDS.includes(user.id);
+  }
+
+  const hasMembershipAsync = async () => {
     const now = parseISO(format(new Date(), 'yyyy-MM-dd'));
     const meetingDate = parseISO(format(new Date(bookreview.meeting.startedAt), 'yyyy-MM-dd'));
     const isTodayOrPastMeeting = isAfter(now, meetingDate);
@@ -66,15 +65,33 @@ const BookReviewShow = () => {
       };
     }
     const hasMembershipAction = await dispatch(hasMembership.initiate(hasMembershipArgs));
-    const hasMembershipFlag = hasMembershipAction.isSuccess && hasMembershipAction.data.hasMembership;
+    return hasMembershipAction.isSuccess && hasMembershipAction.data;
+  }
 
-    const hasPermission = bookreview.isPublic || isMyClub || isAdmin || hasMembershipFlag || isMyBookreview;
-    if (!hasPermission) {
-      setPermission('denied');
-    } else {
-      setPermission('accepted');
-    }
+  const isMyBookreview = () => {
+    return bookreview.userID === user.id;
+  }
+
+  const isPublicBookreview = () => {
+    return bookreview.isPublic
+  }
+
+  const hasPermissions = async () => {
+    if (isAdmin()) return true
+    if (isPublicBookreview()) return true
+    if (isMyBookreview()) return true
+    if (await isMyClubAsync()) return true
+    if (await hasMembershipAsync()) return true
+
+    return false
+  }
+
+  const checkPermissions = async () => {
+    if (!user || !bookreview) return;
+    const permission = await hasPermissions() ? 'accepted' : 'denied'
+    setPermission(permission);
   };
+
   if (isLoading || permission === 'loading') return <LoadingPage />;
   if (permission === 'denied') {
     goToPage(`${endpoints.user_page_url}/apply/wait`);
