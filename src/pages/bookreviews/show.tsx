@@ -65,7 +65,6 @@ const BookReviewShow = () => {
       };
     }
     const hasMembershipAction = await dispatch(hasMembership.initiate(hasMembershipArgs));
-    console.log(hasMembershipAction)
     return hasMembershipAction.isSuccess && hasMembershipAction.data;
   }
 
