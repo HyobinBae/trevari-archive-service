@@ -16,6 +16,7 @@ import LoadingPage from 'components/base/LoadingPage';
 import {ClubRole, User} from 'types/__generate__/user-backend-api';
 import {Buffer} from "buffer";
 
+
 const BookReviewShow = () => {
   const { bookreivewID } = useParams();
   const { data: bookreview, isLoading } = useGetBookreviewQuery({ id: bookreivewID || '' });
@@ -27,11 +28,7 @@ const BookReviewShow = () => {
   const goToProfile = (user: User) => {
     const buff = Buffer.from(user.email, 'utf-8');
     const base64 = buff.toString('base64');
-    goToPage(
-        `${endpoints.user_page_url}/profile?${
-            user.email ? `uid=${base64}` : `userName=${user.name}`
-        }`,
-    );
+    goToPage(`${endpoints.user_page_url}/profile?${user.email ? `uid=${base64}` : `userName=${user.name}`}`);
   };
 
   useEffect(() => {
@@ -68,7 +65,8 @@ const BookReviewShow = () => {
       };
     }
     const hasMembershipAction = await dispatch(hasMembership.initiate(hasMembershipArgs));
-    return  hasMembershipAction.isSuccess && hasMembershipAction.data.hasMembership;
+    console.log(hasMembershipAction)
+    return hasMembershipAction.isSuccess && hasMembershipAction.data;
   }
 
   const isMyBookreview = () => {
