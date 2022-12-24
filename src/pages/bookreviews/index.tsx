@@ -33,6 +33,8 @@ const Bookreviews = () => {
   const [permission, setPermission] = useState<'loading' | 'denied' | 'accepted'>('loading');
   const { count, bookreviews: totalBookreviews, loading } = bookreviews;
 
+  const limit = 10
+
   useEffect(() => {
     const isGuest = userId === 'guest';
     if (isGuest) {
@@ -40,7 +42,7 @@ const Bookreviews = () => {
       return;
     }
     if (userId) {
-      dispatch(getBookreviews.initiate({ limit: 10, offset: 0, userID: userId }));
+      dispatch(getBookreviews.initiate({ limit, offset: 0, userID: userId }));
       getPermission();
     }
   }, [dispatch, authenticated, userId]);
@@ -56,20 +58,20 @@ const Bookreviews = () => {
 
   useEffect(() => {
     const loadMoreBookreviews = () => {
-      const moMoreLoad = totalBookreviewsOffset + 10 >= count;
+      const noMoreLoad = totalBookreviewsOffset >= count;
       const scrollToEnd = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100;
-      if (moMoreLoad) {
+      if (noMoreLoad) {
         setIsLoadingMoreBookreviews(false);
         return;
       }
+
       setIsLoadingMoreBookreviews(true);
       if(scrollToEnd) {
-        dispatch(
-          getBookreviews.initiate({
-            limit: moMoreLoad ? count : totalBookreviews.length + 10, offset: 0, userID: userId
-          })
-        );
-        setTotalBookreviewsOffset(moMoreLoad ? count : totalBookreviewsOffset + 10);
+        const offset = totalBookreviews.length;
+
+        dispatch(getBookreviews.initiate({limit, offset, userID: userId}));
+
+        setTotalBookreviewsOffset(totalBookreviews.length);
         setIsLoadingMoreBookreviews(false);
       }
     };
