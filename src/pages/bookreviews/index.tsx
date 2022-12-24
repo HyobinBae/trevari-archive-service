@@ -57,20 +57,17 @@ const Bookreviews = () => {
   useEffect(() => {
     // FIXME : OFFSET을 계속 증가시키고 결과를 더해주는 식으로 변경해야된다. 이건 레이지 로딩이 아님..
     const loadMoreBookreviews = () => {
-      const moMoreLoad = totalBookreviewsOffset + 10 > count;
+      const noMoreLoad = totalBookreviewsOffset >= count;
       const scrollToEnd = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100;
-      if (moMoreLoad) {
+      if (noMoreLoad) {
         setIsLoadingMoreBookreviews(false);
         return;
       }
+
       setIsLoadingMoreBookreviews(true);
       if(scrollToEnd) {
-        dispatch(
-          getBookreviews.initiate({
-            limit: moMoreLoad ? count : totalBookreviews.length + 10, offset: 0, userID: userId
-          })
-        );
-        setTotalBookreviewsOffset(moMoreLoad ? count : totalBookreviewsOffset + 10);
+        dispatch(getBookreviews.initiate({limit: noMoreLoad ? count : totalBookreviews.length + 10, offset: 0, userID: userId}));
+        setTotalBookreviewsOffset(totalBookreviews.length);
         setIsLoadingMoreBookreviews(false);
       }
     };
