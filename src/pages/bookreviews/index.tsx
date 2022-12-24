@@ -55,8 +55,9 @@ const Bookreviews = () => {
   }, [roles]);
 
   useEffect(() => {
+    // FIXME : OFFSET을 계속 증가시키고 결과를 더해주는 식으로 변경해야된다. 이건 레이지 로딩이 아님..
     const loadMoreBookreviews = () => {
-      const moMoreLoad = totalBookreviewsOffset + 10 >= count;
+      const moMoreLoad = totalBookreviewsOffset + 10 > count;
       const scrollToEnd = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100;
       if (moMoreLoad) {
         setIsLoadingMoreBookreviews(false);
