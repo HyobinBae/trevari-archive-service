@@ -1,4 +1,5 @@
 import {useMobileDetect} from "../hooks/useDetectMobile";
+import {shareApi} from "../api/share";
 
 interface MyClipboard {
     copyTextToClipboard(data: string): Promise<void>
@@ -12,23 +13,25 @@ class PcClipboard implements MyClipboard {
 
 class ChannigClipboard implements MyClipboard {
     async copyTextToClipboard(data: string )  {
-        const type = "text/plain";
-        const blob = new Blob([data], { type });
-        alert(blob)
-        const items = [new ClipboardItem({ [type]: blob })];
-        alert(items)
+        const clipboardItem = new ClipboardItem({
+            'text/plain': shareApi.register(data).then((result) => {
+                if (!result) {
+                    return new Promise((resolve) => {
+                        resolve(new Blob([``]))
+                    })
+                }
+                return new Promise(async (resolve) => {
+                    resolve(new Blob([result]))
+                })
+            }),
+        })
+        navigator.clipboard.write([clipboardItem])
 
-
-        navigator.clipboard.write(items).then(
-            () => {
-                alert('')
-                /* success */
-            },
-            (error) => {
-                alert(error)
-                /* failure */
-            }
-        );
+        // const type = "text/plain";
+        // const blob = new Blob([data], { type });
+        // const items = [new ClipboardItem({ [type]: blob })];
+        //
+        // await navigator.clipboard.write(items);
     }
 }
 

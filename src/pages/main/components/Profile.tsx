@@ -66,8 +66,7 @@ const Profile = ({
   ];
   const clip = async () => {
     const originUrl = window.location.href
-    const text = await shareApi.register(originUrl)
-    await clipboard.copyTextToClipboard(text)
+    await clipboard.copyTextToClipboard(originUrl)
     toastAlert({
       open: true,
       type: 'done',

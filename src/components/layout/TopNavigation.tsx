@@ -125,12 +125,11 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
 
   const clip = async () => {
     const originUrl = window.location.href
-    const text = await shareApi.register(originUrl)
-    await clipboard.copyTextToClipboard(text)
+    await clipboard.copyTextToClipboard(originUrl)
     toastAlert({
-        open: true,
-        type: 'done',
-        text: '링크가 복사되었습니다.',
+      open: true,
+      type: 'done',
+      text: '링크가 복사되었습니다.',
     });
     onDismiss();
   };
