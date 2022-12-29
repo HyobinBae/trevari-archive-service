@@ -20,10 +20,30 @@ import {LikeUser} from '../../bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
 import {Buffer} from 'buffer';
 import {shareApi} from "../../../api/share";
+import {useMobileDetect} from "../../../hooks/useDetectMobile";
 
 interface Props {
   bookreview: Bookreview;
   userID: string;
+}
+
+interface MyClipboard {
+  copyTextToClipboard(data: string): Promise<void>
+}
+
+class PcClipboard implements MyClipboard {
+  async copyTextToClipboard(data: string) {
+    await navigator.clipboard.writeText('')
+  }
+}
+
+class MobileClipboard implements MyClipboard {
+  async copyTextToClipboard(data: string)  {
+    const clipboardItem = new ClipboardItem({
+      'text/plain': new Blob(['']),
+    })
+    await navigator.clipboard.write([clipboardItem])
+  }
 }
 
 const BookreviewItem = ({ bookreview, userID }: Props) => {
@@ -42,6 +62,9 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   const [isLikeUserListModal, setIsLikeUserListModal] = useState(false);
   const [isAlreadyLikedBookreview, setIsAlreadyLikedBookreview] = useState(bookreview.likeUserIDs.includes(userID));
   const [likeUsers, setLikeUsers] = useState<LikeUser[]>(bookreview.likeUserIDs);
+  const isApp = useMobileDetect().isMobile();
+  const myClipboard = isApp ? new MobileClipboard() : new PcClipboard()
+
 
   const {
     colors: { orange900, gray500 },
@@ -104,38 +127,9 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
 
   const clip = async () => {
     const originUrl = `${window.location.href}/show/${bookreview.id}`
-    // alert(res)
+    const text = await shareApi.register(originUrl)
+    await myClipboard.copyTextToClipboard(text)
 
-    const clipboardItem = new ClipboardItem({
-      'text/plain': shareApi.register(originUrl).then((result) => {
-
-        /**
-         * We have to return an empty string to the clipboard if something bad happens, otherwise the
-         * return type for the ClipBoardItem is incorrect.
-         */
-        if (!result) {
-          return new Promise((resolve) => {
-            resolve(new Blob[``]())
-          })
-        }
-
-        return new Promise((resolve) => {
-          resolve(new Blob([result]))
-        })
-      }),
-    })
-    navigator.clipboard.write([clipboardItem])
-    //     .then(() => {
-    //       alert('ㅠㅠ')
-    //     })
-    //     .catch((e) => {
-    //       alert(e)
-    //     })
-    // navigator.clipboard.writeText(res)
-
-    //
-    //
-    // ;
     toastAlert({
       open: true,
       type: 'done',
