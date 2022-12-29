@@ -20,32 +20,11 @@ import {LikeUser} from '../../bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
 import {Buffer} from 'buffer';
 import {shareApi} from "../../../api/share";
-import {useMobileDetect} from "../../../hooks/useDetectMobile";
+import {clipboard} from "../../../utils/clipboard";
 
 interface Props {
   bookreview: Bookreview;
   userID: string;
-}
-
-interface MyClipboard {
-  copyTextToClipboard(data: string): Promise<void>
-}
-
-class PcClipboard implements MyClipboard {
-  async copyTextToClipboard(data: string) {
-    await navigator.clipboard.writeText(data)
-  }
-}
-
-class MobileClipboard implements MyClipboard {
-  async copyTextToClipboard(data: string)  {
-    const clipboardItem = new ClipboardItem({
-      'text/plain': new Promise((resolve) => {
-        resolve(new Blob([data]))
-      })
-    })
-    await navigator.clipboard.write([clipboardItem])
-  }
 }
 
 const BookreviewItem = ({ bookreview, userID }: Props) => {
@@ -64,8 +43,6 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   const [isLikeUserListModal, setIsLikeUserListModal] = useState(false);
   const [isAlreadyLikedBookreview, setIsAlreadyLikedBookreview] = useState(bookreview.likeUserIDs.includes(userID));
   const [likeUsers, setLikeUsers] = useState<LikeUser[]>(bookreview.likeUserIDs);
-  const isApp = useMobileDetect().isMobile();
-  const myClipboard = isApp ? new MobileClipboard() : new PcClipboard()
 
 
   const {
@@ -130,8 +107,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   const clip = async () => {
     const originUrl = `${window.location.href}/show/${bookreview.id}`
     const text = await shareApi.register(originUrl)
-    await myClipboard.copyTextToClipboard(text)
-
+    await clipboard.copyTextToClipboard(text)
     toastAlert({
       open: true,
       type: 'done',

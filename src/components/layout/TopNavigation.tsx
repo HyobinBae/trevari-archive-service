@@ -20,6 +20,7 @@ import {useWindowSize} from "../../utils/windowResize";
 import {shareApi} from "../../api/share";
 import {toastAlert} from "../../services/ui.store";
 import {MoreButtonItems} from "../../pages/main/components/MoreButtonItems";
+import {clipboard} from "../../utils/clipboard";
 
 interface IProps {
   closeMenuWhenScrolled: boolean;
@@ -122,19 +123,16 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
     },
   ];
 
-  const clip = () => {
+  const clip = async () => {
     const originUrl = window.location.href
-      shareApi.register(originUrl)
-          .then(res => {
-              navigator.clipboard.writeText(res);
-              toastAlert({
-                  open: true,
-                  type: 'done',
-                  text: '링크가 복사되었습니다.',
-              });
-              onDismiss();
-          })
-          .catch();
+    const text = await shareApi.register(originUrl)
+    await clipboard.copyTextToClipboard(text)
+    toastAlert({
+        open: true,
+        type: 'done',
+        text: '링크가 복사되었습니다.',
+    });
+    onDismiss();
   };
 
   const onDismiss = () => {
