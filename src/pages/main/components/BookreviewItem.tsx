@@ -102,10 +102,6 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
     },
   ];
 
-  const copyToClipboard(test) {
-
-  }
-
   const clip = async () => {
     const originUrl = `${window.location.href}/show/${bookreview.id}`
     // alert(res)
