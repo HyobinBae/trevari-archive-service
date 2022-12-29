@@ -102,20 +102,44 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
     },
   ];
 
+  const copyToClipboard(test) {
+
+  }
+
   const clip = async () => {
     const originUrl = `${window.location.href}/show/${bookreview.id}`
-    const res = await shareApi.register(originUrl)
-    alert(res)
-    navigator.clipboard.writeText(res)
-        .then(() => {
-          alert('ㅠㅠ')
-        })
-        .catch((e) => {
-          alert(e)
-        })
+    // alert(res)
 
+    const clipboardItem = new ClipboardItem({
+      'text/plain': shareApi.register(originUrl).then((result) => {
 
-    ;
+        /**
+         * We have to return an empty string to the clipboard if something bad happens, otherwise the
+         * return type for the ClipBoardItem is incorrect.
+         */
+        if (!result) {
+          return new Promise(async (resolve) => {
+            resolve(new Blob[``]())
+          })
+        }
+
+        const copyText = `some string`
+        return new Promise(async (resolve) => {
+          resolve(new Blob([copyText]))
+        })
+      }),
+    })
+    navigator.clipboard.write([clipboardItem])
+    // navigator.clipboard.writeText(res)
+    //     .then(() => {
+    //       alert('ㅠㅠ')
+    //     })
+    //     .catch((e) => {
+    //       alert(e)
+    //     })
+    //
+    //
+    // ;
     toastAlert({
       open: true,
       type: 'done',
