@@ -7,7 +7,6 @@ interface MyClipboard {
 
 class PcClipboard implements MyClipboard {
     async copyTextToClipboard(data: string) {
-        alert("pc")
         shareApi.register(data).then(result => {
             navigator.clipboard.writeText(result)
         });
@@ -16,7 +15,6 @@ class PcClipboard implements MyClipboard {
 
 class IosClipboard implements MyClipboard {
     async copyTextToClipboard(data: string )  {
-        alert("mo")
         // ClipboardItem 내부에서 Promise 를 받아야 정상 동작
         const clipboardItem = new ClipboardItem({
             'text/plain': shareApi.register(data).then((result) => {
