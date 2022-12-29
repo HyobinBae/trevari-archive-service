@@ -57,9 +57,6 @@ const ListItemWrap = styled(ListItem)`
 
 const Button = styled.button<{ red: boolean }>`
   ${resetButtonCss}
-  :hover {
-    background-color: ${({ theme }) => theme.colors.orange50};
-  }
   ${({ theme }) => theme.breakPoint.mobile} {
     margin-bottom: 6px;
   }

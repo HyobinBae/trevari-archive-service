@@ -104,11 +104,16 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
   }
 
   const renderRightContents = () => {
-    return  (
+    return isSharePath() ? (
       <ButtonWrapper onClick={onClickShareButton}>
         <ShareIcon />
       </ButtonWrapper>
-    );
+    ) : {};
+  }
+
+  const isSharePath = (): boolean => {
+      const currentPath = window.location.href;
+      return currentPath.includes("/bookreviews/show");
   }
 
   const onClickShareButton = () => {
@@ -125,7 +130,7 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
   const clip = async () => {
     const originUrl = window.location.href
     const shareUrl = await shareApi.registerShareUrl(originUrl);
-    await navigator.clipboard.writeText(shareUrl);
+    navigator.clipboard.writeText(shareUrl);
     toastAlert({
       open: true,
       type: 'done',
