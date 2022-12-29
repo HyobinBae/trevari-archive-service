@@ -15,7 +15,10 @@ class ChannigClipboard implements MyClipboard {
     async copyTextToClipboard( text: string)  {
         const type = "text/plain";
         const blob = new Blob([text], { type });
+        alert(blob)
         const data = [new ClipboardItem({ [type]: blob })];
+        alert(data)
+
 
         navigator.clipboard.write(data).then(
             () => {
