@@ -11,7 +11,7 @@ interface RequestShareUrl {
 }
 
 export const shareApi = {
-    registerShareUrl(url: string) {
+    register(url: string) {
         return registerShareUrl(url)
     }
 }

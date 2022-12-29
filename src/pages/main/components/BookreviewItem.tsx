@@ -100,16 +100,19 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
     },
   ];
 
-  const clip = async () => {
+  const clip = () => {
     const originUrl = `${window.location.href}/show/${bookreview.id}`
-    const shareUrl = await shareApi.registerShareUrl(originUrl);
-    navigator.clipboard.writeText(shareUrl);
-    toastAlert({
-      open: true,
-      type: 'done',
-      text: '링크가 복사되었습니다.',
-    });
-    onDismiss();
+    shareApi.register(originUrl)
+        .then(res => {
+          navigator.clipboard.writeText(res);
+          toastAlert({
+            open: true,
+            type: 'done',
+            text: '링크가 복사되었습니다.',
+          });
+          onDismiss();
+        })
+        .catch();
   };
 
   const onDismiss = () => {
