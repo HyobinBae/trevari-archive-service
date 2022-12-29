@@ -18,7 +18,6 @@ import {useMobileDetect} from "../../hooks/useDetectMobile";
 import {BottomSheet} from "react-spring-bottom-sheet";
 import {useWindowSize} from "../../utils/windowResize";
 import {toastAlert} from "../../services/ui.store";
-import {MoreButtonItems} from "../../pages/main/components/MoreButtonItems";
 import {clipboard} from "../../utils/clipboard";
 import MoreItems from "../../pages/main/components/MoreItems";
 
@@ -116,12 +115,12 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
     setOpenMoreList(state => !state);
   }
 
-  const MORE_ACTIONS = [
-    {
-      item: linkItem(),
-      onAction: () => clip(),
-    },
-  ];
+  // const MORE_ACTIONS = [
+  //   {
+  //     item: linkItem(),
+  //     onAction: () => clip(),
+  //   },
+  // ];
 
   const TEMP_MORE_ACTIONS = [
     {
