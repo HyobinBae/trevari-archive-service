@@ -40,7 +40,7 @@ class PcClipboard implements MyClipboard {
 class MobileClipboard implements MyClipboard {
   async copyTextToClipboard(data: string)  {
     const clipboardItem = new ClipboardItem({
-      'text/plain': new Promise(async (resolve) => {
+      'text/plain': new Promise((resolve) => {
         resolve(new Blob([data]))
       })
     })
