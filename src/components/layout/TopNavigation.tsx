@@ -118,22 +118,23 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
   const MORE_ACTIONS = [
     {
       item: linkItem(),
-      onAction: async () => {
-          return await clip()
-      },
+      onAction: () => clip(),
     },
   ];
 
-  const clip = async () => {
+  const clip = () => {
     const originUrl = window.location.href
-      const res = await  shareApi.register(originUrl)
-      await navigator.clipboard.writeText(res);
-      toastAlert({
-          open: true,
-          type: 'done',
-          text: '링크가 복사되었습니다.',
-      });
-      onDismiss();
+      shareApi.register(originUrl)
+          .then(res => {
+              navigator.clipboard.writeText(res);
+              toastAlert({
+                  open: true,
+                  type: 'done',
+                  text: '링크가 복사되었습니다.',
+              });
+              onDismiss();
+          })
+          .catch();
   };
 
   const onDismiss = () => {
