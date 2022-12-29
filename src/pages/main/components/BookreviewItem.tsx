@@ -19,7 +19,6 @@ import DefaultProfileAvatar from '../../../components/svgs/DefaultProfileAvatar'
 import {LikeUser} from '../../bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
 import {Buffer} from 'buffer';
-import {shareApi} from "../../../api/share";
 import {clipboard} from "../../../utils/clipboard";
 
 interface Props {

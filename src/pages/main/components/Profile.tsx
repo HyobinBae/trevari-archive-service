@@ -14,7 +14,6 @@ import { useAppDispatch } from 'services/store';
 import { deleteBookreview } from 'pages/bookreviews/services/api';
 import { toastAlert } from 'services/ui.store';
 import BaseModal from './ModalBase';
-import {shareApi} from "../../../api/share";
 import {clipboard} from "../../../utils/clipboard";
 
 interface ProfileProps {

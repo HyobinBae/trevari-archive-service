@@ -17,7 +17,6 @@ import { heading7 } from '@trevari/typo';
 import {useMobileDetect} from "../../hooks/useDetectMobile";
 import {BottomSheet} from "react-spring-bottom-sheet";
 import {useWindowSize} from "../../utils/windowResize";
-import {shareApi} from "../../api/share";
 import {toastAlert} from "../../services/ui.store";
 import {MoreButtonItems} from "../../pages/main/components/MoreButtonItems";
 import {clipboard} from "../../utils/clipboard";
