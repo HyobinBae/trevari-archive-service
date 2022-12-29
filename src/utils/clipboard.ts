@@ -10,12 +10,10 @@ class PcClipboard implements MyClipboard {
     }
 }
 
-class MobileClipboard implements MyClipboard {
-    async copyTextToClipboard(data: string)  {
+class ChannigClipboard implements MyClipboard {
+    async copyTextToClipboard( data: string)  {
         const clipboardItem = new ClipboardItem({
-            'text/plain': new Promise((resolve) => {
-                resolve(new Blob([data]))
-            })
+            'text/plain': new Blob([data])
         })
         navigator.clipboard.write([clipboardItem])
     }
@@ -23,6 +21,6 @@ class MobileClipboard implements MyClipboard {
 
 const isApp = useMobileDetect().isMobile();
 
-const myClipboard = isApp ? new MobileClipboard() : new PcClipboard()
+const myClipboard = isApp ? new ChannigClipboard() : new PcClipboard()
 
 export const clipboard = myClipboard;
