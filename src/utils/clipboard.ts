@@ -20,7 +20,8 @@ class ChannigClipboard implements MyClipboard {
                         resolve(new Blob([``]))
                     })
                 }
-                return new Promise(async (resolve) => {
+
+                return new Promise((resolve) => {
                     resolve(new Blob([result]))
                 })
             }),
