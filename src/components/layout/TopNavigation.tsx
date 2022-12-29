@@ -122,16 +122,19 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
     },
   ];
 
-  const clip = async () => {
+  const clip = () => {
     const originUrl = window.location.href
-    const shareUrl = await shareApi.registerShareUrl(originUrl);
-    navigator.clipboard.writeText(shareUrl);
-    toastAlert({
-      open: true,
-      type: 'done',
-      text: 'URL이 복사되었습니다.',
-    });
-    onDismiss();
+      shareApi.register(originUrl)
+          .then(res => {
+              navigator.clipboard.writeText(res);
+              toastAlert({
+                  open: true,
+                  type: 'done',
+                  text: '링크가 복사되었습니다.',
+              });
+              onDismiss();
+          })
+          .catch();
   };
 
   const onDismiss = () => {
@@ -161,7 +164,7 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
       >
         <MoreButtonItems title={'공유하기'} actions={MORE_ACTIONS} />
       </BottomSheet>
-      <Global
+BottomSheet      <Global
         styles={css`
           body {
             padding: 0 !important;
