@@ -114,24 +114,25 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
          * return type for the ClipBoardItem is incorrect.
          */
         if (!result) {
-          return new Promise(async (resolve) => {
+          return new Promise((resolve) => {
             resolve(new Blob[``]())
           })
         }
 
-        return new Promise(async (resolve) => {
+        return new Promise((resolve) => {
           resolve(new Blob([result]))
         })
       }),
     })
     navigator.clipboard.write([clipboardItem])
-    // navigator.clipboard.writeText(res)
     //     .then(() => {
     //       alert('ㅠㅠ')
     //     })
     //     .catch((e) => {
     //       alert(e)
     //     })
+    // navigator.clipboard.writeText(res)
+
     //
     //
     // ;
