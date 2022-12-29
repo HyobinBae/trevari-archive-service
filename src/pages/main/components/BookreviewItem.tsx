@@ -33,14 +33,14 @@ interface MyClipboard {
 
 class PcClipboard implements MyClipboard {
   async copyTextToClipboard(data: string) {
-    await navigator.clipboard.writeText('')
+    await navigator.clipboard.writeText(data)
   }
 }
 
 class MobileClipboard implements MyClipboard {
   async copyTextToClipboard(data: string)  {
     const clipboardItem = new ClipboardItem({
-      'text/plain': new Blob(['']),
+      'text/plain': new Blob([data]),
     })
     await navigator.clipboard.write([clipboardItem])
   }
