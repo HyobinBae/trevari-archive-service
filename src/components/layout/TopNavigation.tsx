@@ -12,7 +12,6 @@ import { ButtonWrapper, Title } from 'components/layout/style';
 import Arrow from 'components/svgs/Arrow';
 import BetaBadge from 'components/svgs/BetaBadge';
 import {ShareIcon} from "components/svgs/ShareIcon";
-import {LinkIcon} from "components/svgs/LinkIcon";
 import { heading7 } from '@trevari/typo';
 import {useMobileDetect} from "../../hooks/useDetectMobile";
 import {BottomSheet} from "react-spring-bottom-sheet";
@@ -224,34 +223,34 @@ const TitleSpan = styled.div`
   margin-right: 4px;
   ${heading7};
 `;
-
-const ItemWrapper = styled.div`
-  box-sizing: border-box;
-  position: relative;
-  width: 56px;
-  height: 56px;
-  left: 0px;
-  top: 0px;
-  border: 1px solid #ECECE9;
-  border-radius: 100%;
-`;
-
-const ItemDetailWrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const linkItem = () => {
-    return (
-        <ItemWrapper>
-          <ItemDetailWrapper>
-              <LinkIcon/>
-          </ItemDetailWrapper>
-        </ItemWrapper>
-    );
-}
+//
+// const ItemWrapper = styled.div`
+//   box-sizing: border-box;
+//   position: relative;
+//   width: 56px;
+//   height: 56px;
+//   left: 0px;
+//   top: 0px;
+//   border: 1px solid #ECECE9;
+//   border-radius: 100%;
+// `;
+//
+// const ItemDetailWrapper = styled.div`
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// `;
+//
+// const linkItem = () => {
+//     return (
+//         <ItemWrapper>
+//           <ItemDetailWrapper>
+//               <LinkIcon/>
+//           </ItemDetailWrapper>
+//         </ItemWrapper>
+//     );
+// }
 
 const isSharePath = (): boolean => {
     const currentPath = window.location.href;
