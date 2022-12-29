@@ -105,6 +105,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   const clip = async () => {
     const originUrl = `${window.location.href}/show/${bookreview.id}`
     const res = await shareApi.register(originUrl)
+    alert(res)
     navigator.clipboard.writeText(res)
         .then(() => {
           alert('ㅠㅠ')
