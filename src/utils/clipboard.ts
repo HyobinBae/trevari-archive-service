@@ -7,14 +7,17 @@ interface MyClipboard {
 
 class PcClipboard implements MyClipboard {
     async copyTextToClipboard(data: string) {
-        const result = await shareApi.register(data);
-        await navigator.clipboard.writeText(result)
+        alert("pc")
+        shareApi.register(data).then(result => {
+            navigator.clipboard.writeText(result)
+        });
     }
 }
 
 class MobileClipboard implements MyClipboard {
     async copyTextToClipboard(data: string )  {
-        // 밖에서 API콜하면 안됨..ㅜ
+        alert("mo")
+        // ClipboardItem 내부에서 Promise 를 받아야 정상 동작
         const clipboardItem = new ClipboardItem({
             'text/plain': shareApi.register(data).then((result) => {
                 if (!result) {
