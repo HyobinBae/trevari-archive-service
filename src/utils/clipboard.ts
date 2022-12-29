@@ -11,7 +11,7 @@ class PcClipboard implements MyClipboard {
             .then(result => {
                 navigator.clipboard.writeText(result)
             })
-            .catch(err => {
+            .catch(() => {
                 navigator.clipboard.writeText(data)
             });
     }
