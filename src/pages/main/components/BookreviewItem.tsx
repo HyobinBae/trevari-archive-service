@@ -97,9 +97,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   const MORE_ACTIONS = [
     {
       text: '링크 복사하기',
-      onAction: async () => {
-        await clip()
-      },
+      onAction: () => clip(),
     },
   ];
 

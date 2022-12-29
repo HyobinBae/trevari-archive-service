@@ -14,7 +14,7 @@ class PcClipboard implements MyClipboard {
     }
 }
 
-class MobileClipboard implements MyClipboard {
+class IosClipboard implements MyClipboard {
     async copyTextToClipboard(data: string )  {
         alert("mo")
         // ClipboardItem 내부에서 Promise 를 받아야 정상 동작
@@ -34,8 +34,8 @@ class MobileClipboard implements MyClipboard {
     }
 }
 
-const isApp = useMobileDetect().isMobile();
+const isIos = useMobileDetect().isIos();
 
-const myClipboard = isApp ? new MobileClipboard() : new PcClipboard()
+const myClipboard = isIos ? new IosClipboard() : new PcClipboard()
 
 export const clipboard = myClipboard;

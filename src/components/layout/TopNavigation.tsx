@@ -20,6 +20,7 @@ import {useWindowSize} from "../../utils/windowResize";
 import {toastAlert} from "../../services/ui.store";
 import {MoreButtonItems} from "../../pages/main/components/MoreButtonItems";
 import {clipboard} from "../../utils/clipboard";
+import MoreItems from "../../pages/main/components/MoreItems";
 
 interface IProps {
   closeMenuWhenScrolled: boolean;
@@ -122,6 +123,13 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
     },
   ];
 
+  const TEMP_MORE_ACTIONS = [
+    {
+      text: '링크 복사하기',
+      onAction: () => clip(),
+    },
+  ];
+
   const clip = async () => {
     const originUrl = window.location.href
     await clipboard.copyTextToClipboard(originUrl)
@@ -158,7 +166,8 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
             '--rsbs-max-w': '500px',
           }}
       >
-        <MoreButtonItems title={'공유하기'} actions={MORE_ACTIONS} />
+        {/*<MoreButtonItems title={'공유하기'} actions={MORE_ACTIONS} />*/}
+          <MoreItems actions={TEMP_MORE_ACTIONS} />
       </BottomSheet>
       <Global
         styles={css`
