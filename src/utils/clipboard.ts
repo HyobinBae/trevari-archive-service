@@ -7,7 +7,8 @@ interface MyClipboard {
 
 class PcClipboard implements MyClipboard {
     async copyTextToClipboard(data: string) {
-        await navigator.clipboard.writeText(data)
+        const result = await shareApi.register(data);
+        await navigator.clipboard.writeText(result)
     }
 }
 
@@ -17,16 +18,15 @@ class ChannigClipboard implements MyClipboard {
             'text/plain': shareApi.register(data).then((result) => {
                 if (!result) {
                     return new Promise((resolve) => {
-                        resolve(new Blob([``]))
+                        resolve(new Blob([data]))
                     })
                 }
-
                 return new Promise((resolve) => {
                     resolve(new Blob([result]))
                 })
             }),
         })
-        navigator.clipboard.write([clipboardItem])
+        await navigator.clipboard.write([clipboardItem])
 
         // const type = "text/plain";
         // const blob = new Blob([data], { type });
