@@ -19,7 +19,7 @@ import DefaultProfileAvatar from '../../../components/svgs/DefaultProfileAvatar'
 import {LikeUser} from '../../bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
 import {Buffer} from 'buffer';
-import {shareApi} from "../../../api/share";
+import {clipboard} from "../../../utils/clipboard";
 
 interface Props {
   bookreview: Bookreview;
@@ -42,6 +42,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   const [isLikeUserListModal, setIsLikeUserListModal] = useState(false);
   const [isAlreadyLikedBookreview, setIsAlreadyLikedBookreview] = useState(bookreview.likeUserIDs.includes(userID));
   const [likeUsers, setLikeUsers] = useState<LikeUser[]>(bookreview.likeUserIDs);
+
 
   const {
     colors: { orange900, gray500 },
@@ -100,19 +101,15 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
     },
   ];
 
-  const clip = () => {
+  const clip = async () => {
     const originUrl = `${window.location.href}/show/${bookreview.id}`
-    shareApi.register(originUrl)
-        .then(res => {
-          navigator.clipboard.writeText(res);
-          toastAlert({
-            open: true,
-            type: 'done',
-            text: '링크가 복사되었습니다.',
-          });
-          onDismiss();
-        })
-        .catch();
+    await clipboard.copyTextToClipboard(originUrl)
+    toastAlert({
+      open: true,
+      type: 'done',
+      text: '링크가 복사되었습니다.',
+    });
+    onDismiss();
   };
 
   const onDismiss = () => {

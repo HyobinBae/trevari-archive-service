@@ -14,7 +14,7 @@ import { useAppDispatch } from 'services/store';
 import { deleteBookreview } from 'pages/bookreviews/services/api';
 import { toastAlert } from 'services/ui.store';
 import BaseModal from './ModalBase';
-import {shareApi} from "../../../api/share";
+import {clipboard} from "../../../utils/clipboard";
 
 interface ProfileProps {
   user: User;
@@ -63,19 +63,15 @@ const Profile = ({
       onAction: () => clip(),
     },
   ];
-  const clip = () => {
+  const clip = async () => {
     const originUrl = window.location.href
-    shareApi.register(originUrl)
-        .then(res => {
-          navigator.clipboard.writeText(res);
-          toastAlert({
-            open: true,
-            type: 'done',
-            text: '링크가 복사되었습니다.',
-          });
-          onDismiss();
-        })
-        .catch();
+    await clipboard.copyTextToClipboard(originUrl)
+    toastAlert({
+      open: true,
+      type: 'done',
+      text: '링크가 복사되었습니다.',
+    });
+    onDismiss();
   };
   const onDismiss = () => {
     setOpenMoreList(false);

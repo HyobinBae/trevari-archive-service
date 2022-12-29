@@ -15,7 +15,9 @@ const MoreItems = ({ actions }: IProps) => {
       <Base>
         {actions.map(({ text, onAction }) => (
           <ListItemWrap key={text} ignorePadding>
-            <Button onClick={onAction} red={text === '신고하기'}>
+            <Button onClick={async () => {
+              await onAction()
+            }} red={text === '신고하기'}>
               {text}
             </Button>
           </ListItemWrap>
