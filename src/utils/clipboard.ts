@@ -7,9 +7,13 @@ interface MyClipboard {
 
 class PcClipboard implements MyClipboard {
     async copyTextToClipboard(data: string) {
-        shareApi.register(data).then(result => {
-            navigator.clipboard.writeText(result)
-        });
+        shareApi.register(data)
+            .then(result => {
+                navigator.clipboard.writeText(result)
+            })
+            .catch(err => {
+                navigator.clipboard.writeText(data)
+            });
     }
 }
 
