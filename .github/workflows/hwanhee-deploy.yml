@@ -3,7 +3,7 @@ name: Deploy trevari/trevari-web feat push
 on:
   push:
     branches:
-      - "feat/bookrewview"
+      - "feat/share"
   workflow_dispatch:
 
 
