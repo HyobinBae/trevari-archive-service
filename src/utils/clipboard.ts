@@ -13,8 +13,9 @@ class PcClipboard implements MyClipboard {
 class ChannigClipboard implements MyClipboard {
     async copyTextToClipboard( data: string)  {
         const clipboardItem = new ClipboardItem({
-            'text/plain': new Blob([data])
+            'text/plain': data
         })
+
         navigator.clipboard.write([clipboardItem])
     }
 }
