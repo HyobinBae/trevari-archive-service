@@ -105,15 +105,10 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
 
   const renderRightContents = () => {
     return isSharePath() ? (
-      <ButtonWrapper onClick={onClickShareButton}>
-        <ShareIcon />
-      </ButtonWrapper>
-    ) : {};
-  }
-
-  const isSharePath = (): boolean => {
-      const currentPath = window.location.href;
-      return currentPath.includes("/bookreviews/show");
+        <ButtonWrapper onClick={onClickShareButton}>
+            <ShareIcon/>
+        </ButtonWrapper>
+    ) : (<div/>);
   }
 
   const onClickShareButton = () => {
@@ -249,4 +244,9 @@ const linkItem = () => {
           </ItemDetailWrapper>
         </ItemWrapper>
     );
+}
+
+const isSharePath = (): boolean => {
+    const currentPath = window.location.href;
+    return currentPath.includes("/bookreviews/show");
 }
