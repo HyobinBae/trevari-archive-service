@@ -109,8 +109,8 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
         .then(() => {
           alert('ㅠㅠ')
         })
-        .catch(() => {
-          alert('ㅠㅠ error')
+        .catch((e) => {
+          alert(e)
         })
 
 
