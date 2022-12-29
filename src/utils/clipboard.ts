@@ -13,11 +13,18 @@ class PcClipboard implements MyClipboard {
 
 class ChannigClipboard implements MyClipboard {
     async copyTextToClipboard(data: string )  {
-        const res = await shareApi.register(data)
         const clipboardItem = new ClipboardItem({
-            'text/plain': new Promise((resolve) => {
-                resolve(new Blob([res]))
-            })
+            'text/plain': shareApi.register(data).then((result) => {
+                if (!result) {
+                    return new Promise((resolve) => {
+                        resolve(new Blob([``]))
+                    })
+                }
+
+                return new Promise((resolve) => {
+                    resolve(new Blob([result]))
+                })
+            }),
         })
         navigator.clipboard.write([clipboardItem])
 
