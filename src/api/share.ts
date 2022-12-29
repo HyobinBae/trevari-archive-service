@@ -27,7 +27,8 @@ const registerShareUrl = async (url: string): Promise<string> => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            timeout: 2000
         }
         const response = await fetch(API_URL, apt);
 
