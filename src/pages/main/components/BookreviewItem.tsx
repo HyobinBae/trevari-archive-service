@@ -119,9 +119,8 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
           })
         }
 
-        const copyText = `some string`
         return new Promise(async (resolve) => {
-          resolve(new Blob([copyText]))
+          resolve(new Blob([result]))
         })
       }),
     })
