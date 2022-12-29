@@ -164,7 +164,7 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
       >
         <MoreButtonItems title={'공유하기'} actions={MORE_ACTIONS} />
       </BottomSheet>
-BottomSheet      <Global
+      <Global
         styles={css`
           body {
             padding: 0 !important;
