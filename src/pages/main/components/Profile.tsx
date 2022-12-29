@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css';
 
@@ -14,6 +14,9 @@ import { useAppDispatch } from 'services/store';
 import { deleteBookreview } from 'pages/bookreviews/services/api';
 import { toastAlert } from 'services/ui.store';
 import BaseModal from './ModalBase';
+import {shareApi} from "../../../api/share";
+import {MoreButtonItems} from "./MoreButtonItems";
+import {LinkIcon} from "../../../components/svgs/LinkIcon";
 
 interface ProfileProps {
   user: User;
@@ -58,16 +61,18 @@ const Profile = ({
 
   const MORE_ACTIONS = [
     {
-      text: '링크 복사하기',
+      item: linkItem(),
       onAction: () => clip(),
     },
   ];
-  const clip = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const clip = async () => {
+    const originUrl = window.location.href
+    const shareUrl = await shareApi.registerShareUrl(originUrl);
+    await navigator.clipboard.writeText(shareUrl);
     toastAlert({
       open: true,
       type: 'done',
-      text: '링크가 복사되었습니다.',
+      text: 'URL이 복사되었습니다.',
     });
     onDismiss();
   };
@@ -121,7 +126,9 @@ const Profile = ({
           '--rsbs-max-w': '500px',
         }}
       >
-        <MoreItems actions={isMyBookreview ? MORE_ACTIONS_OF_MY_BOOKREVIEW : MORE_ACTIONS} />
+        {isMyBookreview
+            ? <MoreItems actions={MORE_ACTIONS_OF_MY_BOOKREVIEW}/>
+            : <MoreButtonItems title={'공유하기'} actions={MORE_ACTIONS}/>}
       </BottomSheet>
       <BaseModal
         title={deleteModalTitle}
@@ -150,4 +157,32 @@ const MoreButtonWrapper = styled.div`
   height: 24px;
   cursor: pointer;
 `;
+
+const ItemWrapper = styled.div`
+  box-sizing: border-box;
+  position: relative;
+  width: 56px;
+  height: 56px;
+  left: 0px;
+  top: 0px;
+  border: 1px solid #ECECE9;
+  border-radius: 100%;
+`;
+
+const ItemDetailWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+const linkItem = () => {
+  return (
+      <ItemWrapper>
+        <ItemDetailWrapper>
+          <LinkIcon/>
+        </ItemDetailWrapper>
+      </ItemWrapper>
+  );
+}
 export default Profile;
