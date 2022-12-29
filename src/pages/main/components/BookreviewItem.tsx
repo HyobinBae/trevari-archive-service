@@ -19,6 +19,7 @@ import DefaultProfileAvatar from '../../../components/svgs/DefaultProfileAvatar'
 import {LikeUser} from '../../bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
 import {Buffer} from 'buffer';
+import {clipboard} from "../../../utils/clipboard";
 
 interface Props {
   bookreview: Bookreview;
@@ -41,6 +42,7 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   const [isLikeUserListModal, setIsLikeUserListModal] = useState(false);
   const [isAlreadyLikedBookreview, setIsAlreadyLikedBookreview] = useState(bookreview.likeUserIDs.includes(userID));
   const [likeUsers, setLikeUsers] = useState<LikeUser[]>(bookreview.likeUserIDs);
+
 
   const {
     colors: { orange900, gray500 },
@@ -99,8 +101,9 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
     },
   ];
 
-  const clip = () => {
-    navigator.clipboard.writeText(`${window.location.href}/show/${bookreview.id}`);
+  const clip = async () => {
+    const originUrl = `${window.location.href}/show/${bookreview.id}`
+    await clipboard.copyTextToClipboard(originUrl)
     toastAlert({
       open: true,
       type: 'done',

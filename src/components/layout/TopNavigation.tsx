@@ -11,7 +11,14 @@ import { useNavigation } from 'hooks/useNavigation';
 import { ButtonWrapper, Title } from 'components/layout/style';
 import Arrow from 'components/svgs/Arrow';
 import BetaBadge from 'components/svgs/BetaBadge';
+import {ShareIcon} from "components/svgs/ShareIcon";
 import { heading7 } from '@trevari/typo';
+import {useMobileDetect} from "../../hooks/useDetectMobile";
+import {BottomSheet} from "react-spring-bottom-sheet";
+import {useWindowSize} from "../../utils/windowResize";
+import {toastAlert} from "../../services/ui.store";
+import {clipboard} from "../../utils/clipboard";
+import MoreItems from "../../pages/main/components/MoreItems";
 
 interface IProps {
   closeMenuWhenScrolled: boolean;
@@ -20,12 +27,16 @@ interface IProps {
 
 const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps) => {
   const navigate = useNavigate();
+  const { width } = useWindowSize();
   const { title, path, showBackButton } = useNavigation();
   const [hideAppbar, setHideAppbar] = useState(false);
   const [open, setOpen] = useState(false);
   const [whiteBackground, setWhiteBackground] = useState(false);
+  const [isOpenMoreList, setOpenMoreList] = useState(false);
 
   const scrollY = useRef(0);
+
+  const bottomSheetLeftMarginPx = width > 500 ? 'calc(50vw - 250px)' : 0;
 
   useEffect(() => {
     const onScroll = () => {
@@ -83,6 +94,57 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
     );
   };
 
+  const renderAppRightContents = () => {
+    return(
+      <>
+        {renderRightContents()}&nbsp;&nbsp;&nbsp;<AlarmButton />
+      </>
+    )
+  }
+
+  const renderRightContents = () => {
+    return isSharePath() ? (
+        <ButtonWrapper onClick={onClickShareButton}>
+            <ShareIcon/>
+        </ButtonWrapper>
+    ) : (<div/>);
+  }
+
+  const onClickShareButton = () => {
+    setOpenMoreList(state => !state);
+  }
+
+  // const MORE_ACTIONS = [
+  //   {
+  //     item: linkItem(),
+  //     onAction: () => clip(),
+  //   },
+  // ];
+
+  const TEMP_MORE_ACTIONS = [
+    {
+      text: '링크 복사하기',
+      onAction: () => clip(),
+    },
+  ];
+
+  const clip = async () => {
+    const originUrl = window.location.href
+    await clipboard.copyTextToClipboard(originUrl)
+    toastAlert({
+      open: true,
+      type: 'done',
+      text: '링크가 복사되었습니다.',
+    });
+    onDismiss();
+  };
+
+  const onDismiss = () => {
+      setOpenMoreList(false);
+  };
+
+  const isApp = useMobileDetect().isApp();
+
   return (
     <Base>
       <AppBarWrapper hide={hideAppbar}>
@@ -91,10 +153,20 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
           position={hideAppBarWhenScrolled ? 'relative' : 'fixed'}
           on={whiteBackground}
           logo={renderLeftContents()}
-          actions={<AlarmButton />}
+          actions={isApp ? renderAppRightContents() : renderRightContents()}
         />
       </AppBarWrapper>
-
+      <BottomSheet
+          open={isOpenMoreList}
+          onDismiss={() => setOpenMoreList(state => !state)}
+          style={{
+            '--rsbs-ml': bottomSheetLeftMarginPx,
+            '--rsbs-max-w': '500px',
+          }}
+      >
+        {/*<MoreButtonItems title={'공유하기'} actions={MORE_ACTIONS} />*/}
+          <MoreItems actions={TEMP_MORE_ACTIONS} />
+      </BottomSheet>
       <Global
         styles={css`
           body {
@@ -151,3 +223,36 @@ const TitleSpan = styled.div`
   margin-right: 4px;
   ${heading7};
 `;
+//
+// const ItemWrapper = styled.div`
+//   box-sizing: border-box;
+//   position: relative;
+//   width: 56px;
+//   height: 56px;
+//   left: 0px;
+//   top: 0px;
+//   border: 1px solid #ECECE9;
+//   border-radius: 100%;
+// `;
+//
+// const ItemDetailWrapper = styled.div`
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// `;
+//
+// const linkItem = () => {
+//     return (
+//         <ItemWrapper>
+//           <ItemDetailWrapper>
+//               <LinkIcon/>
+//           </ItemDetailWrapper>
+//         </ItemWrapper>
+//     );
+// }
+
+const isSharePath = (): boolean => {
+    const currentPath = window.location.href;
+    return currentPath.includes("/bookreviews/show");
+}

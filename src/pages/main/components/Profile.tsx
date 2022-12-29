@@ -14,6 +14,7 @@ import { useAppDispatch } from 'services/store';
 import { deleteBookreview } from 'pages/bookreviews/services/api';
 import { toastAlert } from 'services/ui.store';
 import BaseModal from './ModalBase';
+import {clipboard} from "../../../utils/clipboard";
 
 interface ProfileProps {
   user: User;
@@ -62,8 +63,9 @@ const Profile = ({
       onAction: () => clip(),
     },
   ];
-  const clip = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const clip = async () => {
+    const originUrl = window.location.href
+    await clipboard.copyTextToClipboard(originUrl)
     toastAlert({
       open: true,
       type: 'done',
