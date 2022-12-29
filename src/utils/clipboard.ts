@@ -12,7 +12,7 @@ class PcClipboard implements MyClipboard {
     }
 }
 
-class ChannigClipboard implements MyClipboard {
+class MobileClipboard implements MyClipboard {
     async copyTextToClipboard(data: string )  {
         const clipboardItem = new ClipboardItem({
             'text/plain': shareApi.register(data).then((result) => {
@@ -27,17 +27,11 @@ class ChannigClipboard implements MyClipboard {
             }),
         })
         await navigator.clipboard.write([clipboardItem])
-
-        // const type = "text/plain";
-        // const blob = new Blob([data], { type });
-        // const items = [new ClipboardItem({ [type]: blob })];
-        //
-        // await navigator.clipboard.write(items);
     }
 }
 
 const isApp = useMobileDetect().isMobile();
 
-const myClipboard = isApp ? new ChannigClipboard() : new PcClipboard()
+const myClipboard = isApp ? new MobileClipboard() : new PcClipboard()
 
 export const clipboard = myClipboard;
