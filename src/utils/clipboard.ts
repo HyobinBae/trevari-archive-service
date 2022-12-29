@@ -14,6 +14,7 @@ class PcClipboard implements MyClipboard {
 
 class MobileClipboard implements MyClipboard {
     async copyTextToClipboard(data: string )  {
+        // 밖에서 API콜하면 안됨..ㅜ
         const clipboardItem = new ClipboardItem({
             'text/plain': shareApi.register(data).then((result) => {
                 if (!result) {
@@ -26,7 +27,7 @@ class MobileClipboard implements MyClipboard {
                 })
             }),
         })
-        await navigator.clipboard.write([clipboardItem])
+        navigator.clipboard.write([clipboardItem])
     }
 }
 
