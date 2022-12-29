@@ -19,6 +19,7 @@ import DefaultProfileAvatar from '../../../components/svgs/DefaultProfileAvatar'
 import {LikeUser} from '../../bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
 import {Buffer} from 'buffer';
+import {shareApi} from "../../../api/share";
 
 interface Props {
   bookreview: Bookreview;
@@ -99,8 +100,10 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
     },
   ];
 
-  const clip = () => {
-    navigator.clipboard.writeText(`${window.location.href}/show/${bookreview.id}`);
+  const clip = async () => {
+    const originUrl = `${window.location.href}/show/${bookreview.id}`
+    const shareUrl = await shareApi.registerShareUrl(originUrl);
+    navigator.clipboard.writeText(shareUrl);
     toastAlert({
       open: true,
       type: 'done',

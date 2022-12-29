@@ -19,7 +19,7 @@ export const shareApi = {
 const endpoint: string = endpoints.share_endpoint;
 
 const registerShareUrl = async (url: string): Promise<string> => {
-    const request : RequestShareUrl = {url};
+    const request: RequestShareUrl = {url};
     try {
         const API_URL = `${endpoint}/apis/v1/shorten-urls`;
         const apt = {
@@ -41,7 +41,7 @@ const registerShareUrl = async (url: string): Promise<string> => {
 
         const result: ResponseShareUrl = await response.json();
         return `${endpoint}/${result.tag}`;
-    } catch(error) {
+    } catch (error) {
         return url;
     }
 }
