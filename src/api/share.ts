@@ -3,7 +3,7 @@ import {endpoints} from "../config";
 interface ResponseShareUrl {
     originUrl: string,
     tag: string,
-    providerId: number,
+    providerToken: string,
 }
 
 interface RequestShareUrl {
@@ -21,7 +21,7 @@ const endpoint: string = endpoints.share_endpoint;
 const registerShareUrl = async (url: string): Promise<string> => {
     const request: RequestShareUrl = {url};
     try {
-        const API_URL = `${endpoint}/apis/v1/shorten-urls`;
+        const API_URL = `${endpoint}/apis/v1/shares`;
         const apt = {
             body: JSON.stringify(request),
             method: 'POST',

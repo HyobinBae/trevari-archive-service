@@ -49,7 +49,7 @@ const BookreviewComments = ({
   const filterComments = (comments: BookreviewComment[]): BookreviewComment[] => {
     const res: BookreviewComment[] = []
     for(const comment of comments) {
-      // 첫번째 댓글인데 삭제됐고, 답글이 없는 경우
+      // 첫번째 댓글인데 삭제됐고, 답글이 없는 경우 TODO: userId is not null
       if( !isNil(comment.deletedAt) && isNil(comment.parentID) && isEmpty(comment.replies) ) {
         continue
       }
