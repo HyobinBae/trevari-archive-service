@@ -14,5 +14,6 @@ export const endpoints = {
   bookreview_api_graphql_endpoint: IS_PRODUCTION
     ? 'https://bookreview-api.trevari.co.kr/graphql'
     : 'http://localhost:8007/graphql',
+
   share_endpoint: IS_PRODUCTION ? 'https://trevar.ink' : 'http://localhost:8008',
 };
