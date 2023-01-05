@@ -101,7 +101,7 @@ const Bookreviews = () => {
       return;
     }
 
-    setPermission('denied');
+    setPermission('accepted');
   };
 
   let moreClubRolesLength = 0;

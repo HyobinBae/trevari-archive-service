@@ -11,17 +11,17 @@ interface RequestShareUrl {
 }
 
 export const shareApi = {
-    register(url: string) {
-        return registerShareUrl(url)
+    register(url: string, method?: string, access?: string) {
+        return registerShareUrl(url, method, access)
     }
 }
 
 const endpoint: string = endpoints.share_endpoint;
 
-const registerShareUrl = async (url: string): Promise<string> => {
+const registerShareUrl = async (url: string, method?: string, access?: string): Promise<string> => {
     const request: RequestShareUrl = {url};
     try {
-        const API_URL = `${endpoint}/apis/v1/shares`;
+        const API_URL = `${endpoint}/apis/v1/shares?method=${method}&access=${access}`;
         const apt = {
             body: JSON.stringify(request),
             method: 'POST',
