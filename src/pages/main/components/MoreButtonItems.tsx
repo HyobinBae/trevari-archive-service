@@ -50,7 +50,7 @@ const Base = styled.div`
 const ListItemWrap = styled(ListItem)`
   ${({ theme }) => theme.breakPoint.mobile} {
     margin-bottom: 6px;
-    padding-bottom: 40px;
+    padding-bottom: 30px;
     padding-top: 20px;
   }
 `;
