@@ -19,7 +19,6 @@ import DefaultProfileAvatar from '../../../components/svgs/DefaultProfileAvatar'
 import {LikeUser} from '../../bookreviews/services/types';
 import LikeUserModal from './LikeUserModal';
 import {Buffer} from 'buffer';
-import {clipboard} from "../../../utils/clipboard";
 
 interface Props {
   bookreview: Bookreview;
@@ -102,8 +101,8 @@ const BookreviewItem = ({ bookreview, userID }: Props) => {
   ];
 
   const clip = async () => {
-    const originUrl = `${window.location.href}/show/${bookreview.id}`
-    await clipboard.copyTextToClipboard(originUrl)
+    const originUrl = `${window.location.href}/show/${bookreview.id}`;
+    navigator.clipboard.writeText(originUrl);
     toastAlert({
       open: true,
       type: 'done',

@@ -17,11 +17,10 @@ import {useMobileDetect} from "../../hooks/useDetectMobile";
 import {BottomSheet} from "react-spring-bottom-sheet";
 import {useWindowSize} from "../../utils/windowResize";
 import {toastAlert} from "../../services/ui.store";
-import {clipboard} from "../../utils/clipboard";
 import {LinkShareIcon} from "../svgs/LinkShareIcon";
 import {MoreButtonItems} from "../../pages/main/components/MoreButtonItems";
 import {KakaoShareIcon} from "../svgs/KakaoShareIcon";
-import {kakaoShare} from "../../utils/kakaoShare";
+import {share} from "../../utils/share";
 
 interface IProps {
   closeMenuWhenScrolled: boolean;
@@ -129,8 +128,7 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
   ];
 
   const clip = async () => {
-    const originUrl = window.location.href
-    await clipboard.copyTextToClipboard(originUrl)
+    await share.link();
     toastAlert({
       open: true,
       type: 'done',
@@ -140,7 +138,7 @@ const TopNavigation = ({ closeMenuWhenScrolled, hideAppBarWhenScrolled }: IProps
   };
 
   const kakao = async () => {
-    await kakaoShare();
+    await share.kakao();
     onDismiss();
   };
 
