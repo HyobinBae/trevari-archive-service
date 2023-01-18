@@ -16,6 +16,9 @@ import { logout } from 'services/user/user.store';
 import WishList from 'pages/wishList';
 import Bookreviews from '../pages/bookreviews';
 import BookReviewShow from 'pages/bookreviews/show';
+import Test from '../pages/test';
+
+
 
 type Loader<T> = (props: T) => Promise<DefaultComponent<T>>;
 
@@ -29,6 +32,7 @@ const Goods = Loadable(() => import('pages/goods'));
 const External = Loadable(() => import('pages/external'));
 const Curations = Loadable(() => import('pages/curations'));
 const LoadingP = Loadable(() => import('components/base/LoadingPage'));
+const Platform = Loadable(() => import('pages/platform')) ;
 
 export default () => {
   const dispatch = useAppDispatch();
@@ -40,26 +44,26 @@ export default () => {
     dispatch(logout());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (!authenticated) {
-      if (isEmpty(storage.getToken$())) {
-        _logout();
-      }
-      _validateAuth();
-    } else {
-      dispatch(getUser.initiate(userId));
-      dispatch(
-        getClubRoles.initiate({
-          limit: 15,
-          offset: 0,
-          where: {
-            userID: userId,
-            isOpenPeriodRefundedRole: false,
-          },
-        }),
-      );
-    }
-  }, [authenticated]);
+  // useEffect(() => {
+  //   if (!authenticated) {
+  //     if (isEmpty(storage.getToken$())) {
+  //       _logout();
+  //     }
+  //     _validateAuth();
+  //   } else {
+  //     dispatch(getUser.initiate(userId));
+  //     dispatch(
+  //       getClubRoles.initiate({
+  //         limit: 15,
+  //         offset: 0,
+  //         where: {
+  //           userID: userId,
+  //           isOpenPeriodRefundedRole: false,
+  //         },
+  //       }),
+  //     );
+  //   }
+  // }, [authenticated]);
 
   return (
     <Layout>
@@ -74,6 +78,8 @@ export default () => {
         <Route path="/bookreviews" element={<Bookreviews />} />
         <Route path="/bookreviews/show/:bookreivewID" element={<BookReviewShow />} />
         <Route path="*" element={<LoadingP />} />
+        <Route path="/platform" element={<Platform/>}/>
+
       </Routes>
     </Layout>
   );
