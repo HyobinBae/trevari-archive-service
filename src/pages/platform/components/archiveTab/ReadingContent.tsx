@@ -22,8 +22,6 @@ const ReadingContent: React.FunctionComponent<IProps> = ({magazine}) => {
     }
   }
 
-
-
   return(
     <>
       {magazine?.map((data: MagazineProps) => {

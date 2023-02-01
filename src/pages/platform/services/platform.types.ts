@@ -40,3 +40,7 @@ export interface SearchParams {
 export interface LiveDate {
   date?: string
 }
+
+export interface LiveLink {
+  link?: string
+}

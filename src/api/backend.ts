@@ -4,7 +4,13 @@ import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query';
 import { endpoints } from 'config';
 import { RootState } from 'services/store';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
-import { ReplayListProps, MagazineListProps, PlatformProps, LiveDate } from '../pages/platform/services/platform.types';
+import {
+  ReplayListProps,
+  MagazineListProps,
+  PlatformProps,
+  LiveDate,
+  LiveLink,
+} from '../pages/platform/services/platform.types';
 
 
 export const client = new GraphQLClient(endpoints.user_backend_api_graphql_endpoint);
@@ -67,9 +73,9 @@ export const bookreviewBackend = createApi({
 
 export const PlatformGetApi = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://192.168.1.12:3000',
+    // baseUrl: 'http://192.168.1.12:3000',
     // baseUrl: '/'
-    // baseUrl: 'http://subscriber-club.trevari.co.kr:3000/platform'
+    baseUrl: 'http://subscriber-club.trevari.co.kr:3000/platform'
   }),
   tagTypes: ['GET'],
   endpoints: (builder) => ({
@@ -116,7 +122,7 @@ export const PlatformGetApi = createApi({
         response: { status: string | number },
       ) => response.status,
     }),
-    getMagazine: builder.query<Array<MagazineListProps[]>,{platformID:number, searchParams: string}>({
+    getMagazine: builder.query<Array<MagazineListProps>,{platformID:number, searchParams: string}>({
       query: ({ platformID ,searchParams}) => ({
         url: `/platform/${platformID}/archive?${searchParams}`,
         method: 'get',
@@ -127,7 +133,7 @@ export const PlatformGetApi = createApi({
         variables: {platformID}
       }),
       transformResponse: (
-        response: { data: MagazineListProps[] }
+        response: { data: MagazineListProps }
       ) => {
         return response;
       },
@@ -156,6 +162,26 @@ export const PlatformGetApi = createApi({
       ) => response.status,
       providesTags: (result, error) => [{ type: 'GET' }],
     }),
+    getLiveLink: builder.query<Array<LiveLink>,{ platformID:number }>({
+      query: ({ platformID }) => ({
+        url: `/platform/${platformID}/liveLink`,
+        method: 'get',
+        prepareHeaders: (headers:Headers) => {
+          headers.set("Content-Type",'Application/json')
+          return headers
+        },
+        variables: {platformID}
+      }),
+      transformResponse: (
+        response: { data: LiveLink }
+      ) => {
+        return (response);
+      },
+      transformErrorResponse: (
+        response: { status: string | number },
+      ) => response.status,
+      providesTags: (result, error) => [{ type: 'GET' }],
+    }),
   })
 })
 
@@ -166,5 +192,6 @@ export const {
     getMagazine,
     getPlatform,
     getLiveDate,
+    getLiveLink,
   },
 } = PlatformGetApi

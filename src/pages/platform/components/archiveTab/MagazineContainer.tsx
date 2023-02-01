@@ -4,9 +4,9 @@ import styled from '@emotion/styled';
 import ReadingContent from './ReadingContent';
 import { useAppDispatch, useAppSelector } from '../../../../services/store';
 import { getMagazine} from '../../../../api/backend';
-import { selectMagazineList, setPdfSrc } from '../../services/platform.store';
+import { selectMagazineList } from '../../services/platform.store';
 import { MagazineListProps } from '../../services/platform.types';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const initialState: MagazineListProps[] = [
   { id: 0,

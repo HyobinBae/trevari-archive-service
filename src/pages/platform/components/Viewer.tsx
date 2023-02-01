@@ -114,12 +114,6 @@ const SinglePage= styled(Page)`
 const ButtonBox = styled.div`
   width: 100px;
   
-  position: absolute;
-  left: 40%;
-  bottom: 15%;
-  
-  transform: translate(-50,-50);
-  
   display: flex;
   justify-content: space-evenly;
   align-items: center;

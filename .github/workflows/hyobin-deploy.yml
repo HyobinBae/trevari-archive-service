@@ -1,0 +1,19 @@
+name: Deploy trevari/trevari-web feat push
+
+on:
+  push:
+    branches:
+      - "feat/hyobin"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: trigger vercel
+        run: |
+          curl https://api.vercel.com/v1/integrations/deploy/prj_KeAGCxeH9p15A374WsAhZEtr3S7C/c95oOf2D24
