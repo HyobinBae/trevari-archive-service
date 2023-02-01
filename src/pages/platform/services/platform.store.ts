@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getLiveDate, getLiveLink, getMagazine, getPlatform, getReplay } from '../../../api/backend';
 import { RootState } from '../../../services/store';
-import { LiveDate, LiveLink, MagazineListProps, PlatformProps, ReplayListProps, SearchParams } from './platform.types';
-import { Search } from 'react-router-dom';
-
+import { LiveDate, LiveLink, MagazineListProps, PlatformProps, ReplayListProps } from './platform.types';
 
 interface PlatformState {
   platform?: PlatformProps[]
@@ -12,6 +10,7 @@ interface PlatformState {
   getNavTitle: string
   getVodSrc: string
   getPdfSrc: string
+  getPdfTitle: string
   getVodTitle: string
   getSearchParams: string
   liveDate?: LiveDate[]
@@ -25,6 +24,7 @@ const initialState: PlatformState = {
   getNavTitle: '',
   getVodSrc: '',
   getPdfSrc: '',
+  getPdfTitle:'',
   getVodTitle: '',
   getSearchParams: 'name=replay',
   liveDate: [],
@@ -45,6 +45,9 @@ export const platformStore = createSlice({
     },
     setPdfSrc: (state,action) => {
       state.getPdfSrc = action.payload
+    },
+    setPdfTitle: (state,action) => {
+      state.getPdfTitle = action.payload
     },
     setVodTitle: (state, action) => {
       state.getVodTitle = action.payload
@@ -80,5 +83,5 @@ export const selectMagazineList = (state: RootState) => state.platform.magazine;
 export const selectPlatform = (state:RootState) => state.platform.platform;
 export const selectLiveDate = (state:RootState) => state.platform.liveDate;
 export const selectLiveLink = (state:RootState) => state.platform.liveLink;
-export const { setNavTitle, setVodSrc, setPdfSrc, setVodTitle, setSearchParams } = platformStore.actions;
+export const { setNavTitle, setVodSrc, setPdfSrc, setPdfTitle, setVodTitle, setSearchParams } = platformStore.actions;
 export default platformStore.reducer

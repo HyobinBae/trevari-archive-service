@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import {heading12} from '@trevari/typo';
 import {useAppDispatch} from '../../../../services/store';
-import { setNavTitle, setSearchParams } from '../../services/platform.store';
+import { setNavTitle, setSearchParams, setVodSrc } from '../../services/platform.store';
 import ContentDivider from '../archiveTab/ContentDivider';
 
 export interface ButtonProps {
@@ -37,6 +37,10 @@ const NavigationBar = () => {
     setSelectedButtonID(id)
   }
 
+  const resetVocSrc = () => {
+    dispatch(setVodSrc(''))
+  }
+
 
   return(
     <>
@@ -49,6 +53,7 @@ const NavigationBar = () => {
                 getNavTitle(title.navTitle);
                 getSearchParams(title.sort);
                 getButtonID(title.id);
+                resetVocSrc();
               }}>
               {
                 selectedButtonID === title.id?

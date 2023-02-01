@@ -2,22 +2,23 @@ import React, { useState } from 'react';
 import { Document, Page,pdfjs } from 'react-pdf';
 import styled from '@emotion/styled';
 import { useAppSelector } from '../../../services/store';
+import { body6, heading10 } from '@trevari/typo';
 
-import Arrow from '../../../components/svgs/Arrow';
+import DownloadIcon from '../../../components/svgs/DownloadIcon';
+import LeftChevron from '../../../components/svgs/LeftChevron';
+import RightChevron24px from '../../../components/svgs/RightChevron24px';
+
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const Viewer= () => {
-
-
-  const [numPages, setNumPages] = useState<number>(0);
+  const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
   // const [pageScale,setPageScale] = useState(1);
 
   const pdfSrc = useAppSelector((state)=> state.platform.getPdfSrc)
-  console.log(pdfSrc)
-
-  const onDocumentLoadSuccess = (numPages:number) =>{
+  const pdfTitle = useAppSelector((state)=> state.platform.getPdfTitle)
+  const onDocumentLoadSuccess = ({numPages}:null|number[]) =>{
     setNumPages(numPages)
   }
 
@@ -26,20 +27,26 @@ const Viewer= () => {
   };
 
   const previousPage = () => {
+    pageNumber>1 &&
     changePage(-1);
   };
 
   const nextPage = () => {
+    pageNumber<numPages &&
     changePage(1);
   };
 
-
-
   return(
     <ViewerContainer>
+      <ViewerHeader>
+        <Title>{pdfTitle}</Title>
+        <DownloadButton href={pdfSrc} download>
+          <DownloadIcon fill={'white'}/>
+        </DownloadButton>
+      </ViewerHeader>
       <ViewerMain
         file={pdfSrc}
-        onLoadSuccess={() => {onDocumentLoadSuccess}}
+        onLoadSuccess={onDocumentLoadSuccess}
       >
         <SinglePage
           pageNumber={pageNumber}
@@ -52,7 +59,7 @@ const Viewer= () => {
           disabled={pageNumber < 1}
           onClick={previousPage}
         >
-          <Arrow/>
+          <LeftChevron/>
         </PrevButton>
         <Index>{pageNumber}/{numPages}</Index>
         <NextButton
@@ -60,7 +67,7 @@ const Viewer= () => {
           disabled={pageNumber === numPages}
           onClick={nextPage}
         >
-          <Arrow direction={'right'}/>
+          <RightChevron24px/>
         </NextButton>
       </ButtonBox>
 
@@ -77,6 +84,24 @@ const ViewerContainer = styled.div`
   align-items: center;
 `
 
+const ViewerHeader = styled.div`
+  max-width: 500px;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #222222;
+
+  padding: 0 20px;
+`
+
+const Title = styled.h1`
+  color:white;
+  ${heading10}
+`
+const DownloadButton = styled.a``
 
 const ViewerMain = styled(Document)`
   display: flex;
@@ -133,11 +158,14 @@ const PrevButton = styled.button`
   opacity: 0.9;
   
   background: white;
+  cursor: pointer;
 `
 
 const Index = styled.div`
   padding: 0 5px 0 5px;
   opacity: 0.9;
+  
+  ${body6}
 `
 
 
@@ -154,7 +182,7 @@ const NextButton = styled.button`
   opacity: 0.9;
 
   background: white;
-
+  cursor: pointer;
 `
 
 

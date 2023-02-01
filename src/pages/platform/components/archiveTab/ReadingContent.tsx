@@ -6,7 +6,7 @@ import BookIcon from '../../../../components/svgs/BookIcon';
 import { MagazineProps } from '../../services/platform.types';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../../../services/store';
-import { setPdfSrc } from '../../services/platform.store';
+import { setPdfSrc, setPdfTitle } from '../../services/platform.store';
 
 
 interface IProps {
@@ -18,6 +18,7 @@ const ReadingContent: React.FunctionComponent<IProps> = ({magazine}) => {
     for(let i=0; i < magazine?.length; i++){
       if(magazine[i].type === 'pdf') {
         dispatch(setPdfSrc(magazine[i].src))
+        dispatch(setPdfTitle(magazine[i].title))
       }
     }
   }

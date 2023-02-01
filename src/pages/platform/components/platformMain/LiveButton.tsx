@@ -4,11 +4,14 @@ import { heading12 } from '@trevari/typo';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../services/store';
 import { getLiveLink } from '../../../../api/backend';
+import { selectLiveLink } from '../../services/platform.store';
 
 const LiveButton = () => {
   const { platformID } = useParams()
   const liveLink = useAppSelector((selectLiveLink))
   const dispatch = useAppDispatch()
+
+  const link = liveLink.link
 
   useEffect(() => {
     dispatch(getLiveLink.initiate({platformID}))
@@ -16,7 +19,7 @@ const LiveButton = () => {
 
   return(
     <ButtonBox>
-      <ButtonText href={liveLink.link}>
+      <ButtonText href={link}>
         Live 시작하기
       </ButtonText>
     </ButtonBox>

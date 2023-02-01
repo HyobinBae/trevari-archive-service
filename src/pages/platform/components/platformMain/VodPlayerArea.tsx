@@ -6,10 +6,11 @@ import { useAppSelector } from '../../../../services/store';
 
 const VodPlayerArea = () => {
   const title = useAppSelector((state)=> state.platform.getNavTitle)
+  const vodSrc = useAppSelector((state)=> state.platform.getVodSrc)
 
   return(
     <Container>
-      {!title || title==='커뮤니티'?
+      {(!title || title==='커뮤니티') && !vodSrc?
         <LiveMessageBox/>
         :
         <VodPlayerBox/>

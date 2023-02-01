@@ -2,7 +2,6 @@ import React, { useRef, useLayoutEffect, useState }from 'react';
 
 import videojs from 'video.js';
 import styled from '@emotion/styled';
-import LiveButton from './LiveButton';
 import { useAppSelector } from '../../../../services/store';
 
 interface VideoPlayerProps {

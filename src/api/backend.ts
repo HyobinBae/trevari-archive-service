@@ -75,7 +75,7 @@ export const PlatformGetApi = createApi({
   baseQuery: fetchBaseQuery({
     // baseUrl: 'http://192.168.1.12:3000',
     // baseUrl: '/'
-    baseUrl: 'http://subscriber-club.trevari.co.kr:3000/platform'
+    baseUrl: 'http://subscriber-club.trevari.co.kr:3000'
   }),
   tagTypes: ['GET'],
   endpoints: (builder) => ({
