@@ -1157,6 +1157,28 @@ export type FaqsWhereInput = {
   title?: InputMaybe<Scalars['String']>;
 };
 
+// export type GetReplay = {
+//   __typeName?: 'getReplay';
+//   title?: string|undefined,
+//   description?: string|undefined,
+//   src?: string|undefined,
+//   type?: string|undefined,
+// }
+
+//
+// export type ReplayList = {
+//   __typeName?: 'getReplayList';
+//   replayList?: Array<ReplayListProps>
+// }
+//
+//
+// export type ReplayListProps = {
+//   title?: string|undefined,
+//   description?: string|undefined,
+//   src?: string|undefined,
+//   type?: string|undefined,
+// }
+
 export type InactiveUser = {
   __typename?: 'InactiveUser';
   ads: Array<Maybe<Scalars['String']>>;
@@ -3024,3 +3046,4 @@ export type TypePeriod = {
   endedAt?: Maybe<Scalars['String']>;
   startedAt?: Maybe<Scalars['String']>;
 };
+

@@ -207,7 +207,7 @@ type B2bBookreview {
   publishedAt: String
   createdAt: String
   updatedAt: String
-  contents: [Content]
+  contents: [VodContent]
   b2bClub: B2bClub
   b2bMeeting: B2bMeeting
   b2bUser: B2bUser
@@ -370,7 +370,7 @@ type B2bClubHistory {
   readContentIDs: [String]!
   createdAt: String
   updatedAt: String
-  readContents: [Content]
+  readContents: [VodContent]
 }
 
 type B2bClubReview {
@@ -600,7 +600,7 @@ type B2bMeeting {
   b2bClub: B2bClub
   place: Place
   presenter: B2bUser
-  contents: [Content]
+  contents: [VodContent]
   presenters: [B2bUser]
   roomSchedules: [RoomSchedule]
 }
@@ -791,7 +791,7 @@ type Bookreview {
   publishedAt: String
   createdAt: String
   updatedAt: String
-  contents: [Content]
+  contents: [VodContent]
   club: Club
   meeting: Meeting
   user: User
@@ -1068,7 +1068,7 @@ type ClubHistory {
   readContentIDs: [String]!
   createdAt: String
   updatedAt: String
-  readContents: [Content]
+  readContents: [VodContent]
 }
 
 type ClubReview {
@@ -1243,7 +1243,7 @@ type ConfirmEventRefundPayload {
   eventApplication: EventApplication
 }
 
-type Content {
+type VodContent {
   id: String!
   type: String!
   title: String
@@ -1655,7 +1655,7 @@ input CreateContentInput {
 }
 
 type CreateContentPayload {
-  content: Content
+  content: VodContent
 }
 
 input CreateCurationInput {
@@ -2768,7 +2768,7 @@ type Meeting {
   place: Place
   onlinePlace: OnlinePlace
   presenter: User
-  contents: [Content]
+  contents: [VodContent]
   presenters: [User]
   partnerClubRoles: [ClubRole]
   roomSchedules: [RoomSchedule]
@@ -4823,7 +4823,7 @@ input UpdateContentInput {
 }
 
 type UpdateContentPayload {
-  content: Content
+  content: VodContent
 }
 
 input UpdateCurationInput {

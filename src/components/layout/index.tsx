@@ -24,6 +24,7 @@ const Layout = ({ children }: IProps) => {
   const { open, text, type, fade, autoClose } = useAppSelector(selectToast);
   const { width } = useWindowSize();
   const [viewMode, setViewMode] = useState<'center' | 'full'>('full');
+  const [hideTopNav,setHideTopNav] = useState(false);
   const [hideBottomNav, setHideBottomNav] = useState(false);
   const [initialActiveTab, setInitialActiveTab] = useState('');
 
@@ -56,8 +57,16 @@ const setBottomNavigation = async () => {
   };
 
   useEffect(() => {
-    if (pathname === '/goods') {
+    // eslint-disable-next-line no-constant-condition
+    if (pathname === '/goods' || '/platform' || 'viewer') {
       setHideBottomNav(true);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-constant-condition
+    if (pathname === '/platform' || 'viewer') {
+      setHideTopNav(true);
     }
   }, [pathname]);
 
@@ -79,14 +88,14 @@ const setBottomNavigation = async () => {
         </Item>
         {viewMode === 'full' ? (
           <FullWindow>
-            <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />
+            {!hideTopNav && <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />}
             {children}
             {!hideBottomNav && <BottomNavigation initialActiveTab={initialActiveTab}
                                                  changeNavigationInfo={changeNavigationInfo}/>}
           </FullWindow>
         ) : (
           <CenterWindow>
-            <TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />
+            {!hideTopNav &&<TopNavigation closeMenuWhenScrolled={true} hideAppBarWhenScrolled={true} />}
             {children}
             {!hideBottomNav && <BottomNavigation initialActiveTab={initialActiveTab}
                                                  changeNavigationInfo={changeNavigationInfo}/>}

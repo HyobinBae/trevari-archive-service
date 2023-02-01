@@ -1,18 +1,15 @@
 import React from "react";
-import NavigationBar from './components/NavigationBar'
-import PlatformHeader from './components/PlatformHeader';
-import VodContainer from './components/VodContainer';
-import CommunityContainer from './components/CommunityContainer';
-import ArchiveList from './components/ArchiveList';
+import PlatformHeader from './components/platformMain/PlatformHeader';
+import VodPlayerArea from './components/platformMain/VodPlayerArea';
+import ContentsArea from './components/platformMain/ContentsArea';
+
 
 const Platform = () => {
   return(
     <>
       <PlatformHeader/>
-      <VodContainer/>
-      <NavigationBar/>
-      <CommunityContainer/>
-      <ArchiveList/>
+      <VodPlayerArea/>
+      <ContentsArea/>
     </>
   )
 }

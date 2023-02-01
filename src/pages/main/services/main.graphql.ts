@@ -246,7 +246,7 @@ export const GET_MAIN_POSTS = gql`
   query mainPosts($offset: Int, $limit: Int, $excludeClosedPost: Boolean) {
     mainPosts(offset: $offset, limit: $limit, excludeClosedPost: $excludeClosedPost) {
       title
-      content
+      content 
       id
       createdAt
       updatedAt

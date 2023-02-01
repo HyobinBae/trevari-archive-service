@@ -1,0 +1,69 @@
+[{
+  "user" : {
+    "profile": "amyProfile.png",
+    "profile_description": "amyProfile",
+    "name": "배효빈"
+  },
+  "comment":{
+    "id": 1,
+    "content": "정말 좋아요",
+    "created_at": "2022-11-28T12:30:27Z",
+    "likes": 17,
+    "reply": [{
+      "user" : {
+        "profile": "jinProfile.png",
+        "profile_description": "jinProfile",
+        "name": "김동준"
+      },
+      "comment": {
+        "id": 2,
+        "content": "저도 동감합니다. 저는 반 정도 읽을 때 까지 사실 에세이라는 생각을 못했어요!",
+        "created_at": "2022-12-28T12:30:27Z",
+        "likes": 2,
+        "reply": null
+      }
+    }]
+  }
+},
+  {
+    "user" : {
+      "profile": "Jieun.png",
+      "profile_description": "JieunProfile",
+      "name": "오지은"
+    },
+    "comment":{
+      "id": 3,
+      "content": "너무 좋은 독후감입니다. 저도 책을 읽으면서 비슷한 생각을 했어요. 픽션인듯 하지만 사실은 자신의 이야기를 그대로 담은 글을 읽으며 어떻게 에세이가 이렇게 다채로울 수 있을까 생각했답니다.",
+      "created_at": "2023-01-01T12:30:27Z",
+      "likes": 9,
+      "reply": [{
+        "user" : {
+          "profile": "jinju.png",
+          "profile_description": "jinjuProfile",
+          "name": "박진주",
+        },
+        "comment": {
+          "id": 5,
+          "content": "우아아아우아아아우아아아우아아아우아아아",
+          "created_at": "2023-01-12T12:30:27Z",
+          "likes": 1,
+          "reply": null
+        }
+      }]
+    }
+  },
+  {
+    "user" : {
+      "profile": "Jieun.png",
+      "profile_description": "JieunProfile",
+      "name": "오지은"
+    },
+    "comment":{
+      "id": 4,
+      "content": "저는 이렇게 생각했어요. 룰루 밀러가 자신의고통을 이겨내고자 데이비드 스타 조던의 삶에 더 파고들지만, 그에게서 모순점을 찾아내면서 진정으로 블라블라",
+      "created_at": "2023-01-01T12:30:27Z",
+      "likes": 30,
+      "reply": null
+    }
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "title":"F&B와 브랜딩_베이커리에 관하여 w/ 이준범 GFFG 대표" ,
+    "description": "2022년 11월 베이커리에 관하여 w. GFFG 베이커리 음료",
+    "src": "http://vjs.zencdn.net/v/oceans.mp4",
+    "type": "vod"
+  },
+  {
+    "title":"F&B와 브랜딩_음료에 관하여 w/ 이준범 GFFG 대표" ,
+    "description": "2022년 12월 베이커리에 관하여 w. GFFG 베이커리 음료",
+    "src": "https://jsoncompare.org/LearningContainer/SampleFiles/Video/MP4/Sample-MP4-Video-File-for-Testing.mp4",
+    "type": "vod"
+  },
+  {
+    "title":"F&B와 브랜딩_bakery에 관하여 w/ 이준범 GFFG 대표" ,
+    "description": "2023년 1월 베이커리에 관하여 w. GFFG 베이커리 음료",
+    "src": "https://jsoncompare.org/LearningContainer/SampleFiles/Video/MP4/sample-mp4-file.mp4",
+    "type": "vod"
+  },
+  {
+    "title":"F&B와 브랜딩_Food에 관하여 w/ 이준범 GFFG 대표" ,
+    "description": "2023년 12월 베이커리에 관하여 w. GFFG 베이커리 음료",
+    "src": "https://www.youtube.com/watch?v=z-JlNXY51pU",
+    "type": "vod"
+  },
+  {
+    "title":"F&B와 브랜딩에 관하여 w/ 이준범 GFFG 대표" ,
+    "description": "2023년 3월 베이커리에 관하여 w. GFFG 베이커리 음료",
+    "src": "https://www.youtube.com/watch?v=m4eqF5eiArI",
+    "type": "vod"
+  }
+]

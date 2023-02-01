@@ -16,9 +16,7 @@ import { logout } from 'services/user/user.store';
 import WishList from 'pages/wishList';
 import Bookreviews from '../pages/bookreviews';
 import BookReviewShow from 'pages/bookreviews/show';
-import Test from '../pages/test';
-
-
+import Viewer from '../pages/platform/components/Viewer';
 
 type Loader<T> = (props: T) => Promise<DefaultComponent<T>>;
 
@@ -78,8 +76,8 @@ export default () => {
         <Route path="/bookreviews" element={<Bookreviews />} />
         <Route path="/bookreviews/show/:bookreivewID" element={<BookReviewShow />} />
         <Route path="*" element={<LoadingP />} />
-        <Route path="/platform" element={<Platform/>}/>
-
+        <Route path="/platform/:platformID" element={<Platform/>}/>
+        <Route path="/viewer" element={<Viewer/>}/>
       </Routes>
     </Layout>
   );

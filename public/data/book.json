@@ -1,0 +1,40 @@
+[
+  { "id": 1,
+    "contents": [
+      {
+        "title":"나는 4시간만 일한다",
+        "src": "http://www.yes24.com/Product/Goods/53214530",
+        "type":"book"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "contents": [
+      {
+        "title":"부의 추월차선 (10주년 스페셜 에디션)",
+        "src": "http://www.yes24.com/Product/Goods/106369008",
+        "type":"book"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "contents": [
+      {
+        "title":"광기, 패닉, 붕괴 금융위기의 역사",
+        "src": "http://www.yes24.com/Product/Goods/2183283",
+        "type":"book"
+      }
+    ]
+  },
+  { "id": 4,
+    "contents": [
+      {
+        "title":"석유의 종말은 없다",
+        "src": "http://www.yes24.com/Product/Goods/116189465",
+        "type":"book"
+      }
+    ]
+  }
+]
