@@ -1,23 +1,31 @@
-import React from 'react';
+import React, { useRef, useEffect, EventHandler } from 'react';
 import styled from '@emotion/styled';
 import {heading9} from '@trevari/typo';
 import LinkToButton from './LinkToButton';
 import DimBackground from '../editModals/DimBackground';
+import { useAppDispatch, useAppSelector } from '../../../../services/store';
+import { selectLiveLink, selectPlatform, setIsLiveModal } from '../../services/platform.store';
 
-const clubTitle = '내궁의 F&B 기획과 트렌드 읽기'
 
 const LiveAlarmModal = () => {
+  const platformTitle = useAppSelector(selectPlatform)
+  const clubTitle = platformTitle.club_title
+  const liveLink = useAppSelector((selectLiveLink))
+  const linkURL = liveLink.link
+
+  const message = 'Live 보러가기'
+
   return(
     <>
-    <DimBackground/>
-    <Modal>
-      <TextBox>
-        <MessageText>5분 후에</MessageText>
-        <TitleText>{clubTitle}</TitleText>
-        <MessageText>라이브가 시작됩니다.</MessageText>
-      </TextBox>
-      <LinkToButton/>
-    </Modal>
+      <DimBackground/>
+      <Modal>
+        <TextBox>
+          <MessageText>5분 후에</MessageText>
+          <TitleText>{clubTitle}</TitleText>
+          <MessageText>라이브가 시작됩니다.</MessageText>
+        </TextBox>
+        <LinkToButton message={message} linkURL={linkURL} />
+      </Modal>
     </>
   )
 }
@@ -42,6 +50,7 @@ const Modal = styled.div`
   border-radius: 6px;
   
   background: #FFFFFF;
+  z-index: 300;
 `
 
 const TextBox = styled.div`

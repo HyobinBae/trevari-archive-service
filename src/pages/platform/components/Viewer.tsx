@@ -7,6 +7,8 @@ import { body6, heading10 } from '@trevari/typo';
 import DownloadIcon from '../../../components/svgs/DownloadIcon';
 import LeftChevron from '../../../components/svgs/LeftChevron';
 import RightChevron24px from '../../../components/svgs/RightChevron24px';
+import { useNavigate, useParams } from 'react-router-dom';
+import Arrow from '../../../components/svgs/Arrow';
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -15,6 +17,8 @@ const Viewer= () => {
   const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
   // const [pageScale,setPageScale] = useState(1);
+  const navigate = useNavigate()
+
 
   const pdfSrc = useAppSelector((state)=> state.platform.getPdfSrc)
   const pdfTitle = useAppSelector((state)=> state.platform.getPdfTitle)
@@ -36,9 +40,16 @@ const Viewer= () => {
     changePage(1);
   };
 
+  const goToPlatform :(e:React.MouseEvent<HTMLButtonElement>) => void = () => {
+    navigate(`/platform`)
+  };
+
   return(
     <ViewerContainer>
       <ViewerHeader>
+        <HeaderButtonBox onClick={goToPlatform} >
+          <Arrow fill='#FFFFFF'/>
+        </HeaderButtonBox>
         <Title>{pdfTitle}</Title>
         <DownloadButton href={pdfSrc} download>
           <DownloadIcon fill={'white'}/>
@@ -96,7 +107,13 @@ const ViewerHeader = styled.div`
 
   padding: 0 20px;
 `
-
+const HeaderButtonBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  cursor: pointer;
+`
 const Title = styled.h1`
   color:white;
   ${heading10}

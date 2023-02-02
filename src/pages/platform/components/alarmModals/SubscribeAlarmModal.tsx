@@ -4,21 +4,26 @@ import {heading9} from '@trevari/typo';
 import {body5} from '@trevari/typo';
 import LinkToButton from './LinkToButton';
 import DimBackground from '../editModals/DimBackground';
+import WhiteBackground from './WhitheBackground';
 
 const SubscribeAlarmModal = () => {
+  const message = '클럽장 구독 클럽 둘러보기'
+  const link = 'https://trevari.co.kr/onlineclubs'
+
   return(
     <>
-    <DimBackground/>
-    <Modal>
-      <TextBox>
-        <MessageText>클럽장 구독 클럽 멤버에게만</MessageText>
-        <MessageText>공개되는 페이지입니다.</MessageText>
-      </TextBox>
-      <TextBox>
-        <LinkText>클럽장 구독 클럽 멤버가 되고 싶다면?</LinkText>
-      </TextBox>
-      <LinkToButton/>
-    </Modal>
+      <WhiteBackground/>
+      <DimBackground/>
+      <Modal>
+        <TextBox>
+          <MessageText>클럽장 구독 클럽 멤버에게만</MessageText>
+          <MessageText>공개되는 페이지입니다.</MessageText>
+        </TextBox>
+        <TextBox>
+          <LinkText>클럽장 구독 클럽 멤버가 되고 싶다면?</LinkText>
+        </TextBox>
+        <LinkToButton message={message} linkURL={link} />
+      </Modal>
     </>
   )
 }

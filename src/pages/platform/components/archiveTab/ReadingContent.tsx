@@ -4,7 +4,7 @@ import {title2} from '@trevari/typo';
 import PdfIcon from '../../../../components/svgs/PdfIcon';
 import BookIcon from '../../../../components/svgs/BookIcon';
 import { MagazineProps } from '../../services/platform.types';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../../services/store';
 import { setPdfSrc, setPdfTitle } from '../../services/platform.store';
 

@@ -11,6 +11,7 @@ import {
   LiveDate,
   LiveLink,
 } from '../pages/platform/services/platform.types';
+import { BaseQueryApi } from '@reduxjs/toolkit/src/query/baseQueryTypes';
 
 
 export const client = new GraphQLClient(endpoints.user_backend_api_graphql_endpoint);
@@ -84,9 +85,13 @@ export const PlatformGetApi = createApi({
         // url: '/platformTitle.json',
         url:`/platform/${platformID}`,
         method: 'get',
-        prepareHeaders: (headers:Headers)=>{
-          headers.set("Content-Type",'Application/json')
-          return headers
+        prepareHeaders: async (headers:Headers, { getState }:BaseQueryApi) => {
+          const token = (getState() as RootState).auth.token;
+          if (token) {
+            headers.set('Accept', 'application/json');
+            headers.set('Authorization', `Bearer ${token}`);
+          }
+          return (headers);
         },
         variables: { platformID },
       }),
@@ -98,7 +103,7 @@ export const PlatformGetApi = createApi({
       transformErrorResponse: (
         response: { status: string | number },
       ) => {
-        return(response.status)
+        return(response.status, console.log(response.status))
       },
       providesTags: (result, error) => [{ type: 'GET' }],
     }),
@@ -107,9 +112,13 @@ export const PlatformGetApi = createApi({
         // url: '/platform/:platformID/',
         url: `/platform/${platformID}/archive?${searchParams}`,
         method: 'get',
-        prepareHeaders:(headers:Headers)=>{
-          headers.set("Content-Type",'Application/json')
-          return headers
+        prepareHeaders: async (headers:Headers, { getState }:BaseQueryApi) => {
+          const token = (getState() as RootState).auth.token;
+          if (token) {
+            headers.set('Accept', 'application/json');
+            headers.set('Authorization', `Bearer ${token}`);
+          }
+          return headers;
         },
         variables: {platformID},
       }),
@@ -126,9 +135,13 @@ export const PlatformGetApi = createApi({
       query: ({ platformID ,searchParams}) => ({
         url: `/platform/${platformID}/archive?${searchParams}`,
         method: 'get',
-        prepareHeaders: (headers:Headers) => {
-          headers.set("Content-Type",'Application/json')
-          return headers
+        prepareHeaders: async (headers:Headers, { getState }:BaseQueryApi) => {
+          const token = (getState() as RootState).auth.token;
+          if (token) {
+            headers.set('Accept', 'application/json');
+            headers.set('Authorization', `Bearer ${token}`);
+          }
+          return headers;
         },
         variables: {platformID}
       }),
@@ -146,9 +159,13 @@ export const PlatformGetApi = createApi({
       query: ({ platformID }) => ({
         url: `/platform/${platformID}/liveDate`,
         method: 'get',
-        prepareHeaders: (headers:Headers) => {
-          headers.set("Content-Type",'Application/json')
-          return headers
+        prepareHeaders: async (headers:Headers, { getState }:BaseQueryApi) => {
+          const token = (getState() as RootState).auth.token;
+          if (token) {
+            headers.set('Accept', 'application/json');
+            headers.set('Authorization', `Bearer ${token}`);
+          }
+          return headers;
         },
         variables: {platformID}
       }),
@@ -166,9 +183,13 @@ export const PlatformGetApi = createApi({
       query: ({ platformID }) => ({
         url: `/platform/${platformID}/liveLink`,
         method: 'get',
-        prepareHeaders: (headers:Headers) => {
-          headers.set("Content-Type",'Application/json')
-          return headers
+        prepareHeaders: async (headers:Headers, { getState }:BaseQueryApi) => {
+          const token = (getState() as RootState).auth.token;
+          if (token) {
+            headers.set('Accept', 'application/json');
+            headers.set('Authorization', `Bearer ${token}`);
+          }
+          return headers;
         },
         variables: {platformID}
       }),

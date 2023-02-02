@@ -15,6 +15,7 @@ interface PlatformState {
   getSearchParams: string
   liveDate?: LiveDate[]
   liveLink?: LiveLink[]
+  isLiveModal?: boolean
 }
 
 const initialState: PlatformState = {
@@ -28,7 +29,8 @@ const initialState: PlatformState = {
   getVodTitle: '',
   getSearchParams: 'name=replay',
   liveDate: [],
-  liveLink: []
+  liveLink: [],
+  isLiveModal: false
 }
 
 
@@ -54,6 +56,9 @@ export const platformStore = createSlice({
     },
     setSearchParams: (state,action)=>{
       state.getSearchParams = action.payload
+    },
+    setIsLiveModal: (state,action)=>{
+      state.isLiveModal = action.payload
     }
   },
   extraReducers:
@@ -83,5 +88,5 @@ export const selectMagazineList = (state: RootState) => state.platform.magazine;
 export const selectPlatform = (state:RootState) => state.platform.platform;
 export const selectLiveDate = (state:RootState) => state.platform.liveDate;
 export const selectLiveLink = (state:RootState) => state.platform.liveLink;
-export const { setNavTitle, setVodSrc, setPdfSrc, setPdfTitle, setVodTitle, setSearchParams } = platformStore.actions;
+export const { setNavTitle, setVodSrc, setPdfSrc, setPdfTitle, setVodTitle, setSearchParams, setIsLiveModal } = platformStore.actions;
 export default platformStore.reducer

@@ -1,11 +1,23 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { heading11 } from '@trevari/typo';
+import { useAppDispatch } from '../../../../services/store';
+import { setIsLiveModal } from '../../services/platform.store';
 
-const message = 'LIVE 보러가기';
-const LinkToButton = () => {
+interface Props {
+  message: string
+  linkURL: string
+}
+
+const LinkToButton = ({message,linkURL}:Props) => {
+  const dispatch = useAppDispatch()
+
+  const handleClick = () => {
+    dispatch(setIsLiveModal(false))
+  }
+
   return(
-    <ButtonBox>
+    <ButtonBox href={linkURL} onClick={handleClick}>
       <ButtonText>
         {message}
       </ButtonText>
@@ -15,7 +27,7 @@ const LinkToButton = () => {
 
 export default LinkToButton
 
-const ButtonBox = styled.button`
+const ButtonBox = styled.a`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,9 +41,15 @@ const ButtonBox = styled.button`
   border-style: none;
   
   z-index: 10;
+
+  cursor: pointer;
 `
 const ButtonText = styled.h1`
-  width: 89px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  width: 100%;
   height: 26px;
 
   ${heading11};

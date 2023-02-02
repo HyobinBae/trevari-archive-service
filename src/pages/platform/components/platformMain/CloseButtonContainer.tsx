@@ -8,7 +8,6 @@ import PlatformCloseButton from '../../../../components/svgs/PlatformCloseButton
 const CloseButtonContainer = () => {
   const navigate = useNavigate();
   const closeButtonHandler:(e:React.MouseEvent<HTMLButtonElement>) => void = () => {
-    console.log('event')
     navigate('/main')
   };
 
