@@ -21,7 +21,7 @@ const ReadingContent: React.FunctionComponent<IProps> = ({magazine}) => {
     dispatch(setPdfSrc(data.src))
     dispatch(setPdfTitle(data.title))
     params.set('pdf', data.title)
-    navigate(`/viewer/pdf?${params.toString()}`)
+    navigate(`/viewer?pdf=${params.toString()}`)
   }
 
   return(

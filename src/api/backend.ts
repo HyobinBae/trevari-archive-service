@@ -74,7 +74,7 @@ export const bookreviewBackend = createApi({
 
 export const PlatformGetApi = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://subscriber-club.trevari.co.kr:3000'
+    baseUrl: 'https://mock-clubjang.trevari.co.kr'
   }),
   tagTypes: ['GET'],
   endpoints: (builder) => ({
