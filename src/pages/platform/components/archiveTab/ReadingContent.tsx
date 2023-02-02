@@ -5,24 +5,29 @@ import PdfIcon from '../../../../components/svgs/PdfIcon';
 import BookIcon from '../../../../components/svgs/BookIcon';
 import { MagazineProps } from '../../services/platform.types';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useAppDispatch } from '../../../../services/store';
-import { setPdfSrc, setPdfTitle, setSearchParams } from '../../services/platform.store';
+import { useAppDispatch, useAppSelector } from '../../../../services/store';
+import { setPdfSrc, setPdfTitle, setPlatformParams, setSearchParams } from '../../services/platform.store';
 
 
 interface IProps {
   magazine?: MagazineProps[] | undefined
 }
 const ReadingContent: React.FunctionComponent<IProps> = ({magazine}) => {
+  const params = new URLSearchParams()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const params = new URLSearchParams()
 
-  const onClickHandler=(data) =>{
-    dispatch(setPdfSrc(data.src))
-    dispatch(setPdfTitle(data.title))
-    params.set('pdf', data.title)
-    navigate(`/viewer?pdf=${params.toString()}`)
+  const onClickHandler=() =>{
+    for(let i=0; i < magazine?.length; i++){
+      if(magazine[i].type === 'pdf') {
+        dispatch(setPdfSrc(magazine[i].src))
+        dispatch(setPdfTitle(magazine[i].title))
+        params.set('pdf', magazine[i].title)
+        navigate(`/viewer?${params.toString()}`)
+      }
+    }
   }
+
 
   return(
     <>
@@ -45,7 +50,7 @@ const ReadingContent: React.FunctionComponent<IProps> = ({magazine}) => {
               <PdfIcon/>
             </IconBox>
             <TextBox >
-              <Text onClick={onClickHandler(data)}>{data.title}</Text>
+              <Text onClick={onClickHandler} >{data.title}</Text>
               <UnderLine/>
             </TextBox>
           </PdfContainer>)

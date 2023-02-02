@@ -20,8 +20,7 @@ const Viewer= () => {
   const navigate = useNavigate()
   const platformID = useAppSelector(state => state.platform.getPlatformParams)
 
-  const pdfSrc = 'https://d270xxc7m3spo6.cloudfront.net/99273A485C51D81B16.pdf'
-  // const pdfSrc = useAppSelector((state)=> state.platform.getPdfSrc)
+  const pdfSrc = useAppSelector((state)=> state.platform.getPdfSrc)
   const pdfTitle = useAppSelector((state)=> state.platform.getPdfTitle)
   const onDocumentLoadSuccess = ({numPages}:null|number[]) =>{
     setNumPages(numPages)
