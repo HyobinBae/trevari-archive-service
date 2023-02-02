@@ -5,7 +5,7 @@ import { ButtonProps, Styles } from './NavigationBar';
 import { useAppDispatch } from '../../../../services/store';
 import { setNavTitle, setSearchParams } from '../../services/platform.store';
 
-const NavigationButton = (({navTitle,sort}:ButtonProps, style:Styles, onClick:()=>void) => {
+const NavigationButton = (({navTitle,sort}:ButtonProps, style:Styles) => {
   const dispatch = useAppDispatch()
   const params = new URLSearchParams()
 

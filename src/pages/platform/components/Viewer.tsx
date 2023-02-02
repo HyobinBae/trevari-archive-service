@@ -18,7 +18,7 @@ const Viewer= () => {
   const [pageNumber, setPageNumber] = useState(1);
   // const [pageScale,setPageScale] = useState(1);
   const navigate = useNavigate()
-
+  const platformID = useAppSelector(state => state.platform.getPlatformParams)
 
   const pdfSrc = useAppSelector((state)=> state.platform.getPdfSrc)
   const pdfTitle = useAppSelector((state)=> state.platform.getPdfTitle)
@@ -41,7 +41,7 @@ const Viewer= () => {
   };
 
   const goToPlatform :(e:React.MouseEvent<HTMLButtonElement>) => void = () => {
-    navigate(`/platform`)
+    navigate(`/platform/${platformID}`)
   };
 
   return(
@@ -105,7 +105,7 @@ const ViewerHeader = styled.div`
 
   background: #222222;
 
-  padding: 0 20px;
+  padding: 10px 20px;
 `
 const HeaderButtonBox = styled.div`
   display: flex;

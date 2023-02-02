@@ -4,9 +4,9 @@ import {title2} from '@trevari/typo';
 import PdfIcon from '../../../../components/svgs/PdfIcon';
 import BookIcon from '../../../../components/svgs/BookIcon';
 import { MagazineProps } from '../../services/platform.types';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../../services/store';
-import { setPdfSrc, setPdfTitle } from '../../services/platform.store';
+import { setPdfSrc, setPdfTitle, setSearchParams } from '../../services/platform.store';
 
 
 interface IProps {
@@ -14,19 +14,20 @@ interface IProps {
 }
 const ReadingContent: React.FunctionComponent<IProps> = ({magazine}) => {
   const dispatch = useAppDispatch()
-  const onClickHandler=() =>{
-    for(let i=0; i < magazine?.length; i++){
-      if(magazine[i].type === 'pdf') {
-        dispatch(setPdfSrc(magazine[i].src))
-        dispatch(setPdfTitle(magazine[i].title))
-      }
-    }
+  const navigate = useNavigate()
+  const params = new URLSearchParams()
+
+  const onClickHandler=(data) =>{
+    dispatch(setPdfSrc(data.src))
+    dispatch(setPdfTitle(data.title))
+    params.set('pdf', data.title)
+    navigate(`/viewer/pdf?${params.toString()}`)
   }
 
   return(
     <>
       {magazine?.map((data: MagazineProps) => {
-      if (data.type=== 'book'){
+      if (data.type === 'book'){
         return(
           <Container key={data.title}>
             <IconBox>
@@ -39,12 +40,12 @@ const ReadingContent: React.FunctionComponent<IProps> = ({magazine}) => {
           </Container>)
       }else if (data.type ==='pdf'){
         return(
-          <PdfContainer key={data.title} to={`/viewer`}>
+          <PdfContainer key={data.title}>
             <IconBox>
               <PdfIcon/>
             </IconBox>
             <TextBox >
-              <Text onClick={onClickHandler} >{data.title}</Text>
+              <Text onClick={onClickHandler(data)}>{data.title}</Text>
               <UnderLine/>
             </TextBox>
           </PdfContainer>)
@@ -71,7 +72,7 @@ const Container = styled.li`
   background: #222222;
 `
 
-const PdfContainer = styled(Link)`
+const PdfContainer = styled.div`
   width: 100%;
   
   display: flex;

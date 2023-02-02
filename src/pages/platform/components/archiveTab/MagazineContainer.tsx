@@ -26,8 +26,6 @@ const MagazineContainer = () => {
   const searchParams = useAppSelector((state)=>state.platform.getSearchParams);
   const dispatch = useAppDispatch();
 
-
-
   useEffect(()=>{
     dispatch(getMagazine.initiate({initialState, platformID, searchParams}))
   },[])

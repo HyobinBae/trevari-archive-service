@@ -21,7 +21,7 @@ const Platform = () => {
   const liveHour = date.getTime()
   const nowHour = Date.now()
 
-  //Error status 401(unAuthorized) => LoginPage
+  //Error status 401(unAuthorized) => 'https://login.trevari.co.kr'
   //Error status 403(Forbidden) => SubscribeAlarmModal
 
   const isLiveModalToggle = () => {

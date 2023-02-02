@@ -4,7 +4,7 @@ import Title from './Title';
 import SubTitle from './SubTitle';
 import CloseButtonContainer from './CloseButtonContainer';
 import { useAppDispatch, useAppSelector } from '../../../../services/store';
-import { selectPlatform } from '../../services/platform.store';
+import { selectPlatform, setPlatformParams } from '../../services/platform.store';
 import { getPlatform } from '../../../../api/backend';
 import { PlatformProps } from '../../services/platform.types';
 import { useParams } from 'react-router-dom';
@@ -24,6 +24,7 @@ const PlatformHeader = () => {
 
   useEffect(()=>{
     dispatch(getPlatform.initiate({ platformID, initialState }))
+    dispatch(setPlatformParams(platformID))
   })
 
   return(

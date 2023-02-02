@@ -13,6 +13,7 @@ interface PlatformState {
   getPdfTitle: string
   getVodTitle: string
   getSearchParams: string
+  getPlatformParams: string
   liveDate?: LiveDate[]
   liveLink?: LiveLink[]
   isLiveModal?: boolean
@@ -28,6 +29,7 @@ const initialState: PlatformState = {
   getPdfTitle:'',
   getVodTitle: '',
   getSearchParams: 'name=replay',
+  getPlatformParams: '',
   liveDate: [],
   liveLink: [],
   isLiveModal: false
@@ -54,12 +56,15 @@ export const platformStore = createSlice({
     setVodTitle: (state, action) => {
       state.getVodTitle = action.payload
     },
-    setSearchParams: (state,action)=>{
+    setSearchParams: (state,action) => {
       state.getSearchParams = action.payload
     },
-    setIsLiveModal: (state,action)=>{
+    setPlatformParams: (state,action) => {
+      state.getPlatformParams = action.payload
+    },
+    setIsLiveModal: (state,action) => {
       state.isLiveModal = action.payload
-    }
+    },
   },
   extraReducers:
     builder => {
@@ -88,5 +93,5 @@ export const selectMagazineList = (state: RootState) => state.platform.magazine;
 export const selectPlatform = (state:RootState) => state.platform.platform;
 export const selectLiveDate = (state:RootState) => state.platform.liveDate;
 export const selectLiveLink = (state:RootState) => state.platform.liveLink;
-export const { setNavTitle, setVodSrc, setPdfSrc, setPdfTitle, setVodTitle, setSearchParams, setIsLiveModal } = platformStore.actions;
+export const { setNavTitle, setVodSrc, setPdfSrc, setPdfTitle, setVodTitle, setSearchParams, setPlatformParams, setIsLiveModal } = platformStore.actions;
 export default platformStore.reducer

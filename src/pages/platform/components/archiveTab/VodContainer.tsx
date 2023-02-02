@@ -5,7 +5,7 @@ import VodContent from './VodContent';
 import { useAppDispatch } from '../../../../services/store';
 import { useAppSelector } from '../../../../services/store';
 import { getReplay } from '../../../../api/backend';
-import { selectReplayList, setSearchParams, setVodTitle } from '../../services/platform.store';
+import { selectReplayList } from '../../services/platform.store';
 import { useParams } from 'react-router-dom';
 
 const initialState: VodContentsProps[] = [

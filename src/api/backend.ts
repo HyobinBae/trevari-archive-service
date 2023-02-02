@@ -74,15 +74,12 @@ export const bookreviewBackend = createApi({
 
 export const PlatformGetApi = createApi({
   baseQuery: fetchBaseQuery({
-    // baseUrl: 'http://192.168.1.12:3000',
-    // baseUrl: '/'
     baseUrl: 'http://subscriber-club.trevari.co.kr:3000'
   }),
   tagTypes: ['GET'],
   endpoints: (builder) => ({
     getPlatform: builder.query<Array<PlatformProps>,{platformID: number}>({
       query: ({ platformID }) => ({
-        // url: '/platformTitle.json',
         url:`/platform/${platformID}`,
         method: 'get',
         prepareHeaders: async (headers:Headers, { getState }:BaseQueryApi) => {
@@ -103,13 +100,12 @@ export const PlatformGetApi = createApi({
       transformErrorResponse: (
         response: { status: string | number },
       ) => {
-        return(response.status, console.log(response.status))
+        return(response.status)
       },
       providesTags: (result, error) => [{ type: 'GET' }],
     }),
     getReplay: builder.query<Array<ReplayListProps[]>,{platformID:number, searchParams:string}>({
       query: ({ platformID, searchParams }) => ({
-        // url: '/platform/:platformID/',
         url: `/platform/${platformID}/archive?${searchParams}`,
         method: 'get',
         prepareHeaders: async (headers:Headers, { getState }:BaseQueryApi) => {
