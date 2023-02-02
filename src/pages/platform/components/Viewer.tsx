@@ -19,7 +19,7 @@ const Viewer= () => {
   // const [pageScale,setPageScale] = useState(1);
   const navigate = useNavigate()
   const platformID = useAppSelector(state => state.platform.getPlatformParams)
-
+  const searchParams = useAppSelector(state => state.platform.getSearchParams)
   const pdfSrc = useAppSelector((state)=> state.platform.getPdfSrc)
   const pdfTitle = useAppSelector((state)=> state.platform.getPdfTitle)
   const onDocumentLoadSuccess = ({numPages}:null|number[]) =>{
@@ -41,7 +41,7 @@ const Viewer= () => {
   };
 
   const goToPlatform :(e:React.MouseEvent<HTMLButtonElement>) => void = () => {
-    navigate(`/platform/${platformID}`)
+    navigate(`/platform/${platformID}/archive?${searchParams}`)
   };
 
   return(
