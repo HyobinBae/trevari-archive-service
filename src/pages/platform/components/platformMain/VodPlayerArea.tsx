@@ -10,7 +10,7 @@ const VodPlayerArea = () => {
 
   return(
     <Container>
-      {(!title || title==='커뮤니티') && !vodSrc?
+      {(title==='커뮤니티') && !vodSrc?
         <LiveMessageBox/>
         :
         <VodPlayerBox/>

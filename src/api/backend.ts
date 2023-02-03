@@ -9,7 +9,7 @@ import {
   MagazineListProps,
   PlatformProps,
   LiveDate,
-  LiveLink,
+  LiveLink, PDFProps,
 } from '../pages/platform/services/platform.types';
 import { BaseQueryApi } from '@reduxjs/toolkit/src/query/baseQueryTypes';
 
@@ -75,6 +75,7 @@ export const bookreviewBackend = createApi({
 export const PlatformGetApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://mock-clubjang.trevari.co.kr'
+    // baseUrl: 'http://192.168.1.37:8000'
   }),
   tagTypes: ['GET'],
   endpoints: (builder) => ({
@@ -199,6 +200,30 @@ export const PlatformGetApi = createApi({
       ) => response.status,
       providesTags: (result, error) => [{ type: 'GET' }],
     }),
+    getPDFInfo: builder.query<Array<PDFProps>,{ platformID:number, magazineID:number }>({
+      query: ({ platformID, magazineID }) => ({
+        url: `/platform/${platformID}/magazine/${magazineID}`,
+        method: 'get',
+        prepareHeaders: async (headers:Headers, { getState }:BaseQueryApi) => {
+          const token = (getState() as RootState).auth.token;
+          if (token) {
+            headers.set('Accept', 'application/json');
+            headers.set('Authorization', `Bearer ${token}`);
+          }
+          return headers;
+        },
+        variables: {platformID, magazineID}
+      }),
+      transformResponse: (
+        response: { data: PDFProps }
+      ) => {
+        return (response);
+      },
+      transformErrorResponse: (
+        response: { status: string | number },
+      ) => response.status,
+      providesTags: (result, error) => [{ type: 'GET' }],
+    }),
   })
 })
 
@@ -210,5 +235,6 @@ export const {
     getPlatform,
     getLiveDate,
     getLiveLink,
+    getPDFInfo
   },
 } = PlatformGetApi

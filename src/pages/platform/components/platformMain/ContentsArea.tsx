@@ -17,7 +17,7 @@ const ContentsArea = () => {
   return(
     <BackGround style={heightSize}>
       <NavigationBar/>
-      { (!title || title === "다시보기") && <VodContainer/> }
+      { title === "다시보기" && <VodContainer/> }
       { title === "읽을거리" && <MagazineContainer/> }
       { title === "커뮤니티" && <ComingSoon/> }
     </BackGround>

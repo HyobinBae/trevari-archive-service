@@ -8,7 +8,7 @@ import { selectLiveLink } from '../../services/platform.store';
 
 const LiveButton = () => {
   const { platformID } = useParams()
-  const liveLink = useAppSelector((selectLiveLink))
+  const liveLink = useAppSelector(selectLiveLink)
   const dispatch = useAppDispatch()
 
   const link = liveLink.link
@@ -18,8 +18,8 @@ const LiveButton = () => {
   },[])
 
   return(
-    <ButtonBox>
-      <ButtonText href={link}>
+    <ButtonBox href={link}>
+      <ButtonText>
         Live 시작하기
       </ButtonText>
     </ButtonBox>
@@ -38,12 +38,18 @@ const ButtonBox = styled.a`
 
   width: 107px;
   height: 36px;
-  
+
   background: #FF7900;
   border-radius: 2px;
   border-style: none;
+  
+  cursor: pointer;
 `
 const ButtonText = styled.h1`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
   width: 79px;
   height: 24px;
 

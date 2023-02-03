@@ -15,6 +15,12 @@ export interface MagazineProps {
   type?: string
 }
 
+export interface PDFProps {
+  title?: string
+  src?: string
+  type?: string
+}
+
 export interface ReplayList  {
   __typeName?: 'getReplayList'
   replayList?: Array<ReplayListProps>

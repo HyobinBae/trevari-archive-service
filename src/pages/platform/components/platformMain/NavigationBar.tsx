@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import {heading12} from '@trevari/typo';
-import {useAppDispatch} from '../../../../services/store';
+import { useAppDispatch, useAppSelector } from '../../../../services/store';
 import { setNavTitle, setSearchParams, setVodSrc } from '../../services/platform.store';
 import ContentDivider from '../archiveTab/ContentDivider';
 
@@ -20,7 +20,7 @@ const InitialButtonStyle = {button: {color:'#ADADAA'}, bar: {background:'#222222
 const SelectedButtonStyle = {button: {color:'#FF7900'}, bar: {background: '#FF7900'}}
 
 const NavigationBar = () => {
-  const [selectedButtonID,setSelectedButtonID] = useState(2)
+  const selectedTitle = useAppSelector((state)=> state.platform.getNavTitle)
 
   const dispatch = useAppDispatch()
   const params = new URLSearchParams()
@@ -33,9 +33,6 @@ const NavigationBar = () => {
     dispatch(setNavTitle(navTitle))
   }
 
-  const getButtonID = (id:number) =>{
-    setSelectedButtonID(id)
-  }
 
   const resetVocSrc = () => {
     dispatch(setVodSrc(''))
@@ -52,11 +49,10 @@ const NavigationBar = () => {
               onClick={() =>{
                 getNavTitle(title.navTitle);
                 getSearchParams(title.sort);
-                getButtonID(title.id);
                 resetVocSrc();
               }}>
               {
-                selectedButtonID === title.id?
+                selectedTitle === title.navTitle?
                   <>
                     <ButtonText style={SelectedButtonStyle.button}>{title.navTitle}</ButtonText>
                     <SelectedBar style={SelectedButtonStyle.bar}/>

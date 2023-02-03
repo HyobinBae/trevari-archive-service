@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Document, Page,pdfjs } from 'react-pdf';
 import styled from '@emotion/styled';
-import { useAppSelector } from '../../../services/store';
+import { useAppDispatch, useAppSelector } from '../../../services/store';
 import { body6, heading10 } from '@trevari/typo';
 
 import DownloadIcon from '../../../components/svgs/DownloadIcon';
@@ -9,6 +9,8 @@ import LeftChevron from '../../../components/svgs/LeftChevron';
 import RightChevron24px from '../../../components/svgs/RightChevron24px';
 import { useNavigate, useParams } from 'react-router-dom';
 import Arrow from '../../../components/svgs/Arrow';
+import { useWindowSize } from '../../../utils/windowResize';
+import { getPDFInfo } from '../../../api/backend';
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -17,15 +19,22 @@ const Viewer= () => {
   const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
   // const [pageScale,setPageScale] = useState(1);
+
   const navigate = useNavigate()
+  const { height } = useWindowSize();
+  const heightStyle = {height: height-110}
+  const maxHeightStyle = {maxHeight: height-100}
+
+  const dispatch = useAppDispatch()
+  const pdfInfo = useAppSelector(state => state.platform.pdfInfo)
   const platformID = useAppSelector(state => state.platform.getPlatformParams)
-  const searchParams = useAppSelector(state => state.platform.getSearchParams)
   const pdfSrc = useAppSelector((state)=> state.platform.getPdfSrc)
   const pdfTitle = useAppSelector((state)=> state.platform.getPdfTitle)
+
+  const {magazineID} = useParams()
   const onDocumentLoadSuccess = ({numPages}:null|number[]) =>{
     setNumPages(numPages)
   }
-
   const changePage = (offset:number) => {
     setPageNumber(prevPageNumber => prevPageNumber + offset);
   };
@@ -41,9 +50,14 @@ const Viewer= () => {
   };
 
   const goToPlatform :(e:React.MouseEvent<HTMLButtonElement>) => void = () => {
-    navigate(`/platform/${platformID}/archive?${searchParams}`)
+    navigate(`/platform/${platformID}`)
   };
 
+  useEffect(() => {
+    dispatch(getPDFInfo.initiate({platformID, magazineID}))
+  })
+
+console.log(pdfInfo)
   return(
     <ViewerContainer>
       <ViewerHeader>
@@ -51,19 +65,21 @@ const Viewer= () => {
           <Arrow fill='#FFFFFF'/>
         </HeaderButtonBox>
         <Title>{pdfTitle}</Title>
-        <DownloadButton href={pdfSrc} download>
+        <DownloadButton href={pdfSrc} target={'_blank'}>
           <DownloadIcon fill={'white'}/>
         </DownloadButton>
       </ViewerHeader>
-      <ViewerMain
-        file={{url: pdfSrc}}
-        onLoadSuccess={onDocumentLoadSuccess}
-      >
-        <SinglePage
-          pageNumber={pageNumber}
-        />
-
-      </ViewerMain>
+      <MainContainer style={heightStyle}>
+        <ViewerMain
+          file={{url: pdfSrc}}
+          onLoadSuccess={onDocumentLoadSuccess}
+        >
+          <SinglePage
+            style={maxHeightStyle}
+            pageNumber={pageNumber}
+          />
+        </ViewerMain>
+      </MainContainer>
       <ButtonBox>
         <PrevButton
           type="button"
@@ -81,7 +97,6 @@ const Viewer= () => {
           <RightChevron24px/>
         </NextButton>
       </ButtonBox>
-
     </ViewerContainer>
   )
 }
@@ -90,22 +105,24 @@ export default Viewer
 
 const ViewerContainer = styled.div`
   max-width: 500px;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
+  
+  background: #222222;
 `
 
 const ViewerHeader = styled.div`
-  max-width: 500px;
   width: 100%;
-
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   background: #222222;
 
-  padding: 10px 20px;
+  padding: 5px 20px;
 `
 const HeaderButtonBox = styled.div`
   display: flex;
@@ -116,33 +133,41 @@ const HeaderButtonBox = styled.div`
 `
 const Title = styled.h1`
   color:white;
-  ${heading10}
+  ${heading10};
+
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 const DownloadButton = styled.a``
 
-const ViewerMain = styled(Document)`
+const MainContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  
-  max-width: 500px;
+  align-items: center;
+`
 
-  .react-pdf__Page {
+const ViewerMain = styled(Document)`
+  
+  .react-pdf__Document {
     background: black;
-    width: 100%;
-    height: 100%;
+    width: 500px;
   }
 `
-const SinglePage= styled(Page)`
+const SinglePage = styled(Page)`
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  
+  align-items: center;
+
   .react-pdf__Page__canvas {
-    max-width: 500px;
-    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    max-width: 95%;
+    height: auto;
   }
-  overflow: scroll;
 
   .react-pdf__Page__textContent{
     display: none;
@@ -151,6 +176,12 @@ const SinglePage= styled(Page)`
   .react-pdf__Page__annotations{
     display: none;
   }
+  
+  ::-webkit-scrollbar {
+    display: none;
+  }
+   
+  overflow: scroll;
 `
 
 const ButtonBox = styled.div`
@@ -160,7 +191,7 @@ const ButtonBox = styled.div`
   justify-content: space-evenly;
   align-items: center;
   
-  
+  padding: 5px 20px
 `
 const PrevButton = styled.button`
   width: 60px;
@@ -179,12 +210,20 @@ const PrevButton = styled.button`
 `
 
 const Index = styled.div`
+  width: 60px;
+  height: 40px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
   padding: 0 5px 0 5px;
   opacity: 0.9;
   
+  background: white;
+  
   ${body6}
 `
-
 
 const NextButton = styled.button`
   width: 60px;

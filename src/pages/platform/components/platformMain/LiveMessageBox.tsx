@@ -11,7 +11,7 @@ import { getLiveDate } from '../../../../api/backend';
 
 const LiveMessageBox = () => {
   const { platformID } = useParams();
-  const liveDate = useAppSelector((selectLiveDate))
+  const liveDate = useAppSelector(selectLiveDate)
   const dispatch = useAppDispatch()
 
   const date = new Date(liveDate?.date)
@@ -19,7 +19,12 @@ const LiveMessageBox = () => {
   const liveMonth = date.getMonth()+1
   const liveDay = date.getDate()
   const liveHour = date.getTime()
-  const nowHour = Date.now()
+  // 실제 nowHour
+  // const nowHour = Date.now()
+
+  //데모용 nowHour
+  const now = new Date(2023,1,2, 21,0,0)
+  const nowHour = now.getTime()
 
 
   const isLiveButtonAlert = () => {

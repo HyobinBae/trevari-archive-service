@@ -23,7 +23,7 @@ const initialState: MagazineListProps[] = [
 const MagazineContainer = () => {
   const { platformID } = useParams();
   const magazineList = useAppSelector(selectMagazineList);
-  const searchParams = useAppSelector((state)=>state.platform.getSearchParams);
+  const searchParams = useAppSelector((state) => state.platform.getSearchParams);
   const dispatch = useAppDispatch();
 
   useEffect(()=>{

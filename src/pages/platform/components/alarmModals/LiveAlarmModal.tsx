@@ -4,16 +4,24 @@ import {heading9} from '@trevari/typo';
 import LinkToButton from './LinkToButton';
 import DimBackground from '../editModals/DimBackground';
 import { useAppDispatch, useAppSelector } from '../../../../services/store';
-import { selectLiveLink, selectPlatform, setIsLiveModal } from '../../services/platform.store';
+import { selectLiveLink, selectPlatform } from '../../services/platform.store';
+import { getLiveLink } from '../../../../api/backend';
+import { useParams } from 'react-router-dom';
 
 
 const LiveAlarmModal = () => {
+  const { platformID } = useParams()
+  const dispatch = useAppDispatch()
   const platformTitle = useAppSelector(selectPlatform)
   const clubTitle = platformTitle.club_title
   const liveLink = useAppSelector((selectLiveLink))
   const linkURL = liveLink.link
 
   const message = 'Live 보러가기'
+
+  useEffect(() => {
+    dispatch(getLiveLink.initiate({platformID}))
+  },[])
 
   return(
     <>
