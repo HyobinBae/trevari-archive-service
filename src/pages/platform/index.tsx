@@ -27,7 +27,7 @@ const Platform = () => {
   // const nowHour = Date.now()
 
   //데모용 nowHour
-  const now = new Date(2023,1,2, 21,0,0)
+  const now = new Date(2023,1,2, 21,40,0)
   const nowHour = now.getTime()
 
   //Error status 401(unAuthorized) => 'https://login.trevari.co.kr'
