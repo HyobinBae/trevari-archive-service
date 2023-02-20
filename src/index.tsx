@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import ReactFbq from 'react-fbq';
 
 import { TrevariThemeProvider } from '@trevari/react-emotion-theme';
 import { init as initApm } from '@elastic/apm-rum';
@@ -13,19 +12,18 @@ import { store } from 'services/store';
 
 import reportWebVitals from './reportWebVitals';
 import 'styles/index.css';
-import { PIXEL_ID } from 'pages/main/pixel';
-import {IS_PRODUCTION} from "./config";
+import { IS_PRODUCTION } from './config';
 
 export const persistor = persistStore(store);
 
-export const myApm = IS_PRODUCTION ? initApm({
-  serviceName: 'trevari-web',
-  serverUrl: 'https://c0b7c3d540624325a041607b770d97ad.apm.ap-northeast-2.aws.elastic-cloud.com:443',
-  serviceVersion: '',
-  environment: process.env.NODE_ENV,
-}) : initApm(undefined);
-
-ReactFbq.initialize({ id: PIXEL_ID });
+export const myApm = IS_PRODUCTION
+  ? initApm({
+      serviceName: 'trevari-web',
+      serverUrl: 'https://c0b7c3d540624325a041607b770d97ad.apm.ap-northeast-2.aws.elastic-cloud.com:443',
+      serviceVersion: '',
+      environment: process.env.NODE_ENV,
+    })
+  : initApm(undefined);
 
 ReactDOM.render(
   <React.StrictMode>

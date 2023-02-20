@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import CommentContainer from './CommentContainer';
 import CommentInputContainer from './CommentInputContainer';
 
 const CommunityContainer = () => {
-
-  return(
+  return (
     <>
-      <CommentContainer/>
-      <CommentInputContainer/>
+      <CommentContainer />
+      <CommentInputContainer />
     </>
-  )
-}
+  );
+};
 
-export default CommunityContainer
-
+export default CommunityContainer;

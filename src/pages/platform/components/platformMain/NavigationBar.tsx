@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
-import {heading12} from '@trevari/typo';
+import { heading12 } from '@trevari/typo';
 import { useAppDispatch, useAppSelector } from '../../../../services/store';
 import { setNavTitle, setSearchParams, setVodSrc } from '../../services/platform.store';
 import ContentDivider from '../archiveTab/ContentDivider';
@@ -11,70 +11,67 @@ export interface ButtonProps {
   sort: string;
 }
 
-export interface Styles{
-  button: { color: string }
-  bar: { background: string};
+export interface Styles {
+  button: { color: string };
+  bar: { background: string };
 }
 
-const InitialButtonStyle = {button: {color:'#ADADAA'}, bar: {background:'#222222'}}
-const SelectedButtonStyle = {button: {color:'#FF7900'}, bar: {background: '#FF7900'}}
+const InitialButtonStyle = { button: { color: '#ADADAA' }, bar: { background: '#222222' } };
+const SelectedButtonStyle = { button: { color: '#FF7900' }, bar: { background: '#FF7900' } };
 
 const NavigationBar = () => {
-  const selectedTitle = useAppSelector((state)=> state.platform.getNavTitle)
+  const selectedTitle = useAppSelector(state => state.platform.getNavTitle);
 
-  const dispatch = useAppDispatch()
-  const params = new URLSearchParams()
+  const dispatch = useAppDispatch();
+  const params = new URLSearchParams();
 
-  const getSearchParams = (sort:string) => {
-    params.set('name', sort)
-    dispatch(setSearchParams(params.toString()))
-  }
-  const getNavTitle = (navTitle:string) =>{
-    dispatch(setNavTitle(navTitle))
-  }
-
+  const getSearchParams = (sort: string) => {
+    params.set('name', sort);
+    dispatch(setSearchParams(params.toString()));
+  };
+  const getNavTitle = (navTitle: string) => {
+    dispatch(setNavTitle(navTitle));
+  };
 
   const resetVocSrc = () => {
-    dispatch(setVodSrc(''))
-  }
+    dispatch(setVodSrc(''));
+  };
 
-
-  return(
+  return (
     <>
       <NavContainer>
-        {NAVIGATION_TITLE.map((title ) =>
-          {return(
+        {NAVIGATION_TITLE.map(title => {
+          return (
             <ButtonBox
               key={title.id}
-              onClick={() =>{
+              onClick={() => {
                 getNavTitle(title.navTitle);
                 getSearchParams(title.sort);
                 resetVocSrc();
-              }}>
-              {
-                selectedTitle === title.navTitle?
-                  <>
-                    <ButtonText style={SelectedButtonStyle.button}>{title.navTitle}</ButtonText>
-                    <SelectedBar style={SelectedButtonStyle.bar}/>
-                  </>
-                :
-                  <>
-                    <ButtonText style={InitialButtonStyle.button}>{title.navTitle}</ButtonText>
-                    <SelectedBar style={InitialButtonStyle.bar}/>
-                  </>
-              }
-
+              }}
+            >
+              {selectedTitle === title.navTitle ? (
+                <>
+                  <ButtonText style={SelectedButtonStyle.button}>{title.navTitle}</ButtonText>
+                  <SelectedBar style={SelectedButtonStyle.bar} />
+                </>
+              ) : (
+                <>
+                  <ButtonText style={InitialButtonStyle.button}>{title.navTitle}</ButtonText>
+                  <SelectedBar style={InitialButtonStyle.bar} />
+                </>
+              )}
             </ButtonBox>
-          )}
-        )}
+          );
+        })}
       </NavContainer>
-      <ContentDivider/>
+      <ContentDivider />
     </>
-  )
-}
+  );
+};
 export default NavigationBar;
 
-const NavContainer= styled.div`
+const NavContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -83,11 +80,11 @@ const NavContainer= styled.div`
 
   width: 100%;
   height: 56px;
-  
+
   background: #222222;
 
   cursor: pointer;
-`
+`;
 
 const ButtonBox = styled.button`
   display: flex;
@@ -96,36 +93,36 @@ const ButtonBox = styled.button`
   align-items: center;
   gap: 8px;
 
-  width: calc(100%/3);
+  width: calc(100% / 3);
   height: 36px;
 
   background: #222222;
   border-style: none;
 
-  padding:0;
+  padding: 0;
 
   cursor: pointer;
-`
+`;
 
 const ButtonText = styled.span`
   width: 51px;
 
- ${heading12};
-  
-  color: #ADADAA;
-`
+  ${heading12};
+
+  color: #adadaa;
+`;
 
 const SelectedBar = styled.div`
   width: 100%;
   height: 4px;
-  
+
   background: #222222;
-  
+
   flex: none;
-`
+`;
 
 const NAVIGATION_TITLE = [
-  {id: 1, navTitle: '커뮤니티', sort: 'community'},
-  {id: 2, navTitle: '다시보기', sort: 'replay'},
-  {id: 3, navTitle: '읽을거리', sort: 'magazine'}
+  { id: 1, navTitle: '커뮤니티', sort: 'community' },
+  { id: 2, navTitle: '다시보기', sort: 'replay' },
+  { id: 3, navTitle: '읽을거리', sort: 'magazine' },
 ];

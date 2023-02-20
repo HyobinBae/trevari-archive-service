@@ -1,22 +1,19 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import {title2} from '@trevari/typo';
-import { useWindowSize } from '../../../../hooks/useWindowSize';
+import { title2 } from '@trevari/typo';
 
 const ComingSoon = () => {
-  return (
-    <Container>서비스 준비중입니다.</Container>
-  )
-}
+  return <Container>서비스 준비중입니다.</Container>;
+};
 
-export default ComingSoon
+export default ComingSoon;
 
 const Container = styled.div`
   margin-top: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  color:white;
+
+  color: white;
   ${title2}
-`
+`;
