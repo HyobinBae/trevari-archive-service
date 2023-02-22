@@ -57,7 +57,7 @@
 # LINK TO 👉🏻
 
 <div>
-<a href='https://big-tango-420.notion.site/4-273e017e41d1409898fdcaf1104eae72'><img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white"/></a>
+<a href='https://almondine-bread-a7d.notion.site/Trevari-0ed0bee467a449b19c4d90b81f3f902b'><img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white"/></a>
 </div>
 
 </br>
@@ -66,14 +66,14 @@
 
 ### F.E.
 
-|                                             TypeScript                                             |                                                 React                                                 |                                             styled-components                                              |                                                 Redux                                                 |
-| :------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| TypeScript | React | styled-components | Redux |
+| :--------: | :---: | :---------------: | :---: |
 | <img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://raw.githubusercontent.com/styled-components/brand/master/styled-components.png" alt="icon" width="65" height="65" /></div> | <img src="https://techstack-generator.vercel.app/redux-icon.svg" alt="icon" width="65" height="65" /> |
 
 ### B.E.
 
-|                                             JavaScript                                             |                                                Nodejs                                                 |                                                 MySql                                                 |                                                 AWS                                                 |
-| :------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| JavaScript |  Nodejs | MySql | AWS |
+| :--------: | :-----: | :---: | :-: |
 | <img src="https://techstack-generator.vercel.app/js-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/nginx-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/aws-icon.svg" alt="icon" width="65" height="65" /> |
 
 </br>
