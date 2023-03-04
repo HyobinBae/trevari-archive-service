@@ -43,6 +43,22 @@
 
 </br>
 
+# STACK
+
+### F.E.
+
+| TypeScript | React | styled-components | Redux |
+| :--------: | :---: | :---------------: | :---: |
+| <img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://raw.githubusercontent.com/styled-components/brand/master/styled-components.png" alt="icon" width="65" height="65" /></div> | <img src="https://techstack-generator.vercel.app/redux-icon.svg" alt="icon" width="65" height="65" /> |
+
+### B.E.
+
+| JavaScript |  Nodejs | MySql | AWS |
+| :--------: | :-----: | :---: | :-: |
+| <img src="https://techstack-generator.vercel.app/js-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/nginx-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/aws-icon.svg" alt="icon" width="65" height="65" /> |
+
+</br>
+
 # TOOLS
 
 <div>
@@ -61,23 +77,6 @@
 </div>
 
 </br>
-
-# STACK
-
-### F.E.
-
-| TypeScript | React | styled-components | Redux |
-| :--------: | :---: | :---------------: | :---: |
-| <img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://raw.githubusercontent.com/styled-components/brand/master/styled-components.png" alt="icon" width="65" height="65" /></div> | <img src="https://techstack-generator.vercel.app/redux-icon.svg" alt="icon" width="65" height="65" /> |
-
-### B.E.
-
-| JavaScript |  Nodejs | MySql | AWS |
-| :--------: | :-----: | :---: | :-: |
-| <img src="https://techstack-generator.vercel.app/js-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/nginx-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/aws-icon.svg" alt="icon" width="65" height="65" /> |
-
-</br>
-
 </br>
 
 ## 플랫폼 메인
@@ -108,8 +107,17 @@
 
 ## 뷰어
 - react-pdf 라이브러리 활용
-- 다운로드
+- pdf 다운로드
 - 페이지 이동
 - 전체 페이지 및 현재 페이지 표시
 
+## 데모영상 
+[링크](https://youtu.be/CccD3q0OHPM)
 
+</br>
+
+# 구현 기능 
+
+## References 
+* 이 프로젝트는 트레바리에서 구독장 구독 클럽의 구독자를 위한 서비스 제공 목적으로 만들었습니다.
+* 이 소스 코드는 트레바리의 자산이며 실제 이 코드를 활용하여 이득을 취하거나 무단 배포할 경우 법적으로 문제가 될 수 있습니다.  
