@@ -118,6 +118,15 @@
 
 # 구현 기능 
 
+| 구현 기능 | 시연 |
+| :--: | :--: |
+| 탭 이동 | <img width="50%" src="https://im.ezgif.com/tmp/ezgif-1-3addfe082a.gif"/> |
+| 다시보기 | <img width="50%" src="https://im.ezgif.com/tmp/ezgif-1-800a577a07.gif"/> |
+| 읽을거리 | <img width="50%" src="https://im.ezgif.com/tmp/ezgif-1-f558660864.gif"/> |
+| 뷰어 | <img width="50%" src="https://im.ezgif.com/tmp/ezgif-1-5e8ee1b284.gif"/> |
+| live 버튼 | <img width="50%" src="https://im.ezgif.com/tmp/ezgif-1-637082f761.gif"/> |
+| live 모달 | <img width="50%" src="https://im.ezgif.com/tmp/ezgif-1-5575b1e9a8.gif"/> |
+
 ## References 
 * 이 프로젝트는 트레바리에서 구독장 구독 클럽의 구독자를 위한 서비스 제공 목적으로 만들었습니다.
 * 이 소스 코드는 트레바리의 자산이며 실제 이 코드를 활용하여 이득을 취하거나 무단 배포할 경우 법적으로 문제가 될 수 있습니다.  
